@@ -1,0 +1,69 @@
+<!-- container -->
+<div class="container" data-th-fragment="container" id="container" v-show="isContainerShow">
+
+    <!-- 标图row -->
+    <div class="row mt-5">
+        <div class="col-2 offset-5">
+            <img src="/images/github.png" class='mx-auto d-block'
+                 width='50' height='50'/>
+        </div>
+    </div>
+
+    <!-- 标题row -->
+    <div class="row mt-4">
+        <div class="col-4 offset-4">
+            <h4 class='lead text-center'>Yura~yura后台登入</h4>
+        </div>
+    </div>
+
+    <!-- 管理员登入表单row -->
+    <div class="row mt-3">
+        <div class="col-4 offset-4">
+            <div class="card">
+                <div class="card-body">
+                    <form id="managerLoginForm" method="post">
+                        <div class="form-group">
+                            <label for="managerName" class='font-size-14'>管理用户名</label>
+                            <input name="managerName" type="text" class="form-control"
+                                   :class="{'is-invalid':isInValid[0]}"
+                                   id="managerName" placeholder="" v-model="managerName"/>
+                            <div class="invalid-feedback">{{isInValidText[0]}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="managerPassword" class='font-size-14'>密码</label>
+                            <input name="managerPassword" type="password" class="form-control"
+                                   :class="{'is-invalid':isInValid[1]}"
+                                   id="managerPassword" placeholder="" v-model="managerPassword"/>
+                            <div class="invalid-feedback">{{isInValidText[1]}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="verifyCode" class='font-size-14'>验证码</label>
+                            <div class='row pl-3'>
+                                <input name="verifyCode" type="text" class="form-control col-7"
+                                       :class="{'is-invalid':isInValid[2]}"
+                                       id="verifyCode" placeholder="" v-model="verifyCode"/>
+                                <div class="col-5">
+                                    <img id="verifyImage" src="/manager/getVerifyCode"
+                                         onclick="loadVerifyImage()"/>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block mt-4 pr-4"
+                                @click="loginBackstage">
+                            <i class='fa fa-sign-in fa-lg'></i>&nbsp;&nbsp;登入
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 管理员登入表单row END -->
+
+</div>
+<!-- container END -->
+
+<!-- 登入过渡 -->
+<div class="d-flex align-items-center justify-content-center flex-column mt-7" data-th-fragment="spinner" id="spinner">
+    <div class="spinner-grow text-info" v-show="isSpinnerShow"></div>
+    <p class="spinner-txt lead font-size-20 mt-3" v-show="isSpinnerShow">登入中...</p>
+</div>

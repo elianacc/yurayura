@@ -1,0 +1,31 @@
+# Spring配置
+spring:
+  profiles:
+    active: dev
+  mvc:
+    # 关闭默认favicon
+    favicon:
+      enabled: false
+  # thymeleaf配置
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+  # 编码设置（编码过滤器）
+  http:
+    encoding:
+      charset: UTF-8
+      force-request: true
+      force-response: true
+      enabled: true
+  # 文件上传设置
+  servlet:
+    multipart:
+      # 单个文件的最大值
+      max-file-size: 10MB
+      # 总上传文件的最大值
+      max-request-size: 10MB
+
+# mybatis pagehelper配置
+pagehelper:
+  helper-dialect: mysql

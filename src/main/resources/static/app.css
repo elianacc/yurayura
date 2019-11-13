@@ -1,0 +1,9 @@
+﻿/*bootstrap4 css*/
+@import '/frame/bootstrap.min.css';
+/*Font Awesome css*/
+@import '/frame/font-awesome.css';
+
+@import '/plugins/toastr.min.css';
+@import '/plugins/BootSideMenu.css';
+@import '/plugins/metisMenu.min.css';
+@import '/plugins/bootstrap-datepicker.standalone.min.css';

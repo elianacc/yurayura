@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/images/yura.ico" rel="icon">
+    <link href="/app.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- WEB SITE JS -->
+<script src="/app.js"></script>
+<script>
+    const that = this;
+
+    function showUnLogin() {
+        bootbox.alert({
+            size: "small",
+            title: "<i class='fa fa-exclamation-circle fa-lg'></i>&nbsp;&nbsp;提示",
+            message: "管理员还未登入，请先登入！",
+            closeButton: false,
+            buttons: {
+                ok: {
+                    label: '确定',
+                }
+            },
+            callback: function () {
+                location.href = "/manage/manager_login";
+            }
+        });
+    }
+
+    $(function () {
+        that.showUnLogin();
+    });
+
+</script>
+
+</body>
+</html>

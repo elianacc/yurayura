@@ -1,0 +1,18 @@
+# Spring配置
+spring:
+  # 数据源设置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/yurayura_new?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: true
+      idle-timeout: 180000
+      minimum-idle: 15
+      maximum-pool-size: 100
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+      pool-name: ELiaNaCcHikariCP
