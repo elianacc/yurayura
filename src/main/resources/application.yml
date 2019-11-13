@@ -26,6 +26,10 @@ spring:
       # 总上传文件的最大值
       max-request-size: 10MB
 
+# mybatis plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+
 # mybatis pagehelper配置
 pagehelper:
   helper-dialect: mysql
