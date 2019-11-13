@@ -7,7 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.cny.yurayura.annotation.Submit;
+import org.cny.yurayura.vo.Msg;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
@@ -35,12 +35,11 @@ public class SubmitAspect {
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        Submit submit = method.getAnnotation(Submit.class);
-        String key = getCacheKey(submit, pjp.getArgs());
+        String key = method.getName();
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
-                return null;
+                return Msg.warn("请勿重复提交");
             }
             // 如果是第一次请求,就将key存入缓存中
             CACHES.put(key, key);
@@ -55,11 +54,4 @@ public class SubmitAspect {
         }
     }
 
-    /**
-     * Cache key生成策略
-     */
-    private String getCacheKey(Submit submit, Object[] args) {
-        String prefix = submit.prefix();
-        return prefix + args[0];
-    }
 }
