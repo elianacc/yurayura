@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.cny.yurayura.annotation.Submit;
-import org.cny.yurayura.vo.Msg;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
