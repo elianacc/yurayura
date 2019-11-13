@@ -76,9 +76,9 @@ const containerVm = new Vue({
                     url: "/comic/insert",
                     type: "post",
                     success: function (res) {
+                        $("#comicModal").modal('hide');
                         if (res.code == 200) {
                             toastr.success(res.msg);
-                            $("#comicModal").modal('hide');
                             containerVm.toFirstPage();
                         } else {
                             toastr.error(res.msg);
@@ -192,9 +192,9 @@ const containerVm = new Vue({
                     url: "/comic/update",
                     type: "post",
                     success: function (res) {
+                        $('#comicModal').modal('hide');
                         if (res.code == 200) {
                             toastr.success(res.msg);
-                            $('#comicModal').modal('hide');
                             containerVm.toClickPage(that.nowPageNum);
                         } else {
                             toastr.error(res.msg);
