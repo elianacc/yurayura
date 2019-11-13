@@ -49,7 +49,7 @@ public class SubmitAspect {
         } catch (Throwable throwable) {
             throw new RuntimeException("服务器异常");
         } finally {
-            //如果演示的话需要注释该代码,手动将缓存清除，实际应该放开
+            //清楚缓存
             CACHES.invalidate(key);
         }
     }
