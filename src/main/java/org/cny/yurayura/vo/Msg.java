@@ -49,6 +49,19 @@ public class Msg {
         return result;
     }
 
+    public static Msg dontReptCmt() {
+        Msg result = new Msg();
+        result.setCode(101);
+        return result;
+    }
+
+    public static Msg dontReptCmt(String msg) {
+        Msg result = new Msg();
+        result.setCode(101);
+        result.setMsg(msg);
+        return result;
+    }
+
     public static Msg fail() {
         Msg result = new Msg();
         result.setCode(500);
