@@ -2,6 +2,7 @@ package org.cny.yurayura.component.aspect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Aspect
 @Configuration
+@Slf4j
 public class SubmitAspect {
     private static final Cache<String, Object> CACHES = CacheBuilder.newBuilder()
             // 最大缓存 100 个
@@ -38,7 +40,8 @@ public class SubmitAspect {
         String key = getCacheKey(submit, pjp.getArgs());
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
-                return Msg.warn("请勿重复提交");
+                log.info("请勿重复提交");
+                return null;
             }
             // 如果是第一次请求,就将key存入缓存中
             CACHES.put(key, key);
