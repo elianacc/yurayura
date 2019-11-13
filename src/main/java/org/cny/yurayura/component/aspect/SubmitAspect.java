@@ -35,7 +35,8 @@ public class SubmitAspect {
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        String key = getCacheKey(method, pjp.getArgs());
+        Submit submit = method.getAnnotation(Submit.class);
+        String key = getCacheKey(submit, pjp.getArgs());
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
@@ -57,7 +58,8 @@ public class SubmitAspect {
     /**
      * Cache key生成策略
      */
-    private String getCacheKey(Method method, Object[] args) {
-        return method.getName() + args[0];
+    private String getCacheKey(Submit submit, Object[] args) {
+        String prefix = submit.prefix();
+        return prefix + args[0];
     }
 }
