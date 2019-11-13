@@ -28,7 +28,7 @@ public class SubmitAspect {
             // 最大缓存 100 个
             .maximumSize(100)
             // 设置缓存过期时间为3S
-            .expireAfterWrite(5, TimeUnit.SECONDS)
+            .expireAfterWrite(3, TimeUnit.SECONDS)
             .build();
 
     @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.annotation.Submit)")
@@ -48,9 +48,6 @@ public class SubmitAspect {
             return pjp.proceed();
         } catch (Throwable throwable) {
             throw new RuntimeException("服务器异常");
-        } finally {
-            //清楚缓存
-            CACHES.invalidate(key);
         }
     }
 
