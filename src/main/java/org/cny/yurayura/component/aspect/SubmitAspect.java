@@ -35,8 +35,7 @@ public class SubmitAspect {
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        Submit submit = method.getAnnotation(Submit.class);
-        String key = getCacheKey(submit, pjp.getArgs());
+        String key = getCacheKey(method, pjp.getArgs());
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
@@ -56,12 +55,9 @@ public class SubmitAspect {
     }
 
     /**
-     * Cache key生成策略，这里可以自定义实现，比如再Submit注解中添加需要从request中获取字段名称，在此方法中通过反射获取，拼接为最终的Cache key
-     * 本方法Cache key使用最简单的策略：prefix + request参数的toString，这里只做展示使用，一般不会使用这种策略，一是会导致cache key过长，浪费存储空间，
-     * 二是，如果请求参数没有实现toString方法，对于相同的请求参数，依然会被认为是两个不同的请求
+     * Cache key生成策略
      */
-    private String getCacheKey(Submit submit, Object[] args) {
-        String prefix = submit.prefix();
-        return prefix + args[0];
+    private String getCacheKey(Method method, Object[] args) {
+        return method.getName() + args[0];
     }
 }
