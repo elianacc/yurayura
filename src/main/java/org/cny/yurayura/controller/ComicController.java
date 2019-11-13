@@ -2,6 +2,7 @@ package org.cny.yurayura.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import org.cny.yurayura.annotation.Submit;
 import org.cny.yurayura.entity.Comic;
 import org.cny.yurayura.enumerate.ComicStatusEnum;
 import org.cny.yurayura.service.IComicService;
@@ -64,6 +65,7 @@ public class ComicController {
      * @param cmimgfile
      * @return org.cny.yurayura.vo.Msg
      */
+    @Submit
     @PostMapping("/insert")
     public Msg insert(HttpServletRequest request, Comic comic,
                       @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
@@ -194,6 +196,7 @@ public class ComicController {
      * @param id
      * @return org.cny.yurayura.vo.Msg
      */
+    @Submit
     @PostMapping("/update")
     public Msg update(HttpServletRequest request, Comic comic,
                       @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
