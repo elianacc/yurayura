@@ -27,8 +27,8 @@ public class SubmitAspect {
     private static final Cache<String, Object> CACHES = CacheBuilder.newBuilder()
             // 最大缓存 100 个
             .maximumSize(100)
-            // 设置缓存过期时间为3S
-            .expireAfterWrite(3, TimeUnit.SECONDS)
+            // 设置缓存过期时间为2S
+            .expireAfterWrite(2, TimeUnit.SECONDS)
             .build();
 
     @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.annotation.Submit)")
