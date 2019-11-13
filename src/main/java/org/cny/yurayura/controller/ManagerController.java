@@ -2,6 +2,7 @@ package org.cny.yurayura.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.cny.yurayura.annotation.Submit;
 import org.cny.yurayura.entity.Manager;
 import org.cny.yurayura.service.IManagerService;
 import org.cny.yurayura.util.VerifyCodeUtil;
@@ -67,6 +68,7 @@ public class ManagerController {
      * @param response
      * @return org.cny.yurayura.vo.Msg
      */
+    @Submit
     @PostMapping("/login")
     public Msg login(@RequestParam String verifyCode, Manager manager, HttpSession session,
                      HttpServletResponse response) throws UnsupportedEncodingException {
