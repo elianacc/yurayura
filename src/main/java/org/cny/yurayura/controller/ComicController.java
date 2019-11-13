@@ -17,9 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -32,6 +30,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/comic")
 public class ComicController {
+
+    /**
+     * 同步锁对象
+     */
+    private Map<String, Object> synObj = new HashMap<>();
 
     @Autowired
     private IComicService iComicService;
@@ -86,28 +89,46 @@ public class ComicController {
 
         switch (imgUplRes) {
             case "0":
-                // 番剧图片地址使用默认图片
-                comicImgUrl = "images/tpjxz.jpg";
-                comic.setComicImageUrl(comicImgUrl);
-                result = iComicService.save(comic);
-                if (result) {
-                    return Msg.success("添加成功");
-                } else {
-                    return Msg.fail("系统错误");
+                try {
+                    // 番剧图片地址使用默认图片
+                    comicImgUrl = "images/tpjxz.jpg";
+                    comic.setComicImageUrl(comicImgUrl);
+                    if (!synObj.containsKey(comic.getComicName())) {
+                        synObj.put(comic.getComicName(), comic.getComicName());
+                    }
+                    synchronized (synObj.get(comic.getComicName())) {
+                        result = iComicService.save(comic);
+                    }
+                    if (result) {
+                        return Msg.success("添加成功");
+                    } else {
+                        return Msg.fail("系统错误");
+                    }
+                } finally {
+                    synObj.remove(comic.getComicName());
                 }
             case "1":
                 return Msg.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
             case "2":
                 return Msg.warn("图片不能超过100KB");
             default:
-                // 番剧图片地址使用工具类传来的新文件名
-                comicImgUrl = "images/" + imgUplRes;
-                comic.setComicImageUrl(comicImgUrl);
-                result = iComicService.save(comic);
-                if (result) {
-                    return Msg.success("添加成功");
-                } else {
-                    return Msg.fail("系统错误");
+                try {
+                    // 番剧图片地址使用工具类传来的新文件名
+                    comicImgUrl = "images/" + imgUplRes;
+                    comic.setComicImageUrl(comicImgUrl);
+                    if (!synObj.containsKey(comic.getComicName())) {
+                        synObj.put(comic.getComicName(), comic.getComicName());
+                    }
+                    synchronized (synObj.get(comic.getComicName())) {
+                        result = iComicService.save(comic);
+                    }
+                    if (result) {
+                        return Msg.success("添加成功");
+                    } else {
+                        return Msg.fail("系统错误");
+                    }
+                } finally {
+                    synObj.remove(comic.getComicName());
                 }
         }
 
