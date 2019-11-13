@@ -40,7 +40,7 @@ const containerVm = new Vue({
                             that.loadVerifyImage();
                             toastr.error(res.msg);
                         } else if (res.code == 101) {
-                            console.warn("请不要重复提交");
+                            console.log("请不要重复提交");
                         } else {
                             containerVm.isContainerShow = false;
                             spinnerVm.isSpinnerShow = true;
