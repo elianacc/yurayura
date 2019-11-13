@@ -18,13 +18,13 @@ const containerVm = new Vue({
     methods: {
         validataForm: function () {
             if (this.managerName == "") {
-                Vue.set(this.isInValid,0,true);
+                Vue.set(this.isInValid, 0, true);
                 return false;
             } else if (this.managerPassword == "") {
-                Vue.set(this.isInValid,1,true);
+                Vue.set(this.isInValid, 1, true);
                 return false;
             } else if (this.verifyCode == "") {
-                Vue.set(this.isInValid,2,true);
+                Vue.set(this.isInValid, 2, true);
                 return false;
             } else {
                 return true;
@@ -39,6 +39,8 @@ const containerVm = new Vue({
                         if (res.code == 100) {
                             that.loadVerifyImage();
                             toastr.error(res.msg);
+                        } else if (res.code == 101) {
+                            console.warn("请不要重复提交");
                         } else {
                             containerVm.isContainerShow = false;
                             spinnerVm.isSpinnerShow = true;
@@ -53,13 +55,13 @@ const containerVm = new Vue({
     },
     watch: {
         managerName: function () {
-            Vue.set(this.isInValid,0,false);
+            Vue.set(this.isInValid, 0, false);
         },
         managerPassword: function () {
-            Vue.set(this.isInValid,1,false);
+            Vue.set(this.isInValid, 1, false);
         },
         verifyCode: function () {
-            Vue.set(this.isInValid,2,false);
+            Vue.set(this.isInValid, 2, false);
         }
     },
     mounted: function () {

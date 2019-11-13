@@ -80,6 +80,8 @@ const containerVm = new Vue({
                         if (res.code == 200) {
                             toastr.success(res.msg);
                             containerVm.toFirstPage();
+                        } else if (res.code == 101) {
+                            console.warn("请不要重复提交");
                         } else {
                             toastr.error(res.msg);
                         }
@@ -176,6 +178,8 @@ const containerVm = new Vue({
                         containerVm.cmImgFilePv = "/" + res.data.comicMsg.comicImageUrl;
                         containerVm.comicLink = res.data.comicMsg.comicLink;
                         $('#comicModal').modal();
+                    } else if (res.code == 101) {
+                        console.warn("请不要重复提交");
                     } else {
                         toastr.error(res.msg);
                     }

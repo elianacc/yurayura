@@ -39,7 +39,7 @@ public class SubmitAspect {
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
-                return Msg.warn("请勿重复提交");
+                return Msg.dontReptCmt();
             }
             // 如果是第一次请求,就将key存入缓存中
             CACHES.put(key, key);
