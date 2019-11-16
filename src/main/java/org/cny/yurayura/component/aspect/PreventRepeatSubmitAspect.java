@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.cny.yurayura.vo.Msg;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019年11月14日 2:16
  */
 @Aspect
+@Order(1)
 @Configuration
 @Slf4j
 public class PreventRepeatSubmitAspect {

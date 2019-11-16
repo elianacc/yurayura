@@ -19,17 +19,17 @@ import java.util.Enumeration;
  * @author CNY
  * @date 2019年3月28日 14:41
  */
-@Slf4j
-@Order(1)
 @Aspect
+@Order(2)
 @Component
+@Slf4j
 public class WebLogAspect {
 
     @Pointcut("execution(public * org.cny.yurayura.controller..*(..))")
-    public void webLog() {
+    public void webLogPointCut() {
     }
 
-    @Before("webLog()")
+    @Before("webLogPointCut()")
     public void doBefore() {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -45,7 +45,7 @@ public class WebLogAspect {
         }
     }
 
-    @AfterReturning(returning = "ret", pointcut = "webLog()")
+    @AfterReturning(returning = "ret", pointcut = "webLogPointCut()")
     public void doAfterReturning(Object ret) {
         // 处理完请求，返回内容
         log.info("RESPONSE : " + ret);
