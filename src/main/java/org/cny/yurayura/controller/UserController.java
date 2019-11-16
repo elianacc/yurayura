@@ -37,7 +37,7 @@ public class UserController {
     public Msg getPageToNoPvt(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
         PageInfo<User> userPageInfo = iUserService.getPageToNoPvt(pageNum);
         if (userPageInfo.getTotal() != 0) {
-            return Msg.success("分页查询成功").put("pageInfo", userPageInfo);
+            return Msg.success("分页查询成功", userPageInfo);
         } else {
             return Msg.warn("系统数据为空");
         }
