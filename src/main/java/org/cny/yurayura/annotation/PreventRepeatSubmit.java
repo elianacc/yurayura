@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface Submit {
+public @interface PreventRepeatSubmit {
     //prefix为本地锁的key的前缀
     String prefix() default "prefix:";
 }

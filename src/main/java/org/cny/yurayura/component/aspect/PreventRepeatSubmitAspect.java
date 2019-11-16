@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 @Configuration
 @Slf4j
-public class SubmitAspect {
+public class PreventRepeatSubmitAspect {
     private static final Cache<String, Object> CACHES = CacheBuilder.newBuilder()
             // 最大缓存 100 个
             .maximumSize(100)
@@ -31,7 +31,7 @@ public class SubmitAspect {
             .expireAfterWrite(2, TimeUnit.SECONDS)
             .build();
 
-    @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.annotation.Submit)")
+    @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.annotation.PreventRepeatSubmit)")
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
