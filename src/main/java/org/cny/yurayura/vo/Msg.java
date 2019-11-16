@@ -16,6 +16,7 @@ public class Msg {
     // 200-服务器处理成功
     // 500-服务器出错
     // 100-服务器警告
+    // 101-重复提交
     private Integer code;
     // 用户要返回给浏览器的数据
     private Object data;
