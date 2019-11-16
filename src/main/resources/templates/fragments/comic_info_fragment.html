@@ -71,7 +71,7 @@
                     <td class="text-center align-middle">
                         <button type="button" class="btn btn-primary font-size-14"
                                 @click="updateModalOpen(item.id)">
-                            <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
+                            <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看详情和修改
                         </button>
                         <br/><br/>
                         <button type="button" class="btn btn-danger font-size-14"
@@ -323,6 +323,19 @@
                             <label for="comicLink" class="col-form-label">观看地址：</label>
                             <input type="url" class="form-control" id="comicLink" name="comicLink"
                                    placeholder="请输入观看地址" v-model="comicLink"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="comicShelfStatus" class="col-form-label">上架状态：</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="comicShelfStatus1" name="comicShelfStatus"
+                                       class="custom-control-input" value="1" v-model="comicShelfStatus"/>
+                                <label class="custom-control-label" for="comicShelfStatus1">上架</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="comicShelfStatus2" name="comicShelfStatus"
+                                       class="custom-control-input" value="0" v-model="comicShelfStatus"/>
+                                <label class="custom-control-label" for="comicShelfStatus2">下架</label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

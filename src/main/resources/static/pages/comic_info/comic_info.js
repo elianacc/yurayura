@@ -21,7 +21,8 @@ const containerVm = new Vue({
         freeLabelD: "",
         cmImgFileLb: "示例图片.jpg",
         cmImgFilePv: "/images/tpjxz.jpg",
-        comicLink: ""
+        comicLink: "",
+        comicShelfStatus: 1
     },
     methods: {
         buildPageComicManage: function () {
@@ -177,6 +178,7 @@ const containerVm = new Vue({
                         containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
                         containerVm.cmImgFilePv = "/" + res.data.comicMsg.comicImageUrl;
                         containerVm.comicLink = res.data.comicMsg.comicLink;
+                        containerVm.comicShelfStatus = res.data.comicMsg.comicShelfStatus;
                         $('#comicModal').modal();
                     } else if (res.code == 101) {
                         console.log("请不要重复提交");
@@ -288,6 +290,7 @@ const containerVm = new Vue({
                 containerVm.cmImgFileLb = "示例图片.jpg";
                 containerVm.cmImgFilePv = "/images/tpjxz.jpg";
                 containerVm.comicLink = "";
+                containerVm.comicShelfStatus = 1;
                 $("#cmImgFile").val("");
             });
         }

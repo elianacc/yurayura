@@ -65,5 +65,9 @@ public class Comic implements Serializable {
      */
     private Integer comicStatus;
 
+    /**
+     * 上架状态  1：上架  0：下架
+     */
+    private Integer comicShelfStatus;
 
 }
