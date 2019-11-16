@@ -35,7 +35,7 @@ const containerVm = new Vue({
                 dataType: 'json',
                 success: function (res) {
                     if (res.code == 200) {
-                        containerVm.pageInfo = res.data.pageInfo;
+                        containerVm.pageInfo = res.data;
                     } else {
                         toastr.error(res.msg);
                     }
@@ -143,7 +143,7 @@ const containerVm = new Vue({
                 type: "post",
                 success: function (res) {
                     if (res.code == 200) {
-                        containerVm.pageInfo = res.data.pageInfo;
+                        containerVm.pageInfo = res.data;
                     } else {
                         toastr.error(res.msg);
                     }
@@ -162,23 +162,23 @@ const containerVm = new Vue({
                 dataType: 'json',
                 success: function (res) {
                     if (res.code == 200) {
-                        containerVm.id = res.data.comicMsg.id;
-                        containerVm.comicName = res.data.comicMsg.comicName;
-                        containerVm.comicTime = res.data.comicMsg.comicTime;
-                        containerVm.comicContent = res.data.comicMsg.comicContent;
-                        if (res.data.comicMsg.comicStatus == 0) {
+                        containerVm.id = res.data.id;
+                        containerVm.comicName = res.data.comicName;
+                        containerVm.comicTime = res.data.comicTime;
+                        containerVm.comicContent = res.data.comicContent;
+                        if (res.data.comicStatus == 0) {
                             containerVm.comicStatus = 0;
                         } else {
                             containerVm.comicStatus = 8;
-                            containerVm.comicUdTime = res.data.comicMsg.comicStatus;
+                            containerVm.comicUdTime = res.data.comicStatus;
                         }
-                        containerVm.comicLabel = res.data.comicMsg.comicLabel;
-                        let fileName = res.data.comicMsg.comicImageUrl;
+                        containerVm.comicLabel = res.data.comicLabel;
+                        let fileName = res.data.comicImageUrl;
                         let fileNewNameStart = fileName.lastIndexOf("/");
                         containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
-                        containerVm.cmImgFilePv = "/" + res.data.comicMsg.comicImageUrl;
-                        containerVm.comicLink = res.data.comicMsg.comicLink;
-                        containerVm.comicShelfStatus = res.data.comicMsg.comicShelfStatus;
+                        containerVm.cmImgFilePv = "/" + res.data.comicImageUrl;
+                        containerVm.comicLink = res.data.comicLink;
+                        containerVm.comicShelfStatus = res.data.comicShelfStatus;
                         $('#comicModal').modal();
                     } else if (res.code == 101) {
                         console.log("请不要重复提交");

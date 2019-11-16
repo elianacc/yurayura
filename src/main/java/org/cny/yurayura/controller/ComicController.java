@@ -48,7 +48,7 @@ public class ComicController {
 
         PageInfo<Comic> comicPageInfo = iComicService.getPageToAll(pageNum);
         if (comicPageInfo.getTotal() != 0) {
-            return Msg.success("分页查询成功").put("pageInfo", comicPageInfo);
+            return Msg.success("分页查询成功", comicPageInfo);
         } else {
             return Msg.warn("系统数据为空");
         }
@@ -179,7 +179,7 @@ public class ComicController {
     public Msg getOneById(@RequestParam(value = "id", defaultValue = "0") Integer id) {
         Comic aComic = iComicService.getById(id);
         if (!StringUtils.isEmpty(aComic)) {
-            return Msg.success("查询成功").put("comicMsg", aComic);
+            return Msg.success("查询成功", aComic);
         } else {
             return Msg.fail("系统错误");
         }
@@ -263,7 +263,7 @@ public class ComicController {
                              @RequestParam String comicName) {
         PageInfo<Comic> comicPageInfo = iComicService.getPageByName(pageNum, comicName);
         if (comicPageInfo.getTotal() != 0) {
-            return Msg.success("分页查询成功").put("pageInfo", comicPageInfo);
+            return Msg.success("分页查询成功", comicPageInfo);
         } else {
             return Msg.warn("搜索不到数据");
         }
