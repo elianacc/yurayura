@@ -52,9 +52,6 @@ public class ComicController {
      */
     @PostMapping("/getPageToAll")
     public Msg getPageToAll(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
-        if (pageNum == 0) {
-            return Msg.warn("请输入页数");
-        }
         PageInfo<Comic> comicPageInfo = iComicService.getPageToAll(pageNum);
         if (comicPageInfo.getTotal() != 0) {
             return Msg.success("分页查询成功", comicPageInfo);
@@ -255,9 +252,6 @@ public class ComicController {
     @PostMapping("/getPageByName")
     public Msg getPageByName(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                              @RequestParam String comicName) {
-        if (pageNum == 0) {
-            return Msg.warn("请输入页数");
-        }
         PageInfo<Comic> comicPageInfo = iComicService.getPageByName(pageNum, comicName);
         if (comicPageInfo.getTotal() != 0) {
             return Msg.success("分页查询成功", comicPageInfo);
