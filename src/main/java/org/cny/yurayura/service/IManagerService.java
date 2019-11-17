@@ -13,7 +13,7 @@ import org.cny.yurayura.entity.Manager;
  */
 public interface IManagerService extends IService<Manager> {
     /**
-     * 用户名和密码查询管理员 Entity
+     * 用户名和密码查询管理员
      *
      * @param manager
      * @return org.cny.yurayura.entity.Manager

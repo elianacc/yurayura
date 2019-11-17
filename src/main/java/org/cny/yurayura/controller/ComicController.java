@@ -147,6 +147,7 @@ public class ComicController {
             // 删除番剧图片
             FileUtil.fileDelete(request, comic.getComicImageUrl());
         }
+        iComicCountService.deleteByComicId(comic.getId());
         return Msg.success("删除成功");
     }
 
@@ -172,6 +173,7 @@ public class ComicController {
                 // 删除番剧图片
                 FileUtil.fileDelete(request, comic.getComicImageUrl());
             }
+            iComicCountService.deleteByComicId(comic.getId());
         }
         return Msg.success("删除成功");
     }
