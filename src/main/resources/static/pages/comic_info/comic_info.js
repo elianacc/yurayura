@@ -195,7 +195,7 @@ const containerVm = new Vue({
                         $('#comicModal').modal('hide');
                         if (res.code == 200) {
                             toastr.success(res.msg);
-                            containerVm.toClickPage(that.nowPageNum);
+                            containerVm.toClickPage(containerVm.nowPageNum);
                         } else {
                             toastr.error(res.msg);
                         }
