@@ -122,8 +122,6 @@ const containerVm = new Vue({
                                     if (res.code == 200) {
                                         toastr.success(res.msg);
                                         containerVm.toClickPage(containerVm.nowPageNum);
-                                    } else {
-                                        toastr.error(res.msg);
                                     }
                                 }
                             });
@@ -180,10 +178,6 @@ const containerVm = new Vue({
                         containerVm.comicLink = res.data.comicLink;
                         containerVm.comicShelfStatus = res.data.comicShelfStatus;
                         $('#comicModal').modal();
-                    } else if (res.code == 101) {
-                        console.log("请不要重复提交");
-                    } else {
-                        toastr.error(res.msg);
                     }
                 }
             });
@@ -238,8 +232,6 @@ const containerVm = new Vue({
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.toClickPage(containerVm.nowPageNum);
-                                } else {
-                                    toastr.error(res.msg);
                                 }
                             }
                         });

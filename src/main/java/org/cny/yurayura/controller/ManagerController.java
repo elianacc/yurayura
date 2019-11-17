@@ -111,11 +111,7 @@ public class ManagerController {
     public Msg logout(HttpSession session) {
         // 移除管理员session
         session.removeAttribute("managerSession");
-        if (StringUtils.isEmpty(session.getAttribute("managerSession"))) {
-            return Msg.success("管理员注销成功");
-        } else {
-            return Msg.fail("系统错误");
-        }
+        return Msg.success("管理员注销成功");
     }
 
 }

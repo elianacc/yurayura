@@ -27,8 +27,6 @@ const navbarVm = new Vue({
                             success: function (res) {
                                 if (res.code == 200) {
                                     location.reload();
-                                } else {
-                                    alert(res.data.errorMsg);
                                 }
                             }
                         });
