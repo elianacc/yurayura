@@ -8,8 +8,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.cny.yurayura.vo.Msg;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Aspect
 @Order(1)
-@Configuration
+@Component
 @Slf4j
 public class PreventRepeatSubmitAspect {
     private static final Cache<String, Object> CACHES = CacheBuilder.newBuilder()
