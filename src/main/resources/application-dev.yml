@@ -21,3 +21,5 @@ spring:
 yurayura:
   default-upload:
     image: images/tpjxz.jpg
+  swagger:
+    enable: true

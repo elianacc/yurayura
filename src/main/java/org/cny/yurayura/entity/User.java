@@ -4,95 +4,70 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 用户
  * </p>
  *
  * @author CNY
- * @since 2019-10-27
+ * @since 2019-11-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("yurayura_user")
+@ApiModel(value="User对象", description="用户")
 public class User implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    /**
-     * 用户id
-     */
+    @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 用户名
-     */
+    @ApiModelProperty(value = "用户名")
     private String userName;
 
-    /**
-     * 密码
-     */
+    @ApiModelProperty(value = "密码")
     private String userPassword;
 
-    /**
-     * 昵称
-     */
+    @ApiModelProperty(value = "昵称")
     private String userNickname;
 
-    /**
-     * 签名
-     */
+    @ApiModelProperty(value = "签名")
     private String userSignature;
 
-    /**
-     * 性别
-     */
+    @ApiModelProperty(value = "性别")
     private String userSex;
 
-    /**
-     * 生日
-     */
+    @ApiModelProperty(value = "生日")
     private String userBirsday;
 
-    /**
-     * 省份
-     */
+    @ApiModelProperty(value = "省份")
     private String userProvince;
 
-    /**
-     * 城市
-     */
+    @ApiModelProperty(value = "城市")
     private String userCity;
 
-    /**
-     * 头像
-     */
+    @ApiModelProperty(value = "头像")
     private String userImage;
 
-    /**
-     * 邮箱
-     */
+    @ApiModelProperty(value = "邮箱")
     private String userEmail;
 
-    /**
-     * 手机号
-     */
+    @ApiModelProperty(value = "手机号")
     private String userPhoneNum;
 
-    /**
-     * 状态  0：正常  其他数字：小黑屋天数
-     */
+    @ApiModelProperty(value = "状态  0：正常  其他数字：小黑屋天数")
     private Integer userStatus;
 
-    /**
-     * 注册时间
-     */
+    @ApiModelProperty(value = "注册时间")
     private String userRegTime;
 
 

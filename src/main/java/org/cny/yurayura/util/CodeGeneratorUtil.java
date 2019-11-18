@@ -54,6 +54,8 @@ public class CodeGeneratorUtil {
         gc.setBaseColumnList(true);
         // 是否支持 AR, 实体类只需继承 Model 类即可进行强大的 CRUD 操作
         gc.setActiveRecord(false);
+        // 是否启用swagger2
+        gc.setSwagger2(true);
         // XML 二级缓存
         gc.setEnableCache(false);
         gc.setAuthor("CNY");

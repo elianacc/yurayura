@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * 番剧 Mapper 接口
  * </p>
  *
  * @author CNY
- * @since 2019-10-27
+ * @since 2019-11-18
  */
 public interface ComicMapper extends BaseMapper<Comic> {
 
