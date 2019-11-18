@@ -2,6 +2,7 @@ package org.cny.yurayura.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 页面跳转请求 controller
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2019年10月28日 21:56
  */
 @Controller
+@ApiIgnore
 public class PageController {
 
     @RequestMapping("/manage/manager_login")
