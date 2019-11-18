@@ -2,6 +2,9 @@ package org.cny.yurayura.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.entity.User;
 import org.cny.yurayura.service.IUserService;
 import org.cny.yurayura.vo.Msg;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户相关接口")
 public class UserController {
 
     @Autowired
@@ -34,6 +38,8 @@ public class UserController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/getPageToNoPvt")
+    @ApiOperation("分页查询全部用户（剔除了隐私字段）")
+    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
     public Msg getPageToNoPvt(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
         if (pageNum == 0) {
             return Msg.warn("请输入页数");

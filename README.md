@@ -26,6 +26,7 @@
 - ​        代码简化工具：lombok
 - ​        连接池：HikariCP
 - ​        数据库：MySQL80
+- ​        在线接口文档生成： Swagger2
 
 ##### 其他：
 

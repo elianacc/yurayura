@@ -1,6 +1,9 @@
 package org.cny.yurayura.controller;
 
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.entity.Manager;
@@ -32,6 +35,7 @@ import java.net.URLEncoder;
 @Slf4j
 @RestController
 @RequestMapping("/manager")
+@Api(tags = "管理员相关接口")
 public class ManagerController {
 
     @Autowired
@@ -45,6 +49,7 @@ public class ManagerController {
      * @return void
      */
     @GetMapping("/getVerifyCode")
+    @ApiOperation("获取数字加英文验证码图片")
     public void getVerifyCode(HttpServletResponse response, HttpSession session) throws IOException {
         //利用图片工具生成图片
         //第一个参数是生成的验证码，第二个参数是生成的图片
@@ -70,6 +75,8 @@ public class ManagerController {
      */
     @PreventRepeatSubmit
     @PostMapping("/login")
+    @ApiOperation("管理员登入")
+    @ApiImplicitParam(name = "verifyCode", value = "验证码", required = true)
     public Msg login(@RequestParam String verifyCode, Manager manager, HttpSession session,
                      HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -108,6 +115,7 @@ public class ManagerController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/logout")
+    @ApiOperation("管理员注销")
     public Msg logout(HttpSession session) {
         // 移除管理员session
         session.removeAttribute("managerSession");

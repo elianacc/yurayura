@@ -2,6 +2,10 @@ package org.cny.yurayura.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.entity.Comic;
 import org.cny.yurayura.entity.ComicCount;
@@ -34,6 +38,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/comic")
+@Api(tags = "番剧相关接口")
 public class ComicController {
 
     @Autowired
@@ -51,6 +56,8 @@ public class ComicController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/getPageToAll")
+    @ApiOperation("分页查询全部番剧")
+    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
     public Msg getPageToAll(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
         if (pageNum == 0) {
             return Msg.warn("请输入页数");
@@ -75,6 +82,12 @@ public class ComicController {
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
+    @ApiOperation("添加番剧")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "comicstatus", value = "番剧状态", required = true),
+            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", required = true),
+            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片", required = true)
+    })
     public Msg insert(HttpServletRequest request, Comic comic,
                       @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
                       @RequestParam(value = "comicudtime", defaultValue = "8") Integer comicudtime,
@@ -138,6 +151,8 @@ public class ComicController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/deleteById")
+    @ApiOperation("删除单个番剧")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
     public Msg deleteById(HttpServletRequest request,
                           @RequestParam(value = "id", defaultValue = "0") Integer id) {
         Comic comic = iComicService.getById(id);
@@ -159,6 +174,8 @@ public class ComicController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/deleteBatchByIds")
+    @ApiOperation("删除多个番剧")
+    @ApiImplicitParam(name = "ids", value = "id组", required = true)
     public Msg deleteBatchByIds(HttpServletRequest request, @RequestParam String ids) {
         List<Integer> delIdsList = new ArrayList<>();
         String[] delIdsArr = ids.split(",");
@@ -185,6 +202,8 @@ public class ComicController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/getOneById")
+    @ApiOperation("查询单个番剧")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
     public Msg getOneById(@RequestParam(value = "id", defaultValue = "0") Integer id) {
         Comic comic = iComicService.getById(id);
         return Msg.success("查询成功", comic);
@@ -203,6 +222,13 @@ public class ComicController {
      */
     @PreventRepeatSubmit
     @PostMapping("/update")
+    @ApiOperation("修改番剧")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "comicstatus", value = "番剧状态", required = true),
+            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", required = true),
+            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片", required = true),
+            @ApiImplicitParam(name = "id", value = "id", required = true)
+    })
     public Msg update(HttpServletRequest request, Comic comic,
                       @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
                       @RequestParam(value = "comicudtime", defaultValue = "8") Integer comicudtime,
@@ -255,6 +281,11 @@ public class ComicController {
      * @return org.cny.yurayura.vo.Msg
      */
     @PostMapping("/getPageByName")
+    @ApiOperation("搜索番剧")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
+            @ApiImplicitParam(name = "id", value = "id", required = true)
+    })
     public Msg getPageByName(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                              @RequestParam String comicName) {
         if (pageNum == 0) {
