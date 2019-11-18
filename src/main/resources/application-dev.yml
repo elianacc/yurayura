@@ -17,9 +17,11 @@ spring:
       connection-test-query: SELECT 1
       pool-name: ELiaNaCcHikariCP
 
-# 番剧上传默认图片
+# 自定义配置
 yurayura:
+  # 番剧上传默认图片
   default-upload:
     image: images/tpjxz.jpg
+  # swagger配置类是否启用
   swagger:
     enable: true
