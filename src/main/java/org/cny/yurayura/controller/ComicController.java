@@ -284,7 +284,7 @@ public class ComicController {
     @ApiOperation("搜索番剧")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
-            @ApiImplicitParam(name = "id", value = "id", required = true)
+            @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
     })
     public Msg getPageByName(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                              @RequestParam String comicName) {
