@@ -85,8 +85,8 @@ public class ComicController {
     @ApiOperation("添加番剧")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "comicstatus", value = "番剧状态", required = true),
-            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", required = true),
-            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片", required = true)
+            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", defaultValue = "8"),
+            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片")
     })
     public ApiResult insert(HttpServletRequest request, Comic comic,
                             @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
@@ -225,8 +225,8 @@ public class ComicController {
     @ApiOperation("修改番剧")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "comicstatus", value = "番剧状态", required = true),
-            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", required = true),
-            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片", required = true),
+            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", defaultValue = "8"),
+            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片"),
             @ApiImplicitParam(name = "id", value = "id", required = true)
     })
     public ApiResult update(HttpServletRequest request, Comic comic,
@@ -283,7 +283,7 @@ public class ComicController {
     @PostMapping("/getPageByName")
     @ApiOperation("搜索番剧")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
+            @ApiImplicitParam(name = "comicName", value = "番剧名"),
             @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
     })
     public ApiResult getPageByName(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
