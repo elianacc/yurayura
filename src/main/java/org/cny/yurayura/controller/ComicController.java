@@ -283,7 +283,7 @@ public class ComicController {
     @PostMapping("/getPageByName")
     @ApiOperation("搜索番剧")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "comicName", value = "番剧名"),
+            @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
             @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
     })
     public ApiResult getPageByName(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
