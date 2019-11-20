@@ -9,7 +9,7 @@ import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.entity.Manager;
 import org.cny.yurayura.service.IManagerService;
 import org.cny.yurayura.util.VerifyCodeUtil;
-import org.cny.yurayura.vo.Msg;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -77,8 +77,8 @@ public class ManagerController {
     @PostMapping("/login")
     @ApiOperation("管理员登入")
     @ApiImplicitParam(name = "verifyCode", value = "验证码", required = true)
-    public Msg login(@RequestParam String verifyCode, Manager manager, HttpSession session,
-                     HttpServletResponse response) throws UnsupportedEncodingException {
+    public ApiResult login(@RequestParam String verifyCode, Manager manager, HttpSession session,
+                           HttpServletResponse response) throws UnsupportedEncodingException {
 
         // 获取服务器生成验证码
         Object verifyImageCode = session.getAttribute("verifyImageCode");
@@ -99,12 +99,12 @@ public class ManagerController {
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
                 log.info("管理员：" + aManager.getManagerName() + "，登入成功");
-                return Msg.success("管理员登入成功");
+                return ApiResult.success("管理员登入成功");
             } else {
-                return Msg.warn("用户名或密码错误");
+                return ApiResult.warn("用户名或密码错误");
             }
         } else {
-            return Msg.warn("验证码错误");
+            return ApiResult.warn("验证码错误");
         }
     }
 
@@ -116,10 +116,10 @@ public class ManagerController {
      */
     @PostMapping("/logout")
     @ApiOperation("管理员注销")
-    public Msg logout(HttpSession session) {
+    public ApiResult logout(HttpSession session) {
         // 移除管理员session
         session.removeAttribute("managerSession");
-        return Msg.success("管理员注销成功");
+        return ApiResult.success("管理员注销成功");
     }
 
 }

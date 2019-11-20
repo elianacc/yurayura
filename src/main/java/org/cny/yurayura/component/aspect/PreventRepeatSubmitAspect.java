@@ -7,7 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.cny.yurayura.vo.Msg;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -41,7 +41,7 @@ public class PreventRepeatSubmitAspect {
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
-                return Msg.dontReptCmt();
+                return ApiResult.dontReptCmt();
             }
             // 如果是第一次请求,就将key存入缓存中
             CACHES.put(key, key);

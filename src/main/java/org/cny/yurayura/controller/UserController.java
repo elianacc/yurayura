@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.entity.User;
 import org.cny.yurayura.service.IUserService;
-import org.cny.yurayura.vo.Msg;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,15 +40,15 @@ public class UserController {
     @PostMapping("/getPageToNoPvt")
     @ApiOperation("分页查询全部用户（剔除了隐私字段）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
-    public Msg getPageToNoPvt(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
+    public ApiResult getPageToNoPvt(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
         if (pageNum == 0) {
-            return Msg.warn("请输入页数");
+            return ApiResult.warn("请输入页数");
         }
         PageInfo<User> userPageInfo = iUserService.getPageToNoPvt(pageNum);
         if (userPageInfo.getTotal() != 0) {
-            return Msg.success("分页查询成功", userPageInfo);
+            return ApiResult.success("分页查询成功", userPageInfo);
         } else {
-            return Msg.warn("系统数据为空");
+            return ApiResult.warn("系统数据为空");
         }
     }
 
