@@ -35,7 +35,7 @@ public class UserController {
      * 分页查询全部用户（剔除了隐私字段）
      *
      * @param pageNum
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToNoPvt")
     @ApiOperation("分页查询全部用户（剔除了隐私字段）")

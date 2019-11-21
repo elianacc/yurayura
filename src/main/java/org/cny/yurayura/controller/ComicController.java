@@ -7,20 +7,23 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
+import org.cny.yurayura.dto.ComicIstAndUdtDTO;
 import org.cny.yurayura.entity.Comic;
 import org.cny.yurayura.entity.ComicCount;
-import org.cny.yurayura.enumerate.ComicStatusEnum;
 import org.cny.yurayura.service.IComicCountService;
 import org.cny.yurayura.service.IComicService;
 import org.cny.yurayura.util.FileUtil;
 import org.cny.yurayura.vo.ApiResult;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -53,7 +56,7 @@ public class ComicController {
      * 分页查询全部番剧
      *
      * @param pageNum
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToAll")
     @ApiOperation("分页查询全部番剧")
@@ -73,46 +76,39 @@ public class ComicController {
     /**
      * 添加番剧
      *
-     * @param request
-     * @param comic
-     * @param comicstatus
-     * @param comicudtime
-     * @param cmimgfile
-     * @return org.cny.yurayura.vo.Msg
+     * @param dto
+	 * @param cmImgFile
+	 * @param request
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "comicstatus", value = "番剧状态", required = true),
-            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", defaultValue = "8"),
-            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片")
-    })
-    public ApiResult insert(HttpServletRequest request, Comic comic,
-                            @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
-                            @RequestParam(value = "comicudtime", defaultValue = "8") Integer comicudtime,
-                            @RequestParam(value = "cmimgfile", required = false) MultipartFile cmimgfile) throws IOException {
-        Integer comicStatus;
-        String comicImgUrl;
+    @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
+    public ApiResult insert(ComicIstAndUdtDTO dto,
+                            @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile,
+                            @ApiIgnore HttpServletRequest request) throws IOException {
 
+        Integer comicStatus;
         // 有更新时间赋值更新时间，没有则赋值更新状态
-        if (comicudtime != ComicStatusEnum.UPDATING.getStatusId()) {
-            comicStatus = comicudtime;
+        if (!StringUtils.isEmpty(dto.getComicUdTime())) {
+            comicStatus = dto.getComicUdTime();
         } else {
-            comicStatus = comicstatus;
+            comicStatus = dto.getComicStatus();
         }
-        comic.setComicStatus(comicStatus);
 
         // 调用图片上传工具
-        String imgUplRes = FileUtil.imageUpload(request, cmimgfile);
+        String imgUplRes = FileUtil.imageUpload(request, cmImgFile);
 
+        Comic comic = new Comic();
         ComicCount comicCount = new ComicCount();
 
         switch (imgUplRes) {
             case "0":
+                BeanUtils.copyProperties(dto, comic);
+                comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用默认图片
-                comicImgUrl = defaultUplImg;
-                comic.setComicImageUrl(comicImgUrl);
+                comic.setComicImageUrl(defaultUplImg);
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
@@ -127,9 +123,10 @@ public class ComicController {
             case "2":
                 return ApiResult.warn("图片不能超过100KB");
             default:
+                BeanUtils.copyProperties(dto, comic);
+                comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用工具类传来的新文件名
-                comicImgUrl = "images/" + imgUplRes;
-                comic.setComicImageUrl(comicImgUrl);
+                comic.setComicImageUrl("images/" + imgUplRes);
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
@@ -148,12 +145,12 @@ public class ComicController {
      *
      * @param request
      * @param id
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/deleteById")
     @ApiOperation("删除单个番剧")
     @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ApiResult deleteById(HttpServletRequest request,
+    public ApiResult deleteById(@ApiIgnore HttpServletRequest request,
                                 @RequestParam(value = "id", defaultValue = "0") Integer id) {
         Comic comic = iComicService.getById(id);
         iComicService.removeById(id);
@@ -171,12 +168,12 @@ public class ComicController {
      *
      * @param request
      * @param ids
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/deleteBatchByIds")
     @ApiOperation("删除多个番剧")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
-    public ApiResult deleteBatchByIds(HttpServletRequest request, @RequestParam String ids) {
+    public ApiResult deleteBatchByIds(@ApiIgnore HttpServletRequest request, @RequestParam String ids) {
         List<Integer> delIdsList = new ArrayList<>();
         String[] delIdsArr = ids.split(",");
         for (String delIdsStr : delIdsArr) {
@@ -199,7 +196,7 @@ public class ComicController {
      * 查询单个番剧
      *
      * @param id
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getOneById")
     @ApiOperation("查询单个番剧")
@@ -212,45 +209,37 @@ public class ComicController {
     /**
      * 修改番剧
      *
-     * @param request
-     * @param comic
-     * @param comicstatus
-     * @param comicudtime
-     * @param cmimgfile
-     * @param id
-     * @return org.cny.yurayura.vo.Msg
+     * @param dto
+	 * @param cmImgFile
+	 * @param request
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "comicstatus", value = "番剧状态", required = true),
-            @ApiImplicitParam(name = "comicudtime", value = "番剧更新时间", defaultValue = "8"),
-            @ApiImplicitParam(name = "cmimgfile", value = "番剧图片"),
-            @ApiImplicitParam(name = "id", value = "id", required = true)
-    })
-    public ApiResult update(HttpServletRequest request, Comic comic,
-                            @RequestParam(value = "comicstatus", defaultValue = "0") Integer comicstatus,
-                            @RequestParam(value = "comicudtime", defaultValue = "8") Integer comicudtime,
-                            @RequestParam(value = "cmimgfile", required = false) MultipartFile cmimgfile,
-                            @RequestParam(value = "id", defaultValue = "0") Integer id) throws IOException {
-
-        comic.setId(id);
+    @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
+    public ApiResult update(ComicIstAndUdtDTO dto,
+                            @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile,
+                            @ApiIgnore HttpServletRequest request) throws IOException {
 
         Integer comicStatus;
-
         // 有更新时间赋值更新时间，没有则赋值更新状态
-        if (comicudtime != ComicStatusEnum.UPDATING.getStatusId()) {
-            comicStatus = comicudtime;
+        if (!StringUtils.isEmpty(dto.getComicUdTime())) {
+            comicStatus = dto.getComicUdTime();
         } else {
-            comicStatus = comicstatus;
+            comicStatus = dto.getComicStatus();
         }
-        comic.setComicStatus(comicStatus);
 
         // 调用图片上传工具
-        String imgUplRes = FileUtil.imageUpload(request, cmimgfile);
+        String imgUplRes = FileUtil.imageUpload(request, cmImgFile);
+
+        Comic comic = new Comic();
+        ComicCount comicCount = new ComicCount();
+
         switch (imgUplRes) {
             case "0":
+                BeanUtils.copyProperties(dto, comic);
+                comic.setComicStatus(comicStatus);
                 iComicService.updateById(comic);
                 return ApiResult.success("修改成功");
             case "1":
@@ -258,9 +247,10 @@ public class ComicController {
             case "2":
                 return ApiResult.warn("图片不能超过100KB");
             default:
+                BeanUtils.copyProperties(dto, comic);
+                comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用工具类传来的新文件名
-                String comicImgUrl = "images/" + imgUplRes;
-                comic.setComicImageUrl(comicImgUrl);
+                comic.setComicImageUrl("images/" + imgUplRes);
                 Comic aComic = iComicService.getById(comic.getId());
                 iComicService.updateById(comic);
                 // 如果用的是默认图片的，则不删除
@@ -278,7 +268,7 @@ public class ComicController {
      *
      * @param pageNum
      * @param comicName
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageByName")
     @ApiOperation("搜索番剧")

@@ -55,7 +55,7 @@ public class ManagerController {
      */
     @GetMapping("/getVerifyCode")
     @ApiOperation("获取数字加英文验证码图片")
-    public void getVerifyCode(HttpServletResponse response, HttpSession session) throws IOException {
+    public void getVerifyCode(@ApiIgnore HttpServletResponse response, @ApiIgnore HttpSession session) throws IOException {
         //利用图片工具生成图片
         //第一个参数是生成的验证码，第二个参数是生成的图片
         Object[] objs = VerifyCodeUtil.createImage();
@@ -72,7 +72,7 @@ public class ManagerController {
     /**
      * 管理员登入
      *
-     * @param mangerLoginDTO
+     * @param dto
      * @param session
      * @param response
      * @return org.cny.yurayura.vo.ApiResult
@@ -80,14 +80,14 @@ public class ManagerController {
     @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("管理员登入")
-    public ApiResult login(MangerLoginDTO mangerLoginDTO, @ApiIgnore HttpSession session,
+    public ApiResult login(MangerLoginDTO dto, @ApiIgnore HttpSession session,
                            @ApiIgnore HttpServletResponse response) throws UnsupportedEncodingException {
 
         // 获取服务器生成验证码
         Object verifyImageCode = session.getAttribute("verifyImageCode");
-        if (verifyImageCode.toString().equalsIgnoreCase(mangerLoginDTO.getVerifyCode())) {
+        if (verifyImageCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
             Manager manager = new Manager();
-            BeanUtils.copyProperties(mangerLoginDTO, manager);
+            BeanUtils.copyProperties(dto, manager);
             // 查询有没有匹配管理员
             Manager aManager = iManagerService.getOneByNameAndPass(manager);
             if (!StringUtils.isEmpty(aManager)) {
@@ -117,11 +117,11 @@ public class ManagerController {
      * 管理员注销
      *
      * @param session
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/logout")
     @ApiOperation("管理员注销")
-    public ApiResult logout(HttpSession session) {
+    public ApiResult logout(@ApiIgnore HttpSession session) {
         // 移除管理员session
         session.removeAttribute("managerSession");
         return ApiResult.success("管理员注销成功");

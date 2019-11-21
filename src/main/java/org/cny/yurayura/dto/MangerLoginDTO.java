@@ -22,13 +22,13 @@ public class MangerLoginDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "管理员名")
+    @ApiModelProperty(value = "管理员名", required = true)
     private String managerName;
 
-    @ApiModelProperty(value = "管理员密码")
+    @ApiModelProperty(value = "管理员密码", required = true)
     private String managerPassword;
 
-    @ApiModelProperty(value = "验证码")
+    @ApiModelProperty(value = "验证码", required = true)
     private String verifyCode;
 
 }
