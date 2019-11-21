@@ -6,13 +6,16 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
+import org.cny.yurayura.dto.MangerLoginDTO;
 import org.cny.yurayura.entity.Manager;
 import org.cny.yurayura.service.IManagerService;
 import org.cny.yurayura.util.VerifyCodeUtil;
 import org.cny.yurayura.vo.ApiResult;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
@@ -67,22 +70,22 @@ public class ManagerController {
     /**
      * 管理员登入
      *
-     * @param verifyCode
-     * @param manager
+     * @param mangerLoginDTO
      * @param session
      * @param response
-     * @return org.cny.yurayura.vo.Msg
+     * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("管理员登入")
-    @ApiImplicitParam(name = "verifyCode", value = "验证码", required = true)
-    public ApiResult login(@RequestParam String verifyCode, Manager manager, HttpSession session,
-                           HttpServletResponse response) throws UnsupportedEncodingException {
+    public ApiResult login(MangerLoginDTO mangerLoginDTO, @ApiIgnore HttpSession session,
+                           @ApiIgnore HttpServletResponse response) throws UnsupportedEncodingException {
 
         // 获取服务器生成验证码
         Object verifyImageCode = session.getAttribute("verifyImageCode");
-        if (verifyImageCode.toString().equalsIgnoreCase(verifyCode)) {
+        if (verifyImageCode.toString().equalsIgnoreCase(mangerLoginDTO.getVerifyCode())) {
+            Manager manager = new Manager();
+            BeanUtils.copyProperties(mangerLoginDTO, manager);
             // 查询有没有匹配管理员
             Manager aManager = iManagerService.getOneByNameAndPass(manager);
             if (!StringUtils.isEmpty(aManager)) {
