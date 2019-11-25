@@ -37,7 +37,7 @@ public class PreventRepeatSubmitAspect {
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        String key = method.getName();
+        String key = getCacheKey(method, pjp.getArgs());
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
@@ -51,6 +51,10 @@ public class PreventRepeatSubmitAspect {
         } catch (Throwable throwable) {
             throw new RuntimeException("服务器异常");
         }
+    }
+
+    private String getCacheKey(Method method, Object[] args) {
+        return method.getName() + args[0];
     }
 
 }
