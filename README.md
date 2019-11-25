@@ -27,6 +27,7 @@
 - ​        连接池：HikariCP
 - ​        数据库：MySQL80
 - ​        在线接口文档生成： Swagger2
+- ​        JSON处理工具：fastjson
 
 ##### 其他：
 
