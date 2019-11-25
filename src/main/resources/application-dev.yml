@@ -31,4 +31,5 @@ yurayura:
   # swagger配置类是否启用
   swagger:
     enable: true
-  receive-email: 438507003@qq.com
+  # 接收邮箱
+  receive-email: elianacc@126.com
