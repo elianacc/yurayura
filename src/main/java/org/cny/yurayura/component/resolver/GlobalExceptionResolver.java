@@ -52,6 +52,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             log.error(errorMsg);
         }
 
+        // 发送错误信息邮件
         MailDTO dto = new MailDTO();
         dto.setTitle("yurayura报错信息");
         dto.setReceiveEmail(receiveEmail);
