@@ -16,6 +16,12 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
       pool-name: ELiaNaCcHikariCP
+  # 发送邮箱配置
+  mail:
+    host: smtp.126.com
+    username: elianacc@126.com
+    password: cny123456
+    default-encoding: UTF-8
 
 # 自定义配置
 yurayura:
@@ -25,3 +31,4 @@ yurayura:
   # swagger配置类是否启用
   swagger:
     enable: true
+  receive-email: 438507003@qq.com

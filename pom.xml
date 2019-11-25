@@ -60,6 +60,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <!-- SpringBoot mail 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <!-- SpringBoot Spring测试 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
