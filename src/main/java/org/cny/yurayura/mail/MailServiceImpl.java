@@ -39,7 +39,7 @@ public class MailServiceImpl implements MailService {
     private String sendEmail;
 
     /**
-     * 纯文本邮件
+     * 发送纯文本邮件
      *
      * @param dto
      */
@@ -61,7 +61,7 @@ public class MailServiceImpl implements MailService {
     }
 
     /**
-     * 发送的邮件是富文本（附件，图片，html等）
+     * 发送富文本（附件，图片，html等）邮件
      *
      * @param dto
      * @param isShowHtml 是否解析html
