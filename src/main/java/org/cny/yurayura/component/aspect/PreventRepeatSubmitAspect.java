@@ -29,7 +29,7 @@ public class PreventRepeatSubmitAspect {
     private static final Cache<String, Object> CACHES = CacheBuilder.newBuilder()
             // 最大缓存 100 个
             .maximumSize(100)
-            // 设置缓存过期时间为2S
+            // 设置缓存过期时间为3S
             .expireAfterWrite(3, TimeUnit.SECONDS)
             .build();
 
