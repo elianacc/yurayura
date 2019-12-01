@@ -45,12 +45,11 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 
             errorMsg = "业务层异常 - " + "runStatus:" + runEx.getRunStatus() + ",runMessage:" + runEx.getRunMessage() + "\r\n"
                     + ExceptionUtils.getStackTrace(runEx);
-            log.error(errorMsg);
         } else {
             // exception为非业务层抛出的异常
             errorMsg = "非业务层异常 - " + ExceptionUtils.getStackTrace(exception);
-            log.error(errorMsg);
         }
+        log.error(errorMsg);
 
         // 发送错误信息邮件
         MailDTO dto = new MailDTO();
