@@ -149,7 +149,7 @@ const containerVm = new Vue({
                 }
             });
         },
-        detailModalOpen: function (id, event) {
+        detailOrUpdateModalOpen: function (id, event) {
             let isDetail = event.target.dataset.isdetail == 'true';
             this.isDetailModal = isDetail;
             if (isDetail) {
