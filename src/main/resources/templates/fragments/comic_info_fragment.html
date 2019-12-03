@@ -69,9 +69,14 @@
                     <td class="font-size-12 text-center align-middle">{{item.comicLabel | cmLabelFilter}}</td>
                     <td class="font-size-12 text-center align-middle">{{item.comicTime}}</td>
                     <td class="text-center align-middle">
+                        <button type="button" class="btn btn-warning font-size-14 text-light"
+                                @click="detailModalOpen(item.id, $event)" data-isdetail="true">
+                            <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;详情
+                        </button>
+                        <br/><br/>
                         <button type="button" class="btn btn-primary font-size-14"
-                                @click="updateModalOpen(item.id)">
-                            <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看详情和修改
+                                @click="detailModalOpen(item.id, $event)" data-isdetail="false">
+                            <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
                         </button>
                         <br/><br/>
                         <button type="button" class="btn btn-danger font-size-14"
@@ -156,13 +161,14 @@
                         <div class="form-group">
                             <label for="comicName" class="col-form-label"> 番剧名：</label>
                             <input type="text" class="form-control" id="comicName" name="comicName"
-                                   placeholder="请输入番剧名字" v-model="comicName"/>
+                                   placeholder="请输入番剧名字" v-model="comicName" :disabled="isDetailModal"/>
                         </div>
                         <div class="form-group">
                             <label for="comicTime" class="col-form-label">时间：</label>
                             <div class="input-group">
                                 <input type="text" class="form-control datepicker" id="comicTime"
-                                       name="comicTime" placeholder="0000-00-00" v-model="comicTime"/>
+                                       name="comicTime" placeholder="0000-00-00" v-model="comicTime"
+                                       :disabled="isDetailModal"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -171,24 +177,28 @@
                         <div class="form-group">
                             <label for="comicContent" class="col-form-label">简介：</label>
                             <textarea class="form-control" id="comicContent"
-                                      name="comicContent" placeholder="请输入简介" v-model="comicContent"></textarea>
+                                      name="comicContent" placeholder="请输入简介" v-model="comicContent"
+                                      rows="6" :disabled="isDetailModal"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="comicStatus" class="col-form-label">状态：</label>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="comicStatus1" name="comicStatus"
-                                       class="custom-control-input" value="0" v-model="comicStatus"/>
+                                       class="custom-control-input" value="0" v-model="comicStatus"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicStatus1">已完结</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="comicStatus2" name="comicStatus"
-                                       class="custom-control-input" value="8" v-model="comicStatus"/>
+                                       class="custom-control-input" value="8" v-model="comicStatus"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicStatus2">更新中</label>
                             </div>
                         </div>
                         <div class="form-group" v-show="isUdTimeShow">
                             <label for="comicUdTime" class="col-form-label">更新时间：</label>
-                            <select class="form-control" name="comicUdTime" id="comicUdTime" v-model="comicUdTime">
+                            <select class="form-control" name="comicUdTime" id="comicUdTime" v-model="comicUdTime"
+                                    :disabled="isDetailModal">
                                 <option value="" selected disabled>----请选择更新时间----</option>
                                 <option value="1">周一更新</option>
                                 <option value="2">周二更新</option>
@@ -203,87 +213,104 @@
                             <label for="comicTag" class="col-form-label">标签：</label><br/>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag1" value="热血" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag1" value="热血" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag1">热血</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag2" value="机战" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag2" value="机战" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag2">机战</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag3" value="萌系" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag3" value="萌系" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag3">萌系</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag4" value="催泪" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag4" value="催泪" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag4">催泪</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag5" value="搞笑" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag5" value="搞笑" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag5">搞笑</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag6" value="科幻" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag6" value="科幻" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag6">科幻</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag7" value="治愈" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag7" value="治愈" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag7">治愈</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag8" value="恐怖" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag8" value="恐怖" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag8">恐怖</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag9" value="推理" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag9" value="推理" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag9">推理</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag10" value="战斗" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag10" value="战斗" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag10">战斗</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag11" value="萝莉" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag11" value="萝莉" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag11">萝莉</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag12" value="校园" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag12" value="校园" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag12">校园</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag13" value="奇幻" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag13" value="奇幻" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag13">奇幻</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag14" value="百合" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag14" value="百合" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag14">百合</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag15" value="日常" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag15" value="日常" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag15">日常</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag16" value="致郁" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag16" value="致郁" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag16">致郁</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
-                                       id="comicTag17" value="剧场版" name="comicTag" v-model="comicTag"/>
+                                       id="comicTag17" value="剧场版" name="comicTag" v-model="comicTag"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicTag17">剧场版</label>
                             </div>
                         </div>
@@ -291,16 +318,20 @@
                             <label for="freelabel" class="col-form-label">自定义标签：</label>
                             <div class='row'>
                                 <input type="text" class="form-control col-2 ml-3"
-                                       id="freeLabel1" name="freelabel" placeholder="标签一" v-model="freeLabelA"/>
+                                       id="freeLabel1" name="freelabel" placeholder="标签一" v-model="freeLabelA"
+                                       :disabled="isDetailModal"/>
                                 <input type="text" class="form-control col-2 offset-1" id="freeLabel2"
-                                       name="freelabel" placeholder="标签二" v-model="freeLabelB"/>
+                                       name="freelabel" placeholder="标签二" v-model="freeLabelB"
+                                       :disabled="isDetailModal"/>
                                 <input type="text"
                                        class="form-control col-2 offset-1"
                                        id="freeLabel3"
-                                       name="freelabel" placeholder="标签三" v-model="freeLabelC"/>
+                                       name="freelabel" placeholder="标签三" v-model="freeLabelC"
+                                       :disabled="isDetailModal"/>
                                 <input type="text"
                                        class="form-control col-2 offset-1" id="freeLabel4"
-                                       name="freelabel" placeholder="标签四" v-model="freeLabelD"/>
+                                       name="freelabel" placeholder="标签四" v-model="freeLabelD"
+                                       :disabled="isDetailModal"/>
                             </div>
                         </div>
                         <div class="form-group d-none">
@@ -310,7 +341,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cmImgFile" class="col-form-label">上传图片：</label>
-                            <div class="custom-file">
+                            <div class="custom-file" v-show="!isDetailModal">
                                 <input type="file" class="custom-file-input" id="cmImgFile"
                                        name="cmImgFile" @change="cmImgFileChange"/>
                                 <label class="custom-file-label"
@@ -322,18 +353,20 @@
                         <div class="form-group">
                             <label for="comicLink" class="col-form-label">观看地址：</label>
                             <input type="url" class="form-control" id="comicLink" name="comicLink"
-                                   placeholder="请输入观看地址" v-model="comicLink"/>
+                                   placeholder="请输入观看地址" v-model="comicLink" :disabled="isDetailModal"/>
                         </div>
                         <div class="form-group">
                             <label for="comicShelfStatus" class="col-form-label">上架状态：</label>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="comicShelfStatus1" name="comicShelfStatus"
-                                       class="custom-control-input" value="1" v-model="comicShelfStatus"/>
+                                       class="custom-control-input" value="1" v-model="comicShelfStatus"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicShelfStatus1">上架</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="comicShelfStatus2" name="comicShelfStatus"
-                                       class="custom-control-input" value="0" v-model="comicShelfStatus"/>
+                                       class="custom-control-input" value="0" v-model="comicShelfStatus"
+                                       :disabled="isDetailModal"/>
                                 <label class="custom-control-label" for="comicShelfStatus2">下架</label>
                             </div>
                         </div>
@@ -347,7 +380,7 @@
                             <i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;提交
                         </button>
                         <button type="button" class="btn btn-primary"
-                                @click="updateContent" v-show="!isInsertModal">
+                                @click="updateContent" v-show="!isInsertModal && !isDetailModal">
                             <i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;提交
                         </button>
                     </div>

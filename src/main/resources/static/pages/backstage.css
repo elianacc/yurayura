@@ -152,6 +152,7 @@
 
 /*模态窗体样式*/
 .modal-content {
+    width: 120%;
     border: 1px solid #15202b;
 }
 

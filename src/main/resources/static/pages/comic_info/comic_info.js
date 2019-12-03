@@ -7,6 +7,7 @@ const containerVm = new Vue({
         pageInfo: "",
         modalTitle: "",
         isInsertModal: true,
+        isDetailModal: true,
         isUdTimeShow: false,
         id: 0,
         comicName: "",
@@ -63,7 +64,7 @@ const containerVm = new Vue({
             this.buildPageComicManage();
         },
         insertModalOpen: function () {
-            this.modalTitle = "『添加番剧窗口』";
+            this.modalTitle = "『添加窗口』";
             this.isInsertModal = true;
             $("#comicModal").modal();
         },
@@ -148,8 +149,14 @@ const containerVm = new Vue({
                 }
             });
         },
-        updateModalOpen: function (id) {
-            this.modalTitle = "『修改番剧窗口』";
+        detailModalOpen: function (id, event) {
+            let isDetail = event.target.dataset.isdetail == 'true';
+            this.isDetailModal = isDetail;
+            if (isDetail) {
+                this.modalTitle = "『详情窗口』";
+            } else {
+                this.modalTitle = "『修改窗口』";
+            }
             this.isInsertModal = false;
             $.ajax({
                 url: "/comic/getOneById",
@@ -243,6 +250,9 @@ const containerVm = new Vue({
         },
         datePickerBind: function () {
             $(".datepicker").datepicker().on("hide", function () {
+                if ($("#comicTime").val() == "") {
+                    $("#comicTime").val(containerVm.comicTime);
+                }
                 containerVm.comicTime = $("#comicTime").val();
             });
         },
@@ -285,6 +295,7 @@ const containerVm = new Vue({
                 containerVm.cmImgFilePv = "/images/tpjxz.jpg";
                 containerVm.comicLink = "";
                 containerVm.comicShelfStatus = 1;
+                $(".datepicker").datepicker('clearDates');
                 $("#cmImgFile").val("");
             });
         }
