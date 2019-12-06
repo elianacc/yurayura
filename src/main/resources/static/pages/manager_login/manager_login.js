@@ -1,3 +1,5 @@
+var managerLoginThat = this;
+
 const containerVm = new Vue({
     el: "#container",
     data: {
@@ -37,7 +39,7 @@ const containerVm = new Vue({
                     type: "post",
                     success: function (res) {
                         if (res.code == 100) {
-                            that.loadVerifyImage();
+                            managerLoginThat.loadVerifyImage();
                             toastr.error(res.msg);
                         } else if (res.code == 101) {
                             console.log("请不要重复提交");
@@ -65,7 +67,7 @@ const containerVm = new Vue({
         }
     },
     mounted: function () {
-        that.initToastr();
+        managerLoginThat.initToastr();
     }
 });
 

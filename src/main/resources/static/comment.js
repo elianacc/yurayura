@@ -1,4 +1,8 @@
-const that = this;
+/**
+ * comment.js
+ * 通用jQuery插件init方法
+ * author: EliaNaCc
+ */
 
 //toast初始化方法
 function initToastr() {

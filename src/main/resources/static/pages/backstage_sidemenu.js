@@ -1,3 +1,5 @@
+var bksSideMenuThat = this;
+
 const sidemenuVm = new Vue({
     el: "#bootsidemenu",
     data: {
@@ -12,7 +14,7 @@ const sidemenuVm = new Vue({
       }
     },
     mounted: function () {
-        that.initSideMenu();
-        that.initMetisMenu();
+        bksSideMenuThat.initSideMenu();
+        bksSideMenuThat.initMetisMenu();
     }
 });
