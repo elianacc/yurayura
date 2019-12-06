@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * 页面跳转请求 controller
+ * 页面路由 controller
  *
  * @author CNY
  * @date 2019年10月28日 21:56
  */
 @Controller
 @ApiIgnore
-public class PageController {
+public class RouterController {
 
     @RequestMapping("/manage/manager_login")
     public String manager_loginView() {

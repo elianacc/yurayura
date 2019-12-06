@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
-import org.cny.yurayura.dto.ComicIstAndUdtDTO;
+import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.entity.Comic;
 import org.cny.yurayura.entity.ComicCount;
 import org.cny.yurayura.service.IComicCountService;
@@ -85,7 +85,7 @@ public class ComicController {
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
     @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
-    public ApiResult insert(ComicIstAndUdtDTO dto,
+    public ApiResult insert(ComicInstAndUpdtDTO dto,
                             @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile,
                             @ApiIgnore HttpServletRequest request) throws IOException {
 
@@ -218,7 +218,7 @@ public class ComicController {
     @PostMapping("/update")
     @ApiOperation("修改番剧")
     @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
-    public ApiResult update(ComicIstAndUdtDTO dto,
+    public ApiResult update(ComicInstAndUpdtDTO dto,
                             @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile,
                             @ApiIgnore HttpServletRequest request) throws IOException {
 

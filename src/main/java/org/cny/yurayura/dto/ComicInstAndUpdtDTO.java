@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "番剧插入与更新dto")
-public class ComicIstAndUdtDTO {
+public class ComicInstAndUpdtDTO {
 
     private static final long serialVersionUID = 1L;
 
