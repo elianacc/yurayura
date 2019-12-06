@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * 番剧插入与更新 dto
  *
@@ -16,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "番剧插入与更新dto")
-public class ComicInstAndUpdtDTO {
+public class ComicInstAndUpdtDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
