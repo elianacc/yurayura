@@ -155,13 +155,13 @@ const containerVm = new Vue({
             this.isDetailModal = true;
             this.modalTitle = "『详情窗口』";
             this.isInsertModal = false;
-            comicInfoThat.detlAndUpdtModalGetVal(id);
+            comicInfoThat.detlAndUpdtModalSetVal(id);
         },
         updateModalOpen: function (id) {
             this.isDetailModal = false;
             this.modalTitle = "『修改窗口』";
             this.isInsertModal = false;
-            comicInfoThat.detlAndUpdtModalGetVal(id);
+            comicInfoThat.detlAndUpdtModalSetVal(id);
         },
         updateContent: function () {
             if (this.comicName == "") {
@@ -326,7 +326,7 @@ const containerVm = new Vue({
     }
 });
 
-function detlAndUpdtModalGetVal(id) {
+function detlAndUpdtModalSetVal(id) {
     $.ajax({
         url: "/comic/getOneById",
         data: {
