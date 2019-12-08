@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,8 @@ public class PreventRepeatSubmitAspect {
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        String key = getCacheKey(method, pjp.getArgs());
+        PreventRepeatSubmit preventRepeatSubmit = method.getAnnotation(PreventRepeatSubmit.class);
+        String key = getCacheKey(preventRepeatSubmit, pjp.getArgs());
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
@@ -53,8 +55,15 @@ public class PreventRepeatSubmitAspect {
         }
     }
 
-    private String getCacheKey(Method method, Object[] args) {
-        return method.getName() + args[0];
+    /**
+     * Cache key生成策略
+     *
+     * @param preventRepeatSubmit
+	 * @param args
+     * @return java.lang.String
+     */
+    private String getCacheKey(PreventRepeatSubmit preventRepeatSubmit, Object[] args) {
+        return preventRepeatSubmit.prefix() + args[0];
     }
 
 }
