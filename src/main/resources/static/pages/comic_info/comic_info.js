@@ -48,22 +48,27 @@ const containerVm = new Vue({
         toFirstPage: function () {
             this.nowPageNum = 1;
             this.buildPageComicManage();
+            $("#scrollUp").click();
         },
         toPrePage: function () {
             this.nowPageNum = this.nowPageNum - 1;
             this.buildPageComicManage();
+            $("#scrollUp").click();
         },
         toNextPage: function () {
             this.nowPageNum = this.nowPageNum + 1;
             this.buildPageComicManage();
+            $("#scrollUp").click();
         },
         toLastPage: function (lastPage) {
             this.nowPageNum = lastPage;
             this.buildPageComicManage();
+            $("#scrollUp").click();
         },
         toClickPage: function (clickPage) {
             this.nowPageNum = clickPage;
             this.buildPageComicManage();
+            $("#scrollUp").click();
         },
         insertModalOpen: function () {
             this.modalTitle = "『添加窗口』";
