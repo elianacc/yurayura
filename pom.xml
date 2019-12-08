@@ -84,14 +84,14 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
         </dependency>
 
         <!-- mybatis plus代码生成器 依赖 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
         </dependency>
 
         <!-- mybatis plus默认模板 依赖 -->
