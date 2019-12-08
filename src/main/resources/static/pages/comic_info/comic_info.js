@@ -48,27 +48,27 @@ const containerVm = new Vue({
         toFirstPage: function () {
             this.nowPageNum = 1;
             this.buildPageComicManage();
-            $("#scrollUp").click();
+            this.scrollUp();
         },
         toPrePage: function () {
             this.nowPageNum = this.nowPageNum - 1;
             this.buildPageComicManage();
-            $("#scrollUp").click();
+            this.scrollUp();
         },
         toNextPage: function () {
             this.nowPageNum = this.nowPageNum + 1;
             this.buildPageComicManage();
-            $("#scrollUp").click();
+            this.scrollUp();
         },
         toLastPage: function (lastPage) {
             this.nowPageNum = lastPage;
             this.buildPageComicManage();
-            $("#scrollUp").click();
+            this.scrollUp();
         },
         toClickPage: function (clickPage) {
             this.nowPageNum = clickPage;
             this.buildPageComicManage();
-            $("#scrollUp").click();
+            this.scrollUp();
         },
         insertModalOpen: function () {
             this.modalTitle = "『添加窗口』";
@@ -181,7 +181,7 @@ const containerVm = new Vue({
                         $('#comicModal').modal('hide');
                         if (res.code == 200) {
                             toastr.success(res.msg);
-                            containerVm.toClickPage(containerVm.nowPageNum);
+                            containerVm.buildPageComicManage();
                         } else if (res.code == 101) {
                             console.log("请不要重复提交");
                         } else {
@@ -277,6 +277,9 @@ const containerVm = new Vue({
                 $(".datepicker").datepicker('clearDates');
                 $("#cmImgFile").val("");
             });
+        },
+        scrollUp: function () {
+            $("#scrollUp").click();
         }
     },
     watch: {
