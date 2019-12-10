@@ -55,14 +55,14 @@ public class User implements Serializable {
     @ApiModelProperty(value = "城市")
     private String userCity;
 
-    @ApiModelProperty(value = "头像")
-    private String userImage;
+    @ApiModelProperty(value = "头像地址")
+    private String userAvatarUrl;
 
     @ApiModelProperty(value = "邮箱")
     private String userEmail;
 
     @ApiModelProperty(value = "手机号")
-    private String userPhoneNum;
+    private String userPhoneNumber;
 
     @ApiModelProperty(value = "状态  0：正常  其他数字：小黑屋天数")
     private Integer userStatus;

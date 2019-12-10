@@ -32,7 +32,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        List<User> userList = userMapper.selectList(queryWrapper.select("id", "user_image", "user_name", "user_status", "user_reg_time").orderByDesc("id"));
+        List<User> userList = userMapper.selectList(queryWrapper.select("id", "user_avatar_url", "user_name", "user_status", "user_reg_time").orderByDesc("id"));
         List list = JSON.parseArray(JSON.toJSONString(userList));
         PageInfo<User> userPageInfo = new PageInfo<>(list, 5);
         return userPageInfo;

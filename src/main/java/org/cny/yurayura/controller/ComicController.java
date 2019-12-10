@@ -112,9 +112,9 @@ public class ComicController {
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
-                comicCount.setComicEpisodes(24);
-                comicCount.setComicNowEpisodes(1);
-                comicCount.setComicViews(0);
+                comicCount.setComicTotalEpisodes(24);
+                comicCount.setComicCurrentEpisodes(1);
+                comicCount.setComicPlayNum(0);
                 comicCount.setComicFavoriteNum(0);
                 iComicCountService.save(comicCount);
                 return ApiResult.success("添加成功");
@@ -130,9 +130,9 @@ public class ComicController {
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
-                comicCount.setComicEpisodes(24);
-                comicCount.setComicNowEpisodes(1);
-                comicCount.setComicViews(0);
+                comicCount.setComicTotalEpisodes(24);
+                comicCount.setComicCurrentEpisodes(1);
+                comicCount.setComicPlayNum(0);
                 comicCount.setComicFavoriteNum(0);
                 iComicCountService.save(comicCount);
                 return ApiResult.success("添加成功");

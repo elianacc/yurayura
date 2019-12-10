@@ -40,7 +40,7 @@ public class Comic implements Serializable {
     @ApiModelProperty(value = "放送时间")
     private String comicTime;
 
-    @ApiModelProperty(value = "图片")
+    @ApiModelProperty(value = "图片地址")
     private String comicImageUrl;
 
     @ApiModelProperty(value = "链接")
