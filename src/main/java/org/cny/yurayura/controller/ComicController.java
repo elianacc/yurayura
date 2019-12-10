@@ -112,7 +112,6 @@ public class ComicController {
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
-                comicCount.setComicTotalEpisodes(24);
                 comicCount.setComicCurrentEpisodes(1);
                 comicCount.setComicPlayNum(0);
                 comicCount.setComicFavoriteNum(0);
@@ -130,7 +129,6 @@ public class ComicController {
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
-                comicCount.setComicTotalEpisodes(24);
                 comicCount.setComicCurrentEpisodes(1);
                 comicCount.setComicPlayNum(0);
                 comicCount.setComicFavoriteNum(0);

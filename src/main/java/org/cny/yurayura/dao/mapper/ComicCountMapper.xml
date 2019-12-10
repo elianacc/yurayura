@@ -7,7 +7,6 @@
         <id column="id" property="id" />
         <result column="comic_name" property="comicName" />
         <result column="comic_current_episodes" property="comicCurrentEpisodes" />
-        <result column="comic_total_episodes" property="comicTotalEpisodes" />
         <result column="comic_play_num" property="comicPlayNum" />
         <result column="comic_favorite_num" property="comicFavoriteNum" />
         <result column="comic_id" property="comicId" />
@@ -15,7 +14,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, comic_name, comic_current_episodes, comic_total_episodes, comic_play_num, comic_favorite_num, comic_id
+        id, comic_name, comic_current_episodes, comic_play_num, comic_favorite_num, comic_id
     </sql>
 
 </mapper>
