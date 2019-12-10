@@ -72,6 +72,7 @@ const containerVm = new Vue({
         },
         insertModalOpen: function () {
             this.modalTitle = "『添加窗口』";
+            this.isDetailModal = false;
             this.isInsertModal = true;
             $("#comicModal").modal();
         },
