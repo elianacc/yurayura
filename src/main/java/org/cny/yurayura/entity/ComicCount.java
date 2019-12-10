@@ -34,9 +34,6 @@ public class ComicCount implements Serializable {
     @ApiModelProperty(value = "名称")
     private String comicName;
 
-    @ApiModelProperty(value = "当前集数")
-    private Integer comicCurrentEpisodes;
-
     @ApiModelProperty(value = "播放数")
     private Integer comicPlayNum;
 

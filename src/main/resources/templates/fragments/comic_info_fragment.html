@@ -65,7 +65,7 @@
                     </td>
                     <td class="font-size-12 text-center align-middle">{{item.comicName}}</td>
                     <td class="font-size-12"><p class="table-cmcontent text-justify">{{item.comicContent | cmContentFilter}}</p></td>
-                    <td class="font-size-12 text-center align-middle">{{item.comicStatus | cmStatusFilter}}</td>
+                    <td class="font-size-12 text-center align-middle">{{item.comicStatus | cmStatusFilter(item.comicCurrentEpisodes)}}</td>
                     <td class="font-size-12 text-center align-middle">{{item.comicLabel | cmLabelFilter}}</td>
                     <td class="font-size-12 text-center align-middle">{{item.comicTime}}</td>
                     <td class="text-center align-middle">
@@ -208,6 +208,11 @@
                                 <option value="6">周六更新</option>
                                 <option value="7">周日更新</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="comicCurrentEpisodes" class="col-form-label"> 当前话数：</label>
+                            <input type="number" class="form-control" id="comicCurrentEpisodes" name="comicCurrentEpisodes"
+                                   placeholder="请输入当前话数" v-model="comicCurrentEpisodes" :disabled="isDetailModal"/>
                         </div>
                         <div class="form-group">
                             <label for="comicTag" class="col-form-label">标签：</label><br/>

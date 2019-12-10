@@ -17,6 +17,7 @@ const containerVm = new Vue({
         comicContent: "",
         comicStatus: 0,
         comicUdTime: "",
+        comicCurrentEpisodes: 1,
         comicTag: [],
         freeLabelA: "",
         freeLabelB: "",
@@ -79,8 +80,8 @@ const containerVm = new Vue({
         insertContent: function () {
             if (this.comicName == "") {
                 toastr.error("番剧名不能为空");
-            } else if (this.comicContent.length >= 200) {
-                toastr.error("内容不能超过200个字符");
+            } else if (this.comicContent.length >= 500) {
+                toastr.error("内容不能超过500个字符");
             } else {
                 $("#comicForm").ajaxSubmit({
                     url: "/comic/insert",
@@ -266,6 +267,7 @@ const containerVm = new Vue({
                 containerVm.comicContent = "";
                 containerVm.comicStatus = 0;
                 containerVm.comicUdTime = "";
+                containerVm.comicCurrentEpisodes = 0;
                 containerVm.comicTag = [];
                 containerVm.freeLabelA = "";
                 containerVm.freeLabelB = "";
@@ -355,6 +357,7 @@ function detlAndUpdtModalSetVal(id) {
                     containerVm.comicStatus = 8;
                     containerVm.comicUdTime = res.data.comicStatus;
                 }
+                containerVm.comicCurrentEpisodes = res.data.comicCurrentEpisodes;
                 containerVm.comicLabel = res.data.comicLabel;
                 let fileName = res.data.comicImageUrl;
                 let fileNewNameStart = fileName.lastIndexOf("/");
@@ -368,11 +371,13 @@ function detlAndUpdtModalSetVal(id) {
     });
 }
 
-Vue.filter("cmStatusFilter", function (value) {
+Vue.filter("cmStatusFilter", function (status, currentEpisodes) {
     let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新', '更新中'];
     for (let i = 0; i < arrCmStatus.length; i++) {
-        if (value == i) {
-            return arrCmStatus[i];
+        if (status == 0) {
+            return arrCmStatus[i] + "：全" + currentEpisodes + "话";
+        } else if (status == i) {
+            return arrCmStatus[i] + "：更新至第" + currentEpisodes + "话";
         }
     }
 });

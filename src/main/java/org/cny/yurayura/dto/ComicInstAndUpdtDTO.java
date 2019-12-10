@@ -40,6 +40,9 @@ public class ComicInstAndUpdtDTO implements Serializable {
     @ApiModelProperty(value = "标签")
     private String comicLabel;
 
+    @ApiModelProperty(value = "当前话数")
+    private Integer comicCurrentEpisodes;
+
     @ApiModelProperty(value = "上架状态  1：上架  0：下架", required = true)
     private Integer comicShelfStatus;
 
