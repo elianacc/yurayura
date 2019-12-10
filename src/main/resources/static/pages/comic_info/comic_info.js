@@ -172,8 +172,8 @@ const containerVm = new Vue({
         updateContent: function () {
             if (this.comicName == "") {
                 toastr.error("番剧名不能为空");
-            } else if (this.comicContent.length >= 200) {
-                toastr.error("内容不能超过200个字符");
+            } else if (this.comicContent.length >= 500) {
+                toastr.error("内容不能超过500个字符");
             } else {
                 $("#comicForm").ajaxSubmit({
                     url: "/comic/update",
@@ -386,4 +386,9 @@ Vue.filter("cmLabelFilter", function (value) {
         }
     }
     return arrNewCmLabel.toString();
+});
+
+Vue.filter("cmContentFilter", function (value) {
+    let subContent = value.substr(0, 200).trim();
+    return subContent + "...";
 });

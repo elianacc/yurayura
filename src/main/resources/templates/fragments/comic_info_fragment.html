@@ -64,7 +64,7 @@
                         </a>
                     </td>
                     <td class="font-size-12 text-center align-middle">{{item.comicName}}</td>
-                    <td class="font-size-12"><p class="table-cmcontent text-justify">{{item.comicContent}}</p></td>
+                    <td class="font-size-12"><p class="table-cmcontent text-justify">{{item.comicContent | cmContentFilter}}</p></td>
                     <td class="font-size-12 text-center align-middle">{{item.comicStatus | cmStatusFilter}}</td>
                     <td class="font-size-12 text-center align-middle">{{item.comicLabel | cmLabelFilter}}</td>
                     <td class="font-size-12 text-center align-middle">{{item.comicTime}}</td>
