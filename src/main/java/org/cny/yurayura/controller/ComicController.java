@@ -230,7 +230,6 @@ public class ComicController {
         String imgUplRes = FileUtil.imageUpload(request, cmImgFile);
 
         Comic comic = new Comic();
-        ComicCount comicCount = new ComicCount();
 
         switch (imgUplRes) {
             case "0":
