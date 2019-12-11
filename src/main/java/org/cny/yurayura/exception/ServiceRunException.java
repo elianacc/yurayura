@@ -21,10 +21,4 @@ public class ServiceRunException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public ServiceRunException(Integer runStatus, String runMessage, Throwable cause) {
-        super(cause);
-        this.runStatus = runStatus;
-        this.runMessage = runMessage;
-    }
-
 }
