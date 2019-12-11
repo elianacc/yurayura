@@ -25,8 +25,8 @@ public class ComicCountServiceImpl extends ServiceImpl<ComicCountMapper, ComicCo
 
     @Transactional
     @Override
-    public int deleteByComicId(Integer comicId) {
+    public void deleteByComicId(Integer comicId) {
         QueryWrapper<ComicCount> queryWrapper = new QueryWrapper<>();
-        return comicCountMapper.delete(queryWrapper.eq("comic_id", comicId));
+        comicCountMapper.delete(queryWrapper.eq("comic_id", comicId));
     }
 }

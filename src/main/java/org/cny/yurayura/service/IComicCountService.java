@@ -17,7 +17,6 @@ public interface IComicCountService extends IService<ComicCount> {
      * 关联comic表id删除
      *
      * @param comicId
-     * @return boolean
      */
-    int deleteByComicId(Integer comicId);
+    public void deleteByComicId(Integer comicId);
 }
