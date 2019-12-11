@@ -79,11 +79,11 @@ public class MailServiceImpl implements MailService {
             messageHelper.setText(dto.getContent(), isShowHtml);//false，显示原始html代码，无效果
             //判断是否有附加图片等
             if (dto.getAnnexOrData() != null && dto.getAnnexOrData().size() > 0) {
-                dto.getAnnexOrData().entrySet().stream().forEach(entrySet -> {
+                dto.getAnnexOrData().forEach((key, value) -> {
                     try {
-                        File file = new File(String.valueOf(entrySet.getValue()));
+                        File file = new File(String.valueOf(value));
                         if (file.exists()) {
-                            messageHelper.addAttachment(entrySet.getKey(), new FileSystemResource(file));
+                            messageHelper.addAttachment(key, new FileSystemResource(file));
                         }
                     } catch (MessagingException e) {
                         log.error("附件发送失败->message:{}", e.getMessage());
