@@ -21,12 +21,7 @@ public class MybatisPlusConfig {
 
     @Bean
     ConfigurationCustomizer mybatisConfigurationCustomizer() {
-        return new ConfigurationCustomizer() {
-            @Override
-            public void customize(org.apache.ibatis.session.Configuration configuration) {
-                configuration.addInterceptor(new com.github.pagehelper.PageInterceptor());
-            }
-        };
+        return configuration -> configuration.addInterceptor(new com.github.pagehelper.PageInterceptor());
     }
 
 }
