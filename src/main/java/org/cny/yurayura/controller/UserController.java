@@ -44,7 +44,7 @@ public class UserController {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<User> userPageInfo = iUserService.getPageToNoPvt(pageNum);
+        PageInfo<Object> userPageInfo = iUserService.getPageToNoPvt(pageNum);
         if (userPageInfo.getTotal() != 0) {
             return ApiResult.success("分页查询成功", userPageInfo);
         } else {

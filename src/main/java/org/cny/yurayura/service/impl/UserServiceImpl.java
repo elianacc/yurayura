@@ -28,13 +28,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Override
-    public PageInfo<User> getPageToNoPvt(Integer pageNum) {
+    public PageInfo<Object> getPageToNoPvt(Integer pageNum) {
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         List<User> userList = userMapper.selectList(queryWrapper.select("id", "user_avatar_url", "user_name", "user_status", "user_reg_time").orderByDesc("id"));
-        List list = JSON.parseArray(JSON.toJSONString(userList));
-        PageInfo<User> userPageInfo = new PageInfo<>(list, 5);
-        return userPageInfo;
+        return new PageInfo<>(JSON.parseArray(JSON.toJSONString(userList)), 5);
     }
 }

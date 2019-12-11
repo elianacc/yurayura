@@ -35,7 +35,7 @@ public class VerifyCodeUtil {
      * Object[1]：验证码图片。
      */
     public static Object[] createImage() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         // 1.创建空白图片
         BufferedImage image = new BufferedImage(
                 WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -78,8 +78,7 @@ public class VerifyCodeUtil {
      */
     public static Color getRandomColor() {
         Random ran = new Random();
-        Color color = new Color(ran.nextInt(256),
+        return new Color(ran.nextInt(256),
                 ran.nextInt(256), ran.nextInt(256));
-        return color;
     }
 }

@@ -32,8 +32,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
         List<Comic> comicList = comicMapper.selectList(queryWrapper.orderByDesc("id"));
-        PageInfo<Comic> comicPageInfo = new PageInfo<>(comicList, 5);
-        return comicPageInfo;
+        return new PageInfo<>(comicList, 5);
     }
 
     @Override
@@ -42,7 +41,6 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
         List<Comic> comicList = comicMapper.selectList(queryWrapper.like("comic_name", comicName).orderByDesc("id"));
-        PageInfo<Comic> comicPageInfo = new PageInfo<>(comicList, 5);
-        return comicPageInfo;
+        return new PageInfo<>(comicList, 5);
     }
 }
