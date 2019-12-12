@@ -113,20 +113,20 @@
                            href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
                            @click="toPrePage">上一页</a>
                     </li>
-                    <block v-for="item in pageInfo.navigatepageNums">
-                        <block v-if="pageInfo.pageNum == item">
+                    <div v-for="item in pageInfo.navigatepageNums">
+                        <div v-if="pageInfo.pageNum == item">
                             <li class='page-item active'>
                                 <a class='page-link border-twittercont'
                                    href='javascript:void(0)'>{{item}}</a>
                             </li>
-                        </block>
-                        <block v-else>
+                        </div>
+                        <div v-else>
                             <li class='page-item'>
                                 <a class='page-link bg-twittercont border-twittercont text-white'
                                    href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
                             </li>
-                        </block>
-                    </block>
+                        </div>
+                    </div>
                     <li class='page-item'>
                         <a class='page-link bg-twittercont border-twittercont text-white'
                            href='javascript:void(0)' v-show="!pageInfo.isLastPage" @click="toNextPage">下一页</a>
