@@ -231,10 +231,10 @@ const containerVm = new Vue({
         },
         datePickerBind: function () {
             $(".datepicker").datepicker().on("hide", function () {
-                if ($("#comicTime").val() == "") {
-                    $("#comicTime").val(containerVm.comicTime);
+                if ($(this).val() == "") {
+                    $(this).val(containerVm.comicTime);
                 }
-                containerVm.comicTime = $("#comicTime").val();
+                containerVm.comicTime = $(this).val();
             });
         },
         cmImgFileChange: function (e) {

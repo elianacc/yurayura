@@ -64,8 +64,11 @@
                         </a>
                     </td>
                     <td class="font-size-12 text-center align-middle">{{item.comicName}}</td>
-                    <td class="font-size-12"><p class="table-cmcontent text-justify">{{item.comicContent | cmContentFilter}}</p></td>
-                    <td class="font-size-12 text-center align-middle">{{item.comicStatus | cmStatusFilter(item.comicCurrentEpisodes)}}</td>
+                    <td class="font-size-12"><p class="table-cmcontent text-justify">{{item.comicContent |
+                        cmContentFilter}}</p></td>
+                    <td class="font-size-12 text-center align-middle">{{item.comicStatus |
+                        cmStatusFilter(item.comicCurrentEpisodes)}}
+                    </td>
                     <td class="font-size-12 text-center align-middle">{{item.comicLabel | cmLabelFilter}}</td>
                     <td class="font-size-12 text-center align-middle">{{item.comicTime}}</td>
                     <td class="text-center align-middle">
@@ -110,20 +113,20 @@
                            href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
                            @click="toPrePage">上一页</a>
                     </li>
-                    <div v-for="item in pageInfo.navigatepageNums">
-                        <div v-if="pageInfo.pageNum == item">
+                    <block v-for="item in pageInfo.navigatepageNums">
+                        <block v-if="pageInfo.pageNum == item">
                             <li class='page-item active'>
                                 <a class='page-link border-twittercont'
                                    href='javascript:void(0)'>{{item}}</a>
                             </li>
-                        </div>
-                        <div v-else>
+                        </block>
+                        <block v-else>
                             <li class='page-item'>
                                 <a class='page-link bg-twittercont border-twittercont text-white'
                                    href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
                             </li>
-                        </div>
-                    </div>
+                        </block>
+                    </block>
                     <li class='page-item'>
                         <a class='page-link bg-twittercont border-twittercont text-white'
                            href='javascript:void(0)' v-show="!pageInfo.isLastPage" @click="toNextPage">下一页</a>
@@ -181,7 +184,7 @@
                                       rows="6" :disabled="isDetailModal"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="comicStatus" class="col-form-label">状态：</label>
+                            <label class="col-form-label">状态：</label>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="comicStatus1" name="comicStatus"
                                        class="custom-control-input" value="0" v-model="comicStatus"
@@ -211,11 +214,12 @@
                         </div>
                         <div class="form-group">
                             <label for="comicCurrentEpisodes" class="col-form-label"> 当前话数：</label>
-                            <input type="number" class="form-control" id="comicCurrentEpisodes" name="comicCurrentEpisodes"
+                            <input type="number" class="form-control" id="comicCurrentEpisodes"
+                                   name="comicCurrentEpisodes"
                                    placeholder="请输入当前话数" v-model="comicCurrentEpisodes" :disabled="isDetailModal"/>
                         </div>
                         <div class="form-group">
-                            <label for="comicTag" class="col-form-label">标签：</label><br/>
+                            <label class="col-form-label">标签：</label><br/>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input type="checkbox" class="custom-control-input"
                                        id="comicTag1" value="热血" name="comicTag" v-model="comicTag"
@@ -320,7 +324,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="freelabel" class="col-form-label">自定义标签：</label>
+                            <label class="col-form-label">自定义标签：</label>
                             <div class='row'>
                                 <input type="text" class="form-control col-2 ml-3"
                                        id="freeLabel1" name="freelabel" placeholder="标签一" v-model="freeLabelA"
@@ -350,7 +354,7 @@
                                 <input type="file" class="custom-file-input" id="cmImgFile"
                                        name="cmImgFile" @change="cmImgFileChange"/>
                                 <label class="custom-file-label"
-                                       for="customFile">{{cmImgFileLb}}</label>
+                                >{{cmImgFileLb}}</label>
                             </div>
                             <br/> <br/>
                             <img :src="cmImgFilePv" class="rounded" width="30%"/>
@@ -361,7 +365,7 @@
                                    placeholder="请输入观看地址" v-model="comicLink" :disabled="isDetailModal"/>
                         </div>
                         <div class="form-group">
-                            <label for="comicShelfStatus" class="col-form-label">上架状态：</label>
+                            <label class="col-form-label">上架状态：</label>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="comicShelfStatus1" name="comicShelfStatus"
                                        class="custom-control-input" value="1" v-model="comicShelfStatus"
