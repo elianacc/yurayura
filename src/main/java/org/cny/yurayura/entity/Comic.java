@@ -1,14 +1,17 @@
 package org.cny.yurayura.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -38,7 +41,8 @@ public class Comic implements Serializable {
     private String comicContent;
 
     @ApiModelProperty(value = "放送时间")
-    private String comicTime;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private Date comicTime;
 
     @ApiModelProperty(value = "图片地址")
     private String comicImageUrl;

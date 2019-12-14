@@ -18,5 +18,5 @@ public interface IManagerService extends IService<Manager> {
      * @param manager
      * @return org.cny.yurayura.entity.Manager
      */
-    public Manager getOneByNameAndPass(Manager manager);
+    public Manager getOneByNameAndPassword(Manager manager);
 }

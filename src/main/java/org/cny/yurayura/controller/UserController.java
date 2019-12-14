@@ -35,14 +35,14 @@ public class UserController {
      * @param pageNum
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToNoPvt")
+    @PostMapping("/getPageToUserManage")
     @ApiOperation("分页查询全部用户（剔除了隐私字段）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
-    public ApiResult getPageToNoPvt(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
+    public ApiResult getPageToUserManage(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Object> userPageInfo = iUserService.getPageToNoPvt(pageNum);
+        PageInfo<Object> userPageInfo = iUserService.getPageToUserManage(pageNum);
         if (userPageInfo.getTotal() != 0) {
             return ApiResult.success("分页查询成功", userPageInfo);
         } else {

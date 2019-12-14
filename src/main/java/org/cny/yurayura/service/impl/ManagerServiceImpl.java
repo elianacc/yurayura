@@ -23,7 +23,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     @Autowired
     private ManagerMapper managerMapper;
 
-    public Manager getOneByNameAndPass(Manager manager) {
+    public Manager getOneByNameAndPassword(Manager manager) {
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
         return managerMapper.selectOne(queryWrapper.nested(i -> i.eq("manager_name", manager.getManagerName()).eq("manager_password", DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()))).last("limit 1"));
     }

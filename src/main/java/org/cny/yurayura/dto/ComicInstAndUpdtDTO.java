@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 番剧插入与更新 dto
@@ -32,7 +33,7 @@ public class ComicInstAndUpdtDTO implements Serializable {
     private String comicContent;
 
     @ApiModelProperty(value = "放送时间")
-    private String comicTime;
+    private Date comicTime;
 
     @ApiModelProperty(value = "链接")
     private String comicLink;

@@ -20,6 +20,6 @@ public interface IUserService extends IService<User> {
      * @param pageNum
      * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<org.cny.yurayura.entity.User>
      */
-    public PageInfo<Object> getPageToNoPvt(Integer pageNum);
+    public PageInfo<Object> getPageToUserManage(Integer pageNum);
 
 }

@@ -89,7 +89,7 @@ public class ManagerController {
             Manager manager = new Manager();
             BeanUtils.copyProperties(dto, manager);
             // 查询有没有匹配管理员
-            Manager aManager = iManagerService.getOneByNameAndPass(manager);
+            Manager aManager = iManagerService.getOneByNameAndPassword(manager);
             if (!StringUtils.isEmpty(aManager)) {
                 // 登入成功存管理员session
                 session.setAttribute("managerSession", aManager);
