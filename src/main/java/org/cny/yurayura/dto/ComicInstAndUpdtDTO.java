@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class ComicInstAndUpdtDTO implements Serializable {
     private String comicContent;
 
     @ApiModelProperty(value = "放送时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date comicTime;
 
     @ApiModelProperty(value = "链接")
