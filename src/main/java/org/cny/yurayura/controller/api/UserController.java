@@ -30,19 +30,19 @@ public class UserController {
     private IUserService iUserService;
 
     /**
-     * 分页查询全部用户（剔除了隐私字段）
+     * 分页查询全部用户（管理后台）
      *
      * @param pageNum
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToUserManage")
-    @ApiOperation("分页查询全部用户（剔除了隐私字段）")
+    @PostMapping("/getPageToManage")
+    @ApiOperation("分页查询全部用户（管理后台）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
-    public ApiResult getPageToUserManage(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
+    public ApiResult getPageToManage(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Object> userPageInfo = iUserService.getPageToUserManage(pageNum);
+        PageInfo<Object> userPageInfo = iUserService.getPageToManage(pageNum);
         if (userPageInfo.getTotal() != 0) {
             return ApiResult.success("分页查询成功", userPageInfo);
         } else {

@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IComicCountService extends IService<ComicCount> {
 
     /**
-     * 关联comic表id删除
+     * 删除番剧数据（根据关联comic表id）
      *
      * @param comicId
      */

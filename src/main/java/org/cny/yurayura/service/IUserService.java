@@ -15,11 +15,11 @@ import org.cny.yurayura.entity.User;
 public interface IUserService extends IService<User> {
 
     /**
-     * 分页查询所有用户（去除隐私字段）
+     * 分页查询所有用户（管理后台）
      *
      * @param pageNum
-     * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<org.cny.yurayura.entity.User>
+     * @return com.github.pagehelper.PageInfo<java.lang.Object>
      */
-    public PageInfo<Object> getPageToUserManage(Integer pageNum);
+    public PageInfo<Object> getPageToManage(Integer pageNum);
 
 }

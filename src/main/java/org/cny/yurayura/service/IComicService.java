@@ -18,7 +18,7 @@ public interface IComicService extends IService<Comic> {
      * 分页查询所有番剧
      *
      * @param pageNum
-     * @return com.baomidou.mybatisplus.core.metadata.IPage<org.cny.yurayura.entity.Comic>
+     * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.Comic>
      */
     public PageInfo<Comic> getPageToAll(Integer pageNum);
 
@@ -26,7 +26,7 @@ public interface IComicService extends IService<Comic> {
      * 分页查询番剧（根据番剧名）
      *
      * @param pageNum
-	 * @param comicName
+     * @param comicName
      * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.Comic>
      */
     public PageInfo<Comic> getPageByName(Integer pageNum, String comicName);
