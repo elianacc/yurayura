@@ -259,14 +259,14 @@ public class ComicController {
     }
 
     /**
-     * 分页查询番剧（根据名称）
+     * 搜索番剧
      *
      * @param pageNum
      * @param comicName
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageByName")
-    @ApiOperation("分页查询番剧（根据名称）")
+    @ApiOperation("搜索番剧")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
             @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
@@ -280,7 +280,7 @@ public class ComicController {
         if (comicPageInfo.getTotal() != 0) {
             return ApiResult.success("分页查询成功", comicPageInfo);
         } else {
-            return ApiResult.warn("查询不到数据");
+            return ApiResult.warn("搜索不到数据");
         }
     }
 
