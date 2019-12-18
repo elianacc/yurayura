@@ -59,7 +59,7 @@ public class Comic implements Serializable {
     @ApiModelProperty(value = "当前话数")
     private Integer comicCurrentEpisodes;
 
-    @ApiModelProperty(value = "上架状态  1：上架  0：下架")
+    @ApiModelProperty(value = "上架状态 1：上架  0：下架")
     private Integer comicShelfStatus;
 
 
