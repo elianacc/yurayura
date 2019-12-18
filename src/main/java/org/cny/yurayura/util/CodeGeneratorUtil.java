@@ -76,6 +76,7 @@ public class CodeGeneratorUtil {
         //自定义包名
         pc.setMapper("dao");
         pc.setXml("mapper");
+        pc.setController("controller.api");
         mpg.setPackageInfo(pc);
 
         // 策略配置

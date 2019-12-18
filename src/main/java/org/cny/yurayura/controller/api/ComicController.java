@@ -1,4 +1,4 @@
-package org.cny.yurayura.controller;
+package org.cny.yurayura.controller.api;
 
 
 import com.github.pagehelper.PageInfo;
