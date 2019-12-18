@@ -137,14 +137,14 @@ public class ComicController {
     }
 
     /**
-     * 删除单个番剧
+     * 删除番剧（根据id）
      *
      * @param request
      * @param id
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/deleteById")
-    @ApiOperation("删除单个番剧")
+    @ApiOperation("删除番剧（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true)
     public ApiResult deleteById(@ApiIgnore HttpServletRequest request,
                                 @RequestParam(value = "id", defaultValue = "0") Integer id) {
@@ -160,14 +160,14 @@ public class ComicController {
     }
 
     /**
-     * 删除多个番剧
+     * 批量删除番剧（根据id组）
      *
      * @param request
      * @param ids
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/deleteBatchByIds")
-    @ApiOperation("删除多个番剧")
+    @ApiOperation("批量删除番剧（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
     public ApiResult deleteBatchByIds(@ApiIgnore HttpServletRequest request, @RequestParam String ids) {
         List<Integer> delIdsList = new ArrayList<>();
@@ -189,13 +189,13 @@ public class ComicController {
     }
 
     /**
-     * 查询单个番剧
+     * 查询番剧（根据id）
      *
      * @param id
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getOneById")
-    @ApiOperation("查询单个番剧")
+    @ApiOperation("查询番剧（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true)
     public ApiResult getOneById(@RequestParam(value = "id", defaultValue = "0") Integer id) {
         Comic comic = iComicService.getById(id);
@@ -259,14 +259,14 @@ public class ComicController {
     }
 
     /**
-     * 搜索番剧
+     * 分页查询番剧（根据名称）
      *
      * @param pageNum
      * @param comicName
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageByName")
-    @ApiOperation("搜索番剧")
+    @ApiOperation("分页查询番剧（根据名称）")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
             @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
@@ -280,7 +280,7 @@ public class ComicController {
         if (comicPageInfo.getTotal() != 0) {
             return ApiResult.success("分页查询成功", comicPageInfo);
         } else {
-            return ApiResult.warn("搜索不到数据");
+            return ApiResult.warn("查询不到数据");
         }
     }
 

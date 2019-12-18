@@ -23,7 +23,7 @@ public interface IComicService extends IService<Comic> {
     public PageInfo<Comic> getPageToAll(Integer pageNum);
 
     /**
-     * 分页查询番剧（根据番剧名）
+     * 分页查询番剧（根据名称）
      *
      * @param pageNum
      * @param comicName
