@@ -49,7 +49,7 @@ public class BackstageInterceptor implements HandlerInterceptor {
         // 获取管理员session
         Manager aManager = (Manager) session.getAttribute("managerSession");
         if (StringUtils.isEmpty(aManager)) {
-            //如果管理员没登入跳转登入提醒页
+            // 如果管理员没登入跳转登入提醒页
             request.getRequestDispatcher("/manage/manager_unlogin").forward(request, response);
             return false;
         } else {

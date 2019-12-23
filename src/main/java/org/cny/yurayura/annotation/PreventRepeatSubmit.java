@@ -13,6 +13,6 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 public @interface PreventRepeatSubmit {
-    //prefix为本地锁的key的前缀
+    // prefix为本地锁的key的前缀
     String prefix() default "prefix:";
 }

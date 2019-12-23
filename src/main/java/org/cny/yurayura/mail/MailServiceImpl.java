@@ -28,7 +28,7 @@ import java.io.File;
 @Slf4j
 public class MailServiceImpl implements MailService {
 
-    //template模板引擎
+    // template模板引擎
     @Autowired
     private TemplateEngine templateEngine;
 
@@ -46,14 +46,14 @@ public class MailServiceImpl implements MailService {
     @Async
     @Override
     public void sendTextMail(MailDTO dto) {
-        //建立邮件消息
+        // 建立邮件消息
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(sendEmail); // 发送人的邮箱
-        message.setSubject(dto.getTitle()); //主题
-        message.setTo(dto.getReceiveEmail()); //发给谁  对方邮箱
-        message.setText(dto.getContent()); //内容
+        message.setSubject(dto.getTitle()); // 主题
+        message.setTo(dto.getReceiveEmail()); // 发给谁  对方邮箱
+        message.setText(dto.getContent()); // 内容
         try {
-            //发送
+            // 发送
             javaMailSender.send(message);
         } catch (MailException e) {
             log.error("纯文本邮件发送失败->message:{}", e.getMessage());
@@ -71,13 +71,13 @@ public class MailServiceImpl implements MailService {
     public void sendHtmlMail(MailDTO dto, boolean isShowHtml) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            //是否发送的邮件是富文本（附件，图片，html等）
+            // 是否发送的邮件是富文本（附件，图片，html等）
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
             messageHelper.setFrom(sendEmail);// 发送人的邮箱
-            messageHelper.setTo(dto.getReceiveEmail());//发给谁  对方邮箱
-            messageHelper.setSubject(dto.getTitle());//主题
-            messageHelper.setText(dto.getContent(), isShowHtml);//false，显示原始html代码，无效果
-            //判断是否有附加图片等
+            messageHelper.setTo(dto.getReceiveEmail());// 发给谁  对方邮箱
+            messageHelper.setSubject(dto.getTitle());// 主题
+            messageHelper.setText(dto.getContent(), isShowHtml);// false，显示原始html代码，无效果
+            // 判断是否有附加图片等
             if (dto.getAnnexOrData() != null && dto.getAnnexOrData().size() > 0) {
                 dto.getAnnexOrData().forEach((key, value) -> {
                     try {
@@ -90,7 +90,7 @@ public class MailServiceImpl implements MailService {
                     }
                 });
             }
-            //发送
+            // 发送
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error("富文本邮件发送失败->message:{}", e.getMessage());
@@ -114,17 +114,17 @@ public class MailServiceImpl implements MailService {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
             messageHelper.setFrom(sendEmail);// 发送人的邮箱
-            messageHelper.setTo(dto.getReceiveEmail());//发给谁  对方邮箱
-            messageHelper.setSubject(dto.getTitle()); //主题
-            //使用模板thymeleaf
-            //Context是导这个包import org.thymeleaf.context.Context;
+            messageHelper.setTo(dto.getReceiveEmail());// 发给谁  对方邮箱
+            messageHelper.setSubject(dto.getTitle()); // 主题
+            // 使用模板thymeleaf
+            // Context是导这个包import org.thymeleaf.context.Context;
             Context context = new Context();
-            //定义模板数据
+            // 定义模板数据
             context.setVariables(dto.getAnnexOrData());
-            //获取thymeleaf的html模板
-            String emailContent = templateEngine.process(templatePosition, context); //指定模板路径
+            // 获取thymeleaf的html模板
+            String emailContent = templateEngine.process(templatePosition, context); // 指定模板路径
             messageHelper.setText(emailContent, true);
-            //发送邮件
+            // 发送邮件
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error("模板邮件发送失败->message:{}", e.getMessage());

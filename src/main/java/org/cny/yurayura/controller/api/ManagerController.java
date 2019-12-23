@@ -56,13 +56,13 @@ public class ManagerController {
     @GetMapping("/getVerifyCode")
     @ApiOperation("获取数字加英文验证码图片")
     public void getVerifyCode(@ApiIgnore HttpServletResponse response, @ApiIgnore HttpSession session) throws IOException {
-        //利用图片工具生成图片
-        //第一个参数是生成的验证码，第二个参数是生成的图片
+        // 利用图片工具生成图片
+        // 第一个参数是生成的验证码，第二个参数是生成的图片
         Object[] objs = VerifyCodeUtil.createImage();
-        //将验证码存入Session
+        // 将验证码存入Session
         session.setAttribute("verifyImageCode", objs[0]);
 
-        //将图片输出给浏览器
+        // 将图片输出给浏览器
         BufferedImage image = (BufferedImage) objs[1];
         response.setContentType("image/png");
         OutputStream os = response.getOutputStream();
@@ -77,7 +77,7 @@ public class ManagerController {
      * @param response
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
+    @PreventRepeatSubmit(prefix = "managerLogin")
     @PostMapping("/login")
     @ApiOperation("管理员登入")
     public ApiResult login(MangerLoginDTO dto, @ApiIgnore HttpSession session,

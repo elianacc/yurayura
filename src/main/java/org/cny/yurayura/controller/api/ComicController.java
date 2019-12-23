@@ -81,7 +81,7 @@ public class ComicController {
 	 * @param request
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
+    @PreventRepeatSubmit(prefix = "comicInsert")
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
     @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
@@ -210,7 +210,7 @@ public class ComicController {
 	 * @param request
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
+    @PreventRepeatSubmit(prefix = "comicUpdate")
     @PostMapping("/update")
     @ApiOperation("修改番剧")
     @ApiImplicitParam(name = "cmImgFile", value = "图片文件")

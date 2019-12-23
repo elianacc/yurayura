@@ -73,7 +73,7 @@ public class CodeGeneratorUtil {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
         pc.setParent("org.cny");
-        //自定义包名
+        // 自定义包名
         pc.setMapper("dao");
         pc.setXml("dao.mapper");
         pc.setController("controller.api");
