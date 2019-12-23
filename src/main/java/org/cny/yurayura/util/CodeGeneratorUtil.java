@@ -75,7 +75,7 @@ public class CodeGeneratorUtil {
         pc.setParent("org.cny");
         //自定义包名
         pc.setMapper("dao");
-        pc.setXml("mapper");
+        pc.setXml("dao.mapper");
         pc.setController("controller.api");
         mpg.setPackageInfo(pc);
 
