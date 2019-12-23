@@ -7,7 +7,7 @@
     <groupId>org.cny</groupId>
     <artifactId>yurayura</artifactId>
     <version>11.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>yurayura</name>
     <description>yurayura for Spring Boot</description>
@@ -32,13 +32,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- SpringBoot 内部Tomcat 依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- SpringBoot lombok 依赖 -->

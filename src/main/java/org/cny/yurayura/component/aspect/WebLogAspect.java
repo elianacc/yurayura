@@ -21,7 +21,7 @@ import java.util.Arrays;
  * @date 2019年3月28日 14:41
  */
 @Aspect
-@Order(2)
+@Order(6)
 @Component
 @Slf4j
 public class WebLogAspect {

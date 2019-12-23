@@ -2,7 +2,6 @@ package org.cny.yurayura.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -19,11 +18,10 @@ public class FileUtil {
      * 图片上传
      * 返回 "0":图片为空，"1":图片格式必须是.gif,jpeg,jpg,png中的一种，"2":图片不能超过100KB，否则返回新的图片名
      *
-     * @param request
      * @param file
      * @return java.lang.String
      */
-    public static String imageUpload(HttpServletRequest request, MultipartFile file)
+    public static String imageUpload(MultipartFile file)
             throws IllegalStateException, IOException {
         // 返回结果
         String res;
@@ -42,7 +40,7 @@ public class FileUtil {
                     // 新文件名
                     String fileNewName;
                     // 上传文件路径
-                    String path = request.getServletContext().getRealPath("/images");
+                    String path = "D://yurayura_v11/upload/";
                     // 生成不重复的32位新文件名
                     fileNewName = UUID.randomUUID().toString().replace("-", "") + fileEndName;
                     File filePath = new File(path, fileNewName);
@@ -68,13 +66,12 @@ public class FileUtil {
     /**
      * 文件删除
      *
-     * @param request
      * @param dPath
      * @return void
      */
-    public static void fileDelete(HttpServletRequest request, String dPath) {
+    public static void fileDelete(String dPath) {
         // 上传文件路径
-        String path = request.getServletContext().getRealPath("/images");
+        String path = "D://yurayura_v11/upload/";
         File file = new File(path + File.separator + dPath.substring(7));
         // 路径为文件且不为空则进行删除
         if (file.isFile() && file.exists()) {
