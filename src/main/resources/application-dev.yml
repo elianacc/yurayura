@@ -33,7 +33,7 @@ yurayura:
     enable: true
   # 接收邮箱
   receive-email: elianacc@126.com
-  #上传资源对外暴露的访问路径(虚拟路径)和真实路径
+  # 上传资源对外暴露的访问路径(虚拟路径)和真实路径
   file:
     virtual-path: /upload/**
     upload-path: D://yurayura_v11/upload/
