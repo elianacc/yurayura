@@ -1,6 +1,6 @@
 # Spring配置
 spring:
-  # 数据源设置
+  # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/yurayura_new?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=utf-8
@@ -22,18 +22,26 @@ spring:
     username: elianacc@126.com
     password: cny123456
     default-encoding: UTF-8
+  # 文件上传配置
+  servlet:
+    multipart:
+      # 上传文件位置
+      location: D://yurayura_v11/upload/
+      # 单个文件的最大值
+      max-file-size: 10MB
+      # 总上传文件的最大值
+      max-request-size: 10MB
 
 # 自定义配置
 yurayura:
   # 番剧上传默认图片
   default-upload:
-    image: images/tpjxz.jpg
+    comic-image: images/tpjxz.jpg
   # swagger是否启用
   swagger:
     enable: true
   # 接收邮箱
   receive-email: elianacc@126.com
-  # 上传资源对外暴露的访问路径(虚拟路径)和真实路径
-  file:
+  # 上传文件对外暴露的访问路径(虚拟路径)
+  upload-file:
     virtual-path: /upload/**
-    upload-path: D://yurayura_v11/upload/

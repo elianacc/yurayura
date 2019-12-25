@@ -12,11 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2019年12月24日 2:31
  */
 @Configuration
-public class UploadFilePathConfig implements WebMvcConfigurer {
+public class UploadFileVirtualPathConfig implements WebMvcConfigurer {
 
-    @Value("${yurayura.file.virtual-path}")
+    @Value("${yurayura.upload-file.virtual-path}")
     private String virtualPath;
-    @Value("${yurayura.file.upload-path}")
+    @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
     @Override

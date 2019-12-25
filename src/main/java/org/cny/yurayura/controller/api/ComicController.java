@@ -47,7 +47,7 @@ public class ComicController {
     @Autowired
     private IComicCountService iComicCountService;
 
-    @Value("${yurayura.default-upload.image}")
+    @Value("${yurayura.default-upload.comic-image}")
     private String defaultUplImg;
 
     /**
