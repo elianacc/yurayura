@@ -62,5 +62,8 @@ public class Comic implements Serializable {
     @ApiModelProperty(value = "上架状态 1：上架  0：下架")
     private Integer comicShelfStatus;
 
+    @ApiModelProperty(value = "最近编辑时间")
+    private Date comicCurrentEditTime;
+
 
 }
