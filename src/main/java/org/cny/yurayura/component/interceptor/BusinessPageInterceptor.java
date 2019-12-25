@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 管理员未登入 interceptor
+ * 后台页面 interceptor
  *
  * @author CNY
  * @date 2019年1月15日 14:45
  */
 @Component
-public class ManagerUnLoginInterceptor implements HandlerInterceptor {
+public class BusinessPageInterceptor implements HandlerInterceptor {
 
     /**
      * 渲染视图之后被调用. 释放资源
