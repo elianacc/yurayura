@@ -32,7 +32,7 @@ const containerVm = new Vue({
                 return true;
             }
         },
-        loginBackstage: function () {
+        loginBusiness: function () {
             if (this.validataForm()) {
                 $("#managerLoginForm").ajaxSubmit({
                     url: "/manager/login",
@@ -47,7 +47,7 @@ const containerVm = new Vue({
                             containerVm.isContainerShow = false;
                             spinnerVm.isSpinnerShow = true;
                             setTimeout(function () {
-                                location.replace("/manage/comic_info");
+                                location.replace("/business/comic_info");
                             }, 3000);
                         }
                     }

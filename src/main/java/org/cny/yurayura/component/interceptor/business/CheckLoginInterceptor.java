@@ -1,4 +1,4 @@
-package org.cny.yurayura.component.interceptor;
+package org.cny.yurayura.component.interceptor.business;
 
 import org.cny.yurayura.entity.Manager;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * @date 2019年1月15日 14:45
  */
 @Component
-public class BackstageInterceptor implements HandlerInterceptor {
+public class CheckLoginInterceptor implements HandlerInterceptor {
 
     /**
      * 渲染视图之后被调用. 释放资源
@@ -50,7 +50,7 @@ public class BackstageInterceptor implements HandlerInterceptor {
         Manager aManager = (Manager) session.getAttribute("managerSession");
         if (StringUtils.isEmpty(aManager)) {
             // 如果管理员没登入跳转登入提醒页
-            request.getRequestDispatcher("/manage/manager_unlogin").forward(request, response);
+            request.getRequestDispatcher("/business/manager_unlogin").forward(request, response);
             return false;
         } else {
             return true;

@@ -14,19 +14,19 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class RouterController {
 
-    @RequestMapping("/manage/manager_login")
+    @RequestMapping("/business/manager_login")
     public String manager_loginView() {
-        return "manager_login";
+        return "business/manager_login";
     }
 
-    @RequestMapping("/manage/manager_unlogin")
+    @RequestMapping("/business/manager_unlogin")
     public String manager_unloginView() {
-        return "manager_unlogin";
+        return "business/manager_unlogin";
     }
 
-    @RequestMapping("/manage/comic_info")
+    @RequestMapping("/business/comic_info")
     public String comic_infoView() {
-        return "comic_info";
+        return "business/comic_info";
     }
 
 }

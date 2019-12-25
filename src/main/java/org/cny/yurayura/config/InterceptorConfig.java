@@ -1,6 +1,6 @@
 package org.cny.yurayura.config;
 
-import org.cny.yurayura.component.interceptor.BackstageInterceptor;
+import org.cny.yurayura.component.interceptor.business.CheckLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,10 +16,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterceptorConfig implements WebMvcConfigurer {
 
     @Autowired
-    private BackstageInterceptor backstageInterceptor;
+    private CheckLoginInterceptor checkLoginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(backstageInterceptor).addPathPatterns("/manage/comic_info");
+        registry.addInterceptor(checkLoginInterceptor).addPathPatterns("/business/comic_info");
     }
 }
