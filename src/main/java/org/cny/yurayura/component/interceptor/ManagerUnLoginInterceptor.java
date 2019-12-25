@@ -1,4 +1,4 @@
-package org.cny.yurayura.component.interceptor.business;
+package org.cny.yurayura.component.interceptor;
 
 import org.cny.yurayura.entity.Manager;
 import org.springframework.stereotype.Component;
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 后台管理 interceptor
+ * 管理员未登入 interceptor
  *
  * @author CNY
  * @date 2019年1月15日 14:45
  */
 @Component
-public class CheckLoginInterceptor implements HandlerInterceptor {
+public class ManagerUnLoginInterceptor implements HandlerInterceptor {
 
     /**
      * 渲染视图之后被调用. 释放资源
