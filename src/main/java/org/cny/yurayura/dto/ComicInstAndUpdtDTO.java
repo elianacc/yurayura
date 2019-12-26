@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 番剧插入与更新 dto
@@ -35,7 +35,7 @@ public class ComicInstAndUpdtDTO implements Serializable {
 
     @ApiModelProperty(value = "放送时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date comicTime;
+    private LocalDate comicTime;
 
     @ApiModelProperty(value = "链接")
     private String comicLink;

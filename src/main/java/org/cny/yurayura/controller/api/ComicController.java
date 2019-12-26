@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -106,7 +106,7 @@ public class ComicController {
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用默认图片
                 comic.setComicImageUrl(defaultUplImg);
-                comic.setComicCurrentEditTime(new Date());
+                comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
@@ -123,7 +123,7 @@ public class ComicController {
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用工具类传来的新文件名
                 comic.setComicImageUrl("upload/" + imgUplRes);
-                comic.setComicCurrentEditTime(new Date());
+                comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicCount.setComicId(comic.getId());
                 comicCount.setComicName(comic.getComicName());
@@ -230,7 +230,7 @@ public class ComicController {
             case "0":
                 BeanUtils.copyProperties(dto, comic);
                 comic.setComicStatus(comicStatus);
-                comic.setComicCurrentEditTime(new Date());
+                comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.updateById(comic);
                 return ApiResult.success("修改成功");
             case "1":
@@ -243,7 +243,7 @@ public class ComicController {
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用工具类传来的新文件名
                 comic.setComicImageUrl("upload/" + imgUplRes);
-                comic.setComicCurrentEditTime(new Date());
+                comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.updateById(comic);
                 // 如果用的是默认图片的，则不删除
                 if (!(aComic.getComicImageUrl().equals(defaultUplImg))) {
