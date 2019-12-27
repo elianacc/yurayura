@@ -12,6 +12,7 @@ import org.cny.yurayura.util.VerifyCodeUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,6 +89,8 @@ public class ManagerController {
         if (verifyImageCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
             Manager manager = new Manager();
             BeanUtils.copyProperties(dto, manager);
+            // MD5加密管理员密码
+            manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
             // 查询有没有匹配管理员
             Manager aManager = iManagerService.getOneByNameAndPassword(manager);
             if (!StringUtils.isEmpty(aManager)) {

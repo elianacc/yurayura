@@ -36,6 +36,7 @@ const containerVm = new Vue({
             if (this.validataForm()) {
                 $("#managerLoginForm").ajaxSubmit({
                     url: "/manager/login",
+                    data: {managerPassword: Base64.encode(this.managerPassword)},
                     type: "post",
                     success: function (res) {
                         if (res.code == 100) {

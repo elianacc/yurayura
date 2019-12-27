@@ -7,7 +7,6 @@ import org.cny.yurayura.entity.Manager;
 import org.cny.yurayura.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 /**
  * <p>
@@ -25,7 +24,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     public Manager getOneByNameAndPassword(Manager manager) {
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
-        return managerMapper.selectOne(queryWrapper.nested(i -> i.eq("manager_name", manager.getManagerName()).eq("manager_password", DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()))).last("limit 1"));
+        return managerMapper.selectOne(queryWrapper.nested(i -> i.eq("manager_name", manager.getManagerName()).eq("manager_password", manager.getManagerPassword())).last("limit 1"));
     }
 
 }
