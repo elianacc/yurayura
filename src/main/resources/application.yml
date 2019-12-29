@@ -1,9 +1,21 @@
-# SpringBoot 内嵌tomcat配置
+# SpringBoot内嵌web容器配置
 server:
-  # SpringBoot 内嵌tomcat端口号
+  # SpringBoot内嵌web容器http端口号
   port: 2333
+  # SpringBoot内嵌tomcat配置
   tomcat:
+    # 请求编码
     uri-encoding: UTF-8
+    # 最小线程数
+    min-spare-threads: 10
+    # 最大线程数
+    max-threads: 1000
+    # 队列长度
+    accept-count: 200
+    # 最大连接数
+    max-connections: 20000
+    # 连接建立超时时间
+    connection-timeout: 10000
 
 # Spring配置
 spring:
