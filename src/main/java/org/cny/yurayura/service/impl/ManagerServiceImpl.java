@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.cny.yurayura.dao.ManagerMapper;
 import org.cny.yurayura.entity.Manager;
+import org.cny.yurayura.enumerate.ManagerStatusEnum;
 import org.cny.yurayura.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,11 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     public Manager getOneByNameAndPassword(Manager manager) {
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
-        return managerMapper.selectOne(queryWrapper.nested(i -> i.eq("manager_name", manager.getManagerName()).eq("manager_password", manager.getManagerPassword())).last("limit 1"));
+        return managerMapper.selectOne(queryWrapper
+                .eq("manager_name", manager.getManagerName())
+                .eq("manager_password", manager.getManagerPassword())
+                .eq("manager_status", ManagerStatusEnum.ENABLE.getStatusId())
+                .last("limit 1"));
     }
 
 }

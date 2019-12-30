@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,6 +38,12 @@ public class Manager implements Serializable {
 
     @ApiModelProperty(value = "管理员密码")
     private String managerPassword;
+
+    @ApiModelProperty(value = "启用状态- 0：禁用，1：启用")
+    private Integer managerStatus;
+
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime managerCreateTime;
 
 
 }

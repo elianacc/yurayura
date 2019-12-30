@@ -40,7 +40,9 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
-        List<Comic> comicList = comicMapper.selectList(queryWrapper.like("comic_name", comicName).orderByDesc("id"));
+        List<Comic> comicList = comicMapper.selectList(queryWrapper
+                .like("comic_name", comicName)
+                .orderByDesc("id"));
         return new PageInfo<>(comicList, 5);
     }
 }

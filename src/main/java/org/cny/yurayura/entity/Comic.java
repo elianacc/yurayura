@@ -54,13 +54,13 @@ public class Comic implements Serializable {
     @ApiModelProperty(value = "标签")
     private String comicLabel;
 
-    @ApiModelProperty(value = "状态 0：已完结  1：周一更新...  8：更新中")
+    @ApiModelProperty(value = "状态- 0：已完结，1：周一更新...，8：更新中")
     private Integer comicStatus;
 
     @ApiModelProperty(value = "当前话数")
     private Integer comicCurrentEpisodes;
 
-    @ApiModelProperty(value = "上架状态 1：上架  0：下架")
+    @ApiModelProperty(value = "上架状态- 1：上架，0：下架")
     private Integer comicShelfStatus;
 
     @ApiModelProperty(value = "最近编辑时间")
