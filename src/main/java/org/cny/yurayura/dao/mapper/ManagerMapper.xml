@@ -7,11 +7,13 @@
         <id column="id" property="id" />
         <result column="manager_name" property="managerName" />
         <result column="manager_password" property="managerPassword" />
+        <result column="manager_status" property="managerStatus" />
+        <result column="manager_create_time" property="managerCreateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, manager_name, manager_password
+        id, manager_name, manager_password, manager_status, manager_create_time
     </sql>
 
 </mapper>
