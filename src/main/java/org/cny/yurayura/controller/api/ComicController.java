@@ -9,8 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.entity.Comic;
-import org.cny.yurayura.entity.ComicCount;
-import org.cny.yurayura.service.IComicCountService;
+import org.cny.yurayura.entity.ComicUserData;
+import org.cny.yurayura.service.IComicUserDataService;
 import org.cny.yurayura.service.IComicService;
 import org.cny.yurayura.util.FileUtil;
 import org.cny.yurayura.vo.ApiResult;
@@ -46,7 +46,7 @@ public class ComicController {
     @Autowired
     private IComicService iComicService;
     @Autowired
-    private IComicCountService iComicCountService;
+    private IComicUserDataService iComicUserDataService;
 
     @Value("${yurayura.default-upload.comic-image}")
     private String defaultUplImg;
@@ -98,7 +98,7 @@ public class ComicController {
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
 
         Comic comic = new Comic();
-        ComicCount comicCount = new ComicCount();
+        ComicUserData comicUserData = new ComicUserData();
 
         switch (imgUplRes) {
             case "0":
@@ -108,11 +108,11 @@ public class ComicController {
                 comic.setComicImageUrl(defaultUplImg);
                 comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.save(comic);
-                comicCount.setComicId(comic.getId());
-                comicCount.setComicName(comic.getComicName());
-                comicCount.setComicPlayNum(0);
-                comicCount.setComicFavoriteNum(0);
-                iComicCountService.save(comicCount);
+                comicUserData.setComicId(comic.getId());
+                comicUserData.setComicName(comic.getComicName());
+                comicUserData.setComicPlayNum(0);
+                comicUserData.setComicFavoriteNum(0);
+                iComicUserDataService.save(comicUserData);
                 return ApiResult.success("添加成功");
             case "1":
                 return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
@@ -125,11 +125,11 @@ public class ComicController {
                 comic.setComicImageUrl("upload/" + imgUplRes);
                 comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.save(comic);
-                comicCount.setComicId(comic.getId());
-                comicCount.setComicName(comic.getComicName());
-                comicCount.setComicPlayNum(0);
-                comicCount.setComicFavoriteNum(0);
-                iComicCountService.save(comicCount);
+                comicUserData.setComicId(comic.getId());
+                comicUserData.setComicName(comic.getComicName());
+                comicUserData.setComicPlayNum(0);
+                comicUserData.setComicFavoriteNum(0);
+                iComicUserDataService.save(comicUserData);
                 return ApiResult.success("添加成功");
         }
 
@@ -153,7 +153,7 @@ public class ComicController {
             // 删除番剧图片
             FileUtil.fileDelete(comic.getComicImageUrl());
         }
-        iComicCountService.deleteByComicId(comic.getId());
+        iComicUserDataService.deleteByComicId(comic.getId());
         return ApiResult.success("删除成功");
     }
 
@@ -180,7 +180,7 @@ public class ComicController {
                 // 删除番剧图片
                 FileUtil.fileDelete(comic.getComicImageUrl());
             }
-            iComicCountService.deleteByComicId(comic.getId());
+            iComicUserDataService.deleteByComicId(comic.getId());
         }
         return ApiResult.success("删除成功");
     }

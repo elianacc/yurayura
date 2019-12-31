@@ -1,9 +1,9 @@
 package org.cny.yurayura.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.cny.yurayura.entity.ComicCount;
-import org.cny.yurayura.dao.ComicCountMapper;
-import org.cny.yurayura.service.IComicCountService;
+import org.cny.yurayura.entity.ComicUserData;
+import org.cny.yurayura.dao.ComicUserDataMapper;
+import org.cny.yurayura.service.IComicUserDataService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,22 +11,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
- * 番剧数据 service impl
+ * 番剧用户数据 service impl
  * </p>
  *
  * @author CNY
  * @since 2019-11-17
  */
 @Service
-public class ComicCountServiceImpl extends ServiceImpl<ComicCountMapper, ComicCount> implements IComicCountService {
+public class ComicUserDataServiceImpl extends ServiceImpl<ComicUserDataMapper, ComicUserData> implements IComicUserDataService {
 
     @Autowired
-    private ComicCountMapper comicCountMapper;
+    private ComicUserDataMapper comicUserDataMapper;
 
     @Transactional
     @Override
     public void deleteByComicId(Integer comicId) {
-        QueryWrapper<ComicCount> queryWrapper = new QueryWrapper<>();
-        comicCountMapper.delete(queryWrapper.eq("comic_id", comicId));
+        QueryWrapper<ComicUserData> queryWrapper = new QueryWrapper<>();
+        comicUserDataMapper.delete(queryWrapper.eq("comic_id", comicId));
     }
 }

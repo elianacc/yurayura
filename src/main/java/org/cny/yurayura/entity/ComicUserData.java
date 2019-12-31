@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 番剧数据
+ * 番剧用户数据
  * </p>
  *
  * @author CNY
@@ -21,9 +21,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("yurayura_comic_count")
-@ApiModel(value="ComicCount对象", description="番剧数据")
-public class ComicCount implements Serializable {
+@TableName("yurayura_comic_user_data")
+@ApiModel(value="ComicUserData对象", description="番剧用户数据")
+public class ComicUserData implements Serializable {
 
     private static final long serialVersionUID=1L;
 

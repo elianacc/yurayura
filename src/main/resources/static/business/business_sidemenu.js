@@ -6,7 +6,7 @@ const sidemenuVm = new Vue({
       sideMenuUrl: {
           menuA: [
               "/business/comic_info",
-              "/business/comic_count"
+              "/business/comic_user_data"
           ],
           menuB: [
               "/business/user_info"
