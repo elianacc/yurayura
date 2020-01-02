@@ -71,15 +71,18 @@ public class CodeGeneratorUtil {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner("模块名"));
         pc.setParent("org.cny");
+        pc.setModuleName(scanner("模块名"));
+        String isSysModule = scanner("是否是后端系统子模块？（如果是输入y,不是请随意输入）");
+        String submoduleName = scanner("子模块名");
+        submoduleName = isSysModule.equals("y") ? "sys." + submoduleName : submoduleName;
         // 自定义包名
-        pc.setEntity("entity.comic");
-        pc.setMapper("dao.comic");
-        pc.setXml("dao.comic.mapper");
-        pc.setService("service.comic");
-        pc.setServiceImpl("service.comic.impl");
-        pc.setController("controller.comic");
+        pc.setEntity("entity." + submoduleName);
+        pc.setMapper("dao." + submoduleName);
+        pc.setXml("dao." + submoduleName + ".mapper");
+        pc.setService("service." + submoduleName);
+        pc.setServiceImpl("service." + submoduleName + ".impl");
+        pc.setController("controller." + submoduleName);
         mpg.setPackageInfo(pc);
 
         // 策略配置
@@ -88,9 +91,9 @@ public class CodeGeneratorUtil {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(scanner("表名，多个英文逗号分割（生成多个表最好是一个子模块内容，否则无法对应）").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix(isSysModule.equals("y") ? "yurayura_sys_" : "yurayura_");
         mpg.setStrategy(strategy);
 
         mpg.execute();
