@@ -26,7 +26,9 @@ const containerVm = new Vue({
         cmImgFileLb: "示例图片.jpg",
         cmImgFilePv: "/images/tpjxz.jpg",
         comicLink: "",
-        comicShelfStatus: 1
+        comicShelfStatus: 1,
+        cmImgFileLbTmp: "",
+        cmImgFilePvTmp: ""
     },
     methods: {
         buildPageComicManage: function () {
@@ -158,7 +160,7 @@ const containerVm = new Vue({
                 }
             });
         },
-        detlAndUpdtModalSetVal: function(id) {
+        detlAndUpdtModalSetVal: function (id) {
             $.ajax({
                 url: "/comic/getOneById",
                 data: {
@@ -186,6 +188,8 @@ const containerVm = new Vue({
                         containerVm.cmImgFilePv = "/" + res.data.comicImageUrl;
                         containerVm.comicLink = res.data.comicLink;
                         containerVm.comicShelfStatus = res.data.comicShelfStatus;
+                        containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
+                        containerVm.cmImgFilePvTmp = "/" + res.data.comicImageUrl;
                         $('#comicModal').modal();
                     }
                 }
@@ -271,24 +275,47 @@ const containerVm = new Vue({
             });
         },
         cmImgFileChange: function (e) {
-            let file = e.target.files[0];
-            let fileName = file.name;
-            if (!/.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(fileName)) {
-                toastr.error("图片格式必须是.gif,jpeg,jpg,png中的一种");
-                this.cmImgFileLb = "示例图片.jpg";
-                this.cmImgFilePv = "/images/tpjxz.jpg";
-                $("#cmImgFile").val("");
-            } else if ((file.size).toFixed(2) >= 102400) {
-                toastr.error("图片不能超过100KB");
-                this.cmImgFileLb = "示例图片.jpg";
-                this.cmImgFilePv = "/images/tpjxz.jpg";
-                $("#cmImgFile").val("");
+            if (e.target.files.length != 0) {
+                let file = e.target.files[0];
+                let fileName = file.name;
+                if (!/.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(fileName)) {
+                    toastr.error("图片格式必须是.gif,jpeg,jpg,png中的一种");
+                    if (this.isInsertModal) {
+                        this.cmImgFileLb = "示例图片.jpg";
+                        this.cmImgFilePv = "/images/tpjxz.jpg";
+                    }
+                    else {
+                        this.cmImgFileLb = this.cmImgFileLbTmp;
+                        this.cmImgFilePv = this.cmImgFilePvTmp;
+                    }
+                    $("#cmImgFile").val("");
+                } else if ((file.size).toFixed(2) >= 102400) {
+                    toastr.error("图片不能超过100KB");
+                    if (this.isInsertModal) {
+                        this.cmImgFileLb = "示例图片.jpg";
+                        this.cmImgFilePv = "/images/tpjxz.jpg";
+                    }
+                    else {
+                        this.cmImgFileLb = this.cmImgFileLbTmp;
+                        this.cmImgFilePv = this.cmImgFilePvTmp;
+                    }
+                    $("#cmImgFile").val("");
+                } else {
+                    this.cmImgFileLb = fileName;
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        containerVm.cmImgFilePv = e.target.result;
+                    }
+                }
             } else {
-                this.cmImgFileLb = fileName;
-                let reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    containerVm.cmImgFilePv = e.target.result;
+                if (this.isInsertModal) {
+                    this.cmImgFileLb = "示例图片.jpg";
+                    this.cmImgFilePv = "/images/tpjxz.jpg";
+                }
+                else {
+                    this.cmImgFileLb = this.cmImgFileLbTmp;
+                    this.cmImgFilePv = this.cmImgFilePvTmp;
                 }
             }
         },
