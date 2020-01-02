@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cny.yurayura.dao.comic.ComicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.cny.yurayura.entity.comic.Comic">
+        <id column="id" property="id" />
+        <result column="comic_name" property="comicName" />
+        <result column="comic_content" property="comicContent" />
+        <result column="comic_time" property="comicTime" />
+        <result column="comic_image_url" property="comicImageUrl" />
+        <result column="comic_link" property="comicLink" />
+        <result column="comic_label" property="comicLabel" />
+        <result column="comic_status" property="comicStatus" />
+        <result column="comic_current_episodes" property="comicCurrentEpisodes" />
+        <result column="comic_shelf_status" property="comicShelfStatus" />
+        <result column="comic_current_edit_time" property="comicCurrentEditTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, comic_name, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_current_edit_time
+    </sql>
+
+</mapper>

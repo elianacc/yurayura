@@ -1,6 +1,6 @@
 package org.cny.yurayura.component.interceptor;
 
-import org.cny.yurayura.entity.Manager;
+import org.cny.yurayura.entity.sys.manager.Manager;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;

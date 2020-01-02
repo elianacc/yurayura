@@ -74,9 +74,12 @@ public class CodeGeneratorUtil {
         pc.setModuleName(scanner("模块名"));
         pc.setParent("org.cny");
         // 自定义包名
-        pc.setMapper("dao");
-        pc.setXml("dao.mapper");
-        pc.setController("controller.api");
+        pc.setEntity("entity.comic");
+        pc.setMapper("dao.comic");
+        pc.setXml("dao.comic.mapper");
+        pc.setService("service.comic");
+        pc.setServiceImpl("service.comic.impl");
+        pc.setController("controller.comic");
         mpg.setPackageInfo(pc);
 
         // 策略配置

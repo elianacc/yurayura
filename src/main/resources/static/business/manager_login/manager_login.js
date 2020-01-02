@@ -35,7 +35,7 @@ const containerVm = new Vue({
         loginBusiness: function () {
             if (this.validataForm()) {
                 $("#managerLoginForm").ajaxSubmit({
-                    url: "/manager/login",
+                    url: "/sys/manager/login",
                     data: {managerPassword: Base64.encode(this.managerPassword)},
                     type: "post",
                     success: function (res) {
@@ -80,5 +80,5 @@ const spinnerVm = new Vue({
 });
 
 function loadVerifyImage() {
-    document.getElementById("verifyImage").src = "/manager/getVerifyCode?randomId=" + Math.random();
+    document.getElementById("verifyImage").src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cny.yurayura.dao.sys.manager.ManagerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.cny.yurayura.entity.sys.manager.Manager">
+        <id column="id" property="id" />
+        <result column="manager_name" property="managerName" />
+        <result column="manager_password" property="managerPassword" />
+        <result column="manager_status" property="managerStatus" />
+        <result column="manager_create_time" property="managerCreateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, manager_name, manager_password, manager_status, manager_create_time
+    </sql>
+
+</mapper>

@@ -21,7 +21,7 @@ const navbarVm = new Vue({
                 callback: function (result) {
                     if (result == true) {
                         $.ajax({
-                            url: "/manager/logout",
+                            url: "/sys/manager/logout",
                             data: null,
                             type: "post",
                             success: function (res) {

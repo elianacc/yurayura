@@ -1,6 +1,6 @@
 package org.cny.yurayura;
 
-import org.cny.yurayura.entity.Manager;
+import org.cny.yurayura.entity.sys.manager.Manager;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -40,7 +40,7 @@ spring:
 
 # mybatis plus配置
 mybatis-plus:
-  mapper-locations: classpath:org/cny/yurayura/dao/mapper/*.xml
+  mapper-locations: classpath:org/cny/yurayura/dao/**/*.xml
 
 # mybatis pagehelper配置
 pagehelper:
