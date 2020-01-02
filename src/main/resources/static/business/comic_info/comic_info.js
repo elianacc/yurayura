@@ -173,6 +173,7 @@ const containerVm = new Vue({
                         containerVm.id = res.data.id;
                         containerVm.comicName = res.data.comicName;
                         containerVm.comicTime = res.data.comicTime;
+                        $(".datepicker").datepicker("setDate", res.data.comicTime);
                         containerVm.comicContent = res.data.comicContent;
                         if (res.data.comicStatus == 0) {
                             containerVm.comicStatus = 0;
@@ -268,9 +269,6 @@ const containerVm = new Vue({
         },
         datePickerBind: function () {
             $(".datepicker").datepicker().on("hide", function () {
-                if ($(this).val() == "") {
-                    $(this).val(containerVm.comicTime);
-                }
                 containerVm.comicTime = $(this).val();
             });
         },
@@ -283,8 +281,7 @@ const containerVm = new Vue({
                     if (this.isInsertModal) {
                         this.cmImgFileLb = "示例图片.jpg";
                         this.cmImgFilePv = "/images/tpjxz.jpg";
-                    }
-                    else {
+                    } else {
                         this.cmImgFileLb = this.cmImgFileLbTmp;
                         this.cmImgFilePv = this.cmImgFilePvTmp;
                     }
@@ -294,8 +291,7 @@ const containerVm = new Vue({
                     if (this.isInsertModal) {
                         this.cmImgFileLb = "示例图片.jpg";
                         this.cmImgFilePv = "/images/tpjxz.jpg";
-                    }
-                    else {
+                    } else {
                         this.cmImgFileLb = this.cmImgFileLbTmp;
                         this.cmImgFilePv = this.cmImgFilePvTmp;
                     }
@@ -312,8 +308,7 @@ const containerVm = new Vue({
                 if (this.isInsertModal) {
                     this.cmImgFileLb = "示例图片.jpg";
                     this.cmImgFilePv = "/images/tpjxz.jpg";
-                }
-                else {
+                } else {
                     this.cmImgFileLb = this.cmImgFileLbTmp;
                     this.cmImgFilePv = this.cmImgFilePvTmp;
                 }
