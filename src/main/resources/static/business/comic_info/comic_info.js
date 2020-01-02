@@ -158,17 +158,50 @@ const containerVm = new Vue({
                 }
             });
         },
+        detlAndUpdtModalSetVal: function(id) {
+            $.ajax({
+                url: "/comic/getOneById",
+                data: {
+                    id: id
+                },
+                type: "post",
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        containerVm.id = res.data.id;
+                        containerVm.comicName = res.data.comicName;
+                        containerVm.comicTime = res.data.comicTime;
+                        containerVm.comicContent = res.data.comicContent;
+                        if (res.data.comicStatus == 0) {
+                            containerVm.comicStatus = 0;
+                        } else {
+                            containerVm.comicStatus = 8;
+                            containerVm.comicUdTime = res.data.comicStatus;
+                        }
+                        containerVm.comicCurrentEpisodes = res.data.comicCurrentEpisodes;
+                        containerVm.comicLabel = res.data.comicLabel;
+                        let fileName = res.data.comicImageUrl;
+                        let fileNewNameStart = fileName.lastIndexOf("/");
+                        containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
+                        containerVm.cmImgFilePv = "/" + res.data.comicImageUrl;
+                        containerVm.comicLink = res.data.comicLink;
+                        containerVm.comicShelfStatus = res.data.comicShelfStatus;
+                        $('#comicModal').modal();
+                    }
+                }
+            });
+        },
         detailModalOpen: function (id) {
             this.isDetailModal = true;
             this.modalTitle = "『详情窗口』";
             this.isInsertModal = false;
-            comicInfoThat.detlAndUpdtModalSetVal(id);
+            this.detlAndUpdtModalSetVal(id);
         },
         updateModalOpen: function (id) {
             this.isDetailModal = false;
             this.modalTitle = "『修改窗口』";
             this.isInsertModal = false;
-            comicInfoThat.detlAndUpdtModalSetVal(id);
+            this.detlAndUpdtModalSetVal(id);
         },
         updateContent: function () {
             if (this.comicName == "") {
@@ -336,40 +369,6 @@ const containerVm = new Vue({
         this.buildPageComicManage();
     }
 });
-
-function detlAndUpdtModalSetVal(id) {
-    $.ajax({
-        url: "/comic/getOneById",
-        data: {
-            id: id
-        },
-        type: "post",
-        dataType: 'json',
-        success: function (res) {
-            if (res.code == 200) {
-                containerVm.id = res.data.id;
-                containerVm.comicName = res.data.comicName;
-                containerVm.comicTime = res.data.comicTime;
-                containerVm.comicContent = res.data.comicContent;
-                if (res.data.comicStatus == 0) {
-                    containerVm.comicStatus = 0;
-                } else {
-                    containerVm.comicStatus = 8;
-                    containerVm.comicUdTime = res.data.comicStatus;
-                }
-                containerVm.comicCurrentEpisodes = res.data.comicCurrentEpisodes;
-                containerVm.comicLabel = res.data.comicLabel;
-                let fileName = res.data.comicImageUrl;
-                let fileNewNameStart = fileName.lastIndexOf("/");
-                containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
-                containerVm.cmImgFilePv = "/" + res.data.comicImageUrl;
-                containerVm.comicLink = res.data.comicLink;
-                containerVm.comicShelfStatus = res.data.comicShelfStatus;
-                $('#comicModal').modal();
-            }
-        }
-    });
-}
 
 Vue.filter("cmStatusFilter", function (status, currentEpisodes) {
     let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新', '更新中'];
