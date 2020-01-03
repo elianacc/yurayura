@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2019年4月2日 17:33
  */
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer {
+public class InterceptorsConfig implements WebMvcConfigurer {
 
     @Autowired
     private BusinessPageInterceptor businessPageInterceptor;

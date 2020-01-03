@@ -6,13 +6,13 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * 上传文件虚拟路径 config
+ * 静态资源访问处理器 config
  *
  * @author CNY
  * @date 2019年12月24日 2:31
  */
 @Configuration
-public class UploadFileVirtualPathConfig implements WebMvcConfigurer {
+public class ResourceHandlersConfig implements WebMvcConfigurer {
 
     @Value("${yurayura.upload-file.virtual-path}")
     private String virtualPath;
