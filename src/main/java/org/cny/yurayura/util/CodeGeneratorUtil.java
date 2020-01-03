@@ -73,9 +73,9 @@ public class CodeGeneratorUtil {
         PackageConfig pc = new PackageConfig();
         pc.setParent("org.cny");
         pc.setModuleName(scanner("模块名"));
-        String isSysModule = scanner("是否是后端系统子模块？（如果是输入y,不是请随意输入）");
+        String isSysModule = scanner("是否是后端系统子模块？（如果是输入Y/y,不是请随意输入）");
         String submoduleName = scanner("子模块名");
-        submoduleName = isSysModule.equals("y") ? "sys." + submoduleName : submoduleName;
+        submoduleName = isSysModule.equalsIgnoreCase("y") ? "sys." + submoduleName : submoduleName;
         // 自定义包名
         pc.setEntity("entity." + submoduleName);
         pc.setMapper("dao." + submoduleName);
@@ -93,7 +93,7 @@ public class CodeGeneratorUtil {
         strategy.setRestControllerStyle(true);
         strategy.setInclude(scanner("表名，多个英文逗号分割（生成多个表最好是一个子模块内容，否则无法对应）").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(isSysModule.equals("y") ? "yurayura_sys_" : "yurayura_");
+        strategy.setTablePrefix(isSysModule.equalsIgnoreCase("y") ? "yurayura_sys_" : "yurayura_");
         mpg.setStrategy(strategy);
 
         mpg.execute();
