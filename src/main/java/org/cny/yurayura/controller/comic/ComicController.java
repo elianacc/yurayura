@@ -49,7 +49,7 @@ public class ComicController {
     private IComicUserDataService iComicUserDataService;
 
     @Value("${yurayura.default-upload.comic-image}")
-    private String defaultUplImg;
+    private String defaultUplCmImg;
 
     /**
      * 分页查询全部番剧
@@ -105,7 +105,7 @@ public class ComicController {
                 BeanUtils.copyProperties(dto, comic);
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用默认图片
-                comic.setComicImageUrl(defaultUplImg);
+                comic.setComicImageUrl(defaultUplCmImg);
                 comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicUserData.setComicId(comic.getId());
@@ -149,7 +149,7 @@ public class ComicController {
         Comic comic = iComicService.getById(id);
         iComicService.removeById(id);
         // 如果用的是默认图片的，则不删除
-        if (!(comic.getComicImageUrl().equals(defaultUplImg))) {
+        if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
             // 删除番剧图片
             FileUtil.fileDelete(comic.getComicImageUrl());
         }
@@ -176,7 +176,7 @@ public class ComicController {
         iComicService.removeByIds(delIdsList);
         for (Comic comic : delComicList) {
             // 如果用的是默认图片的，则不删除
-            if (!(comic.getComicImageUrl().equals(defaultUplImg))) {
+            if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
                 FileUtil.fileDelete(comic.getComicImageUrl());
             }
@@ -246,7 +246,7 @@ public class ComicController {
                 comic.setComicCurrentEditTime(LocalDateTime.now());
                 iComicService.updateById(comic);
                 // 如果用的是默认图片的，则不删除
-                if (!(aComic.getComicImageUrl().equals(defaultUplImg))) {
+                if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
                     // 删除番剧图片
                     FileUtil.fileDelete(aComic.getComicImageUrl());
                 }
