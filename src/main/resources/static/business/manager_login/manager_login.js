@@ -40,7 +40,7 @@ const containerVm = new Vue({
                     type: "post",
                     success: function (res) {
                         if (res.code == 100) {
-                            managerLoginThat.loadVerifyImage();
+                            containerVm.loadVerifyImage();
                             toastr.error(res.msg);
                         } else if (res.code == 101) {
                             console.log("请不要重复提交");
@@ -54,6 +54,9 @@ const containerVm = new Vue({
                     }
                 });
             }
+        },
+        loadVerifyImage: function () {
+            document.getElementById("verifyImage").src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
         }
     },
     watch: {
@@ -78,7 +81,3 @@ const spinnerVm = new Vue({
         isSpinnerShow: false
     }
 });
-
-function loadVerifyImage() {
-    document.getElementById("verifyImage").src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
-}
