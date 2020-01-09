@@ -60,7 +60,7 @@ public class ComicController {
     @PostMapping("/getPageToAll")
     @ApiOperation("分页查询全部番剧")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
-    public ApiResult getPageToAll(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
+    public ApiResult getPageToAll(Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
@@ -82,7 +82,7 @@ public class ComicController {
     @PreventRepeatSubmit(prefix = "comicInsert")
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
+    @ApiImplicitParam(name = "cmImgFile", value = "图片文件", dataTypeClass = MultipartFile.class)
     public ApiResult insert(ComicInstAndUpdtDTO dto,
                             @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
 
@@ -144,8 +144,7 @@ public class ComicController {
     @PostMapping("/deleteById")
     @ApiOperation("删除番剧（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ApiResult deleteById(
-            @RequestParam(value = "id", defaultValue = "0") Integer id) {
+    public ApiResult deleteById(Integer id) {
         Comic comic = iComicService.getById(id);
         iComicService.removeById(id);
         // 如果用的是默认图片的，则不删除
@@ -166,7 +165,7 @@ public class ComicController {
     @PostMapping("/deleteBatchByIds")
     @ApiOperation("批量删除番剧（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
-    public ApiResult deleteBatchByIds(@RequestParam String ids) {
+    public ApiResult deleteBatchByIds(String ids) {
         List<Integer> delIdsList = new ArrayList<>();
         String[] delIdsArr = ids.split(",");
         for (String delIdsStr : delIdsArr) {
@@ -193,8 +192,8 @@ public class ComicController {
      */
     @PostMapping("/getOneById")
     @ApiOperation("查询番剧（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ApiResult getOneById(@RequestParam(value = "id", defaultValue = "0") Integer id) {
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1")
+    public ApiResult getOneById(Integer id) {
         Comic comic = iComicService.getById(id);
         return ApiResult.success("查询成功", comic);
     }
@@ -209,7 +208,7 @@ public class ComicController {
     @PreventRepeatSubmit(prefix = "comicUpdate")
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    @ApiImplicitParam(name = "cmImgFile", value = "图片文件")
+    @ApiImplicitParam(name = "cmImgFile", value = "图片文件", dataTypeClass = MultipartFile.class)
     public ApiResult update(ComicInstAndUpdtDTO dto,
                             @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
 
@@ -268,8 +267,7 @@ public class ComicController {
             @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
             @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
     })
-    public ApiResult getPageByName(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
-                                   @RequestParam String comicName) {
+    public ApiResult getPageByName(Integer pageNum, String comicName) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }

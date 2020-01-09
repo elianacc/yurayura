@@ -10,7 +10,6 @@ import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -38,7 +37,7 @@ public class UserController {
     @PostMapping("/getPageToManage")
     @ApiOperation("分页查询全部用户（管理后台）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
-    public ApiResult getPageToManage(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
+    public ApiResult getPageToManage(Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }

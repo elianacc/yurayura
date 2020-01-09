@@ -1,16 +1,15 @@
 package org.cny.yurayura.entity.sys.manager;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -24,25 +23,35 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("yurayura_sys_manager")
-@ApiModel(value="Manager对象", description="管理员")
 public class Manager implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @ApiModelProperty(value = "id")
+    /**
+     * id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "管理员名")
+    /**
+     * 管理员名
+     */
     private String managerName;
 
-    @ApiModelProperty(value = "管理员密码")
+    /**
+     * 管理员密码
+     */
     private String managerPassword;
 
-    @ApiModelProperty(value = "启用状态- 0：禁用，1：启用")
+    /**
+     * 启用状态- 0：禁用，1：启用
+     */
     private Integer managerStatus;
 
-    @ApiModelProperty(value = "创建时间")
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime managerCreateTime;
 
 
