@@ -36,7 +36,7 @@ public class UserController {
      */
     @PostMapping("/getPageToManage")
     @ApiOperation("分页查询全部用户（管理后台）")
-    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
+    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPageToManage(Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");

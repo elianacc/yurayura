@@ -2,10 +2,7 @@ package org.cny.yurayura.controller.comic;
 
 
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.entity.comic.Comic;
@@ -59,7 +56,7 @@ public class ComicController {
      */
     @PostMapping("/getPageToAll")
     @ApiOperation("分页查询全部番剧")
-    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
+    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPageToAll(Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
@@ -82,9 +79,8 @@ public class ComicController {
     @PreventRepeatSubmit(prefix = "comicInsert")
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    @ApiImplicitParam(name = "cmImgFile", value = "图片文件", dataTypeClass = MultipartFile.class)
     public ApiResult insert(ComicInstAndUpdtDTO dto,
-                            @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
+                            @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
 
         Integer comicStatus;
         // 有更新时间赋值更新时间，没有则赋值更新状态
@@ -143,7 +139,7 @@ public class ComicController {
      */
     @PostMapping("/deleteById")
     @ApiOperation("删除番剧（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true)
+    @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "int")
     public ApiResult deleteById(Integer id) {
         Comic comic = iComicService.getById(id);
         iComicService.removeById(id);
@@ -192,7 +188,7 @@ public class ComicController {
      */
     @PostMapping("/getOneById")
     @ApiOperation("查询番剧（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1")
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getOneById(Integer id) {
         Comic comic = iComicService.getById(id);
         return ApiResult.success("查询成功", comic);
@@ -208,9 +204,8 @@ public class ComicController {
     @PreventRepeatSubmit(prefix = "comicUpdate")
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    @ApiImplicitParam(name = "cmImgFile", value = "图片文件", dataTypeClass = MultipartFile.class)
     public ApiResult update(ComicInstAndUpdtDTO dto,
-                            @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
+                            @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
 
         Integer comicStatus;
         // 有更新时间赋值更新时间，没有则赋值更新状态
@@ -265,7 +260,7 @@ public class ComicController {
     @ApiOperation("搜索番剧")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
-            @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true)
+            @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     })
     public ApiResult getPageByName(Integer pageNum, String comicName) {
         if (pageNum == 0) {
