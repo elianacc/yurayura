@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/comic_user_data")
-@Api(tags = "番剧用户数据相关接口")
+@Api(tags = "番剧用户数据API")
 public class ComicUserDataController {
 
 }

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 管理员 Mapper 接口
+ * 系统管理员 Mapper 接口
  * </p>
  *
  * @author CNY

@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 管理员登入 dto
+ * 系统管理员登入 dto
  *
  * @author CNY
  * @date 2019年11月21日 17:47
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "管理员登入dto")
+@ApiModel(value = "系统管理员登入dto")
 public class MangerLoginDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

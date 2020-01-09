@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 管理员
+ * 系统管理员
  * </p>
  *
  * @author CNY

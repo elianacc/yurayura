@@ -37,7 +37,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/comic")
-@Api(tags = "番剧相关接口")
+@Api(tags = "番剧API")
 public class ComicController {
 
     @Autowired

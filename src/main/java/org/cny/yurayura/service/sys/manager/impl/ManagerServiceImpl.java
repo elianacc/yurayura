@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 管理员 service impl
+ * 系统管理员 service impl
  * </p>
  *
  * @author CNY

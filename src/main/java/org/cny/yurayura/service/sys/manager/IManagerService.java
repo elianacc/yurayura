@@ -5,7 +5,7 @@ import org.cny.yurayura.entity.sys.manager.Manager;
 
 /**
  * <p>
- * 管理员 service
+ * 系统管理员 service
  * </p>
  *
  * @author CNY

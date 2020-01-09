@@ -32,7 +32,7 @@ import java.net.URLEncoder;
 
 /**
  * <p>
- * 管理员 controller
+ * 系统管理员 controller
  * </p>
  *
  * @author CNY
@@ -41,7 +41,7 @@ import java.net.URLEncoder;
 @Slf4j
 @RestController
 @RequestMapping("/sys/manager")
-@Api(tags = "管理员相关接口")
+@Api(tags = "系统管理员API")
 public class ManagerController {
 
     @Autowired
