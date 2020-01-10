@@ -25,14 +25,14 @@ public class CodeGeneratorUtil {
      */
     public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入" + tip + "：");
+        System.out.println(tip);
         if (scanner.hasNext()) {
             String ipt = scanner.next();
             if (!StringUtils.isEmpty(ipt)) {
                 return ipt;
             }
         }
-        throw new MybatisPlusException("请输入正确的" + tip + "！");
+        throw new MybatisPlusException("输入异常！");
     }
 
 
@@ -72,9 +72,9 @@ public class CodeGeneratorUtil {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("org.cny");
-        pc.setModuleName(scanner("模块名"));
+        pc.setModuleName(scanner("请输入模块名"));
         String isSysModule = scanner("是否是后端系统子模块？（如果是输入Y/y,不是请随意输入）");
-        String submoduleName = scanner("子模块名");
+        String submoduleName = scanner("请输入子模块名");
         submoduleName = isSysModule.equalsIgnoreCase("y") ? "sys." + submoduleName : submoduleName;
         // 自定义包名
         pc.setEntity("entity." + submoduleName);
@@ -91,7 +91,7 @@ public class CodeGeneratorUtil {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(scanner("表名，多个英文逗号分割（生成多个表最好是一个子模块内容，否则无法对应）").split(","));
+        strategy.setInclude(scanner("请输入表名，多个英文逗号分割（生成多个表时最好是一个子模块内容，否则无法对应）").split(","));
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(isSysModule.equalsIgnoreCase("y") ? "yurayura_sys_" : "yurayura_");
         mpg.setStrategy(strategy);
