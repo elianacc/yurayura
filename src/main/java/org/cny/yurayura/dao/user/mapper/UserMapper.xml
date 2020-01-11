@@ -18,11 +18,12 @@
         <result column="user_phone_number" property="userPhoneNumber" />
         <result column="user_status" property="userStatus" />
         <result column="user_reg_time" property="userRegTime" />
+        <result column="user_current_edit_time" property="userCurrentEditTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_name, user_password, user_nickname, user_signature, user_sex, user_birsday, user_province, user_city, user_avatar_url, user_email, user_phone_number, user_status, user_reg_time
+        id, user_name, user_password, user_nickname, user_signature, user_sex, user_birsday, user_province, user_city, user_avatar_url, user_email, user_phone_number, user_status, user_reg_time, user_current_edit_time
     </sql>
 
 </mapper>

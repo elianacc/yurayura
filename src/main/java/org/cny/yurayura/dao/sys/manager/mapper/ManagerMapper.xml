@@ -9,11 +9,12 @@
         <result column="manager_password" property="managerPassword" />
         <result column="manager_status" property="managerStatus" />
         <result column="manager_create_time" property="managerCreateTime" />
+        <result column="manager_update_time" property="managerUpdateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, manager_name, manager_password, manager_status, manager_create_time
+        id, manager_name, manager_password, manager_status, manager_create_time, manager_update_time
     </sql>
 
 </mapper>

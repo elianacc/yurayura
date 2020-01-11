@@ -8,12 +8,14 @@
         <result column="comic_name" property="comicName" />
         <result column="comic_play_num" property="comicPlayNum" />
         <result column="comic_favorite_num" property="comicFavoriteNum" />
+        <result column="comic_user_data_create_time" property="comicUserDataCreateTime" />
+        <result column="comic_user_data_update_time" property="comicUserDataUpdateTime" />
         <result column="comic_id" property="comicId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, comic_name, comic_play_num, comic_favorite_num, comic_id
+        id, comic_name, comic_play_num, comic_favorite_num, comic_user_data_create_time, comic_user_data_update_time, comic_id
     </sql>
 
 </mapper>

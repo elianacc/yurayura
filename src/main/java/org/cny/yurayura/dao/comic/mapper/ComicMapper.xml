@@ -14,12 +14,13 @@
         <result column="comic_status" property="comicStatus" />
         <result column="comic_current_episodes" property="comicCurrentEpisodes" />
         <result column="comic_shelf_status" property="comicShelfStatus" />
-        <result column="comic_current_edit_time" property="comicCurrentEditTime" />
+        <result column="comic_create_time" property="comicCreateTime" />
+        <result column="comic_update_time" property="comicUpdateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, comic_name, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_current_edit_time
+        id, comic_name, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_create_time, comic_update_time
     </sql>
 
 </mapper>

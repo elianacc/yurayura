@@ -101,12 +101,13 @@ public class ComicController {
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用默认图片
                 comic.setComicImageUrl(defaultUplCmImg);
-                comic.setComicCurrentEditTime(LocalDateTime.now());
+                comic.setComicCreateTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicUserData.setComicId(comic.getId());
                 comicUserData.setComicName(comic.getComicName());
                 comicUserData.setComicPlayNum(0);
                 comicUserData.setComicFavoriteNum(0);
+                comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
                 iComicUserDataService.save(comicUserData);
                 return ApiResult.success("添加成功");
             case "1":
@@ -118,12 +119,13 @@ public class ComicController {
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用工具类传来的新文件名
                 comic.setComicImageUrl("upload/" + imgUplRes);
-                comic.setComicCurrentEditTime(LocalDateTime.now());
+                comic.setComicCreateTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicUserData.setComicId(comic.getId());
                 comicUserData.setComicName(comic.getComicName());
                 comicUserData.setComicPlayNum(0);
                 comicUserData.setComicFavoriteNum(0);
+                comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
                 iComicUserDataService.save(comicUserData);
                 return ApiResult.success("添加成功");
         }
@@ -223,7 +225,7 @@ public class ComicController {
             case "0":
                 BeanUtils.copyProperties(dto, comic);
                 comic.setComicStatus(comicStatus);
-                comic.setComicCurrentEditTime(LocalDateTime.now());
+                comic.setComicUpdateTime(LocalDateTime.now());
                 iComicService.updateById(comic);
                 return ApiResult.success("修改成功");
             case "1":
@@ -236,7 +238,7 @@ public class ComicController {
                 comic.setComicStatus(comicStatus);
                 // 番剧图片地址使用工具类传来的新文件名
                 comic.setComicImageUrl("upload/" + imgUplRes);
-                comic.setComicCurrentEditTime(LocalDateTime.now());
+                comic.setComicUpdateTime(LocalDateTime.now());
                 iComicService.updateById(comic);
                 // 如果用的是默认图片的，则不删除
                 if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
