@@ -3,6 +3,8 @@ package org.cny.yurayura.service.comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 番剧用户数据 service
@@ -19,4 +21,12 @@ public interface IComicUserDataService extends IService<ComicUserData> {
      * @param comicId
      */
     public void deleteByComicId(Integer comicId);
+
+    /**
+     * 批量删除番剧用户数据（根据关联comic表id）
+     *
+     * @param comicIdList
+     * @return void
+     */
+    public void deleteBatchByComicId(List<Integer> comicIdList);
 }

@@ -174,13 +174,13 @@ public class ComicController {
         }
         List<Comic> delComicList = iComicService.listByIds(delIdsList);
         iComicService.removeByIds(delIdsList);
+        iComicUserDataService.deleteBatchByComicId(delIdsList);
         for (Comic comic : delComicList) {
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
                 FileUtil.fileDelete(comic.getComicImageUrl());
             }
-            iComicUserDataService.deleteByComicId(comic.getId());
         }
         return ApiResult.success("删除成功");
     }

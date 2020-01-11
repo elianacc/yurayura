@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  * 番剧用户数据 service impl
@@ -28,5 +30,10 @@ public class ComicUserDataServiceImpl extends ServiceImpl<ComicUserDataMapper, C
     public void deleteByComicId(Integer comicId) {
         QueryWrapper<ComicUserData> queryWrapper = new QueryWrapper<>();
         comicUserDataMapper.delete(queryWrapper.eq("comic_id", comicId));
+    }
+
+    @Override
+    public void deleteBatchByComicId(List<Integer> comicIdList) {
+        comicUserDataMapper.deleteBatchByComicId(comicIdList);
     }
 }
