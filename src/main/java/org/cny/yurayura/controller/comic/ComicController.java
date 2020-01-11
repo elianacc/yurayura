@@ -102,12 +102,14 @@ public class ComicController {
                 // 番剧图片地址使用默认图片
                 comic.setComicImageUrl(defaultUplCmImg);
                 comic.setComicCreateTime(LocalDateTime.now());
+                comic.setComicUpdateTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicUserData.setComicId(comic.getId());
                 comicUserData.setComicName(comic.getComicName());
                 comicUserData.setComicPlayNum(0);
                 comicUserData.setComicFavoriteNum(0);
                 comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
+                comicUserData.setComicUserDataUpdateTime(LocalDateTime.now());
                 iComicUserDataService.save(comicUserData);
                 return ApiResult.success("添加成功");
             case "1":
@@ -120,12 +122,14 @@ public class ComicController {
                 // 番剧图片地址使用工具类传来的新文件名
                 comic.setComicImageUrl("upload/" + imgUplRes);
                 comic.setComicCreateTime(LocalDateTime.now());
+                comic.setComicUpdateTime(LocalDateTime.now());
                 iComicService.save(comic);
                 comicUserData.setComicId(comic.getId());
                 comicUserData.setComicName(comic.getComicName());
                 comicUserData.setComicPlayNum(0);
                 comicUserData.setComicFavoriteNum(0);
                 comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
+                comicUserData.setComicUserDataUpdateTime(LocalDateTime.now());
                 iComicUserDataService.save(comicUserData);
                 return ApiResult.success("添加成功");
         }
