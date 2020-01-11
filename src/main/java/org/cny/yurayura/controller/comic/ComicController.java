@@ -7,8 +7,8 @@ import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
-import org.cny.yurayura.service.comic.IComicUserDataService;
 import org.cny.yurayura.service.comic.IComicService;
+import org.cny.yurayura.service.comic.IComicUserDataService;
 import org.cny.yurayura.util.FileUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.BeanUtils;
@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -167,7 +166,7 @@ public class ComicController {
         for (String delIdsStr : delIdsArr) {
             delIdsList.add(Integer.parseInt(delIdsStr));
         }
-        Collection<Comic> delComicList = iComicService.listByIds(delIdsList);
+        List<Comic> delComicList = iComicService.listByIds(delIdsList);
         iComicService.removeByIds(delIdsList);
         for (Comic comic : delComicList) {
             // 如果用的是默认图片的，则不删除
