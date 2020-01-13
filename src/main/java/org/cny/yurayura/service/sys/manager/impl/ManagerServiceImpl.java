@@ -23,6 +23,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     @Autowired
     private ManagerMapper managerMapper;
 
+    @Override
     public Manager getOneByNameAndPassword(Manager manager) {
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
         return managerMapper.selectOne(queryWrapper
@@ -31,5 +32,4 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
                 .eq("manager_status", ManagerStatusEnum.ENABLE.getStatusId())
                 .last("limit 1"));
     }
-
 }
