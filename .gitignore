@@ -1,7 +1,9 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/
 !**/src/main/**
 !**/src/test/**
+!.gitignore
+!pom.xml
 
 ### STS ###
 .apt_generated
@@ -28,5 +30,3 @@ build/
 
 ### VS Code ###
 .vscode/
-#.gitignore
-#pom.xml
