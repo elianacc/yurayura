@@ -25,14 +25,14 @@ public class ComicUserDataServiceImpl extends ServiceImpl<ComicUserDataMapper, C
     @Autowired
     private ComicUserDataMapper comicUserDataMapper;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteByComicId(Integer comicId) {
         QueryWrapper<ComicUserData> queryWrapper = new QueryWrapper<>();
         comicUserDataMapper.delete(queryWrapper.eq("comic_id", comicId));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteBatchByComicId(List<Integer> comicIdList) {
         comicUserDataMapper.deleteBatchByComicId(comicIdList);
