@@ -32,6 +32,7 @@ public class ComicUserDataServiceImpl extends ServiceImpl<ComicUserDataMapper, C
         comicUserDataMapper.delete(queryWrapper.eq("comic_id", comicId));
     }
 
+    @Transactional
     @Override
     public void deleteBatchByComicId(List<Integer> comicIdList) {
         comicUserDataMapper.deleteBatchByComicId(comicIdList);
