@@ -6,24 +6,24 @@
     width: 1200px;
 }
 
-/*推特导航背景色*/
+/* 推特导航背景色 */
 .bg-twitternav {
     background-color: #1c2938;
 }
 
-/*推特内容背景色*/
+/* 推特内容背景色 */
 .bg-twittercont {
     background-color: #15202b;
 }
 
-/*推特色的按钮*/
+/* 推特色的按钮 */
 .btn-twitter {
     color: #fff;
     background-color: #1c2938;
     border-color: #1c2938;
 }
 
-/*侧滑菜单*/
+/* bootsidemenu */
 #bootsidemenu {
     width: 255px;
     background: #1c2938;
@@ -37,7 +37,7 @@
     background: #1c2938;
 }
 
-/*metisMenu css*/
+/* metisMenu */
 .sidebar-nav .metismenu {
     background: #1c2938;
     display: -webkit-box;
@@ -89,20 +89,20 @@
     background: #0b7285;
 }
 
-/*番剧图片*/
+/* 番剧图片 */
 .r2 .c1 .table-cmimg {
     width: 165px;
     height: 217px;
 }
 
-/*番剧内容p*/
+/* 番剧内容p */
 .r2 .c1 .table-cmcontent {
     line-height: 16px;
     height: 224px;
     overflow: hidden;
 }
 
-/*分页导航样式 */
+/* 分页导航样式 */
 .r3 .c2 .border-twittercont {
     border-color: #15202b;
 }
@@ -112,7 +112,7 @@
     border-color: #15202b;
 }
 
-/*图片遮罩样式*/
+/* 图片遮罩样式 */
 .box {
     width: 165px;
     height: 217px;
@@ -150,7 +150,7 @@
     border-radius: .25rem;
 }
 
-/*模态窗体样式*/
+/* 模态窗体样式 */
 .modal-content {
     width: 120%;
     border: 1px solid #15202b;
@@ -184,14 +184,14 @@
     border-bottom-right-radius: 0rem;
 }
 
-/*文件浏览样式改变*/
+/* 文件浏览样式改变 */
 .custom-file-label::after {
     color: #fff;
     content: "浏览图片";
     background-color: #007bff;
 }
 
-/*吐司样式改变*/
+/* 吐司样式改变 */
 .toast-success {
     background-color: #28a745;
 }
@@ -200,7 +200,7 @@
     background-color: #dc3545;
 }
 
-/*返回顶部按钮样式*/
+/* 返回顶部按钮样式 */
 #scrollUp {
     background-image: url("../images/top.png");
     bottom: 80px;
