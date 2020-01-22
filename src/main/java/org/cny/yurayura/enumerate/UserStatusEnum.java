@@ -3,7 +3,7 @@ package org.cny.yurayura.enumerate;
 import lombok.Getter;
 
 /**
- * 用户状态枚举
+ * 用户状态 enum
  *
  * @author CNY
  * @date 2019年12月30日 16:03

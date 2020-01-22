@@ -3,7 +3,7 @@ package org.cny.yurayura.enumerate;
 import lombok.Getter;
 
 /**
- * 番剧上架状态枚举
+ * 番剧上架状态 enum
  *
  * @author CNY
  * @date 2019年11月16日 18:10
