@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * 文件操作工具类
+ * 文件操作 util
  *
  * @author CNY
  * @date 2018年8月23日 20:37
@@ -26,16 +26,15 @@ public class FileUtil {
             throws IllegalStateException, IOException {
         // 返回结果
         String res;
-        // 如果文件不为空，写入上传路径
+        // 上传文件不为null
         if (!(file == null)) {
-            // 上传文件名
+            // 获取上传文件名（带后缀）
             String fileName = file.getOriginalFilename();
-            // 获取文件后缀名
-            String fileEndName = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : null;
+            String fileEndName = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : null; // 获取上传文件后缀名
             if ((fileEndName != null && fileEndName.equals(".jpg")) || (fileEndName != null && fileEndName.equals(".JPG")) || (fileEndName != null && fileEndName.equals(".png"))
                     || (fileEndName != null && fileEndName.equals(".PNG")) || (fileEndName != null && fileEndName.equals(".gif")) || (fileEndName != null && fileEndName.equals(".GIF"))
                     || (fileEndName != null && fileEndName.equals("jpeg")) || (fileEndName != null && fileEndName.equals("JPEG"))) {
-                if (file.getSize() >= 102400) {
+                if (file.getSize() >= 102400) { // 上传文件超过100kb
                     res = ImgUploadResultEnum.SIZEBEYOND.getResult();
                 } else {
                     // 新文件名
@@ -45,19 +44,16 @@ public class FileUtil {
                     // 生成不重复的32位新文件名
                     fileNewName = UUID.randomUUID().toString().replace("-", "") + fileEndName;
                     File filePath = new File(path, fileNewName);
-                    // 判断路径是否存在，如果不存在就创建一个
-                    if (!filePath.getParentFile().exists()) {
+                    if (!filePath.getParentFile().exists()) { // 上传文件路径是否存在，如果不存在就创建一个
                         filePath.getParentFile().mkdirs();
                     }
                     // 将上传文件保存到一个目标文件当中
                     file.transferTo(new File(path + File.separator + fileNewName));
                     res = fileNewName;
                 }
-
             } else {
                 res = ImgUploadResultEnum.FORMATNOTALLOW.getResult();
             }
-
         } else {
             res = ImgUploadResultEnum.NULL.getResult();
         }
@@ -72,9 +68,8 @@ public class FileUtil {
      */
     public static void fileDelete(String dPath) {
         File file = new File("D://yurayura_v11" + File.separator + dPath);
-        // 路径为文件且不为空则进行删除
-        if (file.isFile() && file.exists()) {
-            file.delete();
+        if (file.isFile() && file.exists()) { // 上传文件路径不为空
+            file.delete(); // 删除文件
         }
     }
 

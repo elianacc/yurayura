@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 import java.util.Scanner;
 
 /**
- * Mybatis-Plus代码生成器
+ * Mybatis-Plus代码生成 util
  *
  * @author CNY
  * @date 2019年10月21日 16:31

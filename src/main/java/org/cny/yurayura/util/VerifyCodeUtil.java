@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * 中英文图片验证码生成工具类
+ * 中英文图片验证码生成 util
  *
  * @author CNY
  * @date 2019年07月18日 19:51
