@@ -1,5 +1,6 @@
 package org.cny.yurayura.util;
 
+import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -35,7 +36,7 @@ public class FileUtil {
                     || (fileEndName != null && fileEndName.equals(".PNG")) || (fileEndName != null && fileEndName.equals(".gif")) || (fileEndName != null && fileEndName.equals(".GIF"))
                     || (fileEndName != null && fileEndName.equals("jpeg")) || (fileEndName != null && fileEndName.equals("JPEG"))) {
                 if (file.getSize() >= 102400) {
-                    res = "2";
+                    res = ImgUploadResultEnum.SIZEBEYOND.getResult();
                 } else {
                     // 新文件名
                     String fileNewName;
@@ -54,11 +55,11 @@ public class FileUtil {
                 }
 
             } else {
-                res = "1";
+                res = ImgUploadResultEnum.FORMATNOTALLOW.getResult();
             }
 
         } else {
-            res = "0";
+            res = ImgUploadResultEnum.NULL.getResult();
         }
         return res;
     }

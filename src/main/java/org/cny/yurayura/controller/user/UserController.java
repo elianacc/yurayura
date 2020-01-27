@@ -42,11 +42,10 @@ public class UserController {
             return ApiResult.warn("请输入页数");
         }
         PageInfo<Object> userPageInfo = iUserService.getPageToManage(pageNum);
-        if (userPageInfo.getTotal() != 0) {
-            return ApiResult.success("分页查询成功", userPageInfo);
-        } else {
+        if (userPageInfo.getTotal() == 0) {
             return ApiResult.warn("系统数据为空");
         }
+        return ApiResult.success("分页查询成功", userPageInfo);
     }
 
 }

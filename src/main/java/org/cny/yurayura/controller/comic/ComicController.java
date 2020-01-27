@@ -7,6 +7,7 @@ import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
+import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.cny.yurayura.service.comic.IComicService;
 import org.cny.yurayura.service.comic.IComicUserDataService;
 import org.cny.yurayura.util.FileUtil;
@@ -61,11 +62,10 @@ public class ComicController {
             return ApiResult.warn("请输入页数");
         }
         PageInfo<Comic> comicPageInfo = iComicService.getPageToAll(pageNum);
-        if (comicPageInfo.getTotal() != 0) {
-            return ApiResult.success("分页查询成功", comicPageInfo);
-        } else {
+        if (comicPageInfo.getTotal() == 0) { // 没有分页数据
             return ApiResult.warn("系统数据为空");
         }
+        return ApiResult.success("分页查询成功", comicPageInfo);
     }
 
     /**
@@ -81,59 +81,43 @@ public class ComicController {
     public ApiResult insert(ComicInstAndUpdtDTO dto,
                             @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
 
-        Integer comicStatus;
-        // 有更新时间赋值更新时间，没有则赋值更新状态
+        Integer comicStatus = dto.getComicStatus();
+        // 有更新时间,更新状态为更新时间
         if (!StringUtils.isEmpty(dto.getComicUdTime())) {
             comicStatus = dto.getComicUdTime();
-        } else {
-            comicStatus = dto.getComicStatus();
         }
 
-        // 调用图片上传工具
+        // 获取图片上传结果
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
 
         Comic comic = new Comic();
         ComicUserData comicUserData = new ComicUserData();
 
-        switch (imgUplRes) {
-            case "0":
-                BeanUtils.copyProperties(dto, comic);
-                comic.setComicStatus(comicStatus);
-                // 番剧图片地址使用默认图片
-                comic.setComicImageUrl(defaultUplCmImg);
-                comic.setComicCreateTime(LocalDateTime.now());
-                comic.setComicUpdateTime(LocalDateTime.now());
-                iComicService.save(comic);
-                comicUserData.setComicId(comic.getId());
-                comicUserData.setComicName(comic.getComicName());
-                comicUserData.setComicPlayNum(0);
-                comicUserData.setComicFavoriteNum(0);
-                comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
-                comicUserData.setComicUserDataUpdateTime(LocalDateTime.now());
-                iComicUserDataService.save(comicUserData);
-                return ApiResult.success("添加成功");
-            case "1":
-                return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
-            case "2":
-                return ApiResult.warn("图片不能超过100KB");
-            default:
-                BeanUtils.copyProperties(dto, comic);
-                comic.setComicStatus(comicStatus);
-                // 番剧图片地址使用工具类传来的新文件名
+        if (imgUplRes.equals(ImgUploadResultEnum.FORMATNOTALLOW.getResult())) {
+            return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
+        } else if (imgUplRes.equals(ImgUploadResultEnum.SIZEBEYOND.getResult())) {
+            return ApiResult.warn("图片不能超过100KB");
+        } else {
+            BeanUtils.copyProperties(dto, comic);
+            comic.setComicStatus(comicStatus);
+            // 番剧图片地址使用默认图片
+            comic.setComicImageUrl(defaultUplCmImg);
+            // 上传图片不为空，番剧图片地址使用上传图片地址
+            if (!imgUplRes.equals(ImgUploadResultEnum.NULL.getResult())) {
                 comic.setComicImageUrl("upload/" + imgUplRes);
-                comic.setComicCreateTime(LocalDateTime.now());
-                comic.setComicUpdateTime(LocalDateTime.now());
-                iComicService.save(comic);
-                comicUserData.setComicId(comic.getId());
-                comicUserData.setComicName(comic.getComicName());
-                comicUserData.setComicPlayNum(0);
-                comicUserData.setComicFavoriteNum(0);
-                comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
-                comicUserData.setComicUserDataUpdateTime(LocalDateTime.now());
-                iComicUserDataService.save(comicUserData);
-                return ApiResult.success("添加成功");
+            }
+            comic.setComicCreateTime(LocalDateTime.now());
+            comic.setComicUpdateTime(LocalDateTime.now());
+            iComicService.save(comic);
+            comicUserData.setComicId(comic.getId());
+            comicUserData.setComicName(comic.getComicName());
+            comicUserData.setComicPlayNum(0);
+            comicUserData.setComicFavoriteNum(0);
+            comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
+            comicUserData.setComicUserDataUpdateTime(LocalDateTime.now());
+            iComicUserDataService.save(comicUserData);
+            return ApiResult.success("添加成功");
         }
-
     }
 
     /**
@@ -212,46 +196,38 @@ public class ComicController {
     public ApiResult update(ComicInstAndUpdtDTO dto,
                             @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
 
-        Integer comicStatus;
-        // 有更新时间赋值更新时间，没有则赋值更新状态
+        Integer comicStatus = dto.getComicStatus();
+        // 有更新时间,更新状态为更新时间
         if (!StringUtils.isEmpty(dto.getComicUdTime())) {
             comicStatus = dto.getComicUdTime();
-        } else {
-            comicStatus = dto.getComicStatus();
         }
 
-        // 调用图片上传工具
+        // 获取图片上传结果
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
 
         Comic comic = new Comic();
 
-        switch (imgUplRes) {
-            case "0":
-                BeanUtils.copyProperties(dto, comic);
-                comic.setComicStatus(comicStatus);
-                comic.setComicUpdateTime(LocalDateTime.now());
-                iComicService.updateById(comic);
-                return ApiResult.success("修改成功");
-            case "1":
-                return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
-            case "2":
-                return ApiResult.warn("图片不能超过100KB");
-            default:
-                BeanUtils.copyProperties(dto, comic);
-                Comic aComic = iComicService.getById(comic.getId());
-                comic.setComicStatus(comicStatus);
-                // 番剧图片地址使用工具类传来的新文件名
+        if (imgUplRes.equals(ImgUploadResultEnum.FORMATNOTALLOW.getResult())) {
+            return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
+        } else if (imgUplRes.equals(ImgUploadResultEnum.SIZEBEYOND.getResult())) {
+            return ApiResult.warn("图片不能超过100KB");
+        } else {
+            BeanUtils.copyProperties(dto, comic);
+            comic.setComicStatus(comicStatus);
+            comic.setComicUpdateTime(LocalDateTime.now());
+            // 上传图片不为空，番剧图片地址使用上传图片地址
+            if (!imgUplRes.equals(ImgUploadResultEnum.NULL.getResult())) {
                 comic.setComicImageUrl("upload/" + imgUplRes);
-                comic.setComicUpdateTime(LocalDateTime.now());
-                iComicService.updateById(comic);
+                Comic aComic = iComicService.getById(comic.getId());
                 // 如果用的是默认图片的，则不删除
                 if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
                     // 删除番剧图片
                     FileUtil.fileDelete(aComic.getComicImageUrl());
                 }
-                return ApiResult.success("修改成功");
+            }
+            iComicService.updateById(comic);
+            return ApiResult.success("修改成功");
         }
-
     }
 
     /**
@@ -272,11 +248,10 @@ public class ComicController {
             return ApiResult.warn("请输入页数");
         }
         PageInfo<Comic> comicPageInfo = iComicService.getPageByName(pageNum, comicName);
-        if (comicPageInfo.getTotal() != 0) {
-            return ApiResult.success("分页查询成功", comicPageInfo);
-        } else {
+        if (comicPageInfo.getTotal() == 0) {
             return ApiResult.warn("搜索不到数据");
         }
+        return ApiResult.success("分页查询成功", comicPageInfo);
     }
 
 }
