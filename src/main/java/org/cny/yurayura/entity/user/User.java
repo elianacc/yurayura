@@ -63,7 +63,7 @@ public class User implements Serializable {
     /**
      * 生日
      */
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private LocalDate userBirsday;
 
     /**
@@ -99,14 +99,14 @@ public class User implements Serializable {
     /**
      * 注册时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime userRegTime;
 
     /**
      * 最近编辑时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime userCurrentEditTime;
 

@@ -3,7 +3,7 @@ package org.cny.yurayura.component.resolver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.cny.yurayura.dto.MailDTO;
-import org.cny.yurayura.exception.ServiceRunException;
+import org.cny.yurayura.exception.CustomizeException;
 import org.cny.yurayura.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,15 +39,15 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         response.setContentType("text/html;charset=UTF-8");
         String errorMsg;
 
-        // exception 为业务层抛出的异常
-        if (exception instanceof ServiceRunException) {
-            ServiceRunException runEx = (ServiceRunException) exception;
+        // 异常为自定义异常
+        if (exception instanceof CustomizeException) {
+            CustomizeException customizeException = (CustomizeException) exception;
 
-            errorMsg = "业务层异常 - " + "runStatus:" + runEx.getRunStatus() + ",runMessage:" + runEx.getRunMessage() + "\r\n"
-                    + ExceptionUtils.getStackTrace(runEx);
+            errorMsg = "自定义异常 - " + "errorCode:" + customizeException.getErrorCode() + ",errorMsg:" + customizeException.getErrorMsg() + "\r\n"
+                    + ExceptionUtils.getStackTrace(customizeException);
         } else {
-            // exception为非业务层抛出的异常
-            errorMsg = "非业务层异常 - " + ExceptionUtils.getStackTrace(exception);
+            // 异常为系统异常
+            errorMsg = "系统异常 - " + ExceptionUtils.getStackTrace(exception);
         }
         log.error(errorMsg);
 

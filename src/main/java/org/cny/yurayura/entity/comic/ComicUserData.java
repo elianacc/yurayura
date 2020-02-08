@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @TableName("yurayura_comic_user_data")
 public class ComicUserData implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id
@@ -51,13 +51,13 @@ public class ComicUserData implements Serializable {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime comicUserDataCreateTime;
 
     /**
      * 更新时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime comicUserDataUpdateTime;
 
     /**
