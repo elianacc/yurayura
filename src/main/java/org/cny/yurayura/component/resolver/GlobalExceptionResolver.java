@@ -20,7 +20,7 @@ import java.util.Map;
  * 全局捕获异常（500） resolver
  *
  * @author CNY
- * @since 2019年3月29日 9:12
+ * @since 2019-3-29
  */
 @Slf4j
 @Component

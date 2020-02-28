@@ -14,9 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 用户
- * </p>
+ * 用户 entity
  *
  * @author CNY
  * @since 2019-11-18

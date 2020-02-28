@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.cny.yurayura.entity.sys.manager.Manager;
 
 /**
- * <p>
  * 系统管理员 service
- * </p>
  *
  * @author CNY
  * @since 2019-10-27

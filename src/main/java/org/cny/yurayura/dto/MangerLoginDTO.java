@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 系统管理员登入 dto
  *
  * @author CNY
- * @since 2019年11月21日 17:47
+ * @since 2019-11-21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

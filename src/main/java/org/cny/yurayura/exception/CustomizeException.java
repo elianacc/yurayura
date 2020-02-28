@@ -8,9 +8,10 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
+ * 自定义异常
+ *
  * @author CNY
- * @description 自定义异常
- * @since 2019年3月29日 9:29
+ * @since 2019-3-29
  */
 @Getter
 @Setter

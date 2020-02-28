@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 防止重复提交 annotation
  *
  * @author CNY
- * @since 2019年11月14日 2:13
+ * @since 2019-11-14
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

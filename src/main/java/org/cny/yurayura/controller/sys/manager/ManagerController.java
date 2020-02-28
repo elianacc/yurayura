@@ -31,9 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
- * <p>
  * 系统管理员 controller
- * </p>
  *
  * @author CNY
  * @since 2019-10-27

@@ -7,7 +7,7 @@ import lombok.Setter;
  * 通用返回信息处理 vo
  *
  * @author CNY
- * @since 2019年1月1日 14:16
+ * @since 2019-1-1
  */
 @Getter
 @Setter

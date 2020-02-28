@@ -13,9 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 番剧
- * </p>
+ * 番剧 entity
  *
  * @author CNY
  * @since 2019-11-18

@@ -12,9 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 系统管理员
- * </p>
+ * 系统管理员 entity
  *
  * @author CNY
  * @since 2019-11-18

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * 防止重复提交 aspect
  *
  * @author CNY
- * @since 2019年11月14日 2:16
+ * @since 2019-11-14
  */
 @Aspect
 @Order(1)

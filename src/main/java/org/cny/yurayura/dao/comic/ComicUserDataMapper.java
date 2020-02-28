@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 
 /**
- * <p>
- * 番剧用户数据 Mapper 接口
- * </p>
+ * 番剧用户数据 mapper interface
  *
  * @author CNY
  * @since 2019-11-18

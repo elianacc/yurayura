@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * 后台页面 interceptor
  *
  * @author CNY
- * @since 2019年1月15日 14:45
+ * @since 2019-1-15
  */
 @Component
 public class BusinessPageInterceptor implements HandlerInterceptor {

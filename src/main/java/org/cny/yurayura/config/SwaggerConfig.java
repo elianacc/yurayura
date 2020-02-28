@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * swagger2 config
  *
  * @author CNY
- * @since 2019年11月18日 21:57
+ * @since 2019-11-18
  */
 @Configuration
 @EnableSwagger2

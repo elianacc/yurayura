@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * <p>
  * 系统管理员 service impl
- * </p>
  *
  * @author CNY
  * @since 2019-10-27

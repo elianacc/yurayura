@@ -4,9 +4,7 @@ import org.cny.yurayura.entity.comic.Comic;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * <p>
- * 番剧 Mapper 接口
- * </p>
+ * 番剧 mapper interface
  *
  * @author CNY
  * @since 2019-11-18

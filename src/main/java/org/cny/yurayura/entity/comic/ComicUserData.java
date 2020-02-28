@@ -12,9 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 番剧用户数据
- * </p>
+ * 番剧用户数据 entity
  *
  * @author CNY
  * @since 2019-11-18

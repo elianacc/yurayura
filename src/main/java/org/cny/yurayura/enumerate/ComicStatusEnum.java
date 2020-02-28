@@ -6,7 +6,7 @@ import lombok.Getter;
  * 番剧状态 enum
  *
  * @author CNY
- * @since 2019年11月12日 23:50
+ * @since 2019-11-12
  */
 @Getter
 public enum ComicStatusEnum {

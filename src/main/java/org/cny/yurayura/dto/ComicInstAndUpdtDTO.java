@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * 番剧插入与更新 dto
  *
  * @author CNY
- * @since 2019年11月21日 20:37
+ * @since 2019-11-21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

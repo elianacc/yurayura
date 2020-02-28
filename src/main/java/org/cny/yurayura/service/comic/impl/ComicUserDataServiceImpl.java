@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * <p>
  * 番剧用户数据 service impl
- * </p>
  *
  * @author CNY
  * @since 2019-11-17

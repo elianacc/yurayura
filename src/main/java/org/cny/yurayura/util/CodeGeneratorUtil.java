@@ -2,10 +2,7 @@ package org.cny.yurayura.util;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.springframework.util.StringUtils;
 
@@ -15,7 +12,7 @@ import java.util.Scanner;
  * Mybatis-Plus代码生成 util
  *
  * @author CNY
- * @since 2019年10月21日 16:31
+ * @since 2019-10-21
  */
 public class CodeGeneratorUtil {
     /**
@@ -84,6 +81,15 @@ public class CodeGeneratorUtil {
         pc.setServiceImpl("service." + submoduleName + ".impl");
         pc.setController("controller." + submoduleName);
         mpg.setPackageInfo(pc);
+
+        // 配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+        // 配置自定义输出模板
+        templateConfig.setController("templates/controller.java.vm");
+        templateConfig.setServiceImpl("templates/serviceImpl.java.vm");
+        templateConfig.setService("templates/service.java.vm");
+        templateConfig.setMapper("templates/mapper.java.vm");
+        templateConfig.setEntity("templates/entity.java.vm");
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();

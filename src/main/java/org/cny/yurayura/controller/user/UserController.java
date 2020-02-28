@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
  * 用户 controller
- * </p>
  *
  * @author CNY
  * @since 2019-10-27

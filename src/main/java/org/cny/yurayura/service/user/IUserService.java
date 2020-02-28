@@ -5,9 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.cny.yurayura.entity.user.User;
 
 /**
- * <p>
  * 用户 service
- * </p>
  *
  * @author CNY
  * @since 2019-10-27

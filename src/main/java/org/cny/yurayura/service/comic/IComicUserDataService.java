@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * <p>
  * 番剧用户数据 service
- * </p>
  *
  * @author CNY
  * @since 2019-11-17

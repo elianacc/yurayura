@@ -6,7 +6,7 @@ import org.cny.yurayura.dto.MailDTO;
  * 邮件 service
  *
  * @author CNY
- * @since 2019年11月25日 11:12
+ * @since 2019-11-25
  */
 public interface MailService {
     /**

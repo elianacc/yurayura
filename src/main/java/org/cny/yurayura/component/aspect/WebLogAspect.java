@@ -18,7 +18,7 @@ import java.util.Arrays;
  * 使用AOP统一处理Web请求日志 aspect
  *
  * @author CNY
- * @since 2019年3月28日 14:41
+ * @since 2019-3-28
  */
 @Aspect
 @Order(6)
