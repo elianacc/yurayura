@@ -106,7 +106,7 @@ public class ManagerController {
                 // js无法读取cookie，防止xss攻击
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
-                log.info("管理员：" + aManager.getManagerName() + "，登入成功");
+                log.info("管理员：{}，登入成功", aManager.getManagerName());
                 return ApiResult.success("管理员登入成功");
             } else {
                 return ApiResult.warn("用户名或密码错误");

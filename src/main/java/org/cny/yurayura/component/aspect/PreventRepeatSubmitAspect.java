@@ -43,7 +43,7 @@ public class PreventRepeatSubmitAspect {
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
                 log.info("请勿重复提交");
-                return ApiResult.dontReptCmt();
+                return ApiResult.dontReptSubmit();
             }
             // 如果是第一次请求,就将key存入缓存中
             CACHES.put(key, key);

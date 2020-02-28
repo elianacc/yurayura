@@ -94,7 +94,7 @@ const containerVm = new Vue({
                             toastr.success(res.msg);
                             containerVm.toFirstPage();
                         } else if (res.code == 101) {
-                            console.log("请不要重复提交");
+                            console.log(res.msg);
                         } else {
                             toastr.error(res.msg);
                         }
@@ -223,7 +223,7 @@ const containerVm = new Vue({
                             toastr.success(res.msg);
                             containerVm.buildPageComicManage();
                         } else if (res.code == 101) {
-                            console.log("请不要重复提交");
+                            console.log(res.msg);
                         } else {
                             toastr.error(res.msg);
                         }
