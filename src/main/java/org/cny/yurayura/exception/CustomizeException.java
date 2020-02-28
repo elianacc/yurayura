@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @author CNY
  * @description 自定义异常
- * @date 2019年3月29日 9:29
+ * @since 2019年3月29日 9:29
  */
 @Getter
 @Setter

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 视图控制器 config
  *
  * @author CNY
- * @date 2020年01月03日 15:13
+ * @since 2020年01月03日 15:13
  */
 @Configuration
 public class ViewControllersConfig implements WebMvcConfigurer {

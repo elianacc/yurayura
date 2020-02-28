@@ -6,7 +6,7 @@ import lombok.Getter;
  * 用户状态 enum
  *
  * @author CNY
- * @date 2019年12月30日 16:03
+ * @since 2019年12月30日 16:03
  */
 @Getter
 public enum UserStatusEnum {

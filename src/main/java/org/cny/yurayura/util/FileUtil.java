@@ -11,7 +11,7 @@ import java.util.UUID;
  * 文件操作 util
  *
  * @author CNY
- * @date 2018年8月23日 20:37
+ * @since 2018年8月23日 20:37
  */
 public class FileUtil {
 

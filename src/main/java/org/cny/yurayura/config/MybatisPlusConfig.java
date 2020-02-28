@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * MyBatis Plus config
  *
  * @author CNY
- * @date 2019年10月28日 14:54
+ * @since 2019年10月28日 14:54
  */
 @Configuration
 public class MybatisPlusConfig {

@@ -11,7 +11,7 @@ import java.util.concurrent.*;
  * 多线程测试（Runnable，Callable，线程池的使用）
  *
  * @author CNY
- * @date 2019年12月27日 15:38
+ * @since 2019年12月27日 15:38
  */
 public class ThreadTest {
 

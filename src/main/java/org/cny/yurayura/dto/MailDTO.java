@@ -13,7 +13,7 @@ import java.util.Map;
  * 邮件参数 dto
  *
  * @author CNY
- * @date 2019年11月25日 10:46
+ * @since 2019年11月25日 10:46
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

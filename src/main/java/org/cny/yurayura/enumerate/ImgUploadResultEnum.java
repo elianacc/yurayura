@@ -6,7 +6,7 @@ import lombok.Getter;
  * 图片上传结果 enum
  *
  * @author CNY
- * @date 2020年01月26日 18:10
+ * @since 2020年01月26日 18:10
  */
 @Getter
 public enum ImgUploadResultEnum {

@@ -15,7 +15,7 @@ import java.util.Scanner;
  * Mybatis-Plus代码生成 util
  *
  * @author CNY
- * @date 2019年10月21日 16:31
+ * @since 2019年10月21日 16:31
  */
 public class CodeGeneratorUtil {
     /**

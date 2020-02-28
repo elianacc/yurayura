@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 静态资源访问处理器 config
  *
  * @author CNY
- * @date 2019年12月24日 2:31
+ * @since 2019年12月24日 2:31
  */
 @Configuration
 public class ResourceHandlersConfig implements WebMvcConfigurer {

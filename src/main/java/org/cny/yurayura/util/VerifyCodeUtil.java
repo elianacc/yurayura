@@ -8,7 +8,7 @@ import java.util.Random;
  * 中英文图片验证码生成 util
  *
  * @author CNY
- * @date 2019年07月18日 19:51
+ * @since 2019年07月18日 19:51
  */
 public class VerifyCodeUtil {
     // 验证码字符集
