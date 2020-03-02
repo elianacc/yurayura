@@ -7,3 +7,19 @@
 @import '/plugins/BootSideMenu.css';
 @import '/plugins/metisMenu.min.css';
 @import '/plugins/bootstrap-datepicker.standalone.min.css';
+
+/* 吐司样式重写 */
+.toast-success {
+    background-color: #28a745;
+}
+
+.toast-error {
+    background-color: #dc3545;
+}
+
+/* 文件浏览样式重写 */
+.custom-file-label::after {
+    color: #fff;
+    content: "浏览";
+    background-color: #007bff;
+}

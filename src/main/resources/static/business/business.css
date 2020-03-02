@@ -184,23 +184,7 @@
     border-bottom-right-radius: 0rem;
 }
 
-/* 文件浏览样式改变 */
-.custom-file-label::after {
-    color: #fff;
-    content: "浏览图片";
-    background-color: #007bff;
-}
-
-/* 吐司样式改变 */
-.toast-success {
-    background-color: #28a745;
-}
-
-.toast-error {
-    background-color: #dc3545;
-}
-
-/* 返回顶部按钮样式 */
+/* 返回顶部按钮 */
 #scrollUp {
     background-image: url("../images/top.png");
     bottom: 80px;

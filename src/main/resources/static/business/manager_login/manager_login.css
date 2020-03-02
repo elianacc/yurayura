@@ -14,12 +14,3 @@
 	width: 6rem;
 	height: 6rem;
 }
-
-/* 吐司样式改变 */
-.toast-success {
-	background-color: #28a745;
-}
-
-.toast-error {
-	background-color: #dc3545;
-}

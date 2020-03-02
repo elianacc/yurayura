@@ -1,67 +1,177 @@
-<!-- container -->
-<div class="container" data-th-fragment="container" id="container" v-show="isContainerShow">
+<div data-th-fragment="manager_login_fragment">
 
-    <!-- 标图row -->
-    <div class="row mt-5">
-        <div class="col-2 offset-5">
-            <img src="/images/github.png" class='mx-auto d-block'
-                 width='50' height='50'/>
+    <style>
+        body {
+            background: #f8f8f8;
+        }
+
+        .container {
+            width: 992px;
+        }
+
+        .mt-7 {
+            margin-top: 12rem !important;
+        }
+
+        .spinner-grow {
+            width: 6rem;
+            height: 6rem;
+        }
+    </style>
+
+    <!-- container -->
+    <div class="container" id="container" v-show="isContainerShow">
+
+        <!-- 标图row -->
+        <div class="row mt-5">
+            <div class="col-2 offset-5">
+                <img src="/images/github.png" class='mx-auto d-block'
+                     width='50' height='50'/>
+            </div>
         </div>
-    </div>
 
-    <!-- 标题row -->
-    <div class="row mt-4">
-        <div class="col-4 offset-4">
-            <h4 class='lead text-center'>Yura~yura后台登入</h4>
+        <!-- 标题row -->
+        <div class="row mt-4">
+            <div class="col-4 offset-4">
+                <h4 class='lead text-center'>Yura~yura后台登入</h4>
+            </div>
         </div>
-    </div>
 
-    <!-- 管理员登入表单row -->
-    <div class="row mt-3">
-        <div class="col-4 offset-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <form id="managerLoginForm" method="post">
-                        <div class="form-group">
-                            <label for="managerName" class='font-size-14'>管理用户名</label>
-                            <input name="managerName" type="text" class="form-control"
-                                   :class="{'is-invalid':isInValid[0]}"
-                                   id="managerName" placeholder="" v-model="managerName"/>
-                            <div class="invalid-feedback">{{isInValidText[0]}}</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="managerPassword" class='font-size-14'>密码</label>
-                            <input type="password" class="form-control"
-                                   :class="{'is-invalid':isInValid[1]}"
-                                   id="managerPassword" placeholder="" v-model="managerPassword"/>
-                            <div class="invalid-feedback">{{isInValidText[1]}}</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="verifyCode" class='font-size-14'>验证码</label>
-                            <div class='row pl-3'>
-                                <input name="verifyCode" type="text" class="form-control col-7"
-                                       :class="{'is-invalid':isInValid[2]}"
-                                       id="verifyCode" placeholder="" v-model="verifyCode"/>
-                                <div class="col-5">
-                                    <img id="verifyImage" src="/sys/manager/getVerifyCode"
-                                         @click="loadVerifyImage"/>
+        <!-- 管理员登入表单row -->
+        <div class="row mt-3">
+            <div class="col-4 offset-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form id="managerLoginForm" method="post">
+                            <div class="form-group">
+                                <label for="managerName" class='font-size-14'>管理用户名</label>
+                                <input name="managerName" type="text" class="form-control"
+                                       :class="{'is-invalid':isInValid[0]}"
+                                       id="managerName" placeholder="" v-model="managerName"/>
+                                <div class="invalid-feedback">{{isInValidText[0]}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="managerPassword" class='font-size-14'>密码</label>
+                                <input type="password" class="form-control"
+                                       :class="{'is-invalid':isInValid[1]}"
+                                       id="managerPassword" placeholder="" v-model="managerPassword"/>
+                                <div class="invalid-feedback">{{isInValidText[1]}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="verifyCode" class='font-size-14'>验证码</label>
+                                <div class='row pl-3'>
+                                    <input name="verifyCode" type="text" class="form-control col-7"
+                                           :class="{'is-invalid':isInValid[2]}"
+                                           id="verifyCode" placeholder="" v-model="verifyCode"/>
+                                    <div class="col-5">
+                                        <img id="verifyImage" src="/sys/manager/getVerifyCode"
+                                             @click="loadVerifyImage"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-block mt-4 pr-4"
-                                @click="loginBusiness">
-                            <i class='fa fa-sign-in fa-lg'></i>&nbsp;&nbsp;登入
-                        </button>
-                    </form>
+                            <button type="button" class="btn btn-primary btn-block mt-4 pr-4"
+                                    @click="loginBusiness">
+                                <i class='fa fa-sign-in fa-lg'></i>&nbsp;&nbsp;登入
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
+    <!-- 登入过渡 -->
+    <div class="d-flex align-items-center justify-content-center flex-column mt-7" data-th-fragment="spinner"
+         id="spinner">
+        <div class="spinner-grow text-info" v-show="isSpinnerShow"></div>
+        <p class="spinner-txt lead font-size-20 mt-3" v-show="isSpinnerShow">登入中...</p>
+    </div>
 
-<!-- 登入过渡 -->
-<div class="d-flex align-items-center justify-content-center flex-column mt-7" data-th-fragment="spinner" id="spinner">
-    <div class="spinner-grow text-info" v-show="isSpinnerShow"></div>
-    <p class="spinner-txt lead font-size-20 mt-3" v-show="isSpinnerShow">登入中...</p>
+    <script>
+        var managerLoginThat = this;
+
+        const containerVm = new Vue({
+            el: "#container",
+            data: {
+                isContainerShow: true,
+                managerName: "",
+                managerPassword: "",
+                verifyCode: "",
+                isInValid: [
+                    false,
+                    false,
+                    false
+                ],
+                isInValidText: [
+                    "用户名不能为空",
+                    "密码不能为空"
+                ]
+            },
+            methods: {
+                validataForm: function () {
+                    if (this.managerName == "") {
+                        Vue.set(this.isInValid, 0, true);
+                        return false;
+                    } else if (this.managerPassword == "") {
+                        Vue.set(this.isInValid, 1, true);
+                        return false;
+                    } else if (this.verifyCode == "") {
+                        Vue.set(this.isInValid, 2, true);
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                loginBusiness: function () {
+                    if (this.validataForm()) {
+                        $("#managerLoginForm").ajaxSubmit({
+                            url: "/sys/manager/login",
+                            data: {managerPassword: Base64.encode(this.managerPassword)},
+                            type: "post",
+                            success: function (res) {
+                                if (res.code == 100) {
+                                    containerVm.loadVerifyImage();
+                                    toastr.error(res.msg);
+                                } else if (res.code == 101) {
+                                    console.log(res.msg);
+                                } else {
+                                    containerVm.isContainerShow = false;
+                                    spinnerVm.isSpinnerShow = true;
+                                    setTimeout(function () {
+                                        location.replace("/business/comic_info");
+                                    }, 3000);
+                                }
+                            }
+                        });
+                    }
+                },
+                loadVerifyImage: function () {
+                    document.getElementById("verifyImage").src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
+                }
+            },
+            watch: {
+                managerName: function () {
+                    Vue.set(this.isInValid, 0, false);
+                },
+                managerPassword: function () {
+                    Vue.set(this.isInValid, 1, false);
+                },
+                verifyCode: function () {
+                    Vue.set(this.isInValid, 2, false);
+                }
+            },
+            mounted: function () {
+                managerLoginThat.initToastr();
+            }
+        });
+
+        const spinnerVm = new Vue({
+            el: "#spinner",
+            data: {
+                isSpinnerShow: false
+            }
+        });
+    </script>
+
 </div>

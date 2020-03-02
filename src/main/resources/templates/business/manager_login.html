@@ -5,17 +5,14 @@
     <title>管理员登入 - (●'◡'●)ﾉ♥</title>
     <link href="/images/yura.ico" rel="icon">
     <link href="/app.css" rel="stylesheet">
-    <link href="/business/manager_login/manager_login.css" rel="stylesheet">
 </head>
 <body>
-
-<div th:replace="fragments/business/manager_login_fragment :: container"></div>
-<div th:replace="fragments/business/manager_login_fragment :: spinner"></div>
 
 <!-- WEB SITE JS -->
 <script src="/app.js"></script>
 <script src="/comment.js"></script>
-<script src="/business/manager_login/manager_login.js"></script>
+
+<div th:replace="fragments/business/manager_login_fragment :: manager_login_fragment"></div>
 
 </body>
 </html>
