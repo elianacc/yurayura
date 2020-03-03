@@ -5,20 +5,17 @@
     <title>Yura~yura~后台管理 - (●'◡'●)ﾉ♥</title>
     <link href="/images/yura.ico" rel="icon">
     <link href="/app.css" rel="stylesheet">
-    <link href="/business/business.css" rel="stylesheet">
+    <link href="/business.css" rel="stylesheet">
 </head>
 <body>
-
-<div th:replace="fragments/business/business_navbar_fragment :: navbar"></div>
-<div th:replace="fragments/business/business_sidemenu_fragment :: sidemenu"></div>
-<div th:replace="fragments/business/comic_info_fragment :: container"></div>
 
 <!-- WEB SITE JS -->
 <script src="/app.js"></script>
 <script src="/comment.js"></script>
-<script src="/business/business_navbar.js"></script>
-<script src="/business/business_sidemenu.js"></script>
-<script src="/business/comic_info/comic_info.js"></script>
+
+<div th:replace="fragments/business/business_navbar_fragment :: business_navbar_fragment"></div>
+<div th:replace="fragments/business/business_sidemenu_fragment :: business_sidemenu_fragment"></div>
+<div th:replace="fragments/business/comic_info_fragment :: comic_info_fragment"></div>
 
 </body>
 </html>

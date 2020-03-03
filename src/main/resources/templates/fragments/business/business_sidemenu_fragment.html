@@ -1,32 +1,127 @@
-<!-- BootSideMenu -->
-<div id="bootsidemenu" data-th-fragment="sidemenu" xmlns:th="http://www.thymeleaf.org">
-    <!-- BootSideMenu头部 -->
-    <div class="side-user text-white p-1">
-        <img src="/images/xiaomai.jpg"
-             class="img-thumbnail rounded" width="23%"/>
-        <span class="ml-3 font-weight-bold" th:text="'管理员：'+${session.managerSession.managerName}"></span>
-    </div>
-    <!-- metismenu -->
-    <nav class="sidebar-nav">
-        <ul class="metismenu" id="metismenu">
-            <li class="mm-active font-size-14">
-                <a class="has-arrow"
-                   href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;番剧管理</a>
-                <ul>
-                    <li><a :href="sideMenuUrl.menuA[0]">
-                        <i class="fa fa-github-alt fa-lg"></i>&nbsp;&nbsp;番剧信息管理</a></li>
-                    <li><a :href="sideMenuUrl.menuA[1]">
-                        <i class="fa fa-bar-chart fa-lg"></i>&nbsp;&nbsp;番剧用户数据管理</a></li>
+<div data-th-fragment="business_sidemenu_fragment" xmlns:th="http://www.thymeleaf.org">
 
-                </ul>
-            </li>
-            <li class="mm-active font-size-14">
-                <a class="has-arrow" href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;用户管理</a>
-                <ul>
-                    <li><a :href="sideMenuUrl.menuB[0]">
-                        <i class="fa fa-address-card fa-lg"></i>&nbsp;&nbsp;用户信息管理</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+    <style>
+        /* bootsidemenu样式重写 */
+        #bootsidemenu {
+            width: 255px;
+            background: #1c2938;
+        }
+
+        #bootsidemenu .side-user {
+            background: #1c2938;
+        }
+
+        #bootsidemenu .toggler {
+            background: #1c2938;
+        }
+
+        /* metisMenu */
+        .sidebar-nav .metismenu {
+            background: #1c2938;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .sidebar-nav ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            background: #15202b;
+        }
+
+        .sidebar-nav .metismenu li:first-child {
+            margin-top: 0px;
+        }
+
+        .sidebar-nav .metismenu > li {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .sidebar-nav .metismenu a {
+            position: relative;
+            display: block;
+            padding: 13px 15px;
+            color: #adb5bd;
+            outline-width: 0;
+            transition: all .3s ease-out;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        .sidebar-nav .metismenu a:hover, .sidebar-nav .metismenu a:focus,
+        .sidebar-nav .metismenu a:active {
+            color: #f8f9fa;
+            text-decoration: none;
+            background: #0b7285;
+        }
+    </style>
+
+    <!-- BootSideMenu -->
+    <div id="bootsidemenu">
+        <!-- BootSideMenu头部 -->
+        <div class="side-user text-white p-1">
+            <img src="/images/xiaomai.jpg"
+                 class="img-thumbnail rounded" width="23%"/>
+            <span class="ml-3 font-weight-bold" th:text="'管理员：'+${session.managerSession.managerName}"></span>
+        </div>
+        <!-- metismenu -->
+        <nav class="sidebar-nav">
+            <ul class="metismenu" id="metismenu">
+                <li class="mm-active font-size-14">
+                    <a class="has-arrow"
+                       href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;番剧管理</a>
+                    <ul>
+                        <li><a :href="sideMenuUrl.menuA[0]">
+                            <i class="fa fa-github-alt fa-lg"></i>&nbsp;&nbsp;番剧信息管理</a></li>
+                        <li><a :href="sideMenuUrl.menuA[1]">
+                            <i class="fa fa-bar-chart fa-lg"></i>&nbsp;&nbsp;番剧用户数据管理</a></li>
+
+                    </ul>
+                </li>
+                <li class="mm-active font-size-14">
+                    <a class="has-arrow" href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;用户管理</a>
+                    <ul>
+                        <li><a :href="sideMenuUrl.menuB[0]">
+                            <i class="fa fa-address-card fa-lg"></i>&nbsp;&nbsp;用户信息管理</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        var bsnsSideMenuThat = this;
+
+        const sidemenuVm = new Vue({
+            el: "#bootsidemenu",
+            data: {
+                sideMenuUrl: {
+                    menuA: [
+                        "/business/comic_info",
+                        "/business/comic_user_data"
+                    ],
+                    menuB: [
+                        "/business/user_info"
+                    ]
+                }
+            },
+            mounted: function () {
+                bsnsSideMenuThat.initSideMenu();
+                bsnsSideMenuThat.initMetisMenu();
+            }
+        });
+    </script>
+
 </div>

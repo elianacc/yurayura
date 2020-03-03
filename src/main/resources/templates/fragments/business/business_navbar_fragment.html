@@ -1,10 +1,62 @@
-<!-- 置顶导航 -->
-<nav class="navbar navbar-dark bg-twitternav fixed-top" data-th-fragment="navbar" id="navbar">
-    <span class="navbar-brand mb-0 h1">Yura~yura后台管理系统</span>
-    <form class="form-inline">
-        <button class="btn btn-danger font-weight-bold ml-2" type="button"
-                @click="logoutManager">
-            <i class="fa fa-power-off fa-lg"></i>&nbsp;&nbsp;注销
-        </button>
-    </form>
-</nav>
+<div data-th-fragment="business_navbar_fragment">
+
+    <style>
+        /* 推特色导航背景 */
+        .bg-twitternav {
+            background-color: #1c2938;
+        }
+    </style>
+
+    <!-- 置顶导航 -->
+    <nav class="navbar navbar-dark bg-twitternav fixed-top" id="navbar">
+        <span class="navbar-brand mb-0 h1">Yura~yura后台管理系统</span>
+        <form class="form-inline">
+            <button class="btn btn-danger font-weight-bold ml-2" type="button"
+                    @click="logoutManager">
+                <i class="fa fa-power-off fa-lg"></i>&nbsp;&nbsp;注销
+            </button>
+        </form>
+    </nav>
+
+    <script>
+        const navbarVm = new Vue({
+            el: "#navbar",
+            methods: {
+                logoutManager: function () {
+                    bootbox.confirm({
+                        size: "small",
+                        title: "<i class='fa fa-comment'></i>&nbsp;&nbsp;提示",
+                        message: "确定要注销吗？",
+                        buttons: {
+                            confirm: {
+                                label: '确定',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: '取消',
+                                className: 'btn-danger'
+                            }
+                        },
+                        backdrop: true,
+                        closeButton: false,
+                        callback: function (result) {
+                            if (result == true) {
+                                $.ajax({
+                                    url: "/sys/manager/logout",
+                                    data: null,
+                                    type: "post",
+                                    success: function (res) {
+                                        if (res.code == 200) {
+                                            location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+</div>
