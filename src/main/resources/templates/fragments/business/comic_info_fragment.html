@@ -58,28 +58,30 @@
 
         <!-- 操作按钮row -->
         <div class="row mt-5 r1">
-            <div class="col-5 offset-2 mt-4 c1">
+            <div class="col-2 offset-2 mt-4 c1">
                 <div class="btn-group float-left">
                     <button type="button"
-                            class="btn btn-dark btn-twitter font-weight-bold"
+                            class="btn btn-dark btn-twitter btn-sm font-weight-bold"
                             @click="insertModalOpen">
                         <i class="fa fa-plus-circle fa-lg"></i>&nbsp;&nbsp;添加
                     </button>
                     <button type="button"
-                            class="btn btn-dark btn-twitter font-weight-bold"
+                            class="btn btn-dark btn-twitter btn-sm font-weight-bold"
                             @click="deleteBetch">
                         <i class='fa fa-trash fa-lg'></i>&nbsp;&nbsp;批量删除
                     </button>
                 </div>
             </div>
             <div class="col-4 offset-1 mt-4">
-                <div class="input-group w-75 float-right">
-                    <input type="search" class="form-control" placeholder="请输入番剧名(｡・`ω´･)"
-                           id="searchWord" v-model="searchWord"/>
+                <div class="input-group input-group-sm w-75 float-right">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">番剧名:</span>
+                    </div>
+                    <input type="search" class="form-control" id="searchWord" v-model="searchWord"/>
                     <div class="input-group-append">
-                        <button class="btn btn-primary font-weight-bold" type="button"
+                        <button class="btn btn-dark btn-twitter btn-sm font-weight-bold" type="button"
                                 @click="searchContent">
-                            <i class="fa fa-search fa-lg"></i>&nbsp;&nbsp;搜索
+                            <i class="fa fa-search fa-lg"></i>&nbsp;&nbsp;查询
                         </button>
                     </div>
                 </div>
@@ -127,17 +129,17 @@
                         <td class="font-size-12 text-center align-middle">{{item.comicLabel | cmLabelFilter}}</td>
                         <td class="font-size-12 text-center align-middle">{{item.comicTime}}</td>
                         <td class="text-center align-middle">
-                            <button type="button" class="btn btn-warning font-size-14 text-light"
+                            <button type="button" class="btn btn-warning btn-sm font-size-14 text-light"
                                     @click="detailModalOpen(item.id)">
                                 <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;详情
                             </button>
                             <br/><br/>
-                            <button type="button" class="btn btn-primary font-size-14"
+                            <button type="button" class="btn btn-primary btn-sm font-size-14"
                                     @click="updateModalOpen(item.id)">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
                             </button>
                             <br/><br/>
-                            <button type="button" class="btn btn-danger font-size-14"
+                            <button type="button" class="btn btn-danger btn-sm font-size-14"
                                     @click="deleteContent(item.id)">
                                 <i class="fa fa-trash-o"></i>&nbsp;&nbsp;删除
                             </button>
@@ -537,7 +539,7 @@
                     $("#comicModal").modal();
                 },
                 insertContent: function () {
-                    if (this.comicName == "") {
+                    if (this.comicName.trim() == "") {
                         toastr.error("番剧名不能为空");
                     } else if (this.comicContent.length >= 500) {
                         toastr.error("内容不能超过500个字符");
@@ -666,7 +668,7 @@
                     this.detlAndUpdtModalSetVal(id);
                 },
                 updateContent: function () {
-                    if (this.comicName == "") {
+                    if (this.comicName.trim() == "") {
                         toastr.error("番剧名不能为空");
                     } else if (this.comicContent.length >= 500) {
                         toastr.error("内容不能超过500个字符");

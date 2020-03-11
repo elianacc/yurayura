@@ -111,13 +111,13 @@
             },
             methods: {
                 validataForm: function () {
-                    if (this.managerName == "") {
+                    if (this.managerName.trim() == "") {
                         Vue.set(this.isInValid, 0, true);
                         return false;
-                    } else if (this.managerPassword == "") {
+                    } else if (this.managerPassword.trim() == "") {
                         Vue.set(this.isInValid, 1, true);
                         return false;
-                    } else if (this.verifyCode == "") {
+                    } else if (this.verifyCode.trim() == "") {
                         Vue.set(this.isInValid, 2, true);
                         return false;
                     } else {
