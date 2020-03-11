@@ -1,58 +1,5 @@
 <div data-th-fragment="comic_info_fragment">
 
-    <style>
-        /* 番剧图片 */
-        .r2 .c1 .table-cmimg {
-            width: 165px;
-            height: 217px;
-        }
-
-        /* 番剧内容p */
-        .r2 .c1 .table-cmcontent {
-            line-height: 16px;
-            height: 224px;
-            overflow: hidden;
-        }
-
-        /* 番剧图片遮罩 */
-        .box {
-            width: 165px;
-            height: 217px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .box .bmbox {
-            width: 165px;
-            height: 217px;
-            background: black;
-            position: absolute;
-            bottom: 35px;
-            left: 12px;
-            display: none;
-            font-size: 18px;
-            color: white;
-            text-align: center;
-            padding-top: 70px;
-            border-radius: .25rem;
-        }
-
-        .box:hover .bmbox {
-            width: 165px;
-            height: 217px;
-            background: rgba(0, 0, 0, 0.5);
-            position: absolute;
-            bottom: 35px;
-            left: 12px;
-            display: block;
-            font-size: 12px;
-            color: white;
-            text-align: center;
-            padding-top: 70px;
-            border-radius: .25rem;
-        }
-    </style>
-
     <!-- container -->
     <div class="container p-0" id="container">
 
@@ -878,5 +825,58 @@
             return subContent + "...";
         });
     </script>
+
+    <style>
+        /* 番剧图片 */
+        .r2 .c1 .table-cmimg {
+            width: 165px;
+            height: 217px;
+        }
+
+        /* 番剧内容p */
+        .r2 .c1 .table-cmcontent {
+            line-height: 16px;
+            height: 224px;
+            overflow: hidden;
+        }
+
+        /* 番剧图片遮罩 */
+        .box {
+            width: 165px;
+            height: 217px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .box .bmbox {
+            width: 165px;
+            height: 217px;
+            background: black;
+            position: absolute;
+            bottom: 35px;
+            left: 12px;
+            display: none;
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            padding-top: 70px;
+            border-radius: .25rem;
+        }
+
+        .box:hover .bmbox {
+            width: 165px;
+            height: 217px;
+            background: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            bottom: 35px;
+            left: 12px;
+            display: block;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            padding-top: 70px;
+            border-radius: .25rem;
+        }
+    </style>
 
 </div>
