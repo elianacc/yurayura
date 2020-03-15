@@ -37,6 +37,6 @@
 /* 文件浏览样式重写 */
 .custom-file-label::after {
     color: #fff;
-    content: "浏览";
+    content: "浏览文件";
     background-color: #007bff;
 }

@@ -149,14 +149,14 @@ public class ComicController {
     @ApiOperation("批量删除番剧（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
     public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdsList = new ArrayList<>();
-        String[] delIdsArr = ids.split(",");
-        for (String delIdsStr : delIdsArr) {
-            delIdsList.add(Integer.parseInt(delIdsStr));
+        List<Integer> delIdList = new ArrayList<>();
+        String[] delIdArr = ids.split(",");
+        for (String delIdStr : delIdArr) {
+            delIdList.add(Integer.parseInt(delIdStr));
         }
-        List<Comic> delComicList = iComicService.listByIds(delIdsList);
-        iComicService.removeByIds(delIdsList);
-        iComicUserDataService.deleteBatchByComicId(delIdsList);
+        List<Comic> delComicList = iComicService.listByIds(delIdList);
+        iComicService.removeByIds(delIdList);
+        iComicUserDataService.deleteBatchByComicId(delIdList);
         for (Comic comic : delComicList) {
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {

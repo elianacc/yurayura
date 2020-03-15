@@ -24,7 +24,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">番剧名:</span>
                     </div>
-                    <input type="search" class="form-control" id="searchWord" v-model="searchWord"/>
+                    <input type="search" class="form-control" v-model="searchComicName"/>
                     <div class="input-group-append">
                         <button class="btn btn-dark btn-twitter btn-sm font-weight-bold" type="button"
                                 @click="searchContent">
@@ -56,8 +56,7 @@
                         <td>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input"
-                                       :id="'customCheck-'+ index"
-                                       :value="item.id" v-model="ids"/>
+                                       :id="'customCheck-'+ index" :value="item.id" v-model="ids"/>
                                 <label class="custom-control-label" :for="'customCheck-'+ index"></label>
                             </div>
                         </td>
@@ -160,19 +159,18 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group d-none">
-                                <label for="id" class="col-form-label"> id：</label>
-                                <input type="text" class="form-control" id="id"
-                                       name="id" v-model="id"/>
+                                <label class="col-form-label"> id：</label>
+                                <input type="text" class="form-control" name="id" v-model="id"/>
                             </div>
                             <div class="form-group">
-                                <label for="comicName" class="col-form-label"> 番剧名：</label>
-                                <input type="text" class="form-control" id="comicName" name="comicName"
+                                <label class="col-form-label"> 番剧名：</label>
+                                <input type="text" class="form-control" name="comicName"
                                        placeholder="请输入番剧名字" v-model="comicName" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
-                                <label for="comicTime" class="col-form-label">时间：</label>
+                                <label class="col-form-label">时间：</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control datepicker" id="comicTime"
+                                    <input type="text" class="form-control datepicker"
                                            name="comicTime" placeholder="0000-00-00" v-model="comicTime"
                                            :disabled="isDetailModal"/>
                                     <div class="input-group-append">
@@ -181,10 +179,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="comicContent" class="col-form-label">简介：</label>
-                                <textarea class="form-control" id="comicContent"
-                                          name="comicContent" placeholder="请输入简介" v-model="comicContent"
-                                          rows="6" :disabled="isDetailModal"></textarea>
+                                <label class="col-form-label">简介：</label>
+                                <textarea class="form-control" name="comicContent" placeholder="请输入简介" rows="6"
+                                          v-model="comicContent" :disabled="isDetailModal"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">状态：</label>
@@ -202,8 +199,8 @@
                                 </div>
                             </div>
                             <div class="form-group" v-show="isUdTimeShow">
-                                <label for="comicUdTime" class="col-form-label">更新时间：</label>
-                                <select class="form-control" name="comicUdTime" id="comicUdTime" v-model="comicUdTime"
+                                <label class="col-form-label">更新时间：</label>
+                                <select class="form-control" name="comicUdTime" v-model="comicUdTime"
                                         :disabled="isDetailModal">
                                     <option value="" selected disabled>----请选择更新时间----</option>
                                     <option value="1">周一更新</option>
@@ -216,10 +213,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="comicCurrentEpisodes" class="col-form-label"> 当前话数：</label>
-                                <input type="number" class="form-control" id="comicCurrentEpisodes"
-                                       name="comicCurrentEpisodes"
-                                       placeholder="请输入当前话数" v-model="comicCurrentEpisodes" :disabled="isDetailModal"/>
+                                <label class="col-form-label"> 当前话数：</label>
+                                <input type="number" class="form-control" name="comicCurrentEpisodes"
+                                       placeholder="请输入当前话数" v-model="comicCurrentEpisodes"
+                                       :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">标签：</label><br/>
@@ -330,41 +327,38 @@
                                 <label class="col-form-label">自定义标签：</label>
                                 <div class='row'>
                                     <input type="text" class="form-control col-2 ml-3"
-                                           id="freeLabel1" name="freelabel" placeholder="标签一" v-model="freeLabelA"
+                                           name="freelabel" placeholder="标签一" v-model="freeLabelA"
                                            :disabled="isDetailModal"/>
-                                    <input type="text" class="form-control col-2 offset-1" id="freeLabel2"
+                                    <input type="text" class="form-control col-2 offset-1"
                                            name="freelabel" placeholder="标签二" v-model="freeLabelB"
                                            :disabled="isDetailModal"/>
-                                    <input type="text"
-                                           class="form-control col-2 offset-1"
-                                           id="freeLabel3"
+                                    <input type="text" class="form-control col-2 offset-1"
                                            name="freelabel" placeholder="标签三" v-model="freeLabelC"
                                            :disabled="isDetailModal"/>
                                     <input type="text"
-                                           class="form-control col-2 offset-1" id="freeLabel4"
+                                           class="form-control col-2 offset-1"
                                            name="freelabel" placeholder="标签四" v-model="freeLabelD"
                                            :disabled="isDetailModal"/>
                                 </div>
                             </div>
                             <div class="form-group d-none">
-                                <label for="comicLabel" class="col-form-label">标签汇总：</label>
-                                <input type="text" class="form-control" id="comicLabel"
+                                <label class="col-form-label">标签汇总：</label>
+                                <input type="text" class="form-control"
                                        name="comicLabel" v-model="comicLabel"/>
                             </div>
                             <div class="form-group">
-                                <label for="cmImgFile" class="col-form-label">上传图片：</label>
+                                <label class="col-form-label">上传图片：</label>
                                 <div class="custom-file" v-show="!isDetailModal">
-                                    <input type="file" class="custom-file-input" id="cmImgFile"
+                                    <input type="file" class="custom-file-input"
                                            name="cmImgFile" @change="cmImgFileChange"/>
-                                    <label class="custom-file-label"
-                                    >{{cmImgFileLb}}</label>
+                                    <label class="custom-file-label">{{cmImgFileLb}}</label>
                                 </div>
                                 <br/> <br/>
                                 <img :src="cmImgFilePv" class="rounded" width="30%"/>
                             </div>
                             <div class="form-group">
-                                <label for="comicLink" class="col-form-label">观看地址：</label>
-                                <input type="url" class="form-control" id="comicLink" name="comicLink"
+                                <label class="col-form-label">观看地址：</label>
+                                <input type="url" class="form-control" name="comicLink"
                                        placeholder="请输入观看地址" v-model="comicLink" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
@@ -409,7 +403,7 @@
         const containerVm = new Vue({
             el: "#container",
             data: {
-                searchWord: "",
+                searchComicName: "",
                 ids: [],
                 nowPageNum: 1,
                 pageInfo: "",
@@ -554,7 +548,7 @@
                         url: "/comic/getPageByName",
                         data: {
                             pageNum: this.nowPageNum,
-                            comicName: this.searchWord
+                            comicName: this.searchComicName
                         },
                         type: "post",
                         success: function (res) {
@@ -691,7 +685,7 @@
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            $("#cmImgFile").val("");
+                            $("input[name='cmImgFile']").val("");
                         } else if ((file.size).toFixed(2) >= 102400) {
                             toastr.error("图片不能超过100KB");
                             if (this.isInsertModal) {
@@ -701,7 +695,7 @@
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            $("#cmImgFile").val("");
+                            $("input[name='cmImgFile']").val("");
                         } else {
                             this.cmImgFileLb = fileName;
                             let reader = new FileReader();
@@ -739,7 +733,7 @@
                         containerVm.comicLink = "";
                         containerVm.comicShelfStatus = 1;
                         $(".datepicker").datepicker('clearDates');
-                        $("#cmImgFile").val("");
+                        $("input[name='cmImgFile']").val("");
                     });
                 },
                 scrollUp: function () {
@@ -799,7 +793,8 @@
         });
 
         Vue.filter("cmStatusFilter", function (status, currentEpisodes) {
-            let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新', '更新中'];
+            let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新'
+                , '更新中'];
             for (let i = 0; i < arrCmStatus.length; i++) {
                 if (status == 0) {
                     return arrCmStatus[i] + "：全" + currentEpisodes + "话";

@@ -32,7 +32,7 @@ function initSideMenu() {
 
 //metisMenu初始化方法
 function initMetisMenu() {
-    $("#metismenu").metisMenu({toggle: false});
+    $(".metismenu").metisMenu({toggle: false});
 }
 
 //bootstrap-datepicker初始化方法
