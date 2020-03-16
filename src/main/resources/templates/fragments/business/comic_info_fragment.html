@@ -168,7 +168,7 @@
                                        placeholder="请输入番剧名字" v-model="comicName" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">时间：</label>
+                                <label class="col-form-label"> 时间：</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control datepicker"
                                            name="comicTime" placeholder="0000-00-00" v-model="comicTime"
@@ -179,12 +179,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">简介：</label>
+                                <label class="col-form-label"> 简介：</label>
                                 <textarea class="form-control" name="comicContent" placeholder="请输入简介" rows="6"
                                           v-model="comicContent" :disabled="isDetailModal"></textarea>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">状态：</label>
+                                <label class="col-form-label"> 状态：</label>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="comicStatus1" name="comicStatus"
                                            class="custom-control-input" value="0" v-model="comicStatus"
@@ -199,7 +199,7 @@
                                 </div>
                             </div>
                             <div class="form-group" v-show="isUdTimeShow">
-                                <label class="col-form-label">更新时间：</label>
+                                <label class="col-form-label"> 更新时间：</label>
                                 <select class="form-control" name="comicUdTime" v-model="comicUdTime"
                                         :disabled="isDetailModal">
                                     <option value="" selected disabled>----请选择更新时间----</option>
@@ -219,7 +219,7 @@
                                        :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">标签：</label><br/>
+                                <label class="col-form-label"> 标签：</label><br/>
                                 <div class="custom-control custom-checkbox custom-control-inline">
                                     <input type="checkbox" class="custom-control-input"
                                            id="comicTag1" value="热血" name="comicTag" v-model="comicTag"
@@ -324,7 +324,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">自定义标签：</label>
+                                <label class="col-form-label"> 自定义标签：</label>
                                 <div class='row'>
                                     <input type="text" class="form-control col-2 ml-3"
                                            name="freelabel" placeholder="标签一" v-model="freeLabelA"
@@ -342,12 +342,12 @@
                                 </div>
                             </div>
                             <div class="form-group d-none">
-                                <label class="col-form-label">标签汇总：</label>
+                                <label class="col-form-label"> 标签汇总：</label>
                                 <input type="text" class="form-control"
                                        name="comicLabel" v-model="comicLabel"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">上传图片：</label>
+                                <label class="col-form-label"> 上传图片：</label>
                                 <div class="custom-file" v-show="!isDetailModal">
                                     <input type="file" class="custom-file-input"
                                            name="cmImgFile" @change="cmImgFileChange"/>
@@ -357,12 +357,12 @@
                                 <img :src="cmImgFilePv" class="rounded" width="30%"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">观看地址：</label>
+                                <label class="col-form-label"> 观看地址：</label>
                                 <input type="url" class="form-control" name="comicLink"
                                        placeholder="请输入观看地址" v-model="comicLink" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">上架状态：</label>
+                                <label class="col-form-label"> 上架状态：</label>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="comicShelfStatus1" name="comicShelfStatus"
                                            class="custom-control-input" value="1" v-model="comicShelfStatus"

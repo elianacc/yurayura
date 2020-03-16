@@ -35,7 +35,8 @@ public class SwaggerConfig {
                         .title("Yura-Yura API")
                         .description("Yura-Yura swagger在线api文档")
                         .version("11.0.1-SNAPSHOT")
-                        .contact(new Contact("EliaNaCc", "https://github.com/elianacc/yurayura", "438507003@qq.com"))
+                        .contact(new Contact("EliaNaCc", "https://github.com/elianacc/yurayura"
+                                , "438507003@qq.com"))
                         .license("Apache License")
                         .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                         .build()).enable(swaggerEnable);

@@ -76,8 +76,9 @@ public class ComicController {
     @PreventRepeatSubmit(prefix = "comicInsert")
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    public ApiResult insert(ComicInstAndUpdtDTO dto,
-                            @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
+    public ApiResult insert(ComicInstAndUpdtDTO dto
+            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile)
+            throws IOException {
 
         Integer comicStatus = dto.getComicStatus();
         // 有更新时间,更新状态为更新时间
@@ -191,8 +192,9 @@ public class ComicController {
     @PreventRepeatSubmit(prefix = "comicUpdate")
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    public ApiResult update(ComicInstAndUpdtDTO dto,
-                            @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) throws IOException {
+    public ApiResult update(ComicInstAndUpdtDTO dto
+            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile)
+            throws IOException {
 
         Integer comicStatus = dto.getComicStatus();
         // 有更新时间,更新状态为更新时间

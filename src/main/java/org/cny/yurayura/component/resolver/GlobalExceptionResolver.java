@@ -43,7 +43,8 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         if (exception instanceof CustomizeException) {
             CustomizeException customizeException = (CustomizeException) exception;
 
-            errorMsg = "自定义异常 - " + "errorCode:" + customizeException.getErrorCode() + ",errorMsg:" + customizeException.getErrorMsg() + "\r\n"
+            errorMsg = "自定义异常 - " + "errorCode:" + customizeException.getErrorCode()
+                    + ",errorMsg:" + customizeException.getErrorMsg() + "\r\n"
                     + ExceptionUtils.getStackTrace(customizeException);
         } else {
             // 异常为系统异常

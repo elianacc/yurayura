@@ -54,7 +54,8 @@ public class ManagerController {
      */
     @GetMapping("/getVerifyCode")
     @ApiOperation("获取数字加英文验证码图片")
-    public void getVerifyCode(@ApiIgnore HttpServletResponse response, @ApiIgnore HttpSession session) throws IOException {
+    public void getVerifyCode(@ApiIgnore HttpServletResponse response, @ApiIgnore HttpSession session)
+            throws IOException {
         // 利用图片工具生成图片
         // 第一个参数是生成的验证码，第二个参数是生成的图片
         Object[] objs = VerifyCodeUtil.createImage();
