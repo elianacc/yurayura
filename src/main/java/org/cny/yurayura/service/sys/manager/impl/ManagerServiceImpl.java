@@ -27,7 +27,6 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         return managerMapper.selectOne(queryWrapper
                 .eq("manager_name", manager.getManagerName())
                 .eq("manager_password", manager.getManagerPassword())
-                .eq("manager_status", ManagerStatusEnum.ENABLE.getStatusId())
-                .last("limit 1"));
+                .eq("manager_status", ManagerStatusEnum.ENABLE.getStatusId()));
     }
 }
