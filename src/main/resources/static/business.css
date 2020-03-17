@@ -3,7 +3,7 @@
 }
 
 .container {
-    width: 1200px;
+    width: 1300px;
 }
 
 /* 推特色内容背景 */
@@ -72,7 +72,7 @@
 /* 返回顶部按钮 */
 #scrollUp {
     background-image: url("images/top.png");
-    bottom: 80px;
+    bottom: 0px;
     right: 20px;
     width: 60px;
     height: 60px;

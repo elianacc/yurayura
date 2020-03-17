@@ -40,3 +40,8 @@
     content: "浏览文件";
     background-color: #007bff;
 }
+
+/* 按钮样式重写 */
+.btn-warning {
+    background-color: #f5b700;
+}
