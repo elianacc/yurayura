@@ -27,19 +27,19 @@ public class UserController {
     private IUserService iUserService;
 
     /**
-     * 分页查询全部用户（管理后台）
+     * 分页查询用户（B端）
      *
      * @param pageNum
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToManage")
-    @ApiOperation("分页查询全部用户（管理后台）")
+    @PostMapping("/getPageToB")
+    @ApiOperation("分页查询用户（B端）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToManage(Integer pageNum) {
+    public ApiResult getPageToB(Integer pageNum) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Object> userPageInfo = iUserService.getPageToManage(pageNum);
+        PageInfo<Object> userPageInfo = iUserService.getPageToB(pageNum);
         if (userPageInfo.getTotal() == 0) {
             return ApiResult.warn("系统数据为空");
         }

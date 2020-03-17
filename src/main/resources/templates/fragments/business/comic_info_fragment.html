@@ -14,8 +14,8 @@
                     </button>
                     <button type="button"
                             class="btn btn-dark btn-twitter btn-sm font-weight-bold"
-                            @click="deleteBetch">
-                        <i class='fa fa-trash fa-lg'></i>&nbsp;&nbsp;批量删除
+                            @click="deleteBatch">
+                        <i class='fa fa-trash fa-lg'></i>&nbsp;&nbsp;删除
                     </button>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <input type="search" class="form-control" v-model="searchComicName"/>
                     <div class="input-group-append">
                         <button class="btn btn-dark btn-twitter btn-sm font-weight-bold" type="button"
-                                @click="searchContent">
+                                @click="selectContent">
                             <i class="fa fa-search fa-lg"></i>&nbsp;&nbsp;查询
                         </button>
                     </div>
@@ -39,7 +39,7 @@
         <div class="row mt-3 r2">
             <div class="col-10 offset-2 c1">
                 <table class="table table-dark table-borderless rounded bg-twittercont">
-                    <thead>
+                    <thead v-show="pageInfo != ''">
                     <tr>
                         <th class="text-center"></th>
                         <th class="text-center font-size-14">图片</th>
@@ -75,7 +75,7 @@
                         <td class="font-size-12 text-center align-middle">{{item.comicLabel | cmLabelFilter}}</td>
                         <td class="font-size-12 text-center align-middle">{{item.comicTime}}</td>
                         <td class="text-center align-middle">
-                            <button type="button" class="btn btn-warning btn-sm font-size-14 text-light"
+                            <button type="button" class="btn btn-info btn-sm font-size-14"
                                     @click="detailModalOpen(item.id)">
                                 <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;详情
                             </button>
@@ -83,11 +83,6 @@
                             <button type="button" class="btn btn-primary btn-sm font-size-14"
                                     @click="updateModalOpen(item.id)">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
-                            </button>
-                            <br/><br/>
-                            <button type="button" class="btn btn-danger btn-sm font-size-14"
-                                    @click="deleteContent(item.id)">
-                                <i class="fa fa-trash-o"></i>&nbsp;&nbsp;删除
                             </button>
                         </td>
                     </tr>
@@ -99,8 +94,9 @@
         <!-- 数据表格信息及分页row -->
         <div class="row mt-4 mb-5 r3">
             <div class="col-2 offset-2">
-			<span class="badge badge-dark bg-twittercont font-size-16"
-                  v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'"></span>
+                <span class="badge badge-dark bg-twittercont font-size-16"
+                      v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo != ''"></span>
+                <span class="badge badge-dark bg-twittercont font-size-16" v-show="pageInfo == ''">共0页/0个</span>
             </div>
 
             <div class="col-8 c2">
@@ -431,18 +427,19 @@
                 cmImgFilePvTmp: ""
             },
             methods: {
-                buildPageComicManage: function () {
+                getPage: function () {
                     $.ajax({
-                        url: "/comic/getPageToAll",
+                        url: "/comic/getPageToB",
                         data: {
-                            pageNum: this.nowPageNum
+                            pageNum: this.nowPageNum,
+                            comicName: this.searchComicName
                         },
                         type: "post",
-                        dataType: 'json',
                         success: function (res) {
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else {
+                                containerVm.pageInfo = "";
                                 toastr.error(res.msg);
                             }
                         }
@@ -450,27 +447,27 @@
                 },
                 toFirstPage: function () {
                     this.nowPageNum = 1;
-                    this.buildPageComicManage();
+                    this.getPage();
                     this.scrollUp();
                 },
                 toPrePage: function () {
                     this.nowPageNum = this.nowPageNum - 1;
-                    this.buildPageComicManage();
+                    this.getPage();
                     this.scrollUp();
                 },
                 toNextPage: function () {
                     this.nowPageNum = this.nowPageNum + 1;
-                    this.buildPageComicManage();
+                    this.getPage();
                     this.scrollUp();
                 },
                 toLastPage: function (lastPage) {
                     this.nowPageNum = lastPage;
-                    this.buildPageComicManage();
+                    this.getPage();
                     this.scrollUp();
                 },
                 toClickPage: function (clickPage) {
                     this.nowPageNum = clickPage;
-                    this.buildPageComicManage();
+                    this.getPage();
                     this.scrollUp();
                 },
                 insertModalOpen: function () {
@@ -502,7 +499,7 @@
                         });
                     }
                 },
-                deleteBetch: function () {
+                deleteBatch: function () {
                     bootbox.confirm({
                         size: "small",
                         title: "<i class='fa fa-comment'></i>&nbsp;&nbsp;提示",
@@ -542,10 +539,10 @@
                         }
                     });
                 },
-                searchContent: function () {
+                selectContent: function () {
                     this.nowPageNum = 1;
                     $.ajax({
-                        url: "/comic/getPageByName",
+                        url: "/comic/getPageToB",
                         data: {
                             pageNum: this.nowPageNum,
                             comicName: this.searchComicName
@@ -555,6 +552,7 @@
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else {
+                                containerVm.pageInfo = "";
                                 toastr.error(res.msg);
                             }
                         }
@@ -621,7 +619,7 @@
                                 $('#comicModal').modal('hide');
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
-                                    containerVm.buildPageComicManage();
+                                    containerVm.getPage();
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else {
@@ -630,42 +628,6 @@
                             }
                         });
                     }
-                },
-                deleteContent: function (id) {
-                    bootbox.confirm({
-                        size: "small",
-                        title: "<i class='fa fa-comment'></i>&nbsp;&nbsp;提示",
-                        message: "确定要删除吗？",
-                        buttons: {
-                            confirm: {
-                                label: '确定',
-                                className: 'btn-success'
-                            },
-                            cancel: {
-                                label: '取消',
-                                className: 'btn-danger'
-                            }
-                        },
-                        backdrop: true,
-                        closeButton: false,
-                        callback: function (result) {
-                            if (result == true) {
-                                $.ajax({
-                                    url: "/comic/deleteById",
-                                    data: {
-                                        id: id
-                                    },
-                                    type: "post",
-                                    success: function (res) {
-                                        if (res.code == 200) {
-                                            toastr.success(res.msg);
-                                            containerVm.toClickPage(containerVm.nowPageNum);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
                 },
                 datePickerBind: function () {
                     $(".datepicker").datepicker().on("hide", function () {
@@ -788,7 +750,7 @@
                 comicInfoThat.initImgLazyLoad();
                 this.datePickerBind();
                 this.modalReset();
-                this.buildPageComicManage();
+                this.getPage();
             }
         });
 

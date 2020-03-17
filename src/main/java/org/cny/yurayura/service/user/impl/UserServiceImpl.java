@@ -26,7 +26,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Override
-    public PageInfo<Object> getPageToManage(Integer pageNum) {
+    public PageInfo<Object> getPageToB(Integer pageNum) {
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

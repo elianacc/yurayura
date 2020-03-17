@@ -25,16 +25,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     private ComicMapper comicMapper;
 
     @Override
-    public PageInfo<Comic> getPageToAll(Integer pageNum) {
-        // 设置分页
-        PageHelper.startPage(pageNum, 10);
-        QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
-        List<Comic> comicList = comicMapper.selectList(queryWrapper.orderByDesc("id"));
-        return new PageInfo<>(comicList, 5);
-    }
-
-    @Override
-    public PageInfo<Comic> getPageByName(Integer pageNum, String comicName) {
+    public PageInfo<Comic> getPageToB(Integer pageNum, String comicName) {
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();

@@ -14,13 +14,6 @@ import java.util.List;
 public interface IComicUserDataService extends IService<ComicUserData> {
 
     /**
-     * 删除番剧数据（根据关联comic表id）
-     *
-     * @param comicId
-     */
-    public void deleteByComicId(Integer comicId);
-
-    /**
      * 批量删除番剧用户数据（根据关联comic表id）
      *
      * @param comicIdList

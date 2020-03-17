@@ -13,20 +13,12 @@ import org.cny.yurayura.entity.comic.Comic;
 public interface IComicService extends IService<Comic> {
 
     /**
-     * 分页查询所有番剧
-     *
-     * @param pageNum
-     * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.comic.Comic>
-     */
-    public PageInfo<Comic> getPageToAll(Integer pageNum);
-
-    /**
-     * 分页查询番剧（根据名称）
+     * 分页查询番剧（B端）
      *
      * @param pageNum
      * @param comicName
      * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.comic.Comic>
      */
-    public PageInfo<Comic> getPageByName(Integer pageNum, String comicName);
+    public PageInfo<Comic> getPageToB(Integer pageNum, String comicName);
 
 }

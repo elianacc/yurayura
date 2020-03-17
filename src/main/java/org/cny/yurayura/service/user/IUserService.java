@@ -13,11 +13,11 @@ import org.cny.yurayura.entity.user.User;
 public interface IUserService extends IService<User> {
 
     /**
-     * 分页查询所有用户（管理后台）
+     * 分页查询用户（B端）
      *
      * @param pageNum
      * @return com.github.pagehelper.PageInfo<java.lang.Object>
      */
-    public PageInfo<Object> getPageToManage(Integer pageNum);
+    public PageInfo<Object> getPageToB(Integer pageNum);
 
 }

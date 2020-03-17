@@ -47,21 +47,25 @@ public class ComicController {
     private String defaultUplCmImg;
 
     /**
-     * 分页查询全部番剧
+     * 分页查询番剧（B端）
      *
      * @param pageNum
+     * @param comicName
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToAll")
-    @ApiOperation("分页查询全部番剧")
-    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToAll(Integer pageNum) {
+    @PostMapping("/getPageToB")
+    @ApiOperation("分页查询番剧（B端）")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
+            @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
+    })
+    public ApiResult getPageToB(Integer pageNum, String comicName) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Comic> comicPageInfo = iComicService.getPageToAll(pageNum);
-        if (comicPageInfo.getTotal() == 0) { // 没有分页数据
-            return ApiResult.warn("系统数据为空");
+        PageInfo<Comic> comicPageInfo = iComicService.getPageToB(pageNum, comicName);
+        if (comicPageInfo.getTotal() == 0) {
+            return ApiResult.warn("查询不到数据");
         }
         return ApiResult.success("分页查询成功", comicPageInfo);
     }
@@ -117,27 +121,6 @@ public class ComicController {
             iComicUserDataService.save(comicUserData);
             return ApiResult.success("添加成功");
         }
-    }
-
-    /**
-     * 删除番剧（根据id）
-     *
-     * @param id
-     * @return org.cny.yurayura.vo.ApiResult
-     */
-    @PostMapping("/deleteById")
-    @ApiOperation("删除番剧（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "int")
-    public ApiResult deleteById(Integer id) {
-        Comic comic = iComicService.getById(id);
-        iComicService.removeById(id);
-        // 如果用的是默认图片的，则不删除
-        if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
-            // 删除番剧图片
-            FileUtil.fileDelete(comic.getComicImageUrl());
-        }
-        iComicUserDataService.deleteByComicId(comic.getId());
-        return ApiResult.success("删除成功");
     }
 
     /**
@@ -229,29 +212,4 @@ public class ComicController {
             return ApiResult.success("修改成功");
         }
     }
-
-    /**
-     * 搜索番剧
-     *
-     * @param pageNum
-     * @param comicName
-     * @return org.cny.yurayura.vo.ApiResult
-     */
-    @PostMapping("/getPageByName")
-    @ApiOperation("搜索番剧")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
-            @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    })
-    public ApiResult getPageByName(Integer pageNum, String comicName) {
-        if (pageNum == 0) {
-            return ApiResult.warn("请输入页数");
-        }
-        PageInfo<Comic> comicPageInfo = iComicService.getPageByName(pageNum, comicName);
-        if (comicPageInfo.getTotal() == 0) {
-            return ApiResult.warn("搜索不到数据");
-        }
-        return ApiResult.success("分页查询成功", comicPageInfo);
-    }
-
 }
