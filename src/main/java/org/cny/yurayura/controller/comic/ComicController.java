@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
+import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
 import org.cny.yurayura.enumerate.ImgUploadResultEnum;
@@ -47,23 +48,34 @@ public class ComicController {
     private String defaultUplCmImg;
 
     /**
+     * 查询番剧（根据id）
+     *
+     * @param id
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/getOneById")
+    @ApiOperation("查询番剧（根据id）")
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
+    public ApiResult getOneById(Integer id) {
+        Comic comic = iComicService.getById(id);
+        return ApiResult.success("查询成功", comic);
+    }
+
+    /**
      * 分页查询番剧（B端）
      *
      * @param pageNum
-     * @param comicName
+     * @param comicSelectDTO
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询番剧（B端）")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "comicName", value = "番剧名", required = true),
-            @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    })
-    public ApiResult getPageToB(Integer pageNum, String comicName) {
+    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
+    public ApiResult getPageToB(Integer pageNum, ComicSelectDTO comicSelectDTO) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Comic> comicPageInfo = iComicService.getPageToB(pageNum, comicName);
+        PageInfo<Comic> comicPageInfo = iComicService.getPageToB(pageNum, comicSelectDTO);
         if (comicPageInfo.getTotal() == 0) {
             return ApiResult.warn("查询不到数据");
         }
@@ -149,20 +161,6 @@ public class ComicController {
             }
         }
         return ApiResult.success("删除成功");
-    }
-
-    /**
-     * 查询番剧（根据id）
-     *
-     * @param id
-     * @return org.cny.yurayura.vo.ApiResult
-     */
-    @PostMapping("/getOneById")
-    @ApiOperation("查询番剧（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getOneById(Integer id) {
-        Comic comic = iComicService.getById(id);
-        return ApiResult.success("查询成功", comic);
     }
 
     /**

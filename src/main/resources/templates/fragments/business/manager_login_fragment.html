@@ -105,8 +105,11 @@
                     if (this.validataForm()) {
                         $("#managerLoginForm").ajaxSubmit({
                             url: "/sys/manager/login",
-                            data: {managerPassword: Base64.encode(this.managerPassword)},
+                            data: {
+                                managerPassword: Base64.encode(this.managerPassword)
+                            },
                             type: "post",
+                            dataType: "json",
                             success: function (res) {
                                 if (res.code == 100) {
                                     containerVm.loadVerifyImage();

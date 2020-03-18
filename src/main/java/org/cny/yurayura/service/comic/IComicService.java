@@ -2,6 +2,7 @@ package org.cny.yurayura.service.comic;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
+import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.entity.comic.Comic;
 
 /**
@@ -16,9 +17,9 @@ public interface IComicService extends IService<Comic> {
      * 分页查询番剧（B端）
      *
      * @param pageNum
-     * @param comicName
+     * @param comicSelectDTO
      * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.comic.Comic>
      */
-    public PageInfo<Comic> getPageToB(Integer pageNum, String comicName);
+    public PageInfo<Comic> getPageToB(Integer pageNum, ComicSelectDTO comicSelectDTO);
 
 }
