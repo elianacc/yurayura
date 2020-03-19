@@ -236,9 +236,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <id>yurayura</id>
-                    <title>Yura-Yura API</title>
-                    <description>Yura-Yura apiggs在线api文档</description>
+                    <id>api_doc</id>
+                    <title>Yura-Yura API Document</title>
+                    <description>Yura-Yura apiggs文档</description>
+                    <production>classes/static/apiggs</production>
                     <version>11.0.1-SNAPSHOT</version>
                 </configuration>
             </plugin>
