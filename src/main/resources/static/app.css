@@ -1,12 +1,12 @@
 ﻿/* bootstrap4 css */
-@import '/frame/bootstrap.min.css';
+@import './frame/bootstrap.min.css';
 /* Font Awesome css */
-@import '/frame/font-awesome.css';
+@import './frame/font-awesome.css';
 
-@import '/plugins/toastr.min.css';
-@import '/plugins/BootSideMenu.css';
-@import '/plugins/metisMenu.min.css';
-@import '/plugins/bootstrap-datepicker.standalone.min.css';
+@import './plugins/toastr.min.css';
+@import './plugins/BootSideMenu.css';
+@import './plugins/metisMenu.min.css';
+@import './plugins/bootstrap-datepicker.standalone.min.css';
 
 /* font-size */
 .font-size-12{font-size:.75rem} /*default:12px*/

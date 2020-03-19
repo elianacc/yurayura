@@ -71,7 +71,7 @@
 
 /* 返回顶部按钮 */
 #scrollUp {
-    background-image: url("images/top.png");
+    background-image: url("./images/top.png");
     bottom: 0px;
     right: 20px;
     width: 60px;
