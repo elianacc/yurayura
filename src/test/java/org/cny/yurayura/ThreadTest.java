@@ -103,11 +103,11 @@ public class ThreadTest {
         // 1. 提供指定线程数量的线程池
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         // 2. 执行指定的线程的操作，需要提供实现Runnable接口或Callable接口实现类的对象
-        executorService.execute(new RunnableImpl1()); // Runnable使用线程池
-        Future getManagerListfuture = executorService.submit(new GetManagerListCallable()); //Callable使用线程池
+        //executorService.execute(new RunnableImpl1()); // Runnable使用线程池
+        Future future = executorService.submit(new GetManagerListCallable()); //Callable使用线程池
         try {
-            Object managerList = getManagerListfuture.get();
-            System.out.println(Thread.currentThread().getName() + "--" + managerList.toString());
+            List<Manager> managerList = (List<Manager>) future.get();
+            System.out.println(Thread.currentThread().getName() + "--" + managerList.get(0).toString());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

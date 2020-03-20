@@ -32,6 +32,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
         List<Comic> comicList = comicMapper.selectList(queryWrapper
                 .like("comic_name", comicSelectDTO.getSelectComicName())
+                .eq("comic_status", comicSelectDTO.getSelectComicStatus())
                 .orderByDesc("id"));
         return new PageInfo<>(comicList, 5);
     }

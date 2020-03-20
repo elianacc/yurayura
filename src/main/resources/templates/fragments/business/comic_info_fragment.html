@@ -19,13 +19,17 @@
                     </button>
                 </div>
             </div>
-            <div class="col-4 offset-1 mt-4">
+            <div class="col-8 mt-4">
                 <form id="selectContentForm">
                     <div class="input-group input-group-sm w-75 float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名:</span>
                         </div>
                         <input type="search" class="form-control" name="selectComicName"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">状态:</span>
+                        </div>
+                        <input type="search" class="form-control" name="selectComicStatus" value="0"/>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
                                     @click="selectContent">
