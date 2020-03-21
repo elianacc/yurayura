@@ -10,6 +10,7 @@ import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.service.comic.IComicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -32,7 +33,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
         List<Comic> comicList = comicMapper.selectList(queryWrapper
                 .like("comic_name", comicSelectDTO.getSelectComicName())
-                .eq("comic_status", comicSelectDTO.getSelectComicStatus())
+                .eq(!StringUtils.isEmpty(comicSelectDTO.getSelectComicStatus())
+                        , "comic_status", comicSelectDTO.getSelectComicStatus())
+                .eq(!StringUtils.isEmpty(comicSelectDTO.getSelectComicShelfStatus())
+                        , "comic_shelf_status", comicSelectDTO.getSelectComicShelfStatus())
                 .orderByDesc("id"));
         return new PageInfo<>(comicList, 5);
     }

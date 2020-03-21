@@ -34,4 +34,10 @@ public class ComicSelectDTO implements Serializable {
     @ApiModelProperty(value = "状态")
     private Integer selectComicStatus;
 
+    /**
+     * 上架状态- 1：上架，0：下架
+     */
+    @ApiModelProperty(value = "上架状态")
+    private Integer selectComicShelfStatus;
+
 }

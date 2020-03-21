@@ -21,7 +21,7 @@
             </div>
             <div class="col-8 mt-4">
                 <form id="selectContentForm">
-                    <div class="input-group input-group-sm w-75 float-right">
+                    <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名:</span>
                         </div>
@@ -29,7 +29,26 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">状态:</span>
                         </div>
-                        <input type="search" class="form-control" name="selectComicStatus" value="0"/>
+                        <select class="custom-select" name="selectComicStatus">
+                            <option value="" selected></option>
+                            <option value="0">已完结</option>
+                            <option value="1">周一更新</option>
+                            <option value="2">周二更新</option>
+                            <option value="3">周三更新</option>
+                            <option value="4">周四更新</option>
+                            <option value="5">周五更新</option>
+                            <option value="6">周六更新</option>
+                            <option value="7">周日更新</option>
+                            <option value="8">更新中</option>
+                        </select>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">上架状态:</span>
+                        </div>
+                        <select class="custom-select" name="selectComicShelfStatus">
+                            <option value="" selected></option>
+                            <option value="1">上架</option>
+                            <option value="0">下架</option>
+                        </select>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
                                     @click="selectContent">
@@ -76,7 +95,8 @@
                                 <div class="bmbox"><i class="fa fa-play-circle-o fa-5x"></i><br/><br/><br/></div>
                             </a>
                         </td>
-                        <td class="font-size-12 text-center align-middle">{{item.comicName}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.comicName}}<span
+                                v-show="item.comicShelfStatus == 0">(已下架)</span></td>
                         <td class="font-size-12"><p class="table-cmcontent text-justify">{{item.comicContent |
                             cmContentFilter}}</p></td>
                         <td class="font-size-12 text-center align-middle">{{item.comicStatus |
@@ -209,7 +229,6 @@
                                 </div>
                             </div>
                             <div class="form-group" v-show="isUdTimeShow">
-                                <label class="col-form-label font-size-14"> 更新时间：</label>
                                 <select class="form-control form-control-sm" name="comicUdTime" v-model="comicUdTime"
                                         :disabled="isDetailModal">
                                     <option value="" selected disabled>----请选择更新时间----</option>

@@ -95,12 +95,8 @@ public class ComicController {
     public ApiResult insert(ComicInstAndUpdtDTO dto
             , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile)
             throws IOException {
-
-        Integer comicStatus = dto.getComicStatus();
         // 有更新时间,更新状态为更新时间
-        if (!StringUtils.isEmpty(dto.getComicUdTime())) {
-            comicStatus = dto.getComicUdTime();
-        }
+        Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
@@ -176,12 +172,8 @@ public class ComicController {
     public ApiResult update(ComicInstAndUpdtDTO dto
             , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile)
             throws IOException {
-
-        Integer comicStatus = dto.getComicStatus();
         // 有更新时间,更新状态为更新时间
-        if (!StringUtils.isEmpty(dto.getComicUdTime())) {
-            comicStatus = dto.getComicUdTime();
-        }
+        Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
