@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
+import org.cny.yurayura.exception.CustomizeException;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,7 @@ public class PreventRepeatSubmitAspect {
         try {
             return pjp.proceed();
         } catch (Throwable throwable) {
-            throw new RuntimeException("服务器异常");
+            throw new CustomizeException(500, "提交进程异常");
         }
     }
 
