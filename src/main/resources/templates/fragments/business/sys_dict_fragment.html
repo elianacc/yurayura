@@ -50,13 +50,104 @@
                         <td class="text-center font-size-14" style="width:15%"></td>
                     </tr>
                     </thead>
-
+                    <tbody>
+                    <tr v-for="(item,index) in pageInfo.list" :key="index">
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input"
+                                       :id="'customCheck-'+ index" :value="item.id" v-model="ids"/>
+                                <label class="custom-control-label" :for="'customCheck-'+ index"></label>
+                            </div>
+                        </td>
+                        <td class="font-size-12 text-center align-middle"></td>
+                        <td class="text-center align-middle">
+                            <button type="button" class="btn btn-info btn-sm font-size-14"
+                                    @click="updateModalOpen(item.id)">
+                                <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
+                <div class="d-flex align-items-center justify-content-center flex-row lead text-white font-size-14">
+                    <span v-show="pageInfo == ''"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;查询不到数据</span>
+                </div>
             </div>
         </div>
 
+        <!-- 数据表格信息及分页row -->
+        <div class="row mt-4 mb-5 r3">
+            <div class="col-2 offset-2">
+                <span class="badge badge-dark bg-twittercont font-size-14"
+                      v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo != ''"></span>
+                <span class="badge badge-dark bg-twittercont font-size-14" v-show="pageInfo == ''">共0页/0个</span>
+            </div>
 
+            <div class="col-8 c2">
+                <nav>
+                    <ul class="pagination float-right font-size-14">
+                        <li class='page-item'>
+                            <a class='page-link bg-twittercont border-twittercont text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
+                               @click="toFirstPage">首页</a>
+                        </li>
+                        <li class='page-item'>
+                            <a class='page-link bg-twittercont border-twittercont text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
+                               @click="toPrePage">上一页</a>
+                        </li>
+                        <div v-for="item in pageInfo.navigatepageNums">
+                            <div v-if="pageInfo.pageNum == item">
+                                <li class='page-item active'>
+                                    <a class='page-link border-twittercont'
+                                       href='javascript:void(0)'>{{item}}</a>
+                                </li>
+                            </div>
+                            <div v-else>
+                                <li class='page-item'>
+                                    <a class='page-link bg-twittercont border-twittercont text-white'
+                                       href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
+                                </li>
+                            </div>
+                        </div>
+                        <li class='page-item'>
+                            <a class='page-link bg-twittercont border-twittercont text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isLastPage" @click="toNextPage">下一页</a>
+                        </li>
+                        <li class='page-item'>
+                            <a class='page-link bg-twittercont border-twittercont text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isLastPage"
+                               @click="toLastPage(pageInfo.pages)">末页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
 
+        <!-- 字典modal -->
+        <div class="modal fade" id="dictModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="dictForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <strong>{{modalTitle}}</strong>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span><i class="fa fa-window-close text-white font-size-30"></i></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger font-size-14" data-dismiss="modal">
+                                <i class="fa fa-close"></i>&nbsp;&nbsp;关闭
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
 
