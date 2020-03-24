@@ -1,62 +1,65 @@
-package org.cny.yurayura.controller.user;
+package org.cny.yurayura.controller.sys.dict;
 
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.cny.yurayura.entity.user.User;
-import org.cny.yurayura.service.user.IUserService;
+import org.cny.yurayura.dto.DictSelectDTO;
+import org.cny.yurayura.entity.sys.dict.Dict;
+import org.cny.yurayura.service.sys.dict.IDictService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户 controller
+ * 系统数据字典 controller
  *
  * @author CNY
- * @since 2019-10-27
+ * @since 2020-03-24
  */
 @RestController
-@RequestMapping("/user")
-@Api(tags = "用户API")
-public class UserController {
+@RequestMapping("/sys/dict")
+@Api(tags = "系统数据字典API")
+public class DictController {
 
     @Autowired
-    private IUserService iUserService;
+    private IDictService iDictService;
 
     /**
-     * 查询用户（根据id）
+     * 查询系统数据字典（根据id）
      *
      * @param id
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getOneById")
-    @ApiOperation("查询用户（根据id）")
+    @ApiOperation("查询系统数据字典（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getOneById(Integer id) {
-        User user = iUserService.getById(id);
-        return ApiResult.success("查询成功", user);
+        Dict dict = iDictService.getById(id);
+        return ApiResult.success("查询成功", dict);
     }
 
     /**
-     * 分页查询用户（B端）
+     * 分页查询系统数据字典
      *
      * @param pageNum
+	 * @param dictSelectDTO
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToB")
-    @ApiOperation("分页查询用户（B端）")
+    @PostMapping("/getPage")
+    @ApiOperation("分页查询系统数据字典")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToB(Integer pageNum) {
+    public ApiResult getPage(Integer pageNum, DictSelectDTO dictSelectDTO) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Object> pageInfo = iUserService.getPageToB(pageNum);
+        PageInfo<Dict> pageInfo = iDictService.getPage(pageNum, dictSelectDTO);
         if (pageInfo.getTotal() == 0) {
-            return ApiResult.warn("系统数据为空");
+            return ApiResult.warn("查询不到数据");
         }
         return ApiResult.success("分页查询成功", pageInfo);
     }

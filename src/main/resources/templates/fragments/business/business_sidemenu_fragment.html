@@ -13,19 +13,24 @@
             <ul class="metismenu">
                 <li class="mm-active font-size-14">
                     <a class="has-arrow"
-                       href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;番剧管理</a>
+                       href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;系统管理</a>
                     <ul>
                         <li><a :href="sideMenuUrl.menuA[0]">
+                            <i class="fa fa-book fa-lg"></i>&nbsp;&nbsp;数据字典管理</a></li>
+                    </ul>
+                </li>
+                <li class="mm-active font-size-14">
+                    <a class="has-arrow"
+                       href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;番剧管理</a>
+                    <ul>
+                        <li><a :href="sideMenuUrl.menuB[0]">
                             <i class="fa fa-github-alt fa-lg"></i>&nbsp;&nbsp;番剧信息管理</a></li>
-                        <li><a :href="sideMenuUrl.menuA[1]">
-                            <i class="fa fa-bar-chart fa-lg"></i>&nbsp;&nbsp;番剧用户数据管理</a></li>
-
                     </ul>
                 </li>
                 <li class="mm-active font-size-14">
                     <a class="has-arrow" href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;用户管理</a>
                     <ul>
-                        <li><a :href="sideMenuUrl.menuB[0]">
+                        <li><a :href="sideMenuUrl.menuC[0]">
                             <i class="fa fa-address-card fa-lg"></i>&nbsp;&nbsp;用户信息管理</a></li>
                     </ul>
                 </li>
@@ -41,10 +46,12 @@
             data: {
                 sideMenuUrl: {
                     menuA: [
-                        "/business/comic_info",
-                        "/business/comic_user_data"
+                        "/business/sys_dict"
                     ],
                     menuB: [
+                        "/business/comic_info"
+                    ],
+                    menuC: [
                         "/business/user_info"
                     ]
                 }

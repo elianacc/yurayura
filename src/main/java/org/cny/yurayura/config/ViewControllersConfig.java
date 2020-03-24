@@ -17,6 +17,7 @@ public class ViewControllersConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/business/manager_login").setViewName("/business/manager_login");
         registry.addViewController("/business/manager_unlogin").setViewName("/business/manager_unlogin");
+        registry.addViewController("/business/sys_dict").setViewName("/business/sys_dict");
         registry.addViewController("/business/comic_info").setViewName("/business/comic_info");
     }
 }

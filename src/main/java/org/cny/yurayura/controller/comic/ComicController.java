@@ -75,11 +75,11 @@ public class ComicController {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Comic> comicPageInfo = iComicService.getPageToB(pageNum, comicSelectDTO);
-        if (comicPageInfo.getTotal() == 0) {
+        PageInfo<Comic> pageInfo = iComicService.getPageToB(pageNum, comicSelectDTO);
+        if (pageInfo.getTotal() == 0) {
             return ApiResult.warn("查询不到数据");
         }
-        return ApiResult.success("分页查询成功", comicPageInfo);
+        return ApiResult.success("分页查询成功", pageInfo);
     }
 
     /**

@@ -32,7 +32,8 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
         List<Comic> comicList = comicMapper.selectList(queryWrapper
-                .like("comic_name", comicSelectDTO.getSelectComicName())
+                .like(!StringUtils.isEmpty(comicSelectDTO.getSelectComicName())
+                        , "comic_name", comicSelectDTO.getSelectComicName())
                 .eq(!StringUtils.isEmpty(comicSelectDTO.getSelectComicStatus())
                         , "comic_status", comicSelectDTO.getSelectComicStatus())
                 .eq(!StringUtils.isEmpty(comicSelectDTO.getSelectComicShelfStatus())
