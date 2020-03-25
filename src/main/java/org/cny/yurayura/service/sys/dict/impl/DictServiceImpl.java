@@ -32,8 +32,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(dictSelectDTO.getSelectCode()), "code", dictSelectDTO.getSelectCode())
-                .orderByAsc("code", "id"));
+                .like(!StringUtils.isEmpty(dictSelectDTO.getSelectDictCode())
+                        , "dict_code", dictSelectDTO.getSelectDictCode())
+                .orderByAsc("dict_code", "id"));
         return new PageInfo<>(dictList, 5);
     }
 }

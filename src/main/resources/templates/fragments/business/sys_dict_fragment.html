@@ -25,7 +25,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">字典编码</span>
                         </div>
-                        <input type="search" class="form-control" name="selectCode"/>
+                        <input type="search" class="form-control" name="selectDictCode"/>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
                                     @click="selectContent">
@@ -64,10 +64,10 @@
                                 <label class="custom-control-label" :for="'customCheck-'+ index"></label>
                             </div>
                         </td>
-                        <td class="font-size-12 text-center align-middle">{{item.code}}</td>
-                        <td class="font-size-12 text-center align-middle">{{item.name}}</td>
-                        <td class="font-size-12 text-center align-middle">{{item.val}}</td>
-                        <td class="font-size-12 text-center align-middle">{{item.status | dictStatusFilter}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.dictCode}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.dictName}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.dictVal}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.dictStatus | dictStatusFilter}}</td>
                         <td class="text-center align-middle">
                             <button type="button" class="btn btn-info btn-sm font-size-14"
                                     @click="updateModalOpen(item.id)">
@@ -147,8 +147,33 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典编码：</label>
-                                <input type="text" class="form-control form-control-sm" name="code"
-                                       placeholder="请输入字典编码" v-model="code"/>
+                                <input type="text" class="form-control form-control-sm" name="dictCode"
+                                       placeholder="请输入字典编码" v-model="dictCode"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label font-size-14"> 字典名：</label>
+                                <input type="text" class="form-control form-control-sm" name="dictName"
+                                       placeholder="请输入字典名" v-model="dictName"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label font-size-14"> 字典值：</label>
+                                <input type="text" class="form-control form-control-sm" name="dictVal"
+                                       placeholder="请输入字典值" v-model="dictVal"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label font-size-14"> 状态：</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="dictStatus1" name="dictStatus"
+                                           class="custom-control-input form-control-sm" value="1"
+                                           v-model="dictStatus"/>
+                                    <label class="custom-control-label font-size-14" for="dictStatus1">启用</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="dictStatus2" name="dictStatus"
+                                           class="custom-control-input form-control-sm" value="0"
+                                           v-model="dictStatus"/>
+                                    <label class="custom-control-label font-size-14" for="dictStatus2">禁用</label>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -183,7 +208,10 @@
                 modalTitle: "",
                 isInsertModal: false,
                 id: 0,
-
+                dictCode: "",
+                dictName: "",
+                dictVal: "",
+                dictStatus: 1
             },
             methods: {
                 getPage: function () {

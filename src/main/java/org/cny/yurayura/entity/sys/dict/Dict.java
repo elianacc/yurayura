@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * 系统数据字典 entity
  *
  * @author CNY
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,22 +31,22 @@ public class Dict implements Serializable {
     /**
      * 字典编码
      */
-    private String code;
+    private String dictCode;
 
     /**
      * 字典名
      */
-    private String name;
+    private String dictName;
 
     /**
      * 字典值
      */
-    private String val;
+    private String dictVal;
 
     /**
      * 启用状态- 0：禁用，1：启用
      */
-    private Integer status;
+    private Integer dictStatus;
 
 
 }

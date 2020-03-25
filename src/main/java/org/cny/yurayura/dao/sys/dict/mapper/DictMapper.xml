@@ -5,15 +5,15 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.cny.yurayura.entity.sys.dict.Dict">
         <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="name" property="name" />
-        <result column="val" property="val" />
-        <result column="status" property="status" />
+        <result column="dict_code" property="dictCode" />
+        <result column="dict_name" property="dictName" />
+        <result column="dict_val" property="dictVal" />
+        <result column="dict_status" property="dictStatus" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, name, val, status
+        id, dict_code, dict_name, dict_val, dict_status
     </sql>
 
 </mapper>
