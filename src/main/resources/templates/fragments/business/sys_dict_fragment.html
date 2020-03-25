@@ -19,13 +19,13 @@
                     </button>
                 </div>
             </div>
-            <div class="col-8 mt-4">
+            <div class="col-4 offset-4 mt-4">
                 <form id="selectContentForm">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"></span>
+                            <span class="input-group-text">字典编码</span>
                         </div>
-                        <input type="search" class="form-control" name=""/>
+                        <input type="search" class="form-control" name="selectCode"/>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
                                     @click="selectContent">
@@ -47,7 +47,12 @@
                 <table class="table table-dark table-borderless rounded bg-twittercont" v-show="pageInfo != ''">
                     <thead>
                     <tr>
-                        <td class="text-center font-size-14" style="width:15%"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center font-size-14" style="width:20%">字典编码</td>
+                        <td class="text-center font-size-14" style="width:20%">字典名</td>
+                        <td class="text-center font-size-14" style="width:20%">字典值</td>
+                        <td class="text-center font-size-14" style="width:20%">状态</td>
+                        <td class="text-center font-size-14" style="width:15%">管理</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,7 +64,10 @@
                                 <label class="custom-control-label" :for="'customCheck-'+ index"></label>
                             </div>
                         </td>
-                        <td class="font-size-12 text-center align-middle"></td>
+                        <td class="font-size-12 text-center align-middle">{{item.code}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.name}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.val}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.status | dictStatusFilter}}</td>
                         <td class="text-center align-middle">
                             <button type="button" class="btn btn-info btn-sm font-size-14"
                                     @click="updateModalOpen(item.id)">
@@ -82,9 +90,8 @@
                       v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo != ''"></span>
                 <span class="badge badge-dark bg-twittercont font-size-14" v-show="pageInfo == ''">共0页/0个</span>
             </div>
-
             <div class="col-8 c2">
-                <nav>
+                <nav v-show="pageInfo != ''">
                     <ul class="pagination float-right font-size-14">
                         <li class='page-item'>
                             <a class='page-link bg-twittercont border-twittercont text-white'
@@ -97,18 +104,14 @@
                                @click="toPrePage">上一页</a>
                         </li>
                         <div v-for="item in pageInfo.navigatepageNums">
-                            <div v-if="pageInfo.pageNum == item">
-                                <li class='page-item active'>
-                                    <a class='page-link border-twittercont'
-                                       href='javascript:void(0)'>{{item}}</a>
-                                </li>
-                            </div>
-                            <div v-else>
-                                <li class='page-item'>
-                                    <a class='page-link bg-twittercont border-twittercont text-white'
-                                       href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
-                                </li>
-                            </div>
+                            <li class='page-item active' v-if="pageInfo.pageNum == item">
+                                <a class='page-link border-twittercont'
+                                   href='javascript:void(0)'>{{item}}</a>
+                            </li>
+                            <li class='page-item' v-else>
+                                <a class='page-link bg-twittercont border-twittercont text-white'
+                                   href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
+                            </li>
                         </div>
                         <li class='page-item'>
                             <a class='page-link bg-twittercont border-twittercont text-white'
@@ -124,11 +127,11 @@
             </div>
         </div>
 
-        <!-- 字典modal -->
-        <div class="modal fade" id="dictModal" tabindex="-1">
+        <!-- 系统数据字典modal -->
+        <div class="modal fade" id="sysDictModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="dictForm">
+                    <form id="sysDictForm">
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <strong>{{modalTitle}}</strong>
@@ -138,10 +141,27 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group d-none">
+                                <label class="col-form-label"> id：</label>
+                                <input type="text" class="form-control form-control-sm" name="id" v-model="id"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label font-size-14"> 字典编码：</label>
+                                <input type="text" class="form-control form-control-sm" name="code"
+                                       placeholder="请输入字典编码" v-model="code"/>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger font-size-14" data-dismiss="modal">
                                 <i class="fa fa-close"></i>&nbsp;&nbsp;关闭
+                            </button>
+                            <button type="button" class="btn btn-primary font-size-14"
+                                    @click="insertContent" v-show="isInsertModal">
+                                <i class="fa fa-check"></i>&nbsp;&nbsp;提交
+                            </button>
+                            <button type="button" class="btn btn-primary font-size-14"
+                                    @click="updateContent" v-show="!isInsertModal">
+                                <i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;提交
                             </button>
                         </div>
                     </form>
@@ -152,6 +172,211 @@
     </div>
 
     <script>
+        var sysDictThat = this;
+
+        const containerVm = new Vue({
+            el: "#container",
+            data: {
+                ids: [],
+                nowPageNum: 1,
+                pageInfo: "",
+                modalTitle: "",
+                isInsertModal: false,
+                id: 0,
+
+            },
+            methods: {
+                getPage: function () {
+                    $("#selectContentForm").ajaxSubmit({
+                        url: "/sys/dict/getPage",
+                        data: {
+                            pageNum: this.nowPageNum
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.code == 200) {
+                                containerVm.pageInfo = res.data;
+                            } else {
+                                containerVm.pageInfo = "";
+                            }
+                        }
+                    });
+                },
+                selectContent: function () {
+                    this.nowPageNum = 1;
+                    $("#selectContentForm").ajaxSubmit({
+                        url: "/sys/dict/getPage",
+                        data: {
+                            pageNum: this.nowPageNum
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.code == 200) {
+                                containerVm.pageInfo = res.data;
+                            } else {
+                                containerVm.pageInfo = "";
+                            }
+                        }
+                    });
+                },
+                clearSelectContent: function () {
+                    $("#selectContentForm").resetForm();
+                    this.selectContent();
+                },
+                toFirstPage: function () {
+                    this.nowPageNum = 1;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toPrePage: function () {
+                    this.nowPageNum = this.nowPageNum - 1;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toNextPage: function () {
+                    this.nowPageNum = this.nowPageNum + 1;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toLastPage: function (lastPage) {
+                    this.nowPageNum = lastPage;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toClickPage: function (clickPage) {
+                    this.nowPageNum = clickPage;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                insertModalOpen: function () {
+                    this.modalTitle = "『添加窗口』";
+                    this.isInsertModal = true;
+                    $("#sysDictModal").modal();
+                },
+                insertContent: function () {
+                    $("#sysDictForm").ajaxSubmit({
+                        url: "/sys/dict/insert",
+                        type: "post",
+                        dataType: "json",
+                        success: function (res) {
+                            $("#sysDictModal").modal('hide');
+                            if (res.code == 200) {
+                                toastr.success(res.msg);
+                                containerVm.clearSelectContent();
+                            } else if (res.code == 101) {
+                                console.log(res.msg);
+                            } else {
+                                toastr.error(res.msg);
+                            }
+                        }
+                    });
+                },
+                deleteBatch: function () {
+                    bootbox.confirm({
+                        size: "small",
+                        title: "<i class='fa fa-comment'></i>&nbsp;&nbsp;提示",
+                        message: "确定要删除选中项吗？",
+                        buttons: {
+                            confirm: {
+                                label: '确定',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: '取消',
+                                className: 'btn-danger'
+                            }
+                        },
+                        backdrop: true,
+                        closeButton: false,
+                        callback: function (result) {
+                            if (result == true) {
+                                if (containerVm.ids.length == 0) {
+                                    toastr.error("请至少选择一项删除");
+                                } else {
+                                    $.ajax({
+                                        url: "/sys/dict/deleteBatchByIds",
+                                        data: {
+                                            ids: containerVm.ids.toString()
+                                        },
+                                        type: "post",
+                                        dataType: "json",
+                                        success: function (res) {
+                                            if (res.code == 200) {
+                                                toastr.success(res.msg);
+                                                containerVm.getPage();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                },
+                modalSetVal: function (id) {
+                    $.ajax({
+                        url: "/sys/dict/getOneById",
+                        data: {
+                            id: id
+                        },
+                        type: "post",
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.code == 200) {
+                                containerVm.id = res.data.id;
+                                $('#sysDictModal').modal();
+                            }
+                        }
+                    });
+                },
+                updateModalOpen: function (id) {
+                    this.modalTitle = "『修改窗口』";
+                    this.isInsertModal = false;
+                    this.modalSetVal(id);
+                },
+                updateContent: function () {
+                    $("#sysDictForm").ajaxSubmit({
+                        url: "/sys/dict/update",
+                        type: "post",
+                        dataType: "json",
+                        success: function (res) {
+                            $('#sysDictModal').modal('hide');
+                            if (res.code == 200) {
+                                toastr.success(res.msg);
+                                containerVm.getPage();
+                            } else if (res.code == 101) {
+                                console.log(res.msg);
+                            } else {
+                                toastr.error(res.msg);
+                            }
+                        }
+                    });
+                },
+                modalReset: function () {
+                    $('#sysDictModal').on('hidden.bs.modal', function () {
+                        containerVm.id = 0;
+                    });
+                },
+                scrollUp: function () {
+                    $("#scrollUp").click();
+                }
+            },
+            mounted: function () {
+                sysDictThat.initToastr();
+                sysDictThat.initScrollUp();
+                this.modalReset();
+                this.getPage();
+            }
+        });
+
+        Vue.filter("dictStatusFilter", function (value) {
+            if (value == 1) {
+                return "启用";
+            } else {
+                return "禁用";
+            }
+        });
 
     </script>
 

@@ -26,12 +26,6 @@ public class DictSelectDTO implements Serializable {
      * 字典编码
      */
     @ApiModelProperty(value = "字典编码")
-    private String code;
-
-    /**
-     * 启用状态- 0：禁用，1：启用
-     */
-    @ApiModelProperty(value = "启用状态- 0：禁用，1：启用")
-    private Integer status;
+    private String selectCode;
 
 }

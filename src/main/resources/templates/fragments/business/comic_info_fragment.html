@@ -23,11 +23,11 @@
                 <form id="selectContentForm">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">番剧名:</span>
+                            <span class="input-group-text">番剧名</span>
                         </div>
                         <input type="search" class="form-control" name="selectComicName"/>
                         <div class="input-group-prepend">
-                            <span class="input-group-text">状态:</span>
+                            <span class="input-group-text">状态</span>
                         </div>
                         <select class="custom-select" name="selectComicStatus">
                             <option value="" selected></option>
@@ -42,7 +42,7 @@
                             <option value="8">更新中</option>
                         </select>
                         <div class="input-group-prepend">
-                            <span class="input-group-text">上架状态:</span>
+                            <span class="input-group-text">上架状态</span>
                         </div>
                         <select class="custom-select" name="selectComicShelfStatus">
                             <option value="" selected></option>
@@ -131,9 +131,8 @@
                       v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo != ''"></span>
                 <span class="badge badge-dark bg-twittercont font-size-14" v-show="pageInfo == ''">共0页/0个</span>
             </div>
-
             <div class="col-8 c2">
-                <nav>
+                <nav v-show="pageInfo != ''">
                     <ul class="pagination float-right font-size-14">
                         <li class='page-item'>
                             <a class='page-link bg-twittercont border-twittercont text-white'
@@ -146,18 +145,14 @@
                                @click="toPrePage">上一页</a>
                         </li>
                         <div v-for="item in pageInfo.navigatepageNums">
-                            <div v-if="pageInfo.pageNum == item">
-                                <li class='page-item active'>
-                                    <a class='page-link border-twittercont'
-                                       href='javascript:void(0)'>{{item}}</a>
-                                </li>
-                            </div>
-                            <div v-else>
-                                <li class='page-item'>
-                                    <a class='page-link bg-twittercont border-twittercont text-white'
-                                       href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
-                                </li>
-                            </div>
+                            <li class='page-item active' v-if="pageInfo.pageNum == item">
+                                <a class='page-link border-twittercont'
+                                   href='javascript:void(0)'>{{item}}</a>
+                            </li>
+                            <li class='page-item' v-else>
+                                <a class='page-link bg-twittercont border-twittercont text-white'
+                                   href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
+                            </li>
                         </div>
                         <li class='page-item'>
                             <a class='page-link bg-twittercont border-twittercont text-white'
@@ -174,10 +169,10 @@
         </div>
 
         <!-- 番剧modal -->
-        <div class="modal fade" id="comicModal" tabindex="-1">
+        <div class="modal fade" id="comicInfoModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="comicForm" enctype="multipart/form-data">
+                    <form id="comicInfoForm" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <strong>{{modalTitle}}</strong>
@@ -495,6 +490,28 @@
                         }
                     });
                 },
+                selectContent: function () {
+                    this.nowPageNum = 1;
+                    $("#selectContentForm").ajaxSubmit({
+                        url: "/comic/getPageToB",
+                        data: {
+                            pageNum: this.nowPageNum
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.code == 200) {
+                                containerVm.pageInfo = res.data;
+                            } else {
+                                containerVm.pageInfo = "";
+                            }
+                        }
+                    });
+                },
+                clearSelectContent: function () {
+                    $("#selectContentForm").resetForm();
+                    this.selectContent();
+                },
                 toFirstPage: function () {
                     this.nowPageNum = 1;
                     this.getPage();
@@ -520,33 +537,11 @@
                     this.getPage();
                     this.scrollUp();
                 },
-                selectContent: function () {
-                    this.nowPageNum = 1;
-                    $("#selectContentForm").ajaxSubmit({
-                        url: "/comic/getPageToB",
-                        data: {
-                            pageNum: this.nowPageNum
-                        },
-                        type: "post",
-                        dataType: "json",
-                        success: function (res) {
-                            if (res.code == 200) {
-                                containerVm.pageInfo = res.data;
-                            } else {
-                                containerVm.pageInfo = "";
-                            }
-                        }
-                    });
-                },
-                clearSelectContent: function () {
-                    $("#selectContentForm").resetForm();
-                    this.selectContent();
-                },
                 insertModalOpen: function () {
                     this.modalTitle = "『添加窗口』";
                     this.isDetailModal = false;
                     this.isInsertModal = true;
-                    $("#comicModal").modal();
+                    $("#comicInfoModal").modal();
                 },
                 insertContent: function () {
                     if (this.comicName.trim() == "") {
@@ -554,12 +549,12 @@
                     } else if (this.comicContent.length >= 500) {
                         toastr.error("内容不能超过500个字符");
                     } else {
-                        $("#comicForm").ajaxSubmit({
+                        $("#comicInfoForm").ajaxSubmit({
                             url: "/comic/insert",
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                $("#comicModal").modal('hide');
+                                $("#comicInfoModal").modal('hide');
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.clearSelectContent();
@@ -604,7 +599,7 @@
                                         success: function (res) {
                                             if (res.code == 200) {
                                                 toastr.success(res.msg);
-                                                containerVm.toClickPage(containerVm.nowPageNum);
+                                                containerVm.getPage();
                                             }
                                         }
                                     });
@@ -613,7 +608,7 @@
                         }
                     });
                 },
-                detlAndUpdtModalSetVal: function (id) {
+                modalSetVal: function (id) {
                     $.ajax({
                         url: "/comic/getOneById",
                         data: {
@@ -644,22 +639,22 @@
                                 containerVm.comicShelfStatus = res.data.comicShelfStatus;
                                 containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
                                 containerVm.cmImgFilePvTmp = "/" + res.data.comicImageUrl;
-                                $('#comicModal').modal();
+                                $('#comicInfoModal').modal();
                             }
                         }
                     });
                 },
                 detailModalOpen: function (id) {
-                    this.isDetailModal = true;
                     this.modalTitle = "『详情窗口』";
+                    this.isDetailModal = true;
                     this.isInsertModal = false;
-                    this.detlAndUpdtModalSetVal(id);
+                    this.modalSetVal(id);
                 },
                 updateModalOpen: function (id) {
-                    this.isDetailModal = false;
                     this.modalTitle = "『修改窗口』";
+                    this.isDetailModal = false;
                     this.isInsertModal = false;
-                    this.detlAndUpdtModalSetVal(id);
+                    this.modalSetVal(id);
                 },
                 updateContent: function () {
                     if (this.comicName.trim() == "") {
@@ -667,12 +662,12 @@
                     } else if (this.comicContent.length >= 500) {
                         toastr.error("内容不能超过500个字符");
                     } else {
-                        $("#comicForm").ajaxSubmit({
+                        $("#comicInfoForm").ajaxSubmit({
                             url: "/comic/update",
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                $('#comicModal').modal('hide');
+                                $('#comicInfoModal').modal('hide');
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.getPage();
@@ -733,7 +728,7 @@
                     }
                 },
                 modalReset: function () {
-                    $('#comicModal').on('hidden.bs.modal', function () {
+                    $('#comicInfoModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
                         containerVm.comicName = "";
                         containerVm.comicTime = "";

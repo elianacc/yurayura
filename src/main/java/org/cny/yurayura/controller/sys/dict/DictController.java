@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 系统数据字典 controller
  *
@@ -62,6 +65,25 @@ public class DictController {
             return ApiResult.warn("查询不到数据");
         }
         return ApiResult.success("分页查询成功", pageInfo);
+    }
+
+    /**
+     * 批量删除系统数据字典（根据id组）
+     *
+     * @param ids
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/deleteBatchByIds")
+    @ApiOperation("批量删除系统数据字典（根据id组）")
+    @ApiImplicitParam(name = "ids", value = "id组", required = true)
+    public ApiResult deleteBatchByIds(String ids) {
+        List<Integer> delIdList = new ArrayList<>();
+        String[] delIdArr = ids.split(",");
+        for (String delIdStr : delIdArr) {
+            delIdList.add(Integer.parseInt(delIdStr));
+        }
+        iDictService.removeByIds(delIdList);
+        return ApiResult.success("删除成功");
     }
 
 }
