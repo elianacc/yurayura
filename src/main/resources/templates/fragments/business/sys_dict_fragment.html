@@ -25,7 +25,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">字典编码</span>
                         </div>
-                        <input type="search" class="form-control" name="selectDictCode"/>
+                        <input type="text" class="form-control" name="selectDictCode"/>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
                                     @click="selectContent">
@@ -272,22 +272,30 @@
                     this.modalShow();
                 },
                 insertContent: function () {
-                    $("#sysDictForm").ajaxSubmit({
-                        url: "/sys/dict/insert",
-                        type: "post",
-                        dataType: "json",
-                        success: function (res) {
-                            containerVm.modalHide();
-                            if (res.code == 200) {
-                                toastr.success(res.msg);
-                                containerVm.clearSelectContent();
-                            } else if (res.code == 101) {
-                                console.log(res.msg);
-                            } else if (res.code == 500) {
-                                toastr.error(res.msg);
+                    if (this.dictCode.trim() == "") {
+                        toastr.error("字典编码不能为空");
+                    } else if (this.dictName.trim() == "") {
+                        toastr.error("字典名不能为空");
+                    } else if (this.dictVal.trim() == "") {
+                        toastr.error("字典值不能为空");
+                    } else {
+                        $("#sysDictForm").ajaxSubmit({
+                            url: "/sys/dict/insert",
+                            type: "post",
+                            dataType: "json",
+                            success: function (res) {
+                                containerVm.modalHide();
+                                if (res.code == 200) {
+                                    toastr.success(res.msg);
+                                    containerVm.clearSelectContent();
+                                } else if (res.code == 101) {
+                                    console.log(res.msg);
+                                } else if (res.code == 500) {
+                                    toastr.error(res.msg);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 },
                 deleteBatch: function () {
                     sysDictThat.bootBoxConfirm("确定要删除选中项吗？", function () {
@@ -341,22 +349,30 @@
                     this.modalSetVal(id);
                 },
                 updateContent: function () {
-                    $("#sysDictForm").ajaxSubmit({
-                        url: "/sys/dict/update",
-                        type: "post",
-                        dataType: "json",
-                        success: function (res) {
-                            containerVm.modalHide();
-                            if (res.code == 200) {
-                                toastr.success(res.msg);
-                                containerVm.getPage();
-                            } else if (res.code == 101) {
-                                console.log(res.msg);
-                            } else if (res.code == 500) {
-                                toastr.error(res.msg);
+                    if (this.dictCode.trim() == "") {
+                        toastr.error("字典编码不能为空");
+                    } else if (this.dictName.trim() == "") {
+                        toastr.error("字典名不能为空");
+                    } else if (this.dictVal.trim() == "") {
+                        toastr.error("字典值不能为空");
+                    } else {
+                        $("#sysDictForm").ajaxSubmit({
+                            url: "/sys/dict/update",
+                            type: "post",
+                            dataType: "json",
+                            success: function (res) {
+                                containerVm.modalHide();
+                                if (res.code == 200) {
+                                    toastr.success(res.msg);
+                                    containerVm.getPage();
+                                } else if (res.code == 101) {
+                                    console.log(res.msg);
+                                } else if (res.code == 500) {
+                                    toastr.error(res.msg);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 },
                 modalReset: function () {
                     $('#sysDictModal').on('hidden.bs.modal', function () {

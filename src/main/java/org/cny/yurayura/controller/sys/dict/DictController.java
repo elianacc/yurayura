@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.cny.yurayura.service.sys.dict.IDictService;
@@ -68,6 +69,20 @@ public class DictController {
     }
 
     /**
+     * 添加系统数据字典
+     *
+     * @param dict
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PreventRepeatSubmit(prefix = "sysDictInsert")
+    @PostMapping("/insert")
+    @ApiOperation("添加系统数据字典")
+    public ApiResult insert(Dict dict) {
+        iDictService.save(dict);
+        return ApiResult.success("添加成功");
+    }
+
+    /**
      * 批量删除系统数据字典（根据id组）
      *
      * @param ids
@@ -86,5 +101,18 @@ public class DictController {
         return ApiResult.success("删除成功");
     }
 
+    /**
+     * 修改系统数据字典
+     *
+     * @param dict
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PreventRepeatSubmit(prefix = "sysDictUpdate")
+    @PostMapping("/update")
+    @ApiOperation("修改系统数据字典")
+    public ApiResult update(Dict dict) {
+        iDictService.updateById(dict);
+        return ApiResult.success("修改成功");
+    }
 }
 
