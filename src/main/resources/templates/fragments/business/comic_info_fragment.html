@@ -484,29 +484,17 @@
                         success: function (res) {
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
-                            } else {
+                            } else if (res.code == 100) {
                                 containerVm.pageInfo = "";
+                            } else if (res.code == 500) {
+                                toastr.error(res.msg);
                             }
                         }
                     });
                 },
                 selectContent: function () {
                     this.nowPageNum = 1;
-                    $("#selectContentForm").ajaxSubmit({
-                        url: "/comic/getPageToB",
-                        data: {
-                            pageNum: this.nowPageNum
-                        },
-                        type: "post",
-                        dataType: "json",
-                        success: function (res) {
-                            if (res.code == 200) {
-                                containerVm.pageInfo = res.data;
-                            } else {
-                                containerVm.pageInfo = "";
-                            }
-                        }
-                    });
+                    this.getPage();
                 },
                 clearSelectContent: function () {
                     $("#selectContentForm").resetForm();
@@ -541,7 +529,7 @@
                     this.modalTitle = "『添加窗口』";
                     this.isDetailModal = false;
                     this.isInsertModal = true;
-                    $("#comicInfoModal").modal();
+                    this.modalShow();
                 },
                 insertContent: function () {
                     if (this.comicName.trim() == "") {
@@ -554,13 +542,13 @@
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                $("#comicInfoModal").modal('hide');
+                                containerVm.modalHide();
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.clearSelectContent();
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
-                                } else {
+                                } else if (res.code == 500) {
                                     toastr.error(res.msg);
                                 }
                             }
@@ -568,43 +556,26 @@
                     }
                 },
                 deleteBatch: function () {
-                    bootbox.confirm({
-                        size: "small",
-                        title: "<i class='fa fa-comment'></i>&nbsp;&nbsp;提示",
-                        message: "确定要删除选中项吗？",
-                        buttons: {
-                            confirm: {
-                                label: '确定',
-                                className: 'btn-success'
-                            },
-                            cancel: {
-                                label: '取消',
-                                className: 'btn-danger'
-                            }
-                        },
-                        backdrop: true,
-                        closeButton: false,
-                        callback: function (result) {
-                            if (result == true) {
-                                if (containerVm.ids.length == 0) {
-                                    toastr.error("请至少选择一项删除");
-                                } else {
-                                    $.ajax({
-                                        url: "/comic/deleteBatchByIds",
-                                        data: {
-                                            ids: containerVm.ids.toString()
-                                        },
-                                        type: "post",
-                                        dataType: "json",
-                                        success: function (res) {
-                                            if (res.code == 200) {
-                                                toastr.success(res.msg);
-                                                containerVm.getPage();
-                                            }
-                                        }
-                                    });
+                    comicInfoThat.bootBoxConfirm("确定要删除选中项吗？", function () {
+                        if (containerVm.ids.length == 0) {
+                            toastr.error("请至少选择一项删除");
+                        } else {
+                            $.ajax({
+                                url: "/comic/deleteBatchByIds",
+                                data: {
+                                    ids: containerVm.ids.toString()
+                                },
+                                type: "post",
+                                dataType: "json",
+                                success: function (res) {
+                                    if (res.code == 200) {
+                                        toastr.success(res.msg);
+                                        containerVm.getPage();
+                                    } else if (res.code == 500) {
+                                        toastr.error(res.msg);
+                                    }
                                 }
-                            }
+                            });
                         }
                     });
                 },
@@ -639,7 +610,9 @@
                                 containerVm.comicShelfStatus = res.data.comicShelfStatus;
                                 containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
                                 containerVm.cmImgFilePvTmp = "/" + res.data.comicImageUrl;
-                                $('#comicInfoModal').modal();
+                                containerVm.modalShow();
+                            } else if (res.code == 500) {
+                                toastr.error(res.msg);
                             }
                         }
                     });
@@ -667,13 +640,13 @@
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                $('#comicInfoModal').modal('hide');
+                                containerVm.modalHide();
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.getPage();
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
-                                } else {
+                                } else if (res.code == 500) {
                                     toastr.error(res.msg);
                                 }
                             }
@@ -748,6 +721,12 @@
                         $(".datepicker").datepicker('clearDates');
                         $("input[name='cmImgFile']").val("");
                     });
+                },
+                modalShow: function () {
+                    $("#comicInfoModal").modal();
+                },
+                modalHide: function () {
+                    $("#comicInfoModal").modal('hide');
                 },
                 scrollUp: function () {
                     $("#scrollUp").click();

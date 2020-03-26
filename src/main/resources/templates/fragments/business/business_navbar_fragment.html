@@ -12,41 +12,28 @@
     </nav>
 
     <script>
+        var bsnsNavBarThat = this;
+
         const navbarVm = new Vue({
             el: "#navbar",
             methods: {
                 logoutManager: function () {
-                    bootbox.confirm({
-                        size: "small",
-                        title: "<i class='fa fa-comment'></i>&nbsp;&nbsp;提示",
-                        message: "确定要注销吗？",
-                        buttons: {
-                            confirm: {
-                                label: '确定',
-                                className: 'btn-success'
-                            },
-                            cancel: {
-                                label: '取消',
-                                className: 'btn-danger'
+                    bsnsNavBarThat.bootBoxConfirm("确定要注销吗？", function () {
+                        $.ajax({
+                            url: "/sys/manager/logout",
+                            data: null,
+                            type: "post",
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.code == 200) {
+                                    location.reload();
+                                } else if (res.code == 500) {
+                                    bsnsNavBarThat.bootBoxAlert(res.msg, function () {
+                                        return false;
+                                    });
+                                }
                             }
-                        },
-                        backdrop: true,
-                        closeButton: false,
-                        callback: function (result) {
-                            if (result == true) {
-                                $.ajax({
-                                    url: "/sys/manager/logout",
-                                    data: null,
-                                    type: "post",
-                                    dataType: "json",
-                                    success: function (res) {
-                                        if (res.code == 200) {
-                                            location.reload();
-                                        }
-                                    }
-                                });
-                            }
-                        }
+                        });
                     });
                 }
             }

@@ -116,7 +116,11 @@
                                     toastr.error(res.msg);
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
-                                } else {
+                                } else if (res.code == 500) {
+                                    managerLoginThat.bootBoxAlert(res.msg, function () {
+                                        return false;
+                                    });
+                                } else if (res.code == 200) {
                                     containerVm.isContainerShow = false;
                                     spinnerVm.isSpinnerShow = true;
                                     setTimeout(function () {

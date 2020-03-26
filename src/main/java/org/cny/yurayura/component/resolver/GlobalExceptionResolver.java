@@ -1,10 +1,13 @@
 package org.cny.yurayura.component.resolver;
 
+import com.alibaba.fastjson.JSON;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.cny.yurayura.dto.MailDTO;
 import org.cny.yurayura.exception.CustomizeException;
 import org.cny.yurayura.mail.MailService;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,12 +35,13 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
     @Value("${yurayura.receive-email}")
     private String receiveEmail;
 
+    @SneakyThrows
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
                                          Exception exception) {
 
-        response.setContentType("text/html;charset=UTF-8");
-        String errorMsg;
+        boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With")); // 判断请求是否是ajax请求
+        String errorMsg; // 错误信息
 
         // 异常为自定义异常
         if (exception instanceof CustomizeException) {
@@ -61,11 +65,18 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         dto.setAnnexOrData(map);
         mailService.sendTemplateMail(dto, "error/500");
 
-        // 输出错误信息到自定义的500页面
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("errorMsg", errorMsg);
-        mv.setViewName("error/500");
-        return mv;
+        if (isAjax) { // ajax请求下的异常
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(JSON.toJSONString(ApiResult.fail("请求接口异常，请联系开发人员！")));
+            return new ModelAndView();
+        } else { // 页面请求下的异常
+            response.setContentType("text/html;charset=UTF-8");
+            // 输出错误信息到自定义的500页面
+            ModelAndView mv = new ModelAndView();
+            mv.addObject("errorMsg", errorMsg);
+            mv.setViewName("error/500");
+            return mv;
+        }
 
     }
 
