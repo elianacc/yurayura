@@ -4,25 +4,25 @@
  * author: EliaNaCc
  */
 
-//toast初始化方法
+// toast初始化方法
 function initToastr() {
     toastr.options = {
-        closeButton: false, //是否显示关闭按钮
+        closeButton: false, // 是否显示关闭按钮
         debug: false,
-        progressBar: false, //是否显示进度条
-        positionClass: "toast-top-center", //位置
-        showDuration: "300", //显示的动画时间
-        hideDuration: "1000", //消失的动画时间
-        timeOut: "4000", //展现时间
-        extendedTimeOut: "0", //加长展示时间
-        showEasing: "swing", //显示时的动画缓冲方式
-        hideEasing: "linear", //消失时的动画缓冲方式
-        showMethod: "fadeIn", //显示时的动画方式
-        hideMethod: "fadeOut" //消失时的动画方式
+        progressBar: false, // 是否显示进度条
+        positionClass: "toast-top-center", // 位置
+        showDuration: "300", // 显示的动画时间
+        hideDuration: "1000", // 消失的动画时间
+        timeOut: "4000", // 展现时间
+        extendedTimeOut: "0", // 加长展示时间
+        showEasing: "swing", // 显示时的动画缓冲方式
+        hideEasing: "linear", // 消失时的动画缓冲方式
+        showMethod: "fadeIn", // 显示时的动画方式
+        hideMethod: "fadeOut" // 消失时的动画方式
     };
 }
 
-//BootSideMenu初始化方法
+// BootSideMenu初始化方法
 function initSideMenu() {
     $("#bootsidemenu").BootSideMenu({
         side: "left",
@@ -30,12 +30,12 @@ function initSideMenu() {
     });
 }
 
-//metisMenu初始化方法
+// metisMenu初始化方法
 function initMetisMenu() {
     $(".metismenu").metisMenu({toggle: false});
 }
 
-//bootstrap-datepicker初始化方法
+// bootstrap-datepicker初始化方法
 function initDatePicker() {
     $(".datepicker").datepicker({
         format: 'yyyy-mm-dd',
@@ -49,7 +49,7 @@ function initDatePicker() {
     });
 }
 
-//jquery scrollUp初始化方法
+// jquery scrollUp初始化方法
 function initScrollUp() {
     $.scrollUp({
         scrollName: 'scrollUp', // 对象 ID
@@ -62,7 +62,51 @@ function initScrollUp() {
     });
 }
 
-//jquery图片懒加载初始化方法
+// jquery图片懒加载初始化方法
 function initImgLazyLoad() {
     $("img").unveil(100);
+}
+
+// bootbox alert封装方法
+function bootBoxAlert(msg, callbackFunction) {
+    bootbox.alert({
+        size: "small",
+        title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
+        message: msg,
+        closeButton: false,
+        buttons: {
+            ok: {
+                label: '确定',
+            }
+        },
+        callback: function () {
+            callbackFunction();
+        }
+    });
+}
+
+// bootbox confirm封装方法
+function bootBoxConfirm(msg, callbackFunction) {
+    bootbox.confirm({
+        size: "small",
+        title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
+        message: msg,
+        buttons: {
+            confirm: {
+                label: '确定',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: '取消',
+                className: 'btn-danger'
+            }
+        },
+        backdrop: true,
+        closeButton: false,
+        callback: function (result) {
+            if (result == true) {
+                callbackFunction();
+            }
+        }
+    });
 }
