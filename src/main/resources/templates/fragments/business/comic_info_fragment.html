@@ -38,8 +38,8 @@
                         </div>
                         <select class="custom-select" name="selectComicShelfStatus">
                             <option value="" selected></option>
-                            <option value="1">上架</option>
-                            <option value="0">下架</option>
+                            <option :value="item.dictVal" v-for="item in comicShelfStatusDict">{{item.dictName}}
+                            </option>
                         </select>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
@@ -202,17 +202,14 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 状态：</label>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="comicStatus1" name="comicStatus"
-                                           class="custom-control-input form-control-sm" value="0" v-model="comicStatus"
+                                <div class="custom-control custom-radio custom-control-inline"
+                                     v-for="item in comicUpdtStatusDict">
+                                    <input type="radio" :id="'comicUpdtStatus-'+ item.id" name="comicStatus"
+                                           class="custom-control-input form-control-sm" :value="item.dictVal"
+                                           v-model="comicStatus"
                                            :disabled="isDetailModal"/>
-                                    <label class="custom-control-label font-size-14" for="comicStatus1">已完结</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="comicStatus2" name="comicStatus"
-                                           class="custom-control-input form-control-sm" value="8" v-model="comicStatus"
-                                           :disabled="isDetailModal"/>
-                                    <label class="custom-control-label font-size-14" for="comicStatus2">更新中</label>
+                                    <label class="custom-control-label font-size-14"
+                                           :for="'comicUpdtStatus-'+ item.id">{{item.dictName}}</label>
                                 </div>
                             </div>
                             <div class="form-group" v-show="isUdTimeShow">
@@ -281,19 +278,14 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 上架状态：</label>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="comicShelfStatus1" name="comicShelfStatus"
-                                           class="custom-control-input form-control-sm" value="1"
+                                <div class="custom-control custom-radio custom-control-inline"
+                                     v-for="item in comicShelfStatusDict">
+                                    <input type="radio" :id="'comicShelfStatus-'+ item.id" name="comicShelfStatus"
+                                           class="custom-control-input form-control-sm" :value="item.dictVal"
                                            v-model="comicShelfStatus"
                                            :disabled="isDetailModal"/>
-                                    <label class="custom-control-label font-size-14" for="comicShelfStatus1">上架</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="comicShelfStatus2" name="comicShelfStatus"
-                                           class="custom-control-input form-control-sm" value="0"
-                                           v-model="comicShelfStatus"
-                                           :disabled="isDetailModal"/>
-                                    <label class="custom-control-label font-size-14" for="comicShelfStatus2">下架</label>
+                                    <label class="custom-control-label font-size-14"
+                                           :for="'comicShelfStatus-'+ item.id">{{item.dictName}}</label>
                                 </div>
                             </div>
                         </div>
@@ -350,7 +342,9 @@
                 cmImgFilePvTmp: "",
                 comicLabelDict: "",
                 comicStatusDict: "",
-                comicUpdtTimeDict: ""
+                comicUpdtTimeDict: "",
+                comicUpdtStatusDict: "",
+                comicShelfStatusDict: ""
             },
             methods: {
                 getPage: function () {
@@ -614,7 +608,9 @@
                 getSysDict: function () {
                     this.comicLabelDict = comicInfoThat.getSysDict("comicLabel");
                     this.comicStatusDict = comicInfoThat.getSysDict("comicStatus");
+                    this.comicUpdtStatusDict = comicInfoThat.getSysDict("comicUpdtStatus");
                     this.comicUpdtTimeDict = comicInfoThat.getSysDict("comicUpdtTime");
+                    this.comicShelfStatusDict = comicInfoThat.getSysDict("comicShelfStatus");
                 }
             },
             watch: {
