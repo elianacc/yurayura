@@ -1,6 +1,7 @@
 package org.cny.yurayura.controller.sys.dict;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
+import org.cny.yurayura.enumerate.DictStatusEnum;
 import org.cny.yurayura.service.sys.dict.IDictService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +41,10 @@ public class DictController {
      * @param id
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getOneById")
+    @PostMapping("/getById")
     @ApiOperation("查询系统数据字典（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getOneById(Integer id) {
+    public ApiResult getById(Integer id) {
         Dict dict = iDictService.getById(id);
         return ApiResult.success("查询成功", dict);
     }
@@ -113,6 +115,24 @@ public class DictController {
     public ApiResult update(Dict dict) {
         iDictService.updateById(dict);
         return ApiResult.success("修改成功");
+    }
+
+    /**
+     * 查询系统数据字典（根据字典编码）
+     *
+     * @param dictCode
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/getByDictCode")
+    @ApiOperation("查询系统数据字典（根据字典编码）")
+    @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true)
+    public ApiResult getByDictCode(String dictCode) {
+        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+        List<Dict> dictList = iDictService.list(queryWrapper
+                .eq("dict_code", dictCode)
+                .eq("dict_status", DictStatusEnum.ENABLE.getStatusId())
+                .orderByAsc("id"));
+        return ApiResult.success("查询成功", dictList);
     }
 }
 

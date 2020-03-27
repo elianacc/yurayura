@@ -22,7 +22,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     private ManagerMapper managerMapper;
 
     @Override
-    public Manager getOneByNameAndPassword(Manager manager) {
+    public Manager getByNameAndPassword(Manager manager) {
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
         return managerMapper.selectOne(queryWrapper
                 .eq("manager_name", manager.getManagerName())

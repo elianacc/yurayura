@@ -33,10 +33,10 @@ public class UserController {
      * @param id
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getOneById")
+    @PostMapping("/getById")
     @ApiOperation("查询用户（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getOneById(Integer id) {
+    public ApiResult getById(Integer id) {
         User user = iUserService.getById(id);
         return ApiResult.success("查询成功", user);
     }

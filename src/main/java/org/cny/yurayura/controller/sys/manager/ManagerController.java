@@ -91,7 +91,7 @@ public class ManagerController {
             // MD5加密管理员密码
             manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
             // 查询有没有匹配管理员
-            Manager aManager = iManagerService.getOneByNameAndPassword(manager);
+            Manager aManager = iManagerService.getByNameAndPassword(manager);
             if (!StringUtils.isEmpty(aManager)) {
                 // 登入成功存管理员session
                 session.setAttribute("managerSession", aManager);

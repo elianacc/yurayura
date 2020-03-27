@@ -1,7 +1,7 @@
-/**
+/*!
  * comment.js
- * 通用jQuery插件init方法
- * author: EliaNaCc
+ * 通用jQuery插件init方法,jQuery插件封装方法，字典获取方法
+ * @author EliaNaCc
  */
 
 // toast初始化方法
@@ -106,6 +106,25 @@ function bootBoxConfirm(msg, callbackFunction) {
         callback: function (result) {
             if (result == true) {
                 callbackFunction();
+            }
+        }
+    });
+}
+
+// 字典获取方法
+function getSysDict(dictCode) {
+    $.ajax({
+        url: "/sys/dict/getByDictCode",
+        data: {
+            dictCode: dictCode
+        },
+        type: "post",
+        dataType: "json",
+        success: function (res) {
+            if (res.code == 200) {
+                return res.data;
+            } else if (res.code == 500) {
+                console.log('系统数据字典：' + dictCode + '获取异常');
             }
         }
     });

@@ -53,10 +53,10 @@ public class ComicController {
      * @param id
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getOneById")
+    @PostMapping("/getById")
     @ApiOperation("查询番剧（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getOneById(Integer id) {
+    public ApiResult getById(Integer id) {
         Comic comic = iComicService.getById(id);
         return ApiResult.success("查询成功", comic);
     }
