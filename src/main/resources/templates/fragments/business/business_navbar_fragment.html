@@ -27,6 +27,8 @@
                             success: function (res) {
                                 if (res.code == 200) {
                                     location.reload();
+                                } else if (res.code == 100) {
+                                    toastr.error(res.msg);
                                 } else if (res.code == 500) {
                                     bsnsNavBarThat.bootBoxAlert(res.msg, function () {
                                         return false;

@@ -111,7 +111,13 @@
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                if (res.code == 100) {
+                                if (res.code == 200) {
+                                    containerVm.isContainerShow = false;
+                                    spinnerVm.isSpinnerShow = true;
+                                    setTimeout(function () {
+                                        location.replace("/business/comic_info");
+                                    }, 3000);
+                                } else if (res.code == 100) {
                                     containerVm.loadVerifyImage();
                                     toastr.error(res.msg);
                                 } else if (res.code == 101) {
@@ -120,12 +126,6 @@
                                     managerLoginThat.bootBoxAlert(res.msg, function () {
                                         return false;
                                     });
-                                } else if (res.code == 200) {
-                                    containerVm.isContainerShow = false;
-                                    spinnerVm.isSpinnerShow = true;
-                                    setTimeout(function () {
-                                        location.replace("/business/comic_info");
-                                    }, 3000);
                                 }
                             }
                         });

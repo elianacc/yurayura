@@ -223,6 +223,7 @@
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else if (res.code == 100) {
+                                toastr.error(res.msg);
                                 containerVm.pageInfo = "";
                             } else if (res.code == 500) {
                                 toastr.error(res.msg);
@@ -285,6 +286,8 @@
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.clearSelectContent();
+                                } else if (res.code == 100) {
+                                    toastr.error(res.msg);
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
@@ -310,6 +313,8 @@
                                     if (res.code == 200) {
                                         toastr.success(res.msg);
                                         containerVm.getPage();
+                                    } else if (res.code == 100) {
+                                        toastr.error(res.msg);
                                     } else if (res.code == 500) {
                                         toastr.error(res.msg);
                                     }
@@ -334,6 +339,8 @@
                                 containerVm.dictVal = res.data.dictVal;
                                 containerVm.dictStatus = res.data.dictStatus;
                                 containerVm.modalShow();
+                            } else if (res.code == 100) {
+                                toastr.error(res.msg);
                             } else if (res.code == 500) {
                                 toastr.error(res.msg);
                             }
@@ -362,6 +369,8 @@
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.getPage();
+                                } else if (res.code == 100) {
+                                    toastr.error(res.msg);
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
