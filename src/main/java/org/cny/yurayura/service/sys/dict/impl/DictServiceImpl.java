@@ -29,7 +29,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     @Override
     public PageInfo<Dict> getPage(Integer pageNum, DictSelectDTO dictSelectDTO) {
         // 设置分页
-        PageHelper.startPage(pageNum, 10);
+        PageHelper.startPage(pageNum, 20);
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
                 .like(!StringUtils.isEmpty(dictSelectDTO.getSelectDictCode())

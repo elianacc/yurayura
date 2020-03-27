@@ -113,6 +113,7 @@ function bootBoxConfirm(msg, callbackFunction) {
 
 // 字典获取方法
 function getSysDict(dictCode) {
+    var dictData = "";
     $.ajax({
         url: "/sys/dict/getByDictCode",
         data: {
@@ -120,12 +121,14 @@ function getSysDict(dictCode) {
         },
         type: "post",
         dataType: "json",
+        async: false,
         success: function (res) {
             if (res.code == 200) {
-                return res.data;
+                dictData = res.data;
             } else if (res.code == 500) {
                 console.log('系统数据字典：' + dictCode + '获取异常');
             }
         }
     });
+    return dictData;
 }
