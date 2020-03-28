@@ -125,8 +125,10 @@ function getSysDict(dictCode) {
         success: function (res) {
             if (res.code == 200) {
                 dictData = res.data;
+            } else if (res.code == 100) {
+                console.log(res.msg);
             } else if (res.code == 500) {
-                console.log('系统数据字典：' + dictCode + '获取异常');
+                console.log('字典编码：' + dictCode + '对应系统数据字典获取异常');
             }
         }
     });

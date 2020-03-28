@@ -53,7 +53,7 @@ public class DictController {
      * 分页查询系统数据字典
      *
      * @param pageNum
-	 * @param dictSelectDTO
+     * @param dictSelectDTO
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPage")
@@ -132,6 +132,9 @@ public class DictController {
                 .eq("dict_code", dictCode)
                 .eq("dict_status", DictStatusEnum.ENABLE.getStatusId())
                 .orderByAsc("id"));
+        if (dictList.isEmpty()) {
+            return ApiResult.warn("字典编码：" + dictCode + "对应系统数据字典为空");
+        }
         return ApiResult.success("查询成功", dictList);
     }
 }
