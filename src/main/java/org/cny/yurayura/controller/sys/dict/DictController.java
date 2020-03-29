@@ -53,17 +53,17 @@ public class DictController {
      * 分页查询系统数据字典
      *
      * @param pageNum
-     * @param dictSelectDTO
+     * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPage")
     @ApiOperation("分页查询系统数据字典")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPage(Integer pageNum, DictSelectDTO dictSelectDTO) {
+    public ApiResult getPage(Integer pageNum, DictSelectDTO dto) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Dict> pageInfo = iDictService.getPage(pageNum, dictSelectDTO);
+        PageInfo<Dict> pageInfo = iDictService.getPage(pageNum, dto);
         if (pageInfo.getTotal() == 0) {
             return ApiResult.warn("查询不到数据");
         }

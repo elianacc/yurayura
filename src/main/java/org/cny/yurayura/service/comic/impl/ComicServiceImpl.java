@@ -27,17 +27,16 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     private ComicMapper comicMapper;
 
     @Override
-    public PageInfo<Comic> getPageToB(Integer pageNum, ComicSelectDTO comicSelectDTO) {
+    public PageInfo<Comic> getPageToB(Integer pageNum, ComicSelectDTO dto) {
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
         List<Comic> comicList = comicMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(comicSelectDTO.getSelectComicName())
-                        , "comic_name", comicSelectDTO.getSelectComicName())
-                .eq(!StringUtils.isEmpty(comicSelectDTO.getSelectComicStatus())
-                        , "comic_status", comicSelectDTO.getSelectComicStatus())
-                .eq(!StringUtils.isEmpty(comicSelectDTO.getSelectComicShelfStatus())
-                        , "comic_shelf_status", comicSelectDTO.getSelectComicShelfStatus())
+                .like(!StringUtils.isEmpty(dto.getSelectComicName()), "comic_name", dto.getSelectComicName())
+                .eq(!StringUtils.isEmpty(dto.getSelectComicStatus())
+                        , "comic_status", dto.getSelectComicStatus())
+                .eq(!StringUtils.isEmpty(dto.getSelectComicShelfStatus())
+                        , "comic_shelf_status", dto.getSelectComicShelfStatus())
                 .orderByDesc("id"));
         return new PageInfo<>(comicList, 5);
     }

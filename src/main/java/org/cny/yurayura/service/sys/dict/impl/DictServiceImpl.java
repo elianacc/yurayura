@@ -27,13 +27,12 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     private DictMapper dictMapper;
 
     @Override
-    public PageInfo<Dict> getPage(Integer pageNum, DictSelectDTO dictSelectDTO) {
+    public PageInfo<Dict> getPage(Integer pageNum, DictSelectDTO dto) {
         // 设置分页
         PageHelper.startPage(pageNum, 20);
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(dictSelectDTO.getSelectDictCode())
-                        , "dict_code", dictSelectDTO.getSelectDictCode())
+                .like(!StringUtils.isEmpty(dto.getSelectDictCode()), "dict_code", dto.getSelectDictCode())
                 .orderByAsc("dict_code", "id"));
         return new PageInfo<>(dictList, 5);
     }

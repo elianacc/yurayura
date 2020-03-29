@@ -65,17 +65,17 @@ public class ComicController {
      * 分页查询番剧（B端）
      *
      * @param pageNum
-     * @param comicSelectDTO
+     * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询番剧（B端）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToB(Integer pageNum, ComicSelectDTO comicSelectDTO) {
+    public ApiResult getPageToB(Integer pageNum, ComicSelectDTO dto) {
         if (pageNum == 0) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Comic> pageInfo = iComicService.getPageToB(pageNum, comicSelectDTO);
+        PageInfo<Comic> pageInfo = iComicService.getPageToB(pageNum, dto);
         if (pageInfo.getTotal() == 0) {
             return ApiResult.warn("查询不到数据");
         }

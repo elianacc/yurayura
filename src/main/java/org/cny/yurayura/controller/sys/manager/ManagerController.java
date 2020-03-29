@@ -46,21 +46,21 @@ public class ManagerController {
     private IManagerService iManagerService;
 
     /**
-     * 获取数字加英文验证码图片
+     * 获取管理员登入数字加英文验证码及图片
      *
      * @param response
      * @param session
      * @return void
      */
     @GetMapping("/getVerifyCode")
-    @ApiOperation("获取数字加英文验证码图片")
+    @ApiOperation("获取管理员登入数字加英文验证码及图片")
     public void getVerifyCode(@ApiIgnore HttpServletResponse response, @ApiIgnore HttpSession session)
             throws IOException {
         // 利用图片工具生成图片
         // 第一个参数是生成的验证码，第二个参数是生成的图片
         Object[] objs = VerifyCodeUtil.createImage();
         // 将验证码存入Session
-        session.setAttribute("verifyImageCode", objs[0]);
+        session.setAttribute("managerVerifyCode", objs[0]);
 
         // 将图片输出给浏览器
         BufferedImage image = (BufferedImage) objs[1];
@@ -84,8 +84,8 @@ public class ManagerController {
                            @ApiIgnore HttpServletResponse response) throws UnsupportedEncodingException {
 
         // 获取服务器生成验证码
-        Object verifyImageCode = session.getAttribute("verifyImageCode");
-        if (verifyImageCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
+        Object managerVerifyCode = session.getAttribute("managerVerifyCode");
+        if (managerVerifyCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
             Manager manager = new Manager();
             BeanUtils.copyProperties(dto, manager);
             // MD5加密管理员密码
