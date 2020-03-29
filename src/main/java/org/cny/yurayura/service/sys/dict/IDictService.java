@@ -1,9 +1,9 @@
 package org.cny.yurayura.service.sys.dict;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
-import com.baomidou.mybatisplus.extension.service.IService;
+import org.cny.yurayura.vo.ApiResult;
 
 /**
  * 系统数据字典 service
@@ -20,6 +20,6 @@ public interface IDictService extends IService<Dict> {
 	 * @param dictSelectDTO
      * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.sys.dict.Dict>
      */
-    public PageInfo<Dict> getPage(Integer pageNum, DictSelectDTO dictSelectDTO);
+    public ApiResult getPage(Integer pageNum, DictSelectDTO dictSelectDTO);
 
 }

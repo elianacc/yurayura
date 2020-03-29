@@ -2,7 +2,6 @@ package org.cny.yurayura.controller.sys.dict;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -13,9 +12,9 @@ import org.cny.yurayura.enumerate.DictStatusEnum;
 import org.cny.yurayura.service.sys.dict.IDictService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -45,8 +44,10 @@ public class DictController {
     @ApiOperation("查询系统数据字典（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        Dict dict = iDictService.getById(id);
-        return ApiResult.success("查询成功", dict);
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("查询id不能为空");
+        }
+        return ApiResult.success("查询成功", iDictService.getById(id));
     }
 
     /**
@@ -60,14 +61,10 @@ public class DictController {
     @ApiOperation("分页查询系统数据字典")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPage(Integer pageNum, DictSelectDTO dto) {
-        if (pageNum == 0) {
+        if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Dict> pageInfo = iDictService.getPage(pageNum, dto);
-        if (pageInfo.getTotal() == 0) {
-            return ApiResult.warn("查询不到数据");
-        }
-        return ApiResult.success("分页查询成功", pageInfo);
+        return iDictService.getPage(pageNum, dto);
     }
 
     /**

@@ -1,8 +1,10 @@
 package org.cny.yurayura.controller.comic;
 
 
-import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
@@ -57,8 +59,10 @@ public class ComicController {
     @ApiOperation("查询番剧（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        Comic comic = iComicService.getById(id);
-        return ApiResult.success("查询成功", comic);
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("查询id不能为空");
+        }
+        return ApiResult.success("查询成功", iComicService.getById(id));
     }
 
     /**
@@ -72,14 +76,10 @@ public class ComicController {
     @ApiOperation("分页查询番剧（B端）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPageToB(Integer pageNum, ComicSelectDTO dto) {
-        if (pageNum == 0) {
+        if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Comic> pageInfo = iComicService.getPageToB(pageNum, dto);
-        if (pageInfo.getTotal() == 0) {
-            return ApiResult.warn("查询不到数据");
-        }
-        return ApiResult.success("分页查询成功", pageInfo);
+       return iComicService.getPageToB(pageNum, dto);
     }
 
     /**

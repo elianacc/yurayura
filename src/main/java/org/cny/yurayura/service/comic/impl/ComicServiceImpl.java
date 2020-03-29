@@ -8,6 +8,7 @@ import org.cny.yurayura.dao.comic.ComicMapper;
 import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.service.comic.IComicService;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -27,7 +28,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     private ComicMapper comicMapper;
 
     @Override
-    public PageInfo<Comic> getPageToB(Integer pageNum, ComicSelectDTO dto) {
+    public ApiResult getPageToB(Integer pageNum, ComicSelectDTO dto) {
         // 设置分页
         PageHelper.startPage(pageNum, 10);
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
@@ -38,6 +39,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
                 .eq(!StringUtils.isEmpty(dto.getSelectComicShelfStatus())
                         , "comic_shelf_status", dto.getSelectComicShelfStatus())
                 .orderByDesc("id"));
-        return new PageInfo<>(comicList, 5);
+        PageInfo<Comic> pageInfo = new PageInfo<>(comicList, 5);
+        if (pageInfo.getTotal() == 0) {
+            return ApiResult.warn("查询不到数据");
+        }
+        return ApiResult.success("分页查询成功", pageInfo);
     }
 }

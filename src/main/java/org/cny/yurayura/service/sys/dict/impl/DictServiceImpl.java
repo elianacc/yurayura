@@ -8,6 +8,7 @@ import org.cny.yurayura.entity.sys.dict.Dict;
 import org.cny.yurayura.dao.sys.dict.DictMapper;
 import org.cny.yurayura.service.sys.dict.IDictService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -27,13 +28,17 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     private DictMapper dictMapper;
 
     @Override
-    public PageInfo<Dict> getPage(Integer pageNum, DictSelectDTO dto) {
+    public ApiResult getPage(Integer pageNum, DictSelectDTO dto) {
         // 设置分页
         PageHelper.startPage(pageNum, 20);
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
                 .like(!StringUtils.isEmpty(dto.getSelectDictCode()), "dict_code", dto.getSelectDictCode())
                 .orderByAsc("dict_code", "id"));
-        return new PageInfo<>(dictList, 5);
+        PageInfo<Dict> pageInfo = new PageInfo<>(dictList, 5);
+        if (pageInfo.getTotal() == 0) {
+            return ApiResult.warn("查询不到数据");
+        }
+        return ApiResult.success("分页查询成功", pageInfo);
     }
 }

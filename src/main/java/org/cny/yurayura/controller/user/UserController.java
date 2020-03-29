@@ -9,6 +9,7 @@ import org.cny.yurayura.entity.user.User;
 import org.cny.yurayura.service.user.IUserService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,8 +38,10 @@ public class UserController {
     @ApiOperation("查询用户（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        User user = iUserService.getById(id);
-        return ApiResult.success("查询成功", user);
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("查询id不能为空");
+        }
+        return ApiResult.success("查询成功", iUserService.getById(id));
     }
 
     /**
@@ -51,12 +54,12 @@ public class UserController {
     @ApiOperation("分页查询用户（B端）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPageToB(Integer pageNum) {
-        if (pageNum == 0) {
+        if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("请输入页数");
         }
         PageInfo<Object> pageInfo = iUserService.getPageToB(pageNum);
         if (pageInfo.getTotal() == 0) {
-            return ApiResult.warn("系统数据为空");
+            return ApiResult.warn("查询不到数据");
         }
         return ApiResult.success("分页查询成功", pageInfo);
     }
