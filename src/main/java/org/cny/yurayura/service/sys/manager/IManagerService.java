@@ -1,7 +1,12 @@
 package org.cny.yurayura.service.sys.manager;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.cny.yurayura.dto.MangerLoginDTO;
 import org.cny.yurayura.entity.sys.manager.Manager;
+import org.cny.yurayura.vo.ApiResult;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 系统管理员 service
@@ -10,11 +15,14 @@ import org.cny.yurayura.entity.sys.manager.Manager;
  * @since 2019-10-27
  */
 public interface IManagerService extends IService<Manager> {
+
     /**
-     * 查询管理员（根据管理员名和密码）
+     * 管理员登入
      *
-     * @param manager
-     * @return org.cny.yurayura.entity.sys.manager.Manager
+     * @param dto
+	 * @param session
+	 * @param response
+     * @return org.cny.yurayura.vo.ApiResult
      */
-    public Manager getByNameAndPassword(Manager manager);
+    public ApiResult login(MangerLoginDTO dto, HttpSession session, HttpServletResponse response);
 }
