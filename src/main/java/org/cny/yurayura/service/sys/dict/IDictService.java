@@ -17,9 +17,41 @@ public interface IDictService extends IService<Dict> {
      * 分页查询系统数据字典
      *
      * @param pageNum
-	 * @param dictSelectDTO
-     * @return com.github.pagehelper.PageInfo<org.cny.yurayura.entity.sys.dict.Dict>
+	 * @param dto
+     * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPage(Integer pageNum, DictSelectDTO dictSelectDTO);
+    public ApiResult getPage(Integer pageNum, DictSelectDTO dto);
+
+    /**
+     * 添加系统数据字典
+     *
+     * @param dict
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    public ApiResult insert(Dict dict);
+
+    /**
+     * 批量删除系统数据字典（根据id组）
+     *
+     * @param ids
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    public ApiResult deleteBatchByIds(String ids);
+
+    /**
+     * 修改系统数据字典
+     *
+     * @param dict
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    public ApiResult update(Dict dict);
+
+    /**
+     * 查询系统数据字典（根据字典编码）
+     *
+     * @param dictCode
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    public ApiResult getByDictCode(String dictCode);
 
 }

@@ -20,12 +20,5 @@ import java.util.List;
 @Service
 public class ComicUserDataServiceImpl extends ServiceImpl<ComicUserDataMapper, ComicUserData> implements IComicUserDataService {
 
-    @Autowired
-    private ComicUserDataMapper comicUserDataMapper;
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public void deleteBatchByComicId(List<Integer> comicIdList) {
-        comicUserDataMapper.deleteBatchByComicId(comicIdList);
-    }
 }

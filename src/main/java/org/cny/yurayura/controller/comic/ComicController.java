@@ -8,27 +8,15 @@ import io.swagger.annotations.ApiParam;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
-import org.cny.yurayura.entity.comic.Comic;
-import org.cny.yurayura.entity.comic.ComicUserData;
-import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.cny.yurayura.service.comic.IComicService;
-import org.cny.yurayura.service.comic.IComicUserDataService;
-import org.cny.yurayura.util.FileUtil;
 import org.cny.yurayura.vo.ApiResult;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 番剧 controller
@@ -43,11 +31,6 @@ public class ComicController {
 
     @Autowired
     private IComicService iComicService;
-    @Autowired
-    private IComicUserDataService iComicUserDataService;
-
-    @Value("${yurayura.default-upload.comic-image}")
-    private String defaultUplCmImg;
 
     /**
      * 查询番剧（根据id）
@@ -79,7 +62,7 @@ public class ComicController {
         if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("请输入页数");
         }
-       return iComicService.getPageToB(pageNum, dto);
+        return iComicService.getPageToB(pageNum, dto);
     }
 
     /**
@@ -93,42 +76,15 @@ public class ComicController {
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
     public ApiResult insert(ComicInstAndUpdtDTO dto
-            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile)
-            throws IOException {
-        // 有更新时间,更新状态为更新时间
-        Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
-
-        // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
-
-        Comic comic = new Comic();
-        ComicUserData comicUserData = new ComicUserData();
-
-        if (imgUplRes.equals(ImgUploadResultEnum.FORMATNOTALLOW.getResult())) {
-            return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
-        } else if (imgUplRes.equals(ImgUploadResultEnum.SIZEBEYOND.getResult())) {
-            return ApiResult.warn("图片不能超过100KB");
-        } else {
-            BeanUtils.copyProperties(dto, comic);
-            comic.setComicStatus(comicStatus);
-            // 番剧图片地址使用默认图片
-            comic.setComicImageUrl(defaultUplCmImg);
-            // 上传图片不为空，番剧图片地址使用上传图片地址
-            if (!imgUplRes.equals(ImgUploadResultEnum.NULL.getResult())) {
-                comic.setComicImageUrl("upload/" + imgUplRes);
-            }
-            comic.setComicCreateTime(LocalDateTime.now());
-            comic.setComicUpdateTime(LocalDateTime.now());
-            iComicService.save(comic);
-            comicUserData.setComicId(comic.getId());
-            comicUserData.setComicName(comic.getComicName());
-            comicUserData.setComicPlayNum(0);
-            comicUserData.setComicFavoriteNum(0);
-            comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
-            comicUserData.setComicUserDataUpdateTime(LocalDateTime.now());
-            iComicUserDataService.save(comicUserData);
-            return ApiResult.success("添加成功");
+            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
+        if (StringUtils.isEmpty(dto.getComicName())) {
+            return ApiResult.warn("番剧名不能为空");
+        } else if (StringUtils.isEmpty(dto.getComicStatus())) {
+            return ApiResult.warn("番剧状态不能为空");
+        } else if (StringUtils.isEmpty(dto.getComicShelfStatus())) {
+            return ApiResult.warn("番剧上架状态不能为空");
         }
+        return iComicService.insert(dto, cmImgFile);
     }
 
     /**
@@ -141,22 +97,10 @@ public class ComicController {
     @ApiOperation("批量删除番剧（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
     public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdList = new ArrayList<>();
-        String[] delIdArr = ids.split(",");
-        for (String delIdStr : delIdArr) {
-            delIdList.add(Integer.parseInt(delIdStr));
+        if (StringUtils.isEmpty(ids)) {
+            return ApiResult.warn("删除id组不能为空");
         }
-        List<Comic> delComicList = iComicService.listByIds(delIdList);
-        iComicService.removeByIds(delIdList);
-        iComicUserDataService.deleteBatchByComicId(delIdList);
-        for (Comic comic : delComicList) {
-            // 如果用的是默认图片的，则不删除
-            if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
-                // 删除番剧图片
-                FileUtil.fileDelete(comic.getComicImageUrl());
-            }
-        }
-        return ApiResult.success("删除成功");
+        return iComicService.deleteBatchByIds(ids);
     }
 
     /**
@@ -170,36 +114,16 @@ public class ComicController {
     @PostMapping("/update")
     @ApiOperation("修改番剧")
     public ApiResult update(ComicInstAndUpdtDTO dto
-            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile)
-            throws IOException {
-        // 有更新时间,更新状态为更新时间
-        Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
-
-        // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
-
-        Comic comic = new Comic();
-
-        if (imgUplRes.equals(ImgUploadResultEnum.FORMATNOTALLOW.getResult())) {
-            return ApiResult.warn("图片格式必须是.gif,jpeg,jpg,png中的一种");
-        } else if (imgUplRes.equals(ImgUploadResultEnum.SIZEBEYOND.getResult())) {
-            return ApiResult.warn("图片不能超过100KB");
-        } else {
-            BeanUtils.copyProperties(dto, comic);
-            comic.setComicStatus(comicStatus);
-            comic.setComicUpdateTime(LocalDateTime.now());
-            // 上传图片不为空，番剧图片地址使用上传图片地址
-            if (!imgUplRes.equals(ImgUploadResultEnum.NULL.getResult())) {
-                comic.setComicImageUrl("upload/" + imgUplRes);
-                Comic aComic = iComicService.getById(comic.getId());
-                // 如果用的是默认图片的，则不删除
-                if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
-                    // 删除番剧图片
-                    FileUtil.fileDelete(aComic.getComicImageUrl());
-                }
-            }
-            iComicService.updateById(comic);
-            return ApiResult.success("修改成功");
+            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
+        if (StringUtils.isEmpty(dto.getId())) {
+            return ApiResult.warn("id不能为空");
+        } else if (StringUtils.isEmpty(dto.getComicName())) {
+            return ApiResult.warn("番剧名不能为空");
+        } else if (StringUtils.isEmpty(dto.getComicStatus())) {
+            return ApiResult.warn("番剧状态不能为空");
+        } else if (StringUtils.isEmpty(dto.getComicShelfStatus())) {
+            return ApiResult.warn("番剧上架状态不能为空");
         }
+        return iComicService.update(dto, cmImgFile);
     }
 }

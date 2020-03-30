@@ -162,13 +162,17 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 状态：</label>
-                                <div class="custom-control custom-radio custom-control-inline"
-                                     v-for="item in dictStatusDict">
-                                    <input type="radio" :id="'dictStatus-'+ item.id" name="dictStatus"
-                                           class="custom-control-input form-control-sm" :value="item.dictVal"
-                                           v-model="dictStatus"/>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="dictStatus1" name="dictStatus"
+                                           class="custom-control-input form-control-sm" value="1" v-model="dictStatus"/>
                                     <label class="custom-control-label font-size-14"
-                                           :for="'dictStatus-'+ item.id">{{item.dictName}}</label>
+                                           for="dictStatus1">启用</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="dictStatus2" name="dictStatus"
+                                           class="custom-control-input form-control-sm" value="0" v-model="dictStatus"/>
+                                    <label class="custom-control-label font-size-14"
+                                           for="dictStatus2">禁用</label>
                                 </div>
                             </div>
                         </div>
@@ -207,8 +211,7 @@
                 dictCode: "",
                 dictName: "",
                 dictVal: "",
-                dictStatus: 1,
-                dictStatusDict: ""
+                dictStatus: 1
             },
             methods: {
                 getPage: function () {
@@ -223,7 +226,6 @@
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else if (res.code == 100) {
-                                toastr.error(res.msg);
                                 containerVm.pageInfo = "";
                             } else if (res.code == 500) {
                                 toastr.error(res.msg);
@@ -397,9 +399,6 @@
                 },
                 scrollUp: function () {
                     $("#scrollUp").click();
-                },
-                getSysDict: function () {
-                    this.dictStatusDict = sysDictThat.getSysDict("dictStatus");
                 }
             },
             mounted: function () {
@@ -407,7 +406,6 @@
                 sysDictThat.initScrollUp();
                 this.modalReset();
                 this.getPage();
-                this.getSysDict();
             }
         });
 

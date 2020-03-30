@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.cny.yurayura.entity.user.User;
+import org.cny.yurayura.dto.UserSelectDTO;
 import org.cny.yurayura.service.user.IUserService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,20 +48,17 @@ public class UserController {
      * 分页查询用户（B端）
      *
      * @param pageNum
+	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询用户（B端）")
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToB(Integer pageNum) {
+    public ApiResult getPageToB(Integer pageNum, UserSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("请输入页数");
         }
-        PageInfo<Object> pageInfo = iUserService.getPageToB(pageNum);
-        if (pageInfo.getTotal() == 0) {
-            return ApiResult.warn("查询不到数据");
-        }
-        return ApiResult.success("分页查询成功", pageInfo);
+       return iUserService.getPageToB(pageNum, dto);
     }
 
 }

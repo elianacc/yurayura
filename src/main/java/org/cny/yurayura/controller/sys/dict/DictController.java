@@ -1,14 +1,12 @@
 package org.cny.yurayura.controller.sys.dict;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
-import org.cny.yurayura.enumerate.DictStatusEnum;
 import org.cny.yurayura.service.sys.dict.IDictService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 系统数据字典 controller
@@ -77,8 +72,16 @@ public class DictController {
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
     public ApiResult insert(Dict dict) {
-        iDictService.save(dict);
-        return ApiResult.success("添加成功");
+        if (StringUtils.isEmpty(dict.getDictCode())) {
+            return ApiResult.warn("字典编码不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictName())) {
+            return ApiResult.warn("字典名不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictVal())) {
+            return ApiResult.warn("字典值不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictStatus())) {
+            return ApiResult.warn("字典状态不能为空");
+        }
+        return iDictService.insert(dict);
     }
 
     /**
@@ -91,13 +94,10 @@ public class DictController {
     @ApiOperation("批量删除系统数据字典（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
     public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdList = new ArrayList<>();
-        String[] delIdArr = ids.split(",");
-        for (String delIdStr : delIdArr) {
-            delIdList.add(Integer.parseInt(delIdStr));
+        if (StringUtils.isEmpty(ids)) {
+            return ApiResult.warn("删除id组不能为空");
         }
-        iDictService.removeByIds(delIdList);
-        return ApiResult.success("删除成功");
+        return iDictService.deleteBatchByIds(ids);
     }
 
     /**
@@ -110,8 +110,18 @@ public class DictController {
     @PostMapping("/update")
     @ApiOperation("修改系统数据字典")
     public ApiResult update(Dict dict) {
-        iDictService.updateById(dict);
-        return ApiResult.success("修改成功");
+        if (StringUtils.isEmpty(dict.getId())) {
+            return ApiResult.warn("id不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictCode())) {
+            return ApiResult.warn("字典编码不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictName())) {
+            return ApiResult.warn("字典名不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictVal())) {
+            return ApiResult.warn("字典值不能为空");
+        } else if (StringUtils.isEmpty(dict.getDictStatus())) {
+            return ApiResult.warn("字典状态不能为空");
+        }
+        return iDictService.update(dict);
     }
 
     /**
@@ -124,15 +134,10 @@ public class DictController {
     @ApiOperation("查询系统数据字典（根据字典编码）")
     @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true)
     public ApiResult getByDictCode(String dictCode) {
-        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
-        List<Dict> dictList = iDictService.list(queryWrapper
-                .eq("dict_code", dictCode)
-                .eq("dict_status", DictStatusEnum.ENABLE.getStatusId())
-                .orderByAsc("id"));
-        if (dictList.isEmpty()) {
-            return ApiResult.warn("字典编码：" + dictCode + "对应系统数据字典为空");
+        if (StringUtils.isEmpty(dictCode)) {
+            return ApiResult.warn("查询字典编码不能为空");
         }
-        return ApiResult.success("查询成功", dictList);
+        return iDictService.getByDictCode(dictCode);
     }
 }
 

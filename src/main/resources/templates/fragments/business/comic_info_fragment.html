@@ -359,7 +359,6 @@
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else if (res.code == 100) {
-                                toastr.error(res.msg);
                                 containerVm.pageInfo = "";
                             } else if (res.code == 500) {
                                 toastr.error(res.msg);
