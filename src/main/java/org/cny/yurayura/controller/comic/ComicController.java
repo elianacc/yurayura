@@ -80,7 +80,7 @@ public class ComicController {
     @ApiOperation("添加番剧")
     public ApiResult insert(ComicInstAndUpdtDTO dto
             , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
-        if (StringUtils.isEmpty(dto.getComicName())) {
+        if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
             return ApiResult.warn("状态不能为空");
@@ -122,7 +122,7 @@ public class ComicController {
             , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
         if (StringUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(dto.getComicName())) {
+        } else if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
             return ApiResult.warn("状态不能为空");

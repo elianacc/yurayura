@@ -79,11 +79,11 @@ public class DictController {
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
     public ApiResult insert(Dict dict) {
-        if (StringUtils.isEmpty(dict.getDictCode())) {
+        if (StringUtils.isEmpty(dict.getDictCode().trim())) {
             return ApiResult.warn("字典编码不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictName())) {
+        } else if (StringUtils.isEmpty(dict.getDictName().trim())) {
             return ApiResult.warn("字典名不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictVal())) {
+        } else if (StringUtils.isEmpty(dict.getDictVal().trim())) {
             return ApiResult.warn("字典值不能为空");
         } else if (StringUtils.isEmpty(dict.getDictStatus())) {
             return ApiResult.warn("字典状态不能为空");
@@ -119,11 +119,11 @@ public class DictController {
     public ApiResult update(Dict dict) {
         if (StringUtils.isEmpty(dict.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictCode())) {
+        } else if (StringUtils.isEmpty(dict.getDictCode().trim())) {
             return ApiResult.warn("字典编码不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictName())) {
+        } else if (StringUtils.isEmpty(dict.getDictName().trim())) {
             return ApiResult.warn("字典名不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictVal())) {
+        } else if (StringUtils.isEmpty(dict.getDictVal().trim())) {
             return ApiResult.warn("字典值不能为空");
         } else if (StringUtils.isEmpty(dict.getDictStatus())) {
             return ApiResult.warn("字典状态不能为空");
@@ -141,7 +141,7 @@ public class DictController {
     @ApiOperation("查询系统数据字典（根据字典编码）")
     @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true)
     public ApiResult getByDictCode(String dictCode) {
-        if (StringUtils.isEmpty(dictCode)) {
+        if (StringUtils.isEmpty(dictCode.trim())) {
             return ApiResult.warn("字典编码不能为空");
         }
         return iDictService.getByDictCode(dictCode);

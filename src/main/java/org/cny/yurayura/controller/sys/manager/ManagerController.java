@@ -75,11 +75,11 @@ public class ManagerController {
     public ApiResult login(MangerLoginDTO dto, @ApiIgnore HttpSession session
             , @ApiIgnore HttpServletResponse response) {
 
-        if (StringUtils.isEmpty(dto.getManagerName())) {
+        if (StringUtils.isEmpty(dto.getManagerName().trim())) {
             return ApiResult.warn("用户名不能为空");
-        } else if (StringUtils.isEmpty(dto.getManagerPassword())) {
+        } else if (StringUtils.isEmpty(dto.getManagerPassword().trim())) {
             return ApiResult.warn("密码不能为空");
-        } else if (StringUtils.isEmpty(dto.getVerifyCode())) {
+        } else if (StringUtils.isEmpty(dto.getVerifyCode().trim())) {
             return ApiResult.warn("密码不能为空");
         }
         return iManagerService.login(dto, session, response);
