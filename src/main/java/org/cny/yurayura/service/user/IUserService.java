@@ -14,13 +14,14 @@ import org.cny.yurayura.vo.ApiResult;
  */
 public interface IUserService extends IService<User> {
 
-   /**
-    * 分页查询用户（B端）
-    *
-    * @param pageNum
+    /**
+     * 分页查询用户（B端）
+     *
+     * @param pageNum
+	 * @param pageSize
 	 * @param dto
-    * @return org.cny.yurayura.vo.ApiResult
-    */
-    public ApiResult getPageToB(Integer pageNum, UserSelectDTO dto);
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    public ApiResult getPageToB(Integer pageNum, Integer pageSize, UserSelectDTO dto);
 
 }

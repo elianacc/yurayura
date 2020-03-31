@@ -4,6 +4,7 @@ package org.cny.yurayura.controller.user;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.dto.UserSelectDTO;
 import org.cny.yurayura.service.user.IUserService;
@@ -48,17 +49,23 @@ public class UserController {
      * 分页查询用户（B端）
      *
      * @param pageNum
+	 * @param pageSize
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询用户（B端）")
-    @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToB(Integer pageNum, UserSelectDTO dto) {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "页记录数", defaultValue = "10", dataType = "int")
+    })
+    public ApiResult getPageToB(Integer pageNum, Integer pageSize, UserSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("页码不能为空");
+        } else if (StringUtils.isEmpty(pageSize)) {
+            pageSize = 10; //页记录数默认10
         }
-       return iUserService.getPageToB(pageNum, dto);
+        return iUserService.getPageToB(pageNum, pageSize, dto);
     }
 
 }
