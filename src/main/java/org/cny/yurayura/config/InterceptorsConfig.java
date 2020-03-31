@@ -21,7 +21,6 @@ public class InterceptorsConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(businessPageInterceptor)
-                .addPathPatterns("/business/comic_info", "/business/sys_dict",
-                        "/business/user_info");
+                .addPathPatterns("/business/comic_info", "/business/sys_dict", "/business/user_info");
     }
 }

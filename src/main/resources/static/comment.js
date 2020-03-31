@@ -113,7 +113,7 @@ function bootBoxConfirm(msg, callbackFunction) {
 
 // 字典获取方法
 function getSysDict(dictCode) {
-    var dictData = "";
+    let dictData = "";
     $.ajax({
         url: "/sys/dict/getByDictCode",
         data: {
