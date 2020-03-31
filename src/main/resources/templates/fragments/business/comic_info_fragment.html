@@ -351,7 +351,8 @@
                     $("#selectContentForm").ajaxSubmit({
                         url: "/comic/getPageToB",
                         data: {
-                            pageNum: this.nowPageNum
+                            pageNum: this.nowPageNum,
+                            pageSize: 10
                         },
                         type: "post",
                         dataType: "json",

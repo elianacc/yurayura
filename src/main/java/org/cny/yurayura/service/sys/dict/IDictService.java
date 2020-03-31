@@ -17,10 +17,11 @@ public interface IDictService extends IService<Dict> {
      * 分页查询系统数据字典
      *
      * @param pageNum
+	 * @param pageSize
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPage(Integer pageNum, DictSelectDTO dto);
+    public ApiResult getPage(Integer pageNum, Integer pageSize, DictSelectDTO dto);
 
     /**
      * 添加系统数据字典

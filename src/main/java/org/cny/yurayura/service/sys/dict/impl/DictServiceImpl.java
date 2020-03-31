@@ -31,9 +31,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     private DictMapper dictMapper;
 
     @Override
-    public ApiResult getPage(Integer pageNum, DictSelectDTO dto) {
+    public ApiResult getPage(Integer pageNum, Integer pageSize, DictSelectDTO dto) {
         // 设置分页
-        PageHelper.startPage(pageNum, 20);
+        PageHelper.startPage(pageNum, pageSize);
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
                 .like(!StringUtils.isEmpty(dto.getSelectDictCode()), "dict_code", dto.getSelectDictCode())

@@ -218,7 +218,8 @@
                     $("#selectContentForm").ajaxSubmit({
                         url: "/sys/dict/getPage",
                         data: {
-                            pageNum: this.nowPageNum
+                            pageNum: this.nowPageNum,
+                            pageSize: 20
                         },
                         type: "post",
                         dataType: "json",

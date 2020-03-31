@@ -1,10 +1,7 @@
 package org.cny.yurayura.controller.comic;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
@@ -52,17 +49,23 @@ public class ComicController {
      * 分页查询番剧（B端）
      *
      * @param pageNum
-     * @param dto
+	 * @param pageSize
+	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询番剧（B端）")
-    @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int")
-    public ApiResult getPageToB(Integer pageNum, ComicSelectDTO dto) {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "页记录数", defaultValue = "10", dataType = "int")
+    })
+    public ApiResult getPageToB(Integer pageNum, Integer pageSize, ComicSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
             return ApiResult.warn("页码不能为空");
+        } else if (StringUtils.isEmpty(pageSize)) {
+            pageSize = 10; //页记录数默认10
         }
-        return iComicService.getPageToB(pageNum, dto);
+        return iComicService.getPageToB(pageNum, pageSize, dto);
     }
 
     /**
