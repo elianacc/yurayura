@@ -13,5 +13,4 @@ import java.util.List;
  */
 public interface IComicUserDataService extends IService<ComicUserData> {
 
-
 }

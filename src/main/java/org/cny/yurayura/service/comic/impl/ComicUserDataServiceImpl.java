@@ -20,5 +20,4 @@ import java.util.List;
 @Service
 public class ComicUserDataServiceImpl extends ServiceImpl<ComicUserDataMapper, ComicUserData> implements IComicUserDataService {
 
-
 }
