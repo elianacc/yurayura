@@ -54,10 +54,10 @@ public class DictController {
      */
     @PostMapping("/getPage")
     @ApiOperation("分页查询系统数据字典")
-    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
+    @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPage(Integer pageNum, DictSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
-            return ApiResult.warn("页数不能为空");
+            return ApiResult.warn("页码不能为空");
         }
         return iDictService.getPage(pageNum, dto);
     }

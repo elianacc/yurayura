@@ -57,10 +57,10 @@ public class ComicController {
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询番剧（B端）")
-    @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
+    @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPageToB(Integer pageNum, ComicSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
-            return ApiResult.warn("页数不能为空");
+            return ApiResult.warn("页码不能为空");
         }
         return iComicService.getPageToB(pageNum, dto);
     }
