@@ -40,7 +40,7 @@ public class DictController {
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
         if (StringUtils.isEmpty(id)) {
-            return ApiResult.warn("查询id不能为空");
+            return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iDictService.getById(id));
     }
@@ -57,7 +57,7 @@ public class DictController {
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPage(Integer pageNum, DictSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
-            return ApiResult.warn("请输入页数");
+            return ApiResult.warn("页数不能为空");
         }
         return iDictService.getPage(pageNum, dto);
     }
@@ -95,7 +95,7 @@ public class DictController {
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
     public ApiResult deleteBatchByIds(String ids) {
         if (StringUtils.isEmpty(ids)) {
-            return ApiResult.warn("删除id组不能为空");
+            return ApiResult.warn("id组不能为空");
         }
         return iDictService.deleteBatchByIds(ids);
     }
@@ -135,7 +135,7 @@ public class DictController {
     @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true)
     public ApiResult getByDictCode(String dictCode) {
         if (StringUtils.isEmpty(dictCode)) {
-            return ApiResult.warn("查询字典编码不能为空");
+            return ApiResult.warn("字典编码不能为空");
         }
         return iDictService.getByDictCode(dictCode);
     }

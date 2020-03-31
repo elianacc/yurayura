@@ -39,7 +39,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
         if (StringUtils.isEmpty(id)) {
-            return ApiResult.warn("查询id不能为空");
+            return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iUserService.getById(id));
     }
@@ -56,7 +56,7 @@ public class UserController {
     @ApiImplicitParam(name = "pageNum", value = "当前页数", defaultValue = "1", required = true, dataType = "int")
     public ApiResult getPageToB(Integer pageNum, UserSelectDTO dto) {
         if (StringUtils.isEmpty(pageNum)) {
-            return ApiResult.warn("请输入页数");
+            return ApiResult.warn("页数不能为空");
         }
        return iUserService.getPageToB(pageNum, dto);
     }
