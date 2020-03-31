@@ -86,7 +86,7 @@ public class ComicController {
             return ApiResult.warn("状态不能为空");
         } else if (StringUtils.isEmpty(dto.getComicShelfStatus())) {
             return ApiResult.warn("上架状态不能为空");
-        } else if (!StringUtils.isEmpty(dto.getComicContent()) && dto.getComicContent().length() > 500) {
+        } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
         return iComicService.insert(dto, cmImgFile);
@@ -128,7 +128,7 @@ public class ComicController {
             return ApiResult.warn("状态不能为空");
         } else if (StringUtils.isEmpty(dto.getComicShelfStatus())) {
             return ApiResult.warn("上架状态不能为空");
-        } else if (!StringUtils.isEmpty(dto.getComicContent()) && dto.getComicContent().length() > 500) {
+        } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
         return iComicService.update(dto, cmImgFile);
