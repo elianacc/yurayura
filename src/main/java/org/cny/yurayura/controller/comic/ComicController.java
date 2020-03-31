@@ -49,8 +49,8 @@ public class ComicController {
      * 分页查询番剧（B端）
      *
      * @param pageNum
-	 * @param pageSize
-	 * @param dto
+     * @param pageSize
+     * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
@@ -81,11 +81,13 @@ public class ComicController {
     public ApiResult insert(ComicInstAndUpdtDTO dto
             , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
         if (StringUtils.isEmpty(dto.getComicName())) {
-            return ApiResult.warn("番剧名不能为空");
+            return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
-            return ApiResult.warn("番剧状态不能为空");
+            return ApiResult.warn("状态不能为空");
         } else if (StringUtils.isEmpty(dto.getComicShelfStatus())) {
-            return ApiResult.warn("番剧上架状态不能为空");
+            return ApiResult.warn("上架状态不能为空");
+        } else if (!StringUtils.isEmpty(dto.getComicContent()) && dto.getComicContent().length() > 500) {
+            return ApiResult.warn("简介不能超过500个字符");
         }
         return iComicService.insert(dto, cmImgFile);
     }
@@ -121,11 +123,13 @@ public class ComicController {
         if (StringUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dto.getComicName())) {
-            return ApiResult.warn("番剧名不能为空");
+            return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
-            return ApiResult.warn("番剧状态不能为空");
+            return ApiResult.warn("状态不能为空");
         } else if (StringUtils.isEmpty(dto.getComicShelfStatus())) {
-            return ApiResult.warn("番剧上架状态不能为空");
+            return ApiResult.warn("上架状态不能为空");
+        } else if (!StringUtils.isEmpty(dto.getComicContent()) && dto.getComicContent().length() > 500) {
+            return ApiResult.warn("简介不能超过500个字符");
         }
         return iComicService.update(dto, cmImgFile);
     }

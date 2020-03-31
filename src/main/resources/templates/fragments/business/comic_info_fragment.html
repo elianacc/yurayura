@@ -408,9 +408,9 @@
                 },
                 insertContent: function () {
                     if (this.comicName.trim() == "") {
-                        toastr.error("番剧名不能为空");
-                    } else if (this.comicContent.length >= 500) {
-                        toastr.error("内容不能超过500个字符");
+                        toastr.error("名称不能为空");
+                    } else if (this.comicContent.length > 500) {
+                        toastr.error("简介不能超过500个字符");
                     } else {
                         $("#comicInfoForm").ajaxSubmit({
                             url: "/comic/insert",
@@ -512,9 +512,9 @@
                 },
                 updateContent: function () {
                     if (this.comicName.trim() == "") {
-                        toastr.error("番剧名不能为空");
-                    } else if (this.comicContent.length >= 500) {
-                        toastr.error("内容不能超过500个字符");
+                        toastr.error("名称不能为空");
+                    } else if (this.comicContent.length > 500) {
+                        toastr.error("简介不能超过500个字符");
                     } else {
                         $("#comicInfoForm").ajaxSubmit({
                             url: "/comic/update",
