@@ -417,10 +417,10 @@
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                containerVm.modalHide();
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.clearSelectContent();
+                                    containerVm.modalHide();
                                 } else if (res.code == 100) {
                                     toastr.error(res.msg);
                                 } else if (res.code == 101) {
@@ -521,10 +521,10 @@
                             type: "post",
                             dataType: "json",
                             success: function (res) {
-                                containerVm.modalHide();
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.getPage();
+                                    containerVm.modalHide();
                                 } else if (res.code == 100) {
                                     toastr.error(res.msg);
                                 } else if (res.code == 101) {
