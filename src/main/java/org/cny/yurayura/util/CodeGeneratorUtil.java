@@ -2,10 +2,13 @@ package org.cny.yurayura.util;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -82,6 +85,17 @@ public class CodeGeneratorUtil {
         pc.setController("controller." + submoduleName);
         mpg.setPackageInfo(pc);
 
+        // 自定义配置
+        InjectionConfig injectionConfig = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<>();
+                map.put("isSysModule", isSysModule.equalsIgnoreCase("y"));
+                this.setMap(map);
+            }
+        };
+        mpg.setCfg(injectionConfig);
+
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
         // 配置自定义输出模板
@@ -90,6 +104,7 @@ public class CodeGeneratorUtil {
         templateConfig.setService("templates/service.java.vm");
         templateConfig.setMapper("templates/mapper.java.vm");
         templateConfig.setEntity("templates/entity.java.vm");
+        mpg.setTemplate(templateConfig);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
