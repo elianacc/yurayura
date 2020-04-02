@@ -1,7 +1,13 @@
 package ${package.Controller};
 
 
+import io.swagger.annotations.*;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import ${package.Service}.${table.serviceName};
+import org.cny.yurayura.vo.ApiResult;
 
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
@@ -31,9 +37,28 @@ class ${table.controllerName}#if(${superControllerClass}) : ${superControllerCla
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
+@Api(tags = "$!{table.comment}API")
 public class ${table.controllerName} {
 #end
 
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+     * 查询$!{table.comment}（根据id）
+     *
+     * @param id
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/getById")
+    @ApiOperation("查询$!{table.comment}（根据id）")
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
+    public ApiResult getById(Integer id) {
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("id不能为空");
+        }
+        return ApiResult.success("查询成功", ${table.entityPath}Service.getById(id));
+    }
 }
 
 #end

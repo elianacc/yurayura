@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ComicController {
 
     @Autowired
-    private IComicService iComicService;
+    private IComicService comicService;
 
     /**
      * 查询番剧（根据id）
@@ -42,7 +42,7 @@ public class ComicController {
         if (StringUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iComicService.getById(id));
+        return ApiResult.success("查询成功", comicService.getById(id));
     }
 
     /**
@@ -65,7 +65,7 @@ public class ComicController {
         } else if (StringUtils.isEmpty(pageSize)) {
             pageSize = 10; //页记录数默认10
         }
-        return iComicService.getPageToB(pageNum, pageSize, dto);
+        return comicService.getPageToB(pageNum, pageSize, dto);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ComicController {
         } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
-        return iComicService.insert(dto, cmImgFile);
+        return comicService.insert(dto, cmImgFile);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ComicController {
         if (StringUtils.isEmpty(ids)) {
             return ApiResult.warn("id组不能为空");
         }
-        return iComicService.deleteBatchByIds(ids);
+        return comicService.deleteBatchByIds(ids);
     }
 
     /**
@@ -131,6 +131,6 @@ public class ComicController {
         } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
-        return iComicService.update(dto, cmImgFile);
+        return comicService.update(dto, cmImgFile);
     }
 }

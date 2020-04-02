@@ -1,7 +1,6 @@
 package org.cny.yurayura.controller.user;
 
 
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private IUserService iUserService;
+    private IUserService userService;
 
     /**
      * 查询用户（根据id）
@@ -42,7 +41,7 @@ public class UserController {
         if (StringUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iUserService.getById(id));
+        return ApiResult.success("查询成功", userService.getById(id));
     }
 
     /**
@@ -65,7 +64,7 @@ public class UserController {
         } else if (StringUtils.isEmpty(pageSize)) {
             pageSize = 10; //页记录数默认10
         }
-        return iUserService.getPageToB(pageNum, pageSize, dto);
+        return userService.getPageToB(pageNum, pageSize, dto);
     }
 
 }
