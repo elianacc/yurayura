@@ -29,7 +29,7 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("/#if(${controllerMappingHyphenStyle})#if(${cfg.isSysModule})sys/${controllerMappingHyphen}#else${controllerMappingHyphen}#end#else${table.entityPath}#end")
+@RequestMapping("/#if(${controllerMappingHyphenStyle})#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#else${table.entityPath}#end")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
