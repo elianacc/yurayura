@@ -1,19 +1,16 @@
 package org.cny.yurayura.controller.sys.dict;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
-import org.cny.yurayura.service.sys.dict.IDictService;
-import org.cny.yurayura.vo.ApiResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.cny.yurayura.service.sys.dict.IDictService;
+import org.cny.yurayura.vo.ApiResult;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DictController {
 
     @Autowired
-    private IDictService dictService;
+    private IDictService iDictService;
 
     /**
      * 查询系统数据字典（根据id）
@@ -43,7 +40,7 @@ public class DictController {
         if (StringUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", dictService.getById(id));
+        return ApiResult.success("查询成功", iDictService.getById(id));
     }
 
     /**
@@ -66,7 +63,7 @@ public class DictController {
         } else if (StringUtils.isEmpty(pageSize)) {
             pageSize = 10; //页记录数默认10
         }
-        return dictService.getPage(pageNum, pageSize, dto);
+        return iDictService.getPage(pageNum, pageSize, dto);
     }
 
     /**
@@ -88,7 +85,7 @@ public class DictController {
         } else if (StringUtils.isEmpty(dict.getDictStatus())) {
             return ApiResult.warn("字典状态不能为空");
         }
-        return dictService.insert(dict);
+        return iDictService.insert(dict);
     }
 
     /**
@@ -104,7 +101,7 @@ public class DictController {
         if (StringUtils.isEmpty(ids)) {
             return ApiResult.warn("id组不能为空");
         }
-        return dictService.deleteBatchByIds(ids);
+        return iDictService.deleteBatchByIds(ids);
     }
 
     /**
@@ -128,7 +125,7 @@ public class DictController {
         } else if (StringUtils.isEmpty(dict.getDictStatus())) {
             return ApiResult.warn("字典状态不能为空");
         }
-        return dictService.update(dict);
+        return iDictService.update(dict);
     }
 
     /**
@@ -144,7 +141,7 @@ public class DictController {
         if (StringUtils.isEmpty(dictCode.trim())) {
             return ApiResult.warn("字典编码不能为空");
         }
-        return dictService.getByDictCode(dictCode);
+        return iDictService.getByDictCode(dictCode);
     }
 }
 

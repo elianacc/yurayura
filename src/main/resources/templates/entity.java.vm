@@ -3,10 +3,8 @@ package ${package.Entity};
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
-#if(${swagger2})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-#end
 #if(${entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,9 +29,7 @@ import lombok.experimental.Accessors;
 #if(${table.convert})
 @TableName("${table.name}")
 #end
-#if(${swagger2})
-@ApiModel(value="${entity}对象", description="$!{table.comment}")
-#end
+@ApiModel(value = "${entity}对象", description = "$!{table.comment}")
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
 #elseif(${activeRecord})
@@ -52,13 +48,9 @@ public class ${entity} implements Serializable {
 #set($keyPropertyName=${field.propertyName})
 #end
 #if("$!field.comment" != "")
-  #if(${swagger2})
-    @ApiModelProperty(value = "${field.comment}")
-  #else
     /**
      * ${field.comment}
      */
-  #end
 #end
 #if(${field.keyFlag})
 ## 主键
@@ -87,6 +79,9 @@ public class ${entity} implements Serializable {
 ## 逻辑删除注解
 #if(${logicDeleteFieldName}==${field.name})
     @TableLogic
+#end
+#if("$!field.comment" != "")
+    @ApiModelProperty(value = "${field.comment}")
 #end
     private ${field.propertyType} ${field.propertyName};
 #end

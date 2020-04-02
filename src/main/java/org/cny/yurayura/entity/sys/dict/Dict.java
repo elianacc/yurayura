@@ -1,25 +1,26 @@
 package org.cny.yurayura.entity.sys.dict;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-
 /**
  * 系统数据字典 entity
  *
  * @author CNY
- * @since 2020-03-25
+ * @since 2020-04-03
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("yurayura_sys_dict")
+@ApiModel(value = "Dict对象", description = "系统数据字典")
 public class Dict implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +29,7 @@ public class Dict implements Serializable {
      * id
      */
     @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty(value = "id")
     private Integer id;
 
     /**

@@ -35,7 +35,7 @@ import java.io.OutputStream;
 public class ManagerController {
 
     @Autowired
-    private IManagerService managerService;
+    private IManagerService iManagerService;
 
     /**
      * 获取管理员登入数字加英文验证码及图片
@@ -82,7 +82,7 @@ public class ManagerController {
         } else if (StringUtils.isEmpty(dto.getVerifyCode().trim())) {
             return ApiResult.warn("密码不能为空");
         }
-        return managerService.login(dto, session, response);
+        return iManagerService.login(dto, session, response);
     }
 
     /**

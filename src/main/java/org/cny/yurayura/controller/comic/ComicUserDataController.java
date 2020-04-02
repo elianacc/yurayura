@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.cny.yurayura.service.comic.IComicUserDataService;
 import org.cny.yurayura.vo.ApiResult;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ComicUserDataController {
 
     @Autowired
-    private IComicUserDataService comicUserDataService;
+    private IComicUserDataService iComicUserDataService;
 
     /**
      * 查询番剧用户数据（根据id）
@@ -38,7 +37,7 @@ public class ComicUserDataController {
         if (StringUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", comicUserDataService.getById(id));
+        return ApiResult.success("查询成功", iComicUserDataService.getById(id));
     }
 }
 
