@@ -1,9 +1,7 @@
 package org.cny.yurayura.service.comic;
 
-import org.cny.yurayura.entity.comic.ComicUserData;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
+import org.cny.yurayura.entity.comic.ComicUserData;
 
 /**
  * 番剧用户数据 service
