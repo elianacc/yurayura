@@ -3,7 +3,7 @@ package org.cny.yurayura.component.resolver;
 import com.alibaba.fastjson.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.cny.yurayura.dto.MailDTO;
 import org.cny.yurayura.exception.CustomizeException;
 import org.cny.yurayura.mail.MailService;

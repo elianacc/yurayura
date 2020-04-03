@@ -85,6 +85,12 @@
             <artifactId>jackson-annotations</artifactId>
         </dependency>
 
+        <!-- SpringBoot commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
         <!-- SpringBoot Spring测试 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -127,11 +133,6 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
@@ -156,14 +157,14 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.60</version>
+            <version>1.2.62</version>
         </dependency>
 
         <!-- guava 依赖 -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>28.0-jre</version>
+            <version>28.1-jre</version>
         </dependency>
 
         <!-- swagger2 依赖 -->
