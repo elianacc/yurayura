@@ -1,6 +1,6 @@
 package org.cny.yurayura.config;
 
-import org.cny.yurayura.component.interceptor.BusinessPageInterceptor;
+import org.cny.yurayura.system.interceptor.BusinessPageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

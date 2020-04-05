@@ -14,7 +14,6 @@ spring:
       maximum-pool-size: 100
       max-lifetime: 1800000
       connection-timeout: 30000
-      connection-test-query: SELECT 1
       pool-name: ELiaNaCcHikariCP
   # 发送邮箱配置
   mail:
@@ -31,6 +30,19 @@ spring:
       max-file-size: 10MB
       # 总上传文件的最大值
       max-request-size: 10MB
+  # Redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 1
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 100000
+        max-idle: 10
+        min-idle: 0
+    timeout: 50000
 
 # 自定义配置
 yurayura:

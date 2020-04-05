@@ -1,4 +1,4 @@
-package org.cny.yurayura.component.aspect;
+package org.cny.yurayura.system.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -29,7 +29,7 @@ public class WebLogAspect {
     ThreadLocal<Long> startTime = new ThreadLocal<>();
 
     /**
-     * web日志切入点（以controller包下定义的所有请求为切入点）
+     * web日志切入点（controller包下定义的所有请求）
      */
     @Pointcut("execution(public * org.cny.yurayura.controller..*(..))")
     public void webLogPointCut() {

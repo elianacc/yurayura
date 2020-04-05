@@ -47,6 +47,12 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!-- SpringBoot redis 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!-- SpringBoot aop 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,7 +91,7 @@
             <artifactId>jackson-annotations</artifactId>
         </dependency>
 
-        <!-- SpringBoot commons-lang3 -->
+        <!-- SpringBoot commons-lang3 依赖 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

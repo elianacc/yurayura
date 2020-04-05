@@ -28,6 +28,7 @@ YuraYura是一个兴趣使然的项目，主要的功能是做番剧的导视，
 - ​    代码简化工具：lombok
 - ​    连接池：HikariCP
 - ​    数据库：MySQL80
+- ​    NoSQL数据库： Redis
 - ​    在线接口文档生成： Swagger2 + apiggs
 - ​    JSON处理工具：fastjson
 

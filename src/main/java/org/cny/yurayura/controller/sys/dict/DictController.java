@@ -72,7 +72,7 @@ public class DictController {
      * @param dict
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit(prefix = "sysDictInsert")
+    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
     public ApiResult insert(Dict dict) {
@@ -110,7 +110,7 @@ public class DictController {
      * @param dict
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit(prefix = "sysDictUpdate")
+    @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改系统数据字典")
     public ApiResult update(Dict dict) {

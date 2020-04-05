@@ -1,4 +1,4 @@
-package org.cny.yurayura.component.interceptor;
+package org.cny.yurayura.system.interceptor;
 
 import org.cny.yurayura.entity.sys.manager.Manager;
 import org.springframework.stereotype.Component;

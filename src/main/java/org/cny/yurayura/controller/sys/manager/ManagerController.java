@@ -69,7 +69,7 @@ public class ManagerController {
      * @param response
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit(prefix = "managerLogin")
+    @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("管理员登入")
     public ApiResult login(MangerLoginDTO dto, @ApiIgnore HttpSession session

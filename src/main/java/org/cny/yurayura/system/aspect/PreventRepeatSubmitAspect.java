@@ -1,4 +1,4 @@
-package org.cny.yurayura.component.aspect;
+package org.cny.yurayura.system.aspect;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -6,15 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.cny.yurayura.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.exception.CustomizeException;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.lang.reflect.Method;
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,13 +37,17 @@ public class PreventRepeatSubmitAspect {
 
     @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.annotation.PreventRepeatSubmit)")
     public Object interceptor(ProceedingJoinPoint pjp) {
-        MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Method method = signature.getMethod();
-        PreventRepeatSubmit preventRepeatSubmit = method.getAnnotation(PreventRepeatSubmit.class);
-        String key = getCacheKey(preventRepeatSubmit, pjp.getArgs());
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String sessionId = RequestContextHolder.getRequestAttributes().getSessionId();
+        HttpServletRequest request = attributes.getRequest();
+        // 提交key为sessionId+url
+        String key = sessionId + "-" + request.getServletPath();
+        if (StringUtils.isEmpty(key)) {
+            log.error("提交key为空！");
+        }
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
-                log.info("请勿重复提交");
+                log.warn("请勿重复提交！");
                 return ApiResult.dontReptSubmit();
             }
             // 如果是第一次请求,就将key存入缓存中
@@ -52,19 +56,7 @@ public class PreventRepeatSubmitAspect {
         try {
             return pjp.proceed();
         } catch (Throwable throwable) {
-            throw new CustomizeException(500, "提交进程异常");
+            throw new CustomizeException(500, "提交进程异常！");
         }
     }
-
-    /**
-     * Cache key生成策略
-     *
-     * @param preventRepeatSubmit
-     * @param args
-     * @return java.lang.String
-     */
-    private String getCacheKey(PreventRepeatSubmit preventRepeatSubmit, Object[] args) {
-        return preventRepeatSubmit.prefix() + args[0];
-    }
-
 }

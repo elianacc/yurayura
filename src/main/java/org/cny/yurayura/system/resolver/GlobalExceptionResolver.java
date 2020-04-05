@@ -1,4 +1,4 @@
-package org.cny.yurayura.component.resolver;
+package org.cny.yurayura.system.resolver;
 
 import com.alibaba.fastjson.JSON;
 import lombok.SneakyThrows;

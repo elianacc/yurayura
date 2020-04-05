@@ -75,7 +75,7 @@ public class ComicController {
      * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit(prefix = "comicInsert")
+    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
     public ApiResult insert(ComicInstAndUpdtDTO dto
@@ -115,7 +115,7 @@ public class ComicController {
      * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit(prefix = "comicUpdate")
+    @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改番剧")
     public ApiResult update(ComicInstAndUpdtDTO dto
