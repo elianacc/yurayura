@@ -13,7 +13,7 @@ import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
 import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.cny.yurayura.service.comic.IComicService;
-import org.cny.yurayura.util.FileUtil;
+import org.cny.yurayura.util.CommentUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
+        String imgUplRes = CommentUtil.imageUpload(cmImgFile);
 
         Comic comic = new Comic();
         ComicUserData comicUserData = new ComicUserData();
@@ -118,7 +118,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
-                FileUtil.fileDelete(comic.getComicImageUrl());
+                CommentUtil.fileDelete(comic.getComicImageUrl());
             }
         }
         return ApiResult.success("删除成功");
@@ -132,7 +132,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
+        String imgUplRes = CommentUtil.imageUpload(cmImgFile);
 
         Comic comic = new Comic();
 
@@ -151,7 +151,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
                 // 如果用的是默认图片的，则不删除
                 if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
                     // 删除番剧图片
-                    FileUtil.fileDelete(aComic.getComicImageUrl());
+                    CommentUtil.fileDelete(aComic.getComicImageUrl());
                 }
             }
             comicMapper.updateById(comic);
