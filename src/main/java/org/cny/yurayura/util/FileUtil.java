@@ -5,44 +5,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
- * 通用操作 util
+ * 文件操作 util
  *
  * @author CNY
  * @since 2018-8-23
  */
-public class CommentUtil {
-
-    /**
-     * 对象转map
-     *
-     * @param obj
-     * @return java.util.Map<java.lang.Object,java.lang.Object>
-     */
-    public static Map<Object, Object> objToMap(Object obj) {
-        Map<Object, Object> map = new HashMap<>();
-        Field[] fields = obj.getClass().getDeclaredFields(); // 获取f对象对应类中的所有属性域
-        for (Field field : fields) {
-            String varName = field.getName();
-            try {
-                boolean accessFlag = field.isAccessible(); // 获取原来的访问控制权限
-                field.setAccessible(true); // 修改访问控制权限
-                Object o = field.get(obj); // 获取在对象f中属性fields[i]对应的对象中的变量
-                if (o != null) {
-                    map.put(varName, o.toString());
-                }
-                field.setAccessible(accessFlag); // 恢复访问控制权限
-            } catch (IllegalArgumentException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return map;
-    }
+public class FileUtil {
 
     /**
      * 图片上传

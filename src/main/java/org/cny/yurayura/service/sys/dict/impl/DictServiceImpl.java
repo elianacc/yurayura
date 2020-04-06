@@ -1,15 +1,14 @@
 package org.cny.yurayura.service.sys.dict.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.cny.yurayura.dao.sys.dict.DictMapper;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
-import org.cny.yurayura.dao.sys.dict.DictMapper;
 import org.cny.yurayura.enumerate.DictStatusEnum;
 import org.cny.yurayura.service.sys.dict.IDictService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.cny.yurayura.util.CommentUtil;
 import org.cny.yurayura.util.RedisUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     public ApiResult insert(Dict dict) {
         dictMapper.insert(dict);
         // 插入字典记录到redis
-        redisUtil.lSet(dict.getDictCode(), CommentUtil.objToMap(dict));
+        redisUtil.lSet(dict.getDictCode(), dict);
         return ApiResult.success("添加成功");
     }
 
@@ -67,7 +66,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
             delIdList.add(Integer.parseInt(delIdStr));
             Dict dict = dictMapper.selectById(Integer.parseInt(delIdStr));
             // 删除redis中的字典记录
-            redisUtil.lRemove(dict.getDictCode(), 0, CommentUtil.objToMap(dict));
+            redisUtil.lRemove(dict.getDictCode(), 0, dict);
         }
         dictMapper.deleteBatchIds(delIdList);
         return ApiResult.success("删除成功");
@@ -78,9 +77,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     public ApiResult update(Dict dict) {
         Dict oldDict = dictMapper.selectById(dict.getId()); // 原字典记录
         // 先从redis删除原字典记录
-        redisUtil.lRemove(oldDict.getDictCode(), 0, CommentUtil.objToMap(oldDict));
+        redisUtil.lRemove(oldDict.getDictCode(), 0, oldDict);
         // 再插入新的字典记录到redis
-        redisUtil.lSet(dict.getDictCode(), CommentUtil.objToMap(dict));
+        redisUtil.lSet(dict.getDictCode(), dict);
         dictMapper.updateById(dict);
         return ApiResult.success("修改成功");
     }
