@@ -52,8 +52,10 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     @Override
     public ApiResult insert(Dict dict) {
         dictMapper.insert(dict);
-        // 插入字典记录到redis
-        redisUtil.lSet(dict.getDictCode(), dict);
+        if (dict.getDictStatus().intValue() == DictStatusEnum.ENABLE.getStatusId()) {
+            // 插入字典记录到redis
+            redisUtil.lSet(dict.getDictCode(), dict);
+        }
         return ApiResult.success("添加成功");
     }
 
@@ -78,8 +80,10 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         Dict oldDict = dictMapper.selectById(dict.getId()); // 原字典记录
         // 先从redis删除原字典记录
         redisUtil.lRemove(oldDict.getDictCode(), 0, oldDict);
-        // 再插入新的字典记录到redis
-        redisUtil.lSet(dict.getDictCode(), dict);
+        if (dict.getDictStatus().intValue() == DictStatusEnum.ENABLE.getStatusId()) {
+            // 再插入新的字典记录到redis
+            redisUtil.lSet(dict.getDictCode(), dict);
+        }
         dictMapper.updateById(dict);
         return ApiResult.success("修改成功");
     }
