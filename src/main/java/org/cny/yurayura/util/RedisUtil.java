@@ -453,12 +453,35 @@ public class RedisUtil {
      *              当 index < 0 时 {-1:表尾, -2:倒数第二个元素}
      * @return 值
      */
-    public Object lGetIndex(String key, long index) {
+    public Object lGetVal(String key, long index) {
         try {
             return redisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * 根据 key 的 list中的元素值来获取对应索引(值第一次出现的位置)
+     *
+     * @param key   键
+     * @param value 值
+     * @return long
+     */
+    public long lGetIndex(String key, Object value) {
+        try {
+            long idx = -1;
+            for (long i = 0; i <= lGetListSize(key) - 1; i++) {
+                if (lGetVal(key, i).equals(value)) {
+                    idx = i;
+                    break;
+                }
+            }
+            return idx;
+        } catch (Exception e) {
+            e.getStackTrace();
+            return -1;
         }
     }
 
@@ -546,7 +569,7 @@ public class RedisUtil {
      * @param value 值
      * @return true / false
      */
-    public boolean lUpdateIndex(String key, long index, Object value) {
+    public boolean lUpdateVal(String key, long index, Object value) {
         try {
             redisTemplate.opsForList().set(key, index, value);
             return true;
