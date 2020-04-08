@@ -26,6 +26,6 @@ public class DictSelectDTO implements Serializable {
      * 字典编码
      */
     @ApiModelProperty(value = "字典编码")
-    private String selectDictCode;
+    private String dictCode;
 
 }

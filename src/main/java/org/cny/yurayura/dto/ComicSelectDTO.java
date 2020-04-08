@@ -26,18 +26,18 @@ public class ComicSelectDTO implements Serializable {
      * 名称
      */
     @ApiModelProperty(value = "名称")
-    private String selectComicName;
+    private String comicName;
 
     /**
      * 状态- 0：已完结，1：周一更新...，8：更新中
      */
     @ApiModelProperty(value = "状态")
-    private Integer selectComicStatus;
+    private Integer comicStatus;
 
     /**
      * 上架状态- 1：上架，0：下架
      */
     @ApiModelProperty(value = "上架状态")
-    private Integer selectComicShelfStatus;
+    private Integer comicShelfStatus;
 
 }

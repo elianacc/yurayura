@@ -25,18 +25,18 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名</span>
                         </div>
-                        <input type="text" class="form-control" name="selectComicName"/>
+                        <input type="text" class="form-control" name="comicName"/>
                         <div class="input-group-prepend">
                             <span class="input-group-text">状态</span>
                         </div>
-                        <select class="custom-select" name="selectComicStatus">
+                        <select class="custom-select" name="comicStatus">
                             <option value="" selected></option>
                             <option :value="item.dictVal" v-for="item in comicStatusDict">{{item.dictName}}</option>
                         </select>
                         <div class="input-group-prepend">
                             <span class="input-group-text">上架状态</span>
                         </div>
-                        <select class="custom-select" name="selectComicShelfStatus">
+                        <select class="custom-select" name="comicShelfStatus">
                             <option value="" selected></option>
                             <option :value="item.dictVal" v-for="item in comicShelfStatusDict">{{item.dictName}}
                             </option>
