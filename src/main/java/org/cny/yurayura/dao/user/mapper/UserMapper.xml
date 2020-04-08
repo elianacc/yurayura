@@ -10,7 +10,7 @@
         <result column="user_nickname" property="userNickname" />
         <result column="user_signature" property="userSignature" />
         <result column="user_sex" property="userSex" />
-        <result column="user_birsday" property="userBirsday" />
+        <result column="user_birthday" property="userBirthday" />
         <result column="user_province" property="userProvince" />
         <result column="user_city" property="userCity" />
         <result column="user_avatar_url" property="userAvatarUrl" />
@@ -23,7 +23,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_name, user_password, user_nickname, user_signature, user_sex, user_birsday, user_province, user_city, user_avatar_url, user_email, user_phone_number, user_status, user_reg_time, user_current_edit_time
+        id, user_name, user_password, user_nickname, user_signature, user_sex, user_birthday, user_province, user_city, user_avatar_url, user_email, user_phone_number, user_status, user_reg_time, user_current_edit_time
     </sql>
 
 </mapper>

@@ -75,7 +75,7 @@ public class User implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty(value = "生日")
-    private LocalDate userBirsday;
+    private LocalDate userBirthday;
 
     /**
      * 省份
