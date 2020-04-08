@@ -103,6 +103,7 @@ public class CodeGeneratorUtil {
         templateConfig.setServiceImpl("templates/serviceImpl.java.vm");
         templateConfig.setService("templates/service.java.vm");
         templateConfig.setMapper("templates/mapper.java.vm");
+        templateConfig.setXml("templates/mapper.xml.vm");
         templateConfig.setEntity("templates/entity.java.vm");
         mpg.setTemplate(templateConfig);
 

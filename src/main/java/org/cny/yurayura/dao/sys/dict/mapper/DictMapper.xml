@@ -4,11 +4,11 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.cny.yurayura.entity.sys.dict.Dict">
-        <id column="id" property="id" />
-        <result column="dict_code" property="dictCode" />
-        <result column="dict_name" property="dictName" />
-        <result column="dict_val" property="dictVal" />
-        <result column="dict_status" property="dictStatus" />
+        <id column="id" property="id"/>
+        <result column="dict_code" property="dictCode"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="dict_val" property="dictVal"/>
+        <result column="dict_status" property="dictStatus"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

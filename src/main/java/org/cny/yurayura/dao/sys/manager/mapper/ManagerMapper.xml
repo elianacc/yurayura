@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.cny.yurayura.entity.sys.manager.Manager">
-        <id column="id" property="id" />
-        <result column="manager_name" property="managerName" />
-        <result column="manager_password" property="managerPassword" />
-        <result column="manager_status" property="managerStatus" />
-        <result column="manager_create_time" property="managerCreateTime" />
-        <result column="manager_update_time" property="managerUpdateTime" />
+        <id column="id" property="id"/>
+        <result column="manager_name" property="managerName"/>
+        <result column="manager_password" property="managerPassword"/>
+        <result column="manager_status" property="managerStatus"/>
+        <result column="manager_create_time" property="managerCreateTime"/>
+        <result column="manager_update_time" property="managerUpdateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

@@ -4,18 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.cny.yurayura.entity.comic.Comic">
-        <id column="id" property="id" />
-        <result column="comic_name" property="comicName" />
-        <result column="comic_content" property="comicContent" />
-        <result column="comic_time" property="comicTime" />
-        <result column="comic_image_url" property="comicImageUrl" />
-        <result column="comic_link" property="comicLink" />
-        <result column="comic_label" property="comicLabel" />
-        <result column="comic_status" property="comicStatus" />
-        <result column="comic_current_episodes" property="comicCurrentEpisodes" />
-        <result column="comic_shelf_status" property="comicShelfStatus" />
-        <result column="comic_create_time" property="comicCreateTime" />
-        <result column="comic_update_time" property="comicUpdateTime" />
+        <id column="id" property="id"/>
+        <result column="comic_name" property="comicName"/>
+        <result column="comic_content" property="comicContent"/>
+        <result column="comic_time" property="comicTime"/>
+        <result column="comic_image_url" property="comicImageUrl"/>
+        <result column="comic_link" property="comicLink"/>
+        <result column="comic_label" property="comicLabel"/>
+        <result column="comic_status" property="comicStatus"/>
+        <result column="comic_current_episodes" property="comicCurrentEpisodes"/>
+        <result column="comic_shelf_status" property="comicShelfStatus"/>
+        <result column="comic_create_time" property="comicCreateTime"/>
+        <result column="comic_update_time" property="comicUpdateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
