@@ -44,6 +44,7 @@ public class PreventRepeatSubmitAspect {
         String key = sessionId + "-" + request.getServletPath();
         if (StringUtils.isEmpty(key)) {
             log.error("提交key为空！");
+            return new CustomizeException(500, "提交的key（sessionId+请求url）为空");
         }
         if (!StringUtils.isEmpty(key)) {
             if (CACHES.getIfPresent(key) != null) {
