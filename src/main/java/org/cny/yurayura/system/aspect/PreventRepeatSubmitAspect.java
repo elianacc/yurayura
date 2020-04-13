@@ -46,14 +46,12 @@ public class PreventRepeatSubmitAspect {
             log.error("提交key为空！");
             return new CustomizeException(500, "提交的key（sessionId+请求url）为空");
         }
-        if (!StringUtils.isEmpty(key)) {
-            if (CACHES.getIfPresent(key) != null) {
-                log.warn("请勿重复提交！");
-                return ApiResult.dontReptSubmit();
-            }
-            // 如果是第一次请求,就将key存入缓存中
-            CACHES.put(key, key);
+        if (CACHES.getIfPresent(key) != null) {
+            log.warn("请勿重复提交！");
+            return ApiResult.dontReptSubmit();
         }
+        // 如果是第一次请求,就将key存入缓存中
+        CACHES.put(key, key);
         try {
             return pjp.proceed();
         } catch (Throwable throwable) {
