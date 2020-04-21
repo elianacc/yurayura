@@ -67,7 +67,7 @@
     </div>
 
     <script>
-        var managerLoginThat = this;
+        var that = this;
 
         const containerVm = new Vue({
             el: "#container",
@@ -116,16 +116,14 @@
                                     spinnerVm.isSpinnerShow = true;
                                     setTimeout(function () {
                                         location.replace("/business/comic_info");
-                                    }, 2500);
+                                    }, 2000);
                                 } else if (res.code == 100) {
                                     containerVm.loadVerifyImage();
                                     toastr.error(res.msg);
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    managerLoginThat.bootBoxAlert(res.msg, function () {
-                                        return false;
-                                    });
+                                    that.bootBoxAlert(res.msg);
                                 }
                             }
                         });
@@ -147,7 +145,7 @@
                 }
             },
             mounted: function () {
-                managerLoginThat.initToastr();
+                that.initToastr();
             }
         });
 
