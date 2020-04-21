@@ -12,13 +12,13 @@
     </nav>
 
     <script>
-        var bsnsNavBarThat = this;
+        var navBarThat = this;
 
-        const navbarVm = new Vue({
+        const navBarVm = new Vue({
             el: "#navbar",
             methods: {
                 logoutManager: function () {
-                    bsnsNavBarThat.bootBoxConfirm("确定要注销吗？", function () {
+                    navBarThat.bootBoxConfirm("确定要注销吗？", function () {
                         $.ajax({
                             url: "/sys/manager/logout",
                             data: null,
@@ -30,7 +30,7 @@
                                 } else if (res.code == 100) {
                                     toastr.error(res.msg);
                                 } else if (res.code == 500) {
-                                    bsnsNavBarThat.bootBoxAlert(res.msg, function () {
+                                    navBarThat.bootBoxAlert(res.msg, function () {
                                         return false;
                                     });
                                 }
