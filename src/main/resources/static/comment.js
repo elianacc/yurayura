@@ -78,11 +78,9 @@ function bootBoxAlert(msg) {
             ok: {
                 label: '确定',
             }
-        },
-        callback: function () {
-            return false;
         }
     });
+    return false;
 }
 
 // bootbox alert封装方法(自定义返回事件)
