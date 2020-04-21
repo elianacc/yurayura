@@ -3,9 +3,9 @@
     <!-- container -->
     <div class="container p-0" id="container">
 
-        <!-- 操作按钮row -->
-        <div class="row mt-5 r1">
-            <div class="col-2 offset-2 mt-4 c1">
+        <!-- 操作按钮及数据筛选表单row -->
+        <div class="row mt-5">
+            <div class="col-2 offset-2 mt-4">
                 <div class="btn-group float-left">
                     <button type="button"
                             class="btn btn-dark btn-twitter btn-sm"
@@ -127,11 +127,11 @@
             </div>
         </div>
 
-        <!-- 系统数据字典modal -->
-        <div class="modal fade" id="sysDictModal" tabindex="-1">
+        <!-- 数据模态框 -->
+        <div class="modal fade" id="dataModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="sysDictForm">
+                    <form id="dataForm">
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <strong>{{modalTitle}}</strong>
@@ -197,7 +197,7 @@
     </div>
 
     <script>
-        var sysDictThat = this;
+        var that = this;
 
         const containerVm = new Vue({
             el: "#container",
@@ -229,7 +229,7 @@
                             } else if (res.code == 100) {
                                 containerVm.pageInfo = "";
                             } else if (res.code == 500) {
-                                toastr.error(res.msg);
+                                that.bootBoxAlert(res.msg);
                             }
                         }
                     });
@@ -280,7 +280,7 @@
                     } else if (this.dictVal.trim() == "") {
                         toastr.error("字典值不能为空");
                     } else {
-                        $("#sysDictForm").ajaxSubmit({
+                        $("#dataForm").ajaxSubmit({
                             url: "/sys/dict/insert",
                             type: "post",
                             dataType: "json",
@@ -294,14 +294,14 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    toastr.error(res.msg);
+                                    that.bootBoxAlert(res.msg);
                                 }
                             }
                         });
                     }
                 },
                 deleteBatch: function () {
-                    sysDictThat.bootBoxConfirm("确定要删除选中项吗？", function () {
+                    that.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
                             toastr.error("请至少选择一项删除");
                         } else {
@@ -319,7 +319,7 @@
                                     } else if (res.code == 100) {
                                         toastr.error(res.msg);
                                     } else if (res.code == 500) {
-                                        toastr.error(res.msg);
+                                        that.bootBoxAlert(res.msg);
                                     }
                                 }
                             });
@@ -345,7 +345,7 @@
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
                             } else if (res.code == 500) {
-                                toastr.error(res.msg);
+                                that.bootBoxAlert(res.msg);
                             }
                         }
                     });
@@ -363,7 +363,7 @@
                     } else if (this.dictVal.trim() == "") {
                         toastr.error("字典值不能为空");
                     } else {
-                        $("#sysDictForm").ajaxSubmit({
+                        $("#dataForm").ajaxSubmit({
                             url: "/sys/dict/update",
                             type: "post",
                             dataType: "json",
@@ -377,14 +377,14 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    toastr.error(res.msg);
+                                    that.bootBoxAlert(res.msg);
                                 }
                             }
                         });
                     }
                 },
                 modalReset: function () {
-                    $('#sysDictModal').on('hidden.bs.modal', function () {
+                    $('#dataModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
                         containerVm.dictCode = "";
                         containerVm.dictName = "";
@@ -393,18 +393,18 @@
                     });
                 },
                 modalShow: function () {
-                    $("#sysDictModal").modal();
+                    $("#dataModal").modal();
                 },
                 modalHide: function () {
-                    $("#sysDictModal").modal('hide');
+                    $("#dataModal").modal('hide');
                 },
                 scrollUp: function () {
                     $("#scrollUp").click();
                 }
             },
             mounted: function () {
-                sysDictThat.initToastr();
-                sysDictThat.initScrollUp();
+                that.initToastr();
+                that.initScrollUp();
                 this.modalReset();
                 this.getPage();
             }

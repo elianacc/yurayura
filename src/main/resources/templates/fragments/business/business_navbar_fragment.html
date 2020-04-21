@@ -30,9 +30,7 @@
                                 } else if (res.code == 100) {
                                     toastr.error(res.msg);
                                 } else if (res.code == 500) {
-                                    navBarThat.bootBoxAlert(res.msg, function () {
-                                        return false;
-                                    });
+                                    navBarThat.bootBoxAlert(res.msg);
                                 }
                             }
                         });

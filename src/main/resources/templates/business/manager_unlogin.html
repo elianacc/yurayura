@@ -10,28 +10,14 @@
 
 <!-- WEB SITE JS -->
 <script src="/app.js"></script>
+<script src="/comment.js"></script>
 <script>
     const that = this;
 
-    function showUnLogin() {
-        bootbox.alert({
-            size: "small",
-            title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
-            message: "管理员还未登入，请先登入！",
-            closeButton: false,
-            buttons: {
-                ok: {
-                    label: '确定',
-                }
-            },
-            callback: function () {
-                location.href = "/business/manager_login";
-            }
-        });
-    }
-
     $(function () {
-        that.showUnLogin();
+        that.bootBoxAlertWithCall("管理员还未登入，请先登入！", function () {
+            location.href = "/business/manager_login";
+        });
     });
 
 </script>

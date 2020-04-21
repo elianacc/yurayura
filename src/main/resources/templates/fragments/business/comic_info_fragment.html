@@ -3,9 +3,9 @@
     <!-- container -->
     <div class="container p-0" id="container">
 
-        <!-- 操作按钮row -->
-        <div class="row mt-5 r1">
-            <div class="col-2 offset-2 mt-4 c1">
+        <!-- 操作按钮及数据筛选表单row -->
+        <div class="row mt-5">
+            <div class="col-2 offset-2 mt-4">
                 <div class="btn-group float-left">
                     <button type="button"
                             class="btn btn-dark btn-twitter btn-sm"
@@ -160,11 +160,11 @@
             </div>
         </div>
 
-        <!-- 番剧modal -->
-        <div class="modal fade" id="comicInfoModal" tabindex="-1">
+        <!-- 数据模态框 -->
+        <div class="modal fade" id="dataModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="comicInfoForm" enctype="multipart/form-data">
+                    <form id="dataForm" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <strong>{{modalTitle}}</strong>
@@ -310,7 +310,7 @@
     </div>
 
     <script>
-        var comicInfoThat = this;
+        var that = this;
 
         const containerVm = new Vue({
             el: "#container",
@@ -362,7 +362,7 @@
                             } else if (res.code == 100) {
                                 containerVm.pageInfo = "";
                             } else if (res.code == 500) {
-                                toastr.error(res.msg);
+                                that.bootBoxAlert(res.msg);
                             }
                         }
                     });
@@ -412,7 +412,7 @@
                     } else if (this.comicContent.length > 500) {
                         toastr.error("简介不能超过500个字符");
                     } else {
-                        $("#comicInfoForm").ajaxSubmit({
+                        $("#dataForm").ajaxSubmit({
                             url: "/comic/insert",
                             type: "post",
                             dataType: "json",
@@ -426,14 +426,14 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    toastr.error(res.msg);
+                                    that.bootBoxAlert(res.msg);
                                 }
                             }
                         });
                     }
                 },
                 deleteBatch: function () {
-                    comicInfoThat.bootBoxConfirm("确定要删除选中项吗？", function () {
+                    that.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
                             toastr.error("请至少选择一项删除");
                         } else {
@@ -451,7 +451,7 @@
                                     } else if (res.code == 100) {
                                         toastr.error(res.msg);
                                     } else if (res.code == 500) {
-                                        toastr.error(res.msg);
+                                        that.bootBoxAlert(res.msg);
                                     }
                                 }
                             });
@@ -493,7 +493,7 @@
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
                             } else if (res.code == 500) {
-                                toastr.error(res.msg);
+                                that.bootBoxAlert(res.msg);
                             }
                         }
                     });
@@ -516,7 +516,7 @@
                     } else if (this.comicContent.length > 500) {
                         toastr.error("简介不能超过500个字符");
                     } else {
-                        $("#comicInfoForm").ajaxSubmit({
+                        $("#dataForm").ajaxSubmit({
                             url: "/comic/update",
                             type: "post",
                             dataType: "json",
@@ -530,7 +530,7 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    toastr.error(res.msg);
+                                    that.bootBoxAlert(res.msg);
                                 }
                             }
                         });
@@ -584,7 +584,7 @@
                     }
                 },
                 modalReset: function () {
-                    $('#comicInfoModal').on('hidden.bs.modal', function () {
+                    $('#dataModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
                         containerVm.comicName = "";
                         containerVm.comicTime = "";
@@ -606,20 +606,20 @@
                     });
                 },
                 modalShow: function () {
-                    $("#comicInfoModal").modal();
+                    $("#dataModal").modal();
                 },
                 modalHide: function () {
-                    $("#comicInfoModal").modal('hide');
+                    $("#dataModal").modal('hide');
                 },
                 scrollUp: function () {
                     $("#scrollUp").click();
                 },
                 getSysDict: function () {
-                    this.comicLabelDict = comicInfoThat.getSysDict("comicLabel");
-                    this.comicStatusDict = comicInfoThat.getSysDict("comicStatus");
-                    this.comicUpdtStatusDict = comicInfoThat.getSysDict("comicUpdtStatus");
-                    this.comicUpdtTimeDict = comicInfoThat.getSysDict("comicUpdtTime");
-                    this.comicShelfStatusDict = comicInfoThat.getSysDict("comicShelfStatus");
+                    this.comicLabelDict = that.getSysDict("comicLabel");
+                    this.comicStatusDict = that.getSysDict("comicStatus");
+                    this.comicUpdtStatusDict = that.getSysDict("comicUpdtStatus");
+                    this.comicUpdtTimeDict = that.getSysDict("comicUpdtTime");
+                    this.comicShelfStatusDict = that.getSysDict("comicShelfStatus");
                 }
             },
             watch: {
@@ -664,10 +664,10 @@
                 }
             },
             mounted: function () {
-                comicInfoThat.initToastr();
-                comicInfoThat.initDatePicker();
-                comicInfoThat.initScrollUp();
-                comicInfoThat.initImgLazyLoad();
+                that.initToastr();
+                that.initDatePicker();
+                that.initScrollUp();
+                that.initImgLazyLoad();
                 this.datePickerBind();
                 this.modalReset();
                 this.getSysDict();
