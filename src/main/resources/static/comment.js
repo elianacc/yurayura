@@ -67,8 +67,26 @@ function initImgLazyLoad() {
     $("img").unveil(100);
 }
 
-// bootbox alert封装方法
-function bootBoxAlert(msg, callbackFunction) {
+// bootbox alert封装方法(无返回事件)
+function bootBoxAlert(msg) {
+    bootbox.alert({
+        size: "small",
+        title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
+        message: msg,
+        closeButton: false,
+        buttons: {
+            ok: {
+                label: '确定',
+            }
+        },
+        callback: function () {
+            return false;
+        }
+    });
+}
+
+// bootbox alert封装方法(自定义返回事件)
+function bootBoxAlertWithCall(msg, callbackFunction) {
     bootbox.alert({
         size: "small",
         title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
