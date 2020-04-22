@@ -1,7 +1,8 @@
-/*!
- * comment.js
+/**
+ * util.js
  * 通用jQuery插件init方法,jQuery插件封装方法，字典获取方法
  * @author EliaNaCc
+ * @since 2019-11-06
  */
 
 // toast初始化方法
@@ -23,21 +24,21 @@ function initToastr() {
 }
 
 // BootSideMenu初始化方法
-function initSideMenu() {
-    $("#bootsidemenu").BootSideMenu({
+function initSideMenu(obj) {
+    $(obj).BootSideMenu({
         side: "left",
         autoClose: false
     });
 }
 
 // metisMenu初始化方法
-function initMetisMenu() {
-    $(".metismenu").metisMenu({toggle: false});
+function initMetisMenu(obj) {
+    $(obj).metisMenu({toggle: false});
 }
 
 // bootstrap-datepicker初始化方法
-function initDatePicker() {
-    $(".datepicker").datepicker({
+function initDatePicker(obj) {
+    $(obj).datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true,
         language: 'zh-CN',

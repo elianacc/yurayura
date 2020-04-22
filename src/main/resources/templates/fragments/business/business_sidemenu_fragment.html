@@ -1,14 +1,14 @@
 <div data-th-fragment="business_sidemenu_fragment" xmlns:th="http://www.thymeleaf.org">
 
     <!-- BootSideMenu -->
-    <div id="bootsidemenu">
+    <div id="bootSideMenu">
         <!-- BootSideMenu头部 -->
         <div class="side-user text-white p-1">
             <img src="/images/xiaomai.jpg"
                  class="img-thumbnail rounded" width="23%"/>
             <span class="ml-3 font-weight-normal" th:text="'管理员：'+${session.managerSession.managerName}"></span>
         </div>
-        <!-- metismenu -->
+        <!-- metisMenu -->
         <nav class="sidebar-nav">
             <ul class="metismenu">
                 <li class="mm-active font-size-14">
@@ -42,7 +42,7 @@
         var sideMenuThat = this;
 
         const sideMenuVm = new Vue({
-            el: "#bootsidemenu",
+            el: "#bootSideMenu",
             data: {
                 sideMenuUrl: {
                     menuA: [
@@ -57,24 +57,24 @@
                 }
             },
             mounted: function () {
-                sideMenuThat.initSideMenu();
-                sideMenuThat.initMetisMenu();
+                sideMenuThat.initSideMenu("#bootSideMenu");
+                sideMenuThat.initMetisMenu(".metismenu");
             }
         });
     </script>
 
     <style>
-        /* bootsidemenu样式重写 */
-        #bootsidemenu {
+        /* bootSideMenu样式重写 */
+        #bootSideMenu {
             width: 210px;
             background: #1c2938;
         }
 
-        #bootsidemenu .side-user {
+        #bootSideMenu .side-user {
             background: #1c2938;
         }
 
-        #bootsidemenu .toggler {
+        #bootSideMenu .toggler {
             background: #1c2938;
         }
 
