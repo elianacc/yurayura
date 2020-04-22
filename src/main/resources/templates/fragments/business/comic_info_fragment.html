@@ -310,8 +310,6 @@
     </div>
 
     <script>
-        var that = this;
-
         const containerVm = new Vue({
             el: "#container",
             data: {
@@ -362,7 +360,7 @@
                             } else if (res.code == 100) {
                                 containerVm.pageInfo = "";
                             } else if (res.code == 500) {
-                                that.bootBoxAlert(res.msg);
+                                bootBoxUtil.bootBoxAlert(res.msg);
                             }
                         }
                     });
@@ -426,14 +424,14 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    that.bootBoxAlert(res.msg);
+                                    bootBoxUtil.bootBoxAlert(res.msg);
                                 }
                             }
                         });
                     }
                 },
                 deleteBatch: function () {
-                    that.bootBoxConfirm("确定要删除选中项吗？", function () {
+                    bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
                             toastr.error("请至少选择一项删除");
                         } else {
@@ -451,7 +449,7 @@
                                     } else if (res.code == 100) {
                                         toastr.error(res.msg);
                                     } else if (res.code == 500) {
-                                        that.bootBoxAlert(res.msg);
+                                        bootBoxUtil.bootBoxAlert(res.msg);
                                     }
                                 }
                             });
@@ -493,7 +491,7 @@
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
                             } else if (res.code == 500) {
-                                that.bootBoxAlert(res.msg);
+                                bootBoxUtil.bootBoxAlert(res.msg);
                             }
                         }
                     });
@@ -530,7 +528,7 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    that.bootBoxAlert(res.msg);
+                                    bootBoxUtil.bootBoxAlert(res.msg);
                                 }
                             }
                         });
@@ -615,11 +613,11 @@
                     $("#scrollUp").click();
                 },
                 getSysDict: function () {
-                    this.comicLabelDict = that.getSysDict("comicLabel");
-                    this.comicStatusDict = that.getSysDict("comicStatus");
-                    this.comicUpdtStatusDict = that.getSysDict("comicUpdtStatus");
-                    this.comicUpdtTimeDict = that.getSysDict("comicUpdtTime");
-                    this.comicShelfStatusDict = that.getSysDict("comicShelfStatus");
+                    this.comicLabelDict = sysDictUtil.getSysDict("comicLabel");
+                    this.comicStatusDict = sysDictUtil.getSysDict("comicStatus");
+                    this.comicUpdtStatusDict = sysDictUtil.getSysDict("comicUpdtStatus");
+                    this.comicUpdtTimeDict = sysDictUtil.getSysDict("comicUpdtTime");
+                    this.comicShelfStatusDict = sysDictUtil.getSysDict("comicShelfStatus");
                 }
             },
             watch: {
@@ -664,10 +662,10 @@
                 }
             },
             mounted: function () {
-                that.initToastr();
-                that.initDatePicker(".datepicker");
-                that.initScrollUp();
-                that.initImgLazyLoad();
+                initUtil.initToastr();
+                initUtil.initDatePicker(".datepicker");
+                initUtil.initScrollUp();
+                initUtil.initImgLazyLoad();
                 this.datePickerBind();
                 this.modalReset();
                 this.getSysDict();

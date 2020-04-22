@@ -12,10 +12,9 @@
 <script src="/app.js"></script>
 <script src="/util.js"></script>
 <script>
-    const that = this;
 
     $(function () {
-        that.bootBoxAlertWithCall("管理员还未登入，请先登入！", function () {
+        bootBoxUtil.bootBoxAlertWithCall("管理员还未登入，请先登入！", function () {
             location.href = "/business/manager_login";
         });
     });

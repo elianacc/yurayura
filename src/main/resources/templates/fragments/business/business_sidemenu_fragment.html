@@ -39,8 +39,6 @@
     </div>
 
     <script>
-        var sideMenuThat = this;
-
         const sideMenuVm = new Vue({
             el: "#bootSideMenu",
             data: {
@@ -57,8 +55,8 @@
                 }
             },
             mounted: function () {
-                sideMenuThat.initSideMenu("#bootSideMenu");
-                sideMenuThat.initMetisMenu(".metismenu");
+                initUtil.initSideMenu("#bootSideMenu");
+                initUtil.initMetisMenu(".metismenu");
             }
         });
     </script>
