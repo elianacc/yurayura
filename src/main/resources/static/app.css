@@ -3,9 +3,9 @@
 /* Font Awesome css */
 @import './frame/font-awesome.css';
 
+/* toastr css */
 @import './plugins/toastr.min.css';
-@import './plugins/BootSideMenu.css';
-@import './plugins/metisMenu.min.css';
+/* bootstrap-datepicker css */
 @import './plugins/bootstrap-datepicker.standalone.min.css';
 
 /* font-size */
