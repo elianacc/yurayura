@@ -5,7 +5,7 @@
  * @since 2019-11-06
  */
 
-initUtil = {
+var initUtil = {
     // toast初始化方法
     initToastr: function () {
         toastr.options = {
@@ -65,7 +65,7 @@ initUtil = {
     }
 };
 
-bootBoxUtil = {
+var bootBoxUtil = {
     // bootbox alert封装方法(无返回事件)
     bootBoxAlert: function (msg) {
         bootbox.alert({
@@ -125,7 +125,7 @@ bootBoxUtil = {
     }
 };
 
-sysDictUtil = {
+var sysDictUtil = {
     // 字典获取方法
     getSysDict: function (dictCode) {
         let dictData = "";
@@ -150,3 +150,5 @@ sysDictUtil = {
         return dictData;
     }
 };
+
+export {initUtil, bootBoxUtil, sysDictUtil};

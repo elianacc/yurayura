@@ -10,8 +10,8 @@
 
 <!-- WEB SITE JS -->
 <script src="/app.js"></script>
-<script src="/util.js"></script>
-<script>
+<script type="module">
+    import {bootBoxUtil} from "/util.js";
 
     $(function () {
         bootBoxUtil.bootBoxAlertWithCall("管理员还未登入，请先登入！", function () {
