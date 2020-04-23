@@ -406,9 +406,9 @@
                 },
                 insertContent: function () {
                     if (this.comicName.trim() == "") {
-                        toastr.error("名称不能为空");
+                        toastr.warning("名称不能为空");
                     } else if (this.comicContent.length > 500) {
-                        toastr.error("简介不能超过500个字符");
+                        toastr.warning("简介不能超过500个字符");
                     } else {
                         $("#dataForm").ajaxSubmit({
                             url: "/comic/insert",
@@ -433,7 +433,7 @@
                 deleteBatch: function () {
                     bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
-                            toastr.error("请至少选择一项删除");
+                            toastr.warning("请至少选择一项删除");
                         } else {
                             $.ajax({
                                 url: "/comic/deleteBatchByIds",
@@ -510,9 +510,9 @@
                 },
                 updateContent: function () {
                     if (this.comicName.trim() == "") {
-                        toastr.error("名称不能为空");
+                        toastr.warning("名称不能为空");
                     } else if (this.comicContent.length > 500) {
-                        toastr.error("简介不能超过500个字符");
+                        toastr.warning("简介不能超过500个字符");
                     } else {
                         $("#dataForm").ajaxSubmit({
                             url: "/comic/update",
@@ -544,7 +544,7 @@
                         let file = e.target.files[0];
                         let fileName = file.name;
                         if (!/.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(fileName)) {
-                            toastr.error("图片格式必须是.gif,jpeg,jpg,png中的一种");
+                            toastr.warning("图片格式必须是.gif,jpeg,jpg,png中的一种");
                             if (this.isInsertModal) {
                                 this.cmImgFileLb = "示例图片.jpg";
                                 this.cmImgFilePv = "/images/tpjxz.jpg";
@@ -554,7 +554,7 @@
                             }
                             $("input[name='cmImgFile']").val("");
                         } else if ((file.size).toFixed(2) >= 102400) {
-                            toastr.error("图片不能超过100KB");
+                            toastr.warning("图片不能超过100KB");
                             if (this.isInsertModal) {
                                 this.cmImgFileLb = "示例图片.jpg";
                                 this.cmImgFilePv = "/images/tpjxz.jpg";

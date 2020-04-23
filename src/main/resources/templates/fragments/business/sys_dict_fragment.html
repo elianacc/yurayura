@@ -272,11 +272,11 @@
                 },
                 insertContent: function () {
                     if (this.dictCode.trim() == "") {
-                        toastr.error("字典编码不能为空");
+                        toastr.warning("字典编码不能为空");
                     } else if (this.dictName.trim() == "") {
-                        toastr.error("字典名不能为空");
+                        toastr.warning("字典名不能为空");
                     } else if (this.dictVal.trim() == "") {
-                        toastr.error("字典值不能为空");
+                        toastr.warning("字典值不能为空");
                     } else {
                         $("#dataForm").ajaxSubmit({
                             url: "/sys/dict/insert",
@@ -301,7 +301,7 @@
                 deleteBatch: function () {
                     bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
-                            toastr.error("请至少选择一项删除");
+                            toastr.warning("请至少选择一项删除");
                         } else {
                             $.ajax({
                                 url: "/sys/dict/deleteBatchByIds",
@@ -355,11 +355,11 @@
                 },
                 updateContent: function () {
                     if (this.dictCode.trim() == "") {
-                        toastr.error("字典编码不能为空");
+                        toastr.warning("字典编码不能为空");
                     } else if (this.dictName.trim() == "") {
-                        toastr.error("字典名不能为空");
+                        toastr.warning("字典名不能为空");
                     } else if (this.dictVal.trim() == "") {
-                        toastr.error("字典值不能为空");
+                        toastr.warning("字典值不能为空");
                     } else {
                         $("#dataForm").ajaxSubmit({
                             url: "/sys/dict/update",
