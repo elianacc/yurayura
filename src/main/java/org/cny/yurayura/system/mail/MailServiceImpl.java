@@ -1,4 +1,4 @@
-package org.cny.yurayura.mail;
+package org.cny.yurayura.system.mail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.cny.yurayura.dto.MailDTO;

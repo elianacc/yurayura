@@ -1,4 +1,4 @@
-package org.cny.yurayura.mail;
+package org.cny.yurayura.system.mail;
 
 import org.cny.yurayura.dto.MailDTO;
 

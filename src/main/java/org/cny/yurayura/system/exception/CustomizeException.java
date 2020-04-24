@@ -1,4 +1,4 @@
-package org.cny.yurayura.exception;
+package org.cny.yurayura.system.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
