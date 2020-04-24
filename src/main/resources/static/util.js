@@ -125,6 +125,17 @@ var bootBoxUtil = {
     }
 };
 
+var datePickerUtil = {
+    // 设置date-picker选中日期封装方法
+    setDate: function (obj, val) {
+        $(obj).datepicker("setDate", val);
+    },
+    // 清空date-picker选中日期封装方法
+    clearDate: function (obj) {
+        $(obj).datepicker("clearDates");
+    }
+};
+
 var sysDictUtil = {
     // 字典获取方法
     getSysDict: function (dictCode) {
@@ -151,4 +162,4 @@ var sysDictUtil = {
     }
 };
 
-export {initUtil, bootBoxUtil, sysDictUtil};
+export {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil};

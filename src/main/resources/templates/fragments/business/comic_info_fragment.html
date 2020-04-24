@@ -312,7 +312,7 @@
     <script src='/plugins/jquery.scrollUp.min.js'></script>
     <script src='/plugins/jquery.unveil.js'></script>
     <script type="module">
-        import {initUtil, bootBoxUtil, sysDictUtil} from "/util.js";
+        import {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil} from "/util.js";
 
         const containerVm = new Vue({
             el: "#container",
@@ -473,7 +473,6 @@
                                 containerVm.id = res.data.id;
                                 containerVm.comicName = res.data.comicName;
                                 containerVm.comicTime = res.data.comicTime;
-                                $(".datepicker").datepicker("setDate", res.data.comicTime);
                                 containerVm.comicContent = res.data.comicContent;
                                 if (res.data.comicStatus == 0) {
                                     containerVm.comicStatus = 0;
@@ -491,6 +490,7 @@
                                 containerVm.comicShelfStatus = res.data.comicShelfStatus;
                                 containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
                                 containerVm.cmImgFilePvTmp = res.data.comicImageUrl;
+                                datePickerUtil.setDate(".datepicker", res.data.comicTime);
                                 containerVm.modalShow();
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
@@ -543,6 +543,9 @@
                         containerVm.comicTime = $(this).val();
                     });
                 },
+                cmImgFileClear: function () {
+                    $("input[name='cmImgFile']").val("");
+                },
                 cmImgFileChange: function (e) {
                     if (e.target.files.length != 0) {
                         let file = e.target.files[0];
@@ -556,7 +559,7 @@
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            $("input[name='cmImgFile']").val("");
+                            this.cmImgFileClear();
                         } else if ((file.size).toFixed(2) >= 102400) {
                             toastr.warning("图片不能超过100KB");
                             if (this.isInsertModal) {
@@ -566,7 +569,7 @@
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            $("input[name='cmImgFile']").val("");
+                            this.cmImgFileClear();
                         } else {
                             this.cmImgFileLb = fileName;
                             let reader = new FileReader();
@@ -603,8 +606,8 @@
                         containerVm.cmImgFilePv = "/images/tpjxz.jpg";
                         containerVm.comicLink = "";
                         containerVm.comicShelfStatus = 1;
-                        $(".datepicker").datepicker('clearDates');
-                        $("input[name='cmImgFile']").val("");
+                        containerVm.cmImgFileClear();
+                        datePickerUtil.clearDate(".datepicker");
                     });
                 },
                 modalShow: function () {
