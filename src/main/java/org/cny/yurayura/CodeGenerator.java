@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * Mybatis-Plus代码自动生成
+ * Mybatis-Plus代码生成器
  *
  * @author CNY
  * @since 2019-10-21
