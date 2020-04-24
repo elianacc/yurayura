@@ -64,13 +64,13 @@ public class FileUtil {
     }
 
     /**
-     * 文件删除
+     * 上传文件删除
      *
      * @param dPath
      * @return void
      */
     public static void fileDelete(String dPath) {
-        File file = new File(dPath);
+        File file = new File("D://yurayura_v11" + dPath);
         if (file.isFile() && file.exists()) { // 上传文件路径不为空
             file.delete(); // 删除文件
         }

@@ -118,7 +118,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
-                FileUtil.fileDelete("D://yurayura_v11" + comic.getComicImageUrl());
+                FileUtil.fileDelete(comic.getComicImageUrl());
             }
         }
         return ApiResult.success("删除成功");
@@ -151,7 +151,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
                 // 如果用的是默认图片的，则不删除
                 if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
                     // 删除番剧图片
-                    FileUtil.fileDelete("D://yurayura_v11" + aComic.getComicImageUrl());
+                    FileUtil.fileDelete(aComic.getComicImageUrl());
                 }
             }
             comicMapper.updateById(comic);
