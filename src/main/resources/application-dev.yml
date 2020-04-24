@@ -48,7 +48,7 @@ spring:
 yurayura:
   # 番剧上传默认图片
   default-upload:
-    comic-image: images/tpjxz.jpg
+    comic-image: /images/tpjxz.jpg
   # swagger是否启用
   swagger:
     enable: true
