@@ -1,4 +1,4 @@
-package org.cny.yurayura.util;
+package org.cny.yurayura.system.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.MangerLoginDTO;
 import org.cny.yurayura.service.sys.manager.IManagerService;
-import org.cny.yurayura.util.VerifyCodeUtil;
+import org.cny.yurayura.system.util.VerifyCodeUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;

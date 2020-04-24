@@ -1,4 +1,4 @@
-package org.cny.yurayura.util;
+package org.cny.yurayura.system.util;
 
 import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.springframework.web.multipart.MultipartFile;

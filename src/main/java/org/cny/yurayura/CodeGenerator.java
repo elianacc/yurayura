@@ -1,4 +1,4 @@
-package org.cny.yurayura.util;
+package org.cny.yurayura;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * Mybatis-Plus代码生成 util
+ * Mybatis-Plus代码自动生成
  *
  * @author CNY
  * @since 2019-10-21
  */
-public class CodeGeneratorUtil {
+public class CodeGenerator {
     /**
      * <p>
      * 读取控制台内容

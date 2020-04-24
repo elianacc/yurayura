@@ -13,7 +13,7 @@ import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
 import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.cny.yurayura.service.comic.IComicService;
-import org.cny.yurayura.util.FileUtil;
+import org.cny.yurayura.system.util.FileUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
