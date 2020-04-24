@@ -46,13 +46,13 @@ public class FileUtil {
                     String path = "D://yurayura_v11/upload";
                     // 生成不重复的32位新文件名
                     fileNewName = UUID.randomUUID().toString().replace("-", "") + fileEndName;
-                    File filePath = new File(path, fileNewName);
-                    if (!filePath.getParentFile().exists()) { // 上传文件路径是否存在，如果不存在就创建一个
-                        filePath.getParentFile().mkdirs();
+                    File newFile = new File(path, fileNewName);
+                    if (!newFile.getParentFile().exists()) { // 上传文件路径是否存在，如果不存在就创建一个
+                        newFile.getParentFile().mkdirs();
                     }
                     // 将上传文件保存到一个目标文件当中
-                    file.transferTo(new File(path + File.separator + fileNewName));
-                    res = fileNewName;
+                    file.transferTo(newFile);
+                    res = fileNewName; // 返回新文件名
                 }
             } else {
                 res = ImgUploadResultEnum.FORMATNOTALLOW.getResult();
