@@ -70,7 +70,7 @@ public class FileUtil {
      * @return void
      */
     public static void fileDelete(String dPath) {
-        File file = new File("D://yurayura_v11" + File.separator + dPath);
+        File file = new File(dPath);
         if (file.isFile() && file.exists()) { // 上传文件路径不为空
             file.delete(); // 删除文件
         }

@@ -87,7 +87,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
             comic.setComicImageUrl(defaultUplCmImg);
             // 上传图片不为空，番剧图片地址使用上传图片地址
             if (!imgUplRes.equals(ImgUploadResultEnum.NULL.getResult())) {
-                comic.setComicImageUrl("upload/" + imgUplRes);
+                comic.setComicImageUrl("/upload/" + imgUplRes);
             }
             comic.setComicCreateTime(LocalDateTime.now());
             comic.setComicUpdateTime(LocalDateTime.now());
@@ -118,7 +118,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
-                FileUtil.fileDelete(comic.getComicImageUrl());
+                FileUtil.fileDelete("D://yurayura_v11" + comic.getComicImageUrl());
             }
         }
         return ApiResult.success("删除成功");
@@ -146,12 +146,12 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
             comic.setComicUpdateTime(LocalDateTime.now());
             // 上传图片不为空，番剧图片地址使用上传图片地址
             if (!imgUplRes.equals(ImgUploadResultEnum.NULL.getResult())) {
-                comic.setComicImageUrl("upload/" + imgUplRes);
+                comic.setComicImageUrl("/upload/" + imgUplRes);
                 Comic aComic = comicMapper.selectById(comic.getId());
                 // 如果用的是默认图片的，则不删除
                 if (!(aComic.getComicImageUrl().equals(defaultUplCmImg))) {
                     // 删除番剧图片
-                    FileUtil.fileDelete(aComic.getComicImageUrl());
+                    FileUtil.fileDelete("D://yurayura_v11" + aComic.getComicImageUrl());
                 }
             }
             comicMapper.updateById(comic);

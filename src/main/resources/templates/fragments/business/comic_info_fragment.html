@@ -82,7 +82,7 @@
                             </div>
                         </td>
                         <td class="box">
-                            <img :src="'/'+ item.comicImageUrl" class="table-cmimg rounded"/>
+                            <img :src="item.comicImageUrl" class="table-cmimg rounded"/>
                             <a :href="item.comicLink" target="_blank">
                                 <div class="bmbox"><i class="fa fa-play-circle-o fa-5x"></i><br/><br/><br/></div>
                             </a>
@@ -486,11 +486,11 @@
                                 let fileName = res.data.comicImageUrl;
                                 let fileNewNameStart = fileName.lastIndexOf("/");
                                 containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
-                                containerVm.cmImgFilePv = "/" + res.data.comicImageUrl;
+                                containerVm.cmImgFilePv = res.data.comicImageUrl;
                                 containerVm.comicLink = res.data.comicLink;
                                 containerVm.comicShelfStatus = res.data.comicShelfStatus;
                                 containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
-                                containerVm.cmImgFilePvTmp = "/" + res.data.comicImageUrl;
+                                containerVm.cmImgFilePvTmp = res.data.comicImageUrl;
                                 containerVm.modalShow();
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
