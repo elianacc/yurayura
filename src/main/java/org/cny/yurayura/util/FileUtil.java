@@ -36,7 +36,7 @@ public class FileUtil {
             if ((fileEndName != null && fileEndName.equals(".jpg")) || (fileEndName != null && fileEndName.equals(".JPG"))
                     || (fileEndName != null && fileEndName.equals(".png")) || (fileEndName != null && fileEndName.equals(".PNG"))
                     || (fileEndName != null && fileEndName.equals(".gif")) || (fileEndName != null && fileEndName.equals(".GIF"))
-                    || (fileEndName != null && fileEndName.equals("jpeg")) || (fileEndName != null && fileEndName.equals("JPEG"))) {
+                    || (fileEndName != null && fileEndName.equals(".jpeg")) || (fileEndName != null && fileEndName.equals(".JPEG"))) {
                 if (file.getSize() >= 102400) { // 上传文件超过100kb
                     res = ImgUploadResultEnum.SIZEBEYOND.getResult();
                 } else {

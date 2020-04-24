@@ -547,7 +547,7 @@
                     if (e.target.files.length != 0) {
                         let file = e.target.files[0];
                         let fileName = file.name;
-                        if (!/.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(fileName)) {
+                        if (!/.(gif|jpg|jpeg|png|GIF|JPG|JPEG|PNG)$/.test(fileName)) {
                             toastr.warning("图片格式必须是.gif,jpeg,jpg,png中的一种");
                             if (this.isInsertModal) {
                                 this.cmImgFileLb = "示例图片.jpg";
