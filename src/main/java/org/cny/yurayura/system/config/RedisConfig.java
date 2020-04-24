@@ -1,4 +1,4 @@
-package org.cny.yurayura.config;
+package org.cny.yurayura.system.config;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

@@ -2,7 +2,7 @@ package org.cny.yurayura.controller.comic;
 
 
 import io.swagger.annotations.*;
-import org.cny.yurayura.annotation.PreventRepeatSubmit;
+import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.service.comic.IComicService;

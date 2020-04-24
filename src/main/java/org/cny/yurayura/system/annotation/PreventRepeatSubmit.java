@@ -1,4 +1,4 @@
-package org.cny.yurayura.annotation;
+package org.cny.yurayura.system.annotation;
 
 import java.lang.annotation.*;
 

@@ -3,7 +3,7 @@ package org.cny.yurayura.controller.sys.manager;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.cny.yurayura.annotation.PreventRepeatSubmit;
+import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.MangerLoginDTO;
 import org.cny.yurayura.service.sys.manager.IManagerService;
 import org.cny.yurayura.util.VerifyCodeUtil;

@@ -1,4 +1,4 @@
-package org.cny.yurayura.config;
+package org.cny.yurayura.system.config;
 
 import org.cny.yurayura.system.interceptor.BusinessPageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

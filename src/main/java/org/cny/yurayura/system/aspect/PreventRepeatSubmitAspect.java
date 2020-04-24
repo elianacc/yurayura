@@ -35,7 +35,7 @@ public class PreventRepeatSubmitAspect {
             .expireAfterWrite(3, TimeUnit.SECONDS)
             .build();
 
-    @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.annotation.PreventRepeatSubmit)")
+    @Around("execution(public * *(..)) && @annotation(org.cny.yurayura.system.annotation.PreventRepeatSubmit)")
     public Object interceptor(ProceedingJoinPoint pjp) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String sessionId = RequestContextHolder.getRequestAttributes().getSessionId();

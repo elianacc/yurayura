@@ -1,4 +1,4 @@
-package org.cny.yurayura.config;
+package org.cny.yurayura.system.config;
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;

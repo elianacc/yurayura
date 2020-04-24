@@ -2,7 +2,7 @@ package org.cny.yurayura.controller.sys.dict;
 
 
 import io.swagger.annotations.*;
-import org.cny.yurayura.annotation.PreventRepeatSubmit;
+import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.springframework.util.StringUtils;

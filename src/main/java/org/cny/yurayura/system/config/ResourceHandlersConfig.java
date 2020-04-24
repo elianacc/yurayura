@@ -1,4 +1,4 @@
-package org.cny.yurayura.config;
+package org.cny.yurayura.system.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
