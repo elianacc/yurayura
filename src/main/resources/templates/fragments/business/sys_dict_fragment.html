@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-4 offset-4 mt-4">
-                <form id="selectContentForm">
+                <form id="selectContentForm" ref="selectContentForm">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">字典编码</span>
@@ -240,7 +240,7 @@
                     this.getPage();
                 },
                 clearSelectContent: function () {
-                    $("#selectContentForm").resetForm();
+                    this.$refs.selectContentForm.reset();
                     this.selectContent();
                 },
                 toFirstPage: function () {

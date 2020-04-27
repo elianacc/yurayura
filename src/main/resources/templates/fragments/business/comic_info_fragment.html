@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-8 mt-4">
-                <form id="selectContentForm">
+                <form id="selectContentForm" ref="selectContentForm">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名</span>
@@ -265,7 +265,7 @@
                                 <label class="col-form-label font-size-14"> 上传图片：</label>
                                 <div class="custom-file" v-show="!isDetailModal">
                                     <input type="file" class="custom-file-input form-control-sm"
-                                           name="cmImgFile" @change="cmImgFileChange"/>
+                                           name="cmImgFile" @change="cmImgFileChange" ref="cmImgFile"/>
                                     <label class="custom-file-label font-size-14">{{cmImgFileLb}}</label>
                                 </div>
                                 <br/> <br/>
@@ -374,7 +374,7 @@
                     this.getPage();
                 },
                 clearSelectContent: function () {
-                    $("#selectContentForm").resetForm();
+                    this.$refs.selectContentForm.reset();
                     this.selectContent();
                 },
                 toFirstPage: function () {
@@ -543,9 +543,6 @@
                         containerVm.comicTime = $(this).val();
                     });
                 },
-                cmImgFileClear: function () {
-                    $("input[name='cmImgFile']").val("");
-                },
                 cmImgFileChange: function (e) {
                     if (e.target.files.length != 0) {
                         let file = e.target.files[0];
@@ -559,7 +556,7 @@
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            this.cmImgFileClear();
+                            this.$refs.cmImgFile.value = "";
                         } else if ((file.size).toFixed(2) >= 102400) {
                             toastr.warning("图片不能超过100KB");
                             if (this.isInsertModal) {
@@ -569,7 +566,7 @@
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            this.cmImgFileClear();
+                            this.$refs.cmImgFile.value = "";
                         } else {
                             this.cmImgFileLb = fileName;
                             let reader = new FileReader();
@@ -606,7 +603,7 @@
                         containerVm.cmImgFilePv = "/images/tpjxz.jpg";
                         containerVm.comicLink = "";
                         containerVm.comicShelfStatus = 1;
-                        containerVm.cmImgFileClear();
+                        containerVm.$refs.cmImgFile.value = "";
                         datePickerUtil.clearDate(".datepicker");
                     });
                 },
