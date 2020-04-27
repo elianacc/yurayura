@@ -6,7 +6,7 @@
 
 YuraYura是一个兴趣使然的项目，主要的功能是做番剧的导视，数据的应用
 
-![Snipaste_2019-12-25_10-22-31.png](https://i.loli.net/2019/12/25/ZdQiAefXL5SmHcb.png) 
+![Snipaste_2019-12-25_10-22-31.png](https://i.loli.net/2020/04/27/TDYwVsvpH2oBRu8.png) 
 
 
 
