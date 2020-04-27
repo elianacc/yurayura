@@ -145,7 +145,7 @@
     </dependencies>
 
     <build>
-        <finalName>yurayura_v11</finalName>
+        <finalName>yurayura</finalName>
         <resources>
             <!-- java文件夹下的xml也加入编译 -->
             <resource>
