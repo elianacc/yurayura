@@ -42,7 +42,7 @@
                                     <input name="verifyCode" type="text" class="form-control col-7"
                                            :class="{'is-invalid':isInValid[2]}" v-model="verifyCode"/>
                                     <div class="col-5">
-                                        <img id="verifyImage" src="/sys/manager/getVerifyCode"
+                                        <img ref="verifyImage" src="/sys/manager/getVerifyCode"
                                              @click="loadVerifyImage"/>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                     }
                 },
                 loadVerifyImage: function () {
-                    document.getElementById("verifyImage").src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
+                    this.$refs.verifyImage.src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
                 }
             },
             watch: {
