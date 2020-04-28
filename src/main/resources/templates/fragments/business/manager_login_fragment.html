@@ -23,7 +23,7 @@
             <div class="col-4 offset-4">
                 <div class="card shadow">
                     <div class="card-body">
-                        <form id="managerLoginForm">
+                        <form @submit.prevent="loginBusiness">
                             <div class="form-group">
                                 <label class='font-size-14'>用户名</label>
                                 <input name="managerName" type="text" class="form-control"
@@ -47,8 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary btn-block mt-4 pr-4"
-                                    @click="loginBusiness">
+                            <button type="submit" class="btn btn-primary btn-block mt-4 pr-4">
                                 <i class='fa fa-sign-in fa-lg'></i>&nbsp;&nbsp;登入
                             </button>
                         </form>
@@ -102,30 +101,29 @@
                         return true;
                     }
                 },
-                loginBusiness() {
+                loginBusiness(e) {
                     if (this.validataForm()) {
-                        $("#managerLoginForm").ajaxSubmit({
-                            url: "/sys/manager/login",
-                            data: {
-                                managerPassword: Base64.encode(this.managerPassword)
-                            },
-                            type: "post",
-                            dataType: "json",
-                            success(res) {
-                                if (res.code == 200) {
-                                    containerVm.isContainerShow = false;
-                                    spinnerVm.isSpinnerShow = true;
-                                    setTimeout(function () {
-                                        location.replace("/business/comic_info");
-                                    }, 2000);
-                                } else if (res.code == 100) {
-                                    containerVm.loadVerifyImage();
-                                    toastr.error(res.msg);
-                                } else if (res.code == 101) {
-                                    console.log(res.msg);
-                                } else if (res.code == 500) {
-                                    bootBoxUtil.bootBoxAlert(res.msg);
-                                }
+                        let formData = new FormData(e.target);
+                        formData.append('managerPassword', Base64.encode(this.managerPassword));
+                        axios({
+                            method: 'post',
+                            url: '/sys/manager/login',
+                            data: formData,
+                            responseType: 'json'
+                        }).then(function (res) {
+                            if (res.data.code == 200) {
+                                containerVm.isContainerShow = false;
+                                spinnerVm.isSpinnerShow = true;
+                                setTimeout(function () {
+                                    location.replace("/business/comic_info");
+                                }, 2000);
+                            } else if (res.data.code == 100) {
+                                containerVm.loadVerifyImage();
+                                toastr.error(res.msg);
+                            } else if (res.data.code == 101) {
+                                console.log(res.msg);
+                            } else if (res.data.code == 500) {
+                                bootBoxUtil.bootBoxAlert(res.msg);
                             }
                         });
                     }
