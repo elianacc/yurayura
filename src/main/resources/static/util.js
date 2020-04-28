@@ -93,7 +93,7 @@ var bootBoxUtil = {
                     label: '确定',
                 }
             },
-            callback: function () {
+            callback() {
                 callbackFunction();
             }
         });
@@ -116,7 +116,7 @@ var bootBoxUtil = {
             },
             backdrop: true,
             closeButton: false,
-            callback: function (result) {
+            callback(result) {
                 if (result == true) {
                     callbackFunction();
                 }
@@ -148,7 +148,7 @@ var sysDictUtil = {
             type: "post",
             dataType: "json",
             async: false,
-            success: function (res) {
+            success(res) {
                 if (res.code == 200) {
                     dictData = res.data;
                 } else if (res.code == 100) {
