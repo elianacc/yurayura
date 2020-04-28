@@ -7,7 +7,7 @@
 
 var initUtil = {
     // toast初始化方法
-    initToastr: function () {
+    initToastr() {
         toastr.options = {
             closeButton: false, // 是否显示关闭按钮
             debug: false,
@@ -24,18 +24,18 @@ var initUtil = {
         };
     },
     // BootSideMenu初始化方法
-    initSideMenu: function (obj) {
+    initSideMenu(obj) {
         $(obj).BootSideMenu({
             side: "left",
             autoClose: false
         });
     },
     // metisMenu初始化方法
-    initMetisMenu: function (obj) {
+    initMetisMenu(obj) {
         $(obj).metisMenu({toggle: false});
     },
     // bootstrap-datepicker初始化方法
-    initDatePicker: function (obj) {
+    initDatePicker(obj) {
         $(obj).datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true,
@@ -48,7 +48,7 @@ var initUtil = {
         });
     },
     // jquery scrollUp初始化方法
-    initScrollUp: function () {
+    initScrollUp() {
         $.scrollUp({
             scrollName: 'scrollUp', // 对象 ID
             scrollDistance: '300', // 距离顶部多远时显示对象 (px)
@@ -60,14 +60,14 @@ var initUtil = {
         });
     },
     // jquery图片懒加载初始化方法
-    initImgLazyLoad: function () {
+    initImgLazyLoad() {
         $("img").unveil(100);
     }
 };
 
 var bootBoxUtil = {
     // bootbox alert封装方法(无返回事件)
-    bootBoxAlert: function (msg) {
+    bootBoxAlert(msg) {
         bootbox.alert({
             size: "small",
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
@@ -82,7 +82,7 @@ var bootBoxUtil = {
         return false;
     },
     // bootbox alert封装方法(自定义返回事件)
-    bootBoxAlertWithCall: function (msg, callbackFunction) {
+    bootBoxAlertWithCall(msg, callbackFunction) {
         bootbox.alert({
             size: "small",
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
@@ -99,7 +99,7 @@ var bootBoxUtil = {
         });
     },
     // bootbox confirm封装方法
-    bootBoxConfirm: function (msg, callbackFunction) {
+    bootBoxConfirm(msg, callbackFunction) {
         bootbox.confirm({
             size: "small",
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
@@ -127,18 +127,18 @@ var bootBoxUtil = {
 
 var datePickerUtil = {
     // 设置date-picker选中日期封装方法
-    setDate: function (obj, val) {
+    setDate(obj, val) {
         $(obj).datepicker("setDate", val);
     },
     // 清空date-picker选中日期封装方法
-    clearDate: function (obj) {
+    clearDate(obj) {
         $(obj).datepicker("clearDates");
     }
 };
 
 var sysDictUtil = {
     // 字典获取方法
-    getSysDict: function (dictCode) {
+    getSysDict(dictCode) {
         let dictData = "";
         $.ajax({
             url: "/sys/dict/getByDictCode",

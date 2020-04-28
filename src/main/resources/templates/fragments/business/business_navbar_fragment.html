@@ -17,14 +17,14 @@
         const navBarVm = new Vue({
             el: "#navbar",
             methods: {
-                logoutManager: function () {
+                logoutManager() {
                     bootBoxUtil.bootBoxConfirm("确定要注销吗？", function () {
                         $.ajax({
                             url: "/sys/manager/logout",
                             data: null,
                             type: "post",
                             dataType: "json",
-                            success: function (res) {
+                            success(res) {
                                 if (res.code == 200) {
                                     location.reload();
                                 } else if (res.code == 100) {

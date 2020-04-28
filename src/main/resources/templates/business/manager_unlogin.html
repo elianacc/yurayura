@@ -8,15 +8,20 @@
 </head>
 <body>
 
+<div id="container"></div>
+
 <!-- WEB SITE JS -->
 <script src="/app.js"></script>
 <script type="module">
     import {bootBoxUtil} from "/util.js";
 
-    $(function () {
-        bootBoxUtil.bootBoxAlertWithCall("管理员还未登入，请先登入！", function () {
-            location.href = "/business/manager_login";
-        });
+    new Vue({
+        el: '#container',
+        mounted() {
+            bootBoxUtil.bootBoxAlertWithCall("管理员还未登入，请先登入！", function () {
+                location.href = "/business/manager_login";
+            });
+        }
     });
 
 </script>

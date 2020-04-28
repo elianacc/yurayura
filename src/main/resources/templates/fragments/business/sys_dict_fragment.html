@@ -215,7 +215,7 @@
                 dictStatus: 1
             },
             methods: {
-                getPage: function () {
+                getPage() {
                     $("#selectContentForm").ajaxSubmit({
                         url: "/sys/dict/getPage",
                         data: {
@@ -224,7 +224,7 @@
                         },
                         type: "post",
                         dataType: "json",
-                        success: function (res) {
+                        success(res) {
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else if (res.code == 100) {
@@ -235,45 +235,45 @@
                         }
                     });
                 },
-                selectContent: function () {
+                selectContent() {
                     this.nowPageNum = 1;
                     this.getPage();
                 },
-                clearSelectContent: function () {
+                clearSelectContent() {
                     this.$refs.selectContentForm.reset();
                     this.selectContent();
                 },
-                toFirstPage: function () {
+                toFirstPage() {
                     this.nowPageNum = 1;
                     this.getPage();
                     this.scrollUp();
                 },
-                toPrePage: function () {
+                toPrePage() {
                     this.nowPageNum = this.nowPageNum - 1;
                     this.getPage();
                     this.scrollUp();
                 },
-                toNextPage: function () {
+                toNextPage() {
                     this.nowPageNum = this.nowPageNum + 1;
                     this.getPage();
                     this.scrollUp();
                 },
-                toLastPage: function (lastPage) {
+                toLastPage(lastPage) {
                     this.nowPageNum = lastPage;
                     this.getPage();
                     this.scrollUp();
                 },
-                toClickPage: function (clickPage) {
+                toClickPage(clickPage) {
                     this.nowPageNum = clickPage;
                     this.getPage();
                     this.scrollUp();
                 },
-                insertModalOpen: function () {
+                insertModalOpen() {
                     this.modalTitle = "『添加窗口』";
                     this.isInsertModal = true;
                     this.modalShow();
                 },
-                insertContent: function () {
+                insertContent() {
                     if (this.dictCode.trim() == "") {
                         toastr.warning("字典编码不能为空");
                     } else if (this.dictName.trim() == "") {
@@ -285,7 +285,7 @@
                             url: "/sys/dict/insert",
                             type: "post",
                             dataType: "json",
-                            success: function (res) {
+                            success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.clearSelectContent();
@@ -301,7 +301,7 @@
                         });
                     }
                 },
-                deleteBatch: function () {
+                deleteBatch() {
                     bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
                             toastr.warning("请至少选择一项删除");
@@ -313,7 +313,7 @@
                                 },
                                 type: "post",
                                 dataType: "json",
-                                success: function (res) {
+                                success(res) {
                                     if (res.code == 200) {
                                         toastr.success(res.msg);
                                         containerVm.getPage();
@@ -327,7 +327,7 @@
                         }
                     });
                 },
-                modalSetVal: function (id) {
+                modalSetVal(id) {
                     $.ajax({
                         url: "/sys/dict/getById",
                         data: {
@@ -335,7 +335,7 @@
                         },
                         type: "post",
                         dataType: 'json',
-                        success: function (res) {
+                        success(res) {
                             if (res.code == 200) {
                                 containerVm.id = res.data.id;
                                 containerVm.dictCode = res.data.dictCode;
@@ -351,12 +351,12 @@
                         }
                     });
                 },
-                updateModalOpen: function (id) {
+                updateModalOpen(id) {
                     this.modalTitle = "『修改窗口』";
                     this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
-                updateContent: function () {
+                updateContent() {
                     if (this.dictCode.trim() == "") {
                         toastr.warning("字典编码不能为空");
                     } else if (this.dictName.trim() == "") {
@@ -368,7 +368,7 @@
                             url: "/sys/dict/update",
                             type: "post",
                             dataType: "json",
-                            success: function (res) {
+                            success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.getPage();
@@ -384,7 +384,7 @@
                         });
                     }
                 },
-                modalReset: function () {
+                modalReset() {
                     $('#dataModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
                         containerVm.dictCode = "";
@@ -393,17 +393,17 @@
                         containerVm.dictStatus = 1;
                     });
                 },
-                modalShow: function () {
+                modalShow() {
                     $("#dataModal").modal();
                 },
-                modalHide: function () {
+                modalHide() {
                     $("#dataModal").modal('hide');
                 },
-                scrollUp: function () {
+                scrollUp() {
                     $("#scrollUp").click();
                 }
             },
-            mounted: function () {
+            mounted() {
                 initUtil.initToastr();
                 initUtil.initScrollUp();
                 this.modalReset();

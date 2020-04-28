@@ -88,7 +88,7 @@
                 ]
             },
             methods: {
-                validataForm: function () {
+                validataForm() {
                     if (this.managerName.trim() == "") {
                         Vue.set(this.isInValid, 0, true);
                         return false;
@@ -102,7 +102,7 @@
                         return true;
                     }
                 },
-                loginBusiness: function () {
+                loginBusiness() {
                     if (this.validataForm()) {
                         $("#managerLoginForm").ajaxSubmit({
                             url: "/sys/manager/login",
@@ -111,7 +111,7 @@
                             },
                             type: "post",
                             dataType: "json",
-                            success: function (res) {
+                            success(res) {
                                 if (res.code == 200) {
                                     containerVm.isContainerShow = false;
                                     spinnerVm.isSpinnerShow = true;
@@ -130,22 +130,22 @@
                         });
                     }
                 },
-                loadVerifyImage: function () {
+                loadVerifyImage() {
                     this.$refs.verifyImage.src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
                 }
             },
             watch: {
-                managerName: function () {
+                managerName() {
                     Vue.set(this.isInValid, 0, false);
                 },
-                managerPassword: function () {
+                managerPassword() {
                     Vue.set(this.isInValid, 1, false);
                 },
-                verifyCode: function () {
+                verifyCode() {
                     Vue.set(this.isInValid, 2, false);
                 }
             },
-            mounted: function () {
+            mounted() {
                 initUtil.initToastr();
             }
         });

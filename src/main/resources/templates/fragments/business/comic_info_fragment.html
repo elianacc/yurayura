@@ -349,7 +349,7 @@
                 comicShelfStatusDict: ""
             },
             methods: {
-                getPage: function () {
+                getPage() {
                     $("#selectContentForm").ajaxSubmit({
                         url: "/comic/getPageToB",
                         data: {
@@ -358,7 +358,7 @@
                         },
                         type: "post",
                         dataType: "json",
-                        success: function (res) {
+                        success(res) {
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else if (res.code == 100) {
@@ -369,46 +369,46 @@
                         }
                     });
                 },
-                selectContent: function () {
+                selectContent() {
                     this.nowPageNum = 1;
                     this.getPage();
                 },
-                clearSelectContent: function () {
+                clearSelectContent() {
                     this.$refs.selectContentForm.reset();
                     this.selectContent();
                 },
-                toFirstPage: function () {
+                toFirstPage() {
                     this.nowPageNum = 1;
                     this.getPage();
                     this.scrollUp();
                 },
-                toPrePage: function () {
+                toPrePage() {
                     this.nowPageNum = this.nowPageNum - 1;
                     this.getPage();
                     this.scrollUp();
                 },
-                toNextPage: function () {
+                toNextPage() {
                     this.nowPageNum = this.nowPageNum + 1;
                     this.getPage();
                     this.scrollUp();
                 },
-                toLastPage: function (lastPage) {
+                toLastPage(lastPage) {
                     this.nowPageNum = lastPage;
                     this.getPage();
                     this.scrollUp();
                 },
-                toClickPage: function (clickPage) {
+                toClickPage(clickPage) {
                     this.nowPageNum = clickPage;
                     this.getPage();
                     this.scrollUp();
                 },
-                insertModalOpen: function () {
+                insertModalOpen() {
                     this.modalTitle = "『添加窗口』";
                     this.isDetailModal = false;
                     this.isInsertModal = true;
                     this.modalShow();
                 },
-                insertContent: function () {
+                insertContent() {
                     if (this.comicName.trim() == "") {
                         toastr.warning("名称不能为空");
                     } else if (this.comicContent.length > 500) {
@@ -418,7 +418,7 @@
                             url: "/comic/insert",
                             type: "post",
                             dataType: "json",
-                            success: function (res) {
+                            success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.clearSelectContent();
@@ -434,7 +434,7 @@
                         });
                     }
                 },
-                deleteBatch: function () {
+                deleteBatch() {
                     bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
                         if (containerVm.ids.length == 0) {
                             toastr.warning("请至少选择一项删除");
@@ -446,7 +446,7 @@
                                 },
                                 type: "post",
                                 dataType: "json",
-                                success: function (res) {
+                                success(res) {
                                     if (res.code == 200) {
                                         toastr.success(res.msg);
                                         containerVm.getPage();
@@ -460,7 +460,7 @@
                         }
                     });
                 },
-                modalSetVal: function (id) {
+                modalSetVal(id) {
                     $.ajax({
                         url: "/comic/getById",
                         data: {
@@ -468,7 +468,7 @@
                         },
                         type: "post",
                         dataType: 'json',
-                        success: function (res) {
+                        success(res) {
                             if (res.code == 200) {
                                 containerVm.id = res.data.id;
                                 containerVm.comicName = res.data.comicName;
@@ -500,19 +500,19 @@
                         }
                     });
                 },
-                detailModalOpen: function (id) {
+                detailModalOpen(id) {
                     this.modalTitle = "『详情窗口』";
                     this.isDetailModal = true;
                     this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
-                updateModalOpen: function (id) {
+                updateModalOpen(id) {
                     this.modalTitle = "『修改窗口』";
                     this.isDetailModal = false;
                     this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
-                updateContent: function () {
+                updateContent() {
                     if (this.comicName.trim() == "") {
                         toastr.warning("名称不能为空");
                     } else if (this.comicContent.length > 500) {
@@ -522,7 +522,7 @@
                             url: "/comic/update",
                             type: "post",
                             dataType: "json",
-                            success: function (res) {
+                            success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
                                     containerVm.getPage();
@@ -538,12 +538,12 @@
                         });
                     }
                 },
-                datePickerBind: function () {
+                datePickerBind() {
                     $(".datepicker").datepicker().on("hide", function () {
                         containerVm.comicTime = $(this).val();
                     });
                 },
-                cmImgFileChange: function (e) {
+                cmImgFileChange(e) {
                     if (e.target.files.length != 0) {
                         let file = e.target.files[0];
                         let fileName = file.name;
@@ -585,7 +585,7 @@
                         }
                     }
                 },
-                modalReset: function () {
+                modalReset() {
                     $('#dataModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
                         containerVm.comicName = "";
@@ -607,16 +607,16 @@
                         datePickerUtil.clearDate(".datepicker");
                     });
                 },
-                modalShow: function () {
+                modalShow() {
                     $("#dataModal").modal();
                 },
-                modalHide: function () {
+                modalHide() {
                     $("#dataModal").modal('hide');
                 },
-                scrollUp: function () {
+                scrollUp() {
                     $("#scrollUp").click();
                 },
-                getSysDict: function () {
+                getSysDict() {
                     this.comicLabelDict = sysDictUtil.getSysDict("comicLabel");
                     this.comicStatusDict = sysDictUtil.getSysDict("comicStatus");
                     this.comicUpdtStatusDict = sysDictUtil.getSysDict("comicUpdtStatus");
@@ -625,7 +625,7 @@
                 }
             },
             watch: {
-                comicStatus: function () {
+                comicStatus() {
                     this.isUdTimeShow = this.comicStatus == 8;
                     if (this.comicStatus == 0) {
                         this.comicUdTime = "";
@@ -634,7 +634,7 @@
             },
             computed: {
                 freeLabelArr: {
-                    get: function () {
+                    get() {
                         let tempFreeLabel = [];
                         tempFreeLabel.push(this.freeLabelA);
                         tempFreeLabel.push(this.freeLabelB);
@@ -642,7 +642,7 @@
                         tempFreeLabel.push(this.freeLabelD);
                         return tempFreeLabel;
                     },
-                    set: function (value) {
+                    set(value) {
                         this.freeLabelA = value[0];
                         this.freeLabelB = value[1];
                         this.freeLabelC = value[2];
@@ -650,10 +650,10 @@
                     }
                 },
                 comicLabel: {
-                    get: function () {
+                    get() {
                         return this.comicTag.concat(this.freeLabelArr);
                     },
-                    set: function (value) {
+                    set(value) {
                         let labelArr = value.split(",");
                         this.comicTag = labelArr.slice(0, labelArr.length - 4);
                         let tempFreeLabel = [];
@@ -665,7 +665,7 @@
                     }
                 }
             },
-            mounted: function () {
+            mounted() {
                 initUtil.initToastr();
                 initUtil.initDatePicker(".datepicker");
                 initUtil.initScrollUp();
