@@ -119,11 +119,11 @@
                                 }, 2000);
                             } else if (res.data.code == 100) {
                                 containerVm.loadVerifyImage();
-                                toastr.error(res.msg);
+                                toastr.error(res.data.msg);
                             } else if (res.data.code == 101) {
-                                console.log(res.msg);
+                                console.log(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.bootBoxAlert(res.msg);
+                                bootBoxUtil.bootBoxAlert(res.data.msg);
                             }
                         });
                     }
