@@ -127,7 +127,7 @@
                             } else if (res.data.code == 101) {
                                 console.log(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.bootBoxAlert(res.data.msg);
+                                bootBoxUtil.alert(res.data.msg);
                             }
                         });
                     }

@@ -18,7 +18,7 @@
             el: '#navbar',
             methods: {
                 logoutManager() {
-                    bootBoxUtil.bootBoxConfirm('确定要注销吗？', function () {
+                    bootBoxUtil.confirm('确定要注销吗？', function () {
                         axios({
                             method: 'post',
                             url: '/sys/manager/logout',
@@ -30,7 +30,7 @@
                             } else if (res.data.code == 100) {
                                 toastr.error(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.bootBoxAlert(res.data.msg);
+                                bootBoxUtil.alert(res.data.msg);
                             }
                         });
                     });

@@ -364,7 +364,7 @@
                             } else if (res.code == 100) {
                                 containerVm.pageInfo = '';
                             } else if (res.code == 500) {
-                                bootBoxUtil.bootBoxAlert(res.msg);
+                                bootBoxUtil.alert(res.msg);
                             }
                         }
                     });
@@ -428,14 +428,14 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    bootBoxUtil.bootBoxAlert(res.msg);
+                                    bootBoxUtil.alert(res.msg);
                                 }
                             }
                         });
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.bootBoxConfirm('确定要删除选中项吗？', function () {
+                    bootBoxUtil.confirm('确定要删除选中项吗？', function () {
                         if (containerVm.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
@@ -453,7 +453,7 @@
                                     } else if (res.code == 100) {
                                         toastr.error(res.msg);
                                     } else if (res.code == 500) {
-                                        bootBoxUtil.bootBoxAlert(res.msg);
+                                        bootBoxUtil.alert(res.msg);
                                     }
                                 }
                             });
@@ -495,7 +495,7 @@
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
                             } else if (res.code == 500) {
-                                bootBoxUtil.bootBoxAlert(res.msg);
+                                bootBoxUtil.alert(res.msg);
                             }
                         }
                     });
@@ -532,7 +532,7 @@
                                 } else if (res.code == 101) {
                                     console.log(res.msg);
                                 } else if (res.code == 500) {
-                                    bootBoxUtil.bootBoxAlert(res.msg);
+                                    bootBoxUtil.alert(res.msg);
                                 }
                             }
                         });
@@ -614,14 +614,14 @@
                     $('#dataModal').modal('hide');
                 },
                 scrollUp() {
-                    $('#scrollUp').click();
+                    document.getElementById('scrollUp').click();
                 },
                 getSysDict() {
-                    this.comicLabelDict = sysDictUtil.getSysDict('comicLabel');
-                    this.comicStatusDict = sysDictUtil.getSysDict('comicStatus');
-                    this.comicUpdtStatusDict = sysDictUtil.getSysDict('comicUpdtStatus');
-                    this.comicUpdtTimeDict = sysDictUtil.getSysDict('comicUpdtTime');
-                    this.comicShelfStatusDict = sysDictUtil.getSysDict('comicShelfStatus');
+                    this.comicLabelDict = sysDictUtil.get('comicLabel');
+                    this.comicStatusDict = sysDictUtil.get('comicStatus');
+                    this.comicUpdtStatusDict = sysDictUtil.get('comicUpdtStatus');
+                    this.comicUpdtTimeDict = sysDictUtil.get('comicUpdtTime');
+                    this.comicShelfStatusDict = sysDictUtil.get('comicShelfStatus');
                 }
             },
             watch: {

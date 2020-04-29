@@ -67,7 +67,7 @@ var initUtil = {
 
 var bootBoxUtil = {
     // bootbox alert封装方法(无返回事件)
-    bootBoxAlert(msg) {
+    alert(msg) {
         bootbox.alert({
             size: 'small',
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
@@ -82,7 +82,7 @@ var bootBoxUtil = {
         return false;
     },
     // bootbox alert封装方法(自定义返回事件)
-    bootBoxAlertWithCall(msg, callbackFunction) {
+    alertWithCall(msg, callbackFunction) {
         bootbox.alert({
             size: 'small',
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
@@ -99,7 +99,7 @@ var bootBoxUtil = {
         });
     },
     // bootbox confirm封装方法
-    bootBoxConfirm(msg, callbackFunction) {
+    confirm(msg, callbackFunction) {
         bootbox.confirm({
             size: 'small',
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
@@ -138,7 +138,7 @@ var datePickerUtil = {
 
 var sysDictUtil = {
     // 字典获取方法
-    getSysDict(dictCode) {
+    get(dictCode) {
         let dictData = '';
         $.ajax({
             url: '/sys/dict/getByDictCode',
