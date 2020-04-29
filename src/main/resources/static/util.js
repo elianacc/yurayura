@@ -4,8 +4,7 @@
  * @author EliaNaCc
  * @since 2019-11-06
  */
-
-var initUtil = {
+const initUtil = {
     // toast初始化方法
     initToastr() {
         toastr.options = {
@@ -65,7 +64,7 @@ var initUtil = {
     }
 };
 
-var bootBoxUtil = {
+const bootBoxUtil = {
     // bootbox alert封装方法(无返回事件)
     alert(msg) {
         bootbox.alert({
@@ -125,7 +124,7 @@ var bootBoxUtil = {
     }
 };
 
-var datePickerUtil = {
+const datePickerUtil = {
     // 设置date-picker选中日期封装方法
     setDate(obj, val) {
         $(obj).datepicker('setDate', val);
@@ -136,7 +135,7 @@ var datePickerUtil = {
     }
 };
 
-var sysDictUtil = {
+const sysDictUtil = {
     // 字典获取方法
     get(dictCode) {
         let dictData = '';
