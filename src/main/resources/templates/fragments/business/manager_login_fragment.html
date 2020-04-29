@@ -66,17 +66,17 @@
     </div>
 
     <script src='/plugins/base64.min.js'></script>
-    <script type="module">
-        import {initUtil, bootBoxUtil} from "/util.js";
+    <script type='module'>
+        import {initUtil, bootBoxUtil} from '/util.js';
 
         const containerVm = new Vue({
-            el: "#container",
+            el: '#container',
             data: {
                 isContainerShow: true,
                 formData: {
-                    managerName: "",
-                    managerPassword: "",
-                    verifyCode: ""
+                    managerName: '',
+                    managerPassword: '',
+                    verifyCode: ''
                 },
                 isInValid: [
                     false,
@@ -84,19 +84,19 @@
                     false
                 ],
                 isInValidText: [
-                    "用户名不能为空",
-                    "密码不能为空"
+                    '用户名不能为空',
+                    '密码不能为空'
                 ]
             },
             methods: {
                 validataForm() {
-                    if (this.formData.managerName.trim() == "") {
+                    if (this.formData.managerName.trim() == '') {
                         Vue.set(this.isInValid, 0, true);
                         return false;
-                    } else if (this.formData.managerPassword.trim() == "") {
+                    } else if (this.formData.managerPassword.trim() == '') {
                         Vue.set(this.isInValid, 1, true);
                         return false;
-                    } else if (this.formData.verifyCode.trim() == "") {
+                    } else if (this.formData.verifyCode.trim() == '') {
                         Vue.set(this.isInValid, 2, true);
                         return false;
                     } else {
@@ -117,10 +117,12 @@
                                 containerVm.isContainerShow = false;
                                 spinnerVm.isSpinnerShow = true;
                                 setTimeout(function () {
-                                    location.replace("/business/comic_info");
+                                    location.replace('/business/comic_info');
                                 }, 2000);
                             } else if (res.data.code == 100) {
                                 containerVm.loadVerifyImage();
+                                containerVm.formData.managerPassword = '';
+                                containerVm.formData.verifyCode = '';
                                 toastr.error(res.data.msg);
                             } else if (res.data.code == 101) {
                                 console.log(res.data.msg);
@@ -131,7 +133,7 @@
                     }
                 },
                 loadVerifyImage() {
-                    this.$refs.verifyImage.src = "/sys/manager/getVerifyCode?randomId=" + Math.random();
+                    this.$refs.verifyImage.src = '/sys/manager/getVerifyCode?randomId=' + Math.random();
                 }
             },
             watch: {
@@ -151,7 +153,7 @@
         });
 
         const spinnerVm = new Vue({
-            el: "#spinner",
+            el: '#spinner',
             data: {
                 isSpinnerShow: false
             }

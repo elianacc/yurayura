@@ -11,27 +11,26 @@
         </form>
     </nav>
 
-    <script type="module">
-        import {bootBoxUtil} from "/util.js";
+    <script type='module'>
+        import {bootBoxUtil} from '/util.js';
 
         const navBarVm = new Vue({
-            el: "#navbar",
+            el: '#navbar',
             methods: {
                 logoutManager() {
-                    bootBoxUtil.bootBoxConfirm("确定要注销吗？", function () {
-                        $.ajax({
-                            url: "/sys/manager/logout",
+                    bootBoxUtil.bootBoxConfirm('确定要注销吗？', function () {
+                        axios({
+                            method: 'post',
+                            url: '/sys/manager/logout',
                             data: null,
-                            type: "post",
-                            dataType: "json",
-                            success(res) {
-                                if (res.code == 200) {
-                                    location.reload();
-                                } else if (res.code == 100) {
-                                    toastr.error(res.msg);
-                                } else if (res.code == 500) {
-                                    bootBoxUtil.bootBoxAlert(res.msg);
-                                }
+                            responseType: 'json'
+                        }).then(function (res) {
+                            if (res.data.code == 200) {
+                                location.reload();
+                            } else if (res.data.code == 100) {
+                                toastr.error(res.data.msg);
+                            } else if (res.data.code == 500) {
+                                bootBoxUtil.bootBoxAlert(res.data.msg);
                             }
                         });
                     });
