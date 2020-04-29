@@ -197,33 +197,33 @@
     </div>
 
     <script src='/plugins/jquery.scrollUp.min.js'></script>
-    <script type="module">
-        import {initUtil, bootBoxUtil} from "/util.js";
+    <script type='module'>
+        import {initUtil, bootBoxUtil} from '/util.js';
 
         const containerVm = new Vue({
-            el: "#container",
+            el: '#container',
             data: {
                 ids: [],
                 nowPageNum: 1,
-                pageInfo: "",
-                modalTitle: "",
+                pageInfo: '',
+                modalTitle: '',
                 isInsertModal: false,
                 id: 0,
-                dictCode: "",
-                dictName: "",
-                dictVal: "",
+                dictCode: '',
+                dictName: '',
+                dictVal: '',
                 dictStatus: 1
             },
             methods: {
                 getPage() {
-                    $("#selectContentForm").ajaxSubmit({
-                        url: "/sys/dict/getPage",
+                    $('#selectContentForm').ajaxSubmit({
+                        url: '/sys/dict/getPage',
                         data: {
                             pageNum: this.nowPageNum,
                             pageSize: 20
                         },
-                        type: "post",
-                        dataType: "json",
+                        type: 'post',
+                        dataType: 'json',
                         success(res) {
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
@@ -269,22 +269,22 @@
                     this.scrollUp();
                 },
                 insertModalOpen() {
-                    this.modalTitle = "『添加窗口』";
+                    this.modalTitle = '『添加窗口』';
                     this.isInsertModal = true;
                     this.modalShow();
                 },
                 insertContent() {
-                    if (this.dictCode.trim() == "") {
-                        toastr.warning("字典编码不能为空");
-                    } else if (this.dictName.trim() == "") {
-                        toastr.warning("字典名不能为空");
-                    } else if (this.dictVal.trim() == "") {
-                        toastr.warning("字典值不能为空");
+                    if (this.dictCode.trim() == '') {
+                        toastr.warning('字典编码不能为空');
+                    } else if (this.dictName.trim() == '') {
+                        toastr.warning('字典名不能为空');
+                    } else if (this.dictVal.trim() == '') {
+                        toastr.warning('字典值不能为空');
                     } else {
-                        $("#dataForm").ajaxSubmit({
-                            url: "/sys/dict/insert",
-                            type: "post",
-                            dataType: "json",
+                        $('#dataForm').ajaxSubmit({
+                            url: '/sys/dict/insert',
+                            type: 'post',
+                            dataType: 'json',
                             success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
@@ -302,17 +302,17 @@
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
+                    bootBoxUtil.bootBoxConfirm('确定要删除选中项吗？', function () {
                         if (containerVm.ids.length == 0) {
-                            toastr.warning("请至少选择一项删除");
+                            toastr.warning('请至少选择一项删除');
                         } else {
                             $.ajax({
-                                url: "/sys/dict/deleteBatchByIds",
+                                url: '/sys/dict/deleteBatchByIds',
                                 data: {
                                     ids: containerVm.ids.toString()
                                 },
-                                type: "post",
-                                dataType: "json",
+                                type: 'post',
+                                dataType: 'json',
                                 success(res) {
                                     if (res.code == 200) {
                                         toastr.success(res.msg);
@@ -329,11 +329,11 @@
                 },
                 modalSetVal(id) {
                     $.ajax({
-                        url: "/sys/dict/getById",
+                        url: '/sys/dict/getById',
                         data: {
                             id: id
                         },
-                        type: "post",
+                        type: 'post',
                         dataType: 'json',
                         success(res) {
                             if (res.code == 200) {
@@ -352,22 +352,22 @@
                     });
                 },
                 updateModalOpen(id) {
-                    this.modalTitle = "『修改窗口』";
+                    this.modalTitle = '『修改窗口』';
                     this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
                 updateContent() {
-                    if (this.dictCode.trim() == "") {
-                        toastr.warning("字典编码不能为空");
-                    } else if (this.dictName.trim() == "") {
-                        toastr.warning("字典名不能为空");
-                    } else if (this.dictVal.trim() == "") {
-                        toastr.warning("字典值不能为空");
+                    if (this.dictCode.trim() == '') {
+                        toastr.warning('字典编码不能为空');
+                    } else if (this.dictName.trim() == '') {
+                        toastr.warning('字典名不能为空');
+                    } else if (this.dictVal.trim() == '') {
+                        toastr.warning('字典值不能为空');
                     } else {
                         $("#dataForm").ajaxSubmit({
-                            url: "/sys/dict/update",
-                            type: "post",
-                            dataType: "json",
+                            url: '/sys/dict/update',
+                            type: 'post',
+                            dataType: 'json',
                             success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
@@ -387,20 +387,20 @@
                 modalReset() {
                     $('#dataModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
-                        containerVm.dictCode = "";
-                        containerVm.dictName = "";
-                        containerVm.dictVal = "";
+                        containerVm.dictCode = '';
+                        containerVm.dictName = '';
+                        containerVm.dictVal = '';
                         containerVm.dictStatus = 1;
                     });
                 },
                 modalShow() {
-                    $("#dataModal").modal();
+                    $('#dataModal').modal();
                 },
                 modalHide() {
-                    $("#dataModal").modal('hide');
+                    $('#dataModal').modal('hide');
                 },
                 scrollUp() {
-                    $("#scrollUp").click();
+                    $('#scrollUp').click();
                 }
             },
             mounted() {
@@ -411,11 +411,11 @@
             }
         });
 
-        Vue.filter("dictStatusFilter", function (value) {
+        Vue.filter('dictStatusFilter', function (value) {
             if (value == 1) {
-                return "启用";
+                return '启用';
             } else {
-                return "禁用";
+                return '禁用';
             }
         });
 

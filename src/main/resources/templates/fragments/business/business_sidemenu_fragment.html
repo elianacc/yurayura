@@ -40,27 +40,27 @@
 
     <script src='/plugins/BootSideMenu.js'></script>
     <script src='/plugins/metisMenu.min.js'></script>
-    <script type="module">
-        import {initUtil} from "/util.js";
+    <script type='module'>
+        import {initUtil} from '/util.js';
 
         const sideMenuVm = new Vue({
-            el: "#bootSideMenu",
+            el: '#bootSideMenu',
             data: {
                 sideMenuUrl: {
                     menuA: [
-                        "/business/sys_dict"
+                        '/business/sys_dict'
                     ],
                     menuB: [
-                        "/business/comic_info"
+                        '/business/comic_info'
                     ],
                     menuC: [
-                        "/business/user_info"
+                        '/business/user_info'
                     ]
                 }
             },
             mounted() {
-                initUtil.initSideMenu("#bootSideMenu");
-                initUtil.initMetisMenu(".metismenu");
+                initUtil.initSideMenu('#bootSideMenu');
+                initUtil.initMetisMenu('.metismenu');
             }
         });
     </script>

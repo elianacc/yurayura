@@ -311,58 +311,58 @@
 
     <script src='/plugins/jquery.scrollUp.min.js'></script>
     <script src='/plugins/jquery.unveil.js'></script>
-    <script type="module">
-        import {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil} from "/util.js";
+    <script type='module'>
+        import {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil} from '/util.js';
 
         const containerVm = new Vue({
-            el: "#container",
+            el: '#container',
             data: {
                 ids: [],
                 nowPageNum: 1,
-                pageInfo: "",
-                modalTitle: "",
+                pageInfo: '',
+                modalTitle: '',
                 isInsertModal: false,
                 isDetailModal: false,
                 isUdTimeShow: false,
                 id: 0,
-                comicName: "",
-                comicTime: "",
-                comicContent: "",
+                comicName: '',
+                comicTime: '',
+                comicContent: '',
                 comicStatus: 0,
-                comicUdTime: "",
+                comicUdTime: '',
                 comicCurrentEpisodes: 1,
                 comicTag: [],
-                freeLabelA: "",
-                freeLabelB: "",
-                freeLabelC: "",
-                freeLabelD: "",
-                cmImgFileLb: "示例图片.jpg",
-                cmImgFilePv: "/images/tpjxz.jpg",
-                comicLink: "",
+                freeLabelA: '',
+                freeLabelB: '',
+                freeLabelC: '',
+                freeLabelD: '',
+                cmImgFileLb: '示例图片.jpg',
+                cmImgFilePv: '/images/tpjxz.jpg',
+                comicLink: '',
                 comicShelfStatus: 1,
-                cmImgFileLbTmp: "",
-                cmImgFilePvTmp: "",
-                comicLabelDict: "",
-                comicStatusDict: "",
-                comicUpdtTimeDict: "",
-                comicUpdtStatusDict: "",
-                comicShelfStatusDict: ""
+                cmImgFileLbTmp: '',
+                cmImgFilePvTmp: '',
+                comicLabelDict: '',
+                comicStatusDict: '',
+                comicUpdtTimeDict: '',
+                comicUpdtStatusDict: '',
+                comicShelfStatusDict: ''
             },
             methods: {
                 getPage() {
-                    $("#selectContentForm").ajaxSubmit({
-                        url: "/comic/getPageToB",
+                    $('#selectContentForm').ajaxSubmit({
+                        url: '/comic/getPageToB',
                         data: {
                             pageNum: this.nowPageNum,
                             pageSize: 10
                         },
-                        type: "post",
-                        dataType: "json",
+                        type: 'post',
+                        dataType: 'json',
                         success(res) {
                             if (res.code == 200) {
                                 containerVm.pageInfo = res.data;
                             } else if (res.code == 100) {
-                                containerVm.pageInfo = "";
+                                containerVm.pageInfo = '';
                             } else if (res.code == 500) {
                                 bootBoxUtil.bootBoxAlert(res.msg);
                             }
@@ -403,21 +403,21 @@
                     this.scrollUp();
                 },
                 insertModalOpen() {
-                    this.modalTitle = "『添加窗口』";
+                    this.modalTitle = '『添加窗口』';
                     this.isDetailModal = false;
                     this.isInsertModal = true;
                     this.modalShow();
                 },
                 insertContent() {
-                    if (this.comicName.trim() == "") {
-                        toastr.warning("名称不能为空");
+                    if (this.comicName.trim() == '') {
+                        toastr.warning('名称不能为空');
                     } else if (this.comicContent.length > 500) {
-                        toastr.warning("简介不能超过500个字符");
+                        toastr.warning('简介不能超过500个字符');
                     } else {
                         $("#dataForm").ajaxSubmit({
-                            url: "/comic/insert",
-                            type: "post",
-                            dataType: "json",
+                            url: '/comic/insert',
+                            type: 'post',
+                            dataType: 'json',
                             success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
@@ -435,17 +435,17 @@
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.bootBoxConfirm("确定要删除选中项吗？", function () {
+                    bootBoxUtil.bootBoxConfirm('确定要删除选中项吗？', function () {
                         if (containerVm.ids.length == 0) {
-                            toastr.warning("请至少选择一项删除");
+                            toastr.warning('请至少选择一项删除');
                         } else {
                             $.ajax({
-                                url: "/comic/deleteBatchByIds",
+                                url: '/comic/deleteBatchByIds',
                                 data: {
                                     ids: containerVm.ids.toString()
                                 },
-                                type: "post",
-                                dataType: "json",
+                                type: 'post',
+                                dataType: 'json',
                                 success(res) {
                                     if (res.code == 200) {
                                         toastr.success(res.msg);
@@ -462,11 +462,11 @@
                 },
                 modalSetVal(id) {
                     $.ajax({
-                        url: "/comic/getById",
+                        url: '/comic/getById',
                         data: {
                             id: id
                         },
-                        type: "post",
+                        type: 'post',
                         dataType: 'json',
                         success(res) {
                             if (res.code == 200) {
@@ -483,14 +483,14 @@
                                 containerVm.comicCurrentEpisodes = res.data.comicCurrentEpisodes;
                                 containerVm.comicLabel = res.data.comicLabel;
                                 let fileName = res.data.comicImageUrl;
-                                let fileNewNameStart = fileName.lastIndexOf("/");
+                                let fileNewNameStart = fileName.lastIndexOf('/');
                                 containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
                                 containerVm.cmImgFilePv = res.data.comicImageUrl;
                                 containerVm.comicLink = res.data.comicLink;
                                 containerVm.comicShelfStatus = res.data.comicShelfStatus;
                                 containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
                                 containerVm.cmImgFilePvTmp = res.data.comicImageUrl;
-                                datePickerUtil.setDate(".datepicker", res.data.comicTime);
+                                datePickerUtil.setDate('.datepicker', res.data.comicTime);
                                 containerVm.modalShow();
                             } else if (res.code == 100) {
                                 toastr.error(res.msg);
@@ -501,27 +501,27 @@
                     });
                 },
                 detailModalOpen(id) {
-                    this.modalTitle = "『详情窗口』";
+                    this.modalTitle = '『详情窗口』';
                     this.isDetailModal = true;
                     this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
                 updateModalOpen(id) {
-                    this.modalTitle = "『修改窗口』";
+                    this.modalTitle = '『修改窗口』';
                     this.isDetailModal = false;
                     this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
                 updateContent() {
-                    if (this.comicName.trim() == "") {
-                        toastr.warning("名称不能为空");
+                    if (this.comicName.trim() == '') {
+                        toastr.warning('名称不能为空');
                     } else if (this.comicContent.length > 500) {
-                        toastr.warning("简介不能超过500个字符");
+                        toastr.warning('简介不能超过500个字符');
                     } else {
-                        $("#dataForm").ajaxSubmit({
-                            url: "/comic/update",
-                            type: "post",
-                            dataType: "json",
+                        $('#dataForm').ajaxSubmit({
+                            url: '/comic/update',
+                            type: 'post',
+                            dataType: 'json',
                             success(res) {
                                 if (res.code == 200) {
                                     toastr.success(res.msg);
@@ -539,7 +539,7 @@
                     }
                 },
                 datePickerBind() {
-                    $(".datepicker").datepicker().on("hide", function () {
+                    $('.datepicker').datepicker().on('hide', function () {
                         containerVm.comicTime = $(this).val();
                     });
                 },
@@ -548,25 +548,25 @@
                         let file = e.target.files[0];
                         let fileName = file.name;
                         if (!/.(gif|jpg|jpeg|png|GIF|JPG|JPEG|PNG)$/.test(fileName)) {
-                            toastr.warning("图片格式必须是.gif,jpeg,jpg,png中的一种");
+                            toastr.warning('图片格式必须是.gif,jpeg,jpg,png中的一种');
                             if (this.isInsertModal) {
-                                this.cmImgFileLb = "示例图片.jpg";
-                                this.cmImgFilePv = "/images/tpjxz.jpg";
+                                this.cmImgFileLb = '示例图片.jpg';
+                                this.cmImgFilePv = '/images/tpjxz.jpg';
                             } else {
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            this.$refs.cmImgFile.value = "";
+                            this.$refs.cmImgFile.value = '';
                         } else if ((file.size).toFixed(2) >= 102400) {
-                            toastr.warning("图片不能超过100KB");
+                            toastr.warning('图片不能超过100KB');
                             if (this.isInsertModal) {
-                                this.cmImgFileLb = "示例图片.jpg";
-                                this.cmImgFilePv = "/images/tpjxz.jpg";
+                                this.cmImgFileLb = '示例图片.jpg';
+                                this.cmImgFilePv = '/images/tpjxz.jpg';
                             } else {
                                 this.cmImgFileLb = this.cmImgFileLbTmp;
                                 this.cmImgFilePv = this.cmImgFilePvTmp;
                             }
-                            this.$refs.cmImgFile.value = "";
+                            this.$refs.cmImgFile.value = '';
                         } else {
                             this.cmImgFileLb = fileName;
                             let reader = new FileReader();
@@ -577,8 +577,8 @@
                         }
                     } else {
                         if (this.isInsertModal) {
-                            this.cmImgFileLb = "示例图片.jpg";
-                            this.cmImgFilePv = "/images/tpjxz.jpg";
+                            this.cmImgFileLb = '示例图片.jpg';
+                            this.cmImgFilePv = '/images/tpjxz.jpg';
                         } else {
                             this.cmImgFileLb = this.cmImgFileLbTmp;
                             this.cmImgFilePv = this.cmImgFilePvTmp;
@@ -588,47 +588,47 @@
                 modalReset() {
                     $('#dataModal').on('hidden.bs.modal', function () {
                         containerVm.id = 0;
-                        containerVm.comicName = "";
-                        containerVm.comicTime = "";
-                        containerVm.comicContent = "";
+                        containerVm.comicName = '';
+                        containerVm.comicTime = '';
+                        containerVm.comicContent = '';
                         containerVm.comicStatus = 0;
-                        containerVm.comicUdTime = "";
+                        containerVm.comicUdTime = '';
                         containerVm.comicCurrentEpisodes = 1;
                         containerVm.comicTag = [];
-                        containerVm.freeLabelA = "";
-                        containerVm.freeLabelB = "";
-                        containerVm.freeLabelC = "";
-                        containerVm.freeLabelD = "";
-                        containerVm.cmImgFileLb = "示例图片.jpg";
-                        containerVm.cmImgFilePv = "/images/tpjxz.jpg";
-                        containerVm.comicLink = "";
+                        containerVm.freeLabelA = '';
+                        containerVm.freeLabelB = '';
+                        containerVm.freeLabelC = '';
+                        containerVm.freeLabelD = '';
+                        containerVm.cmImgFileLb = '示例图片.jpg';
+                        containerVm.cmImgFilePv = '/images/tpjxz.jpg';
+                        containerVm.comicLink = '';
                         containerVm.comicShelfStatus = 1;
-                        containerVm.$refs.cmImgFile.value = "";
-                        datePickerUtil.clearDate(".datepicker");
+                        containerVm.$refs.cmImgFile.value = '';
+                        datePickerUtil.clearDate('.datepicker');
                     });
                 },
                 modalShow() {
-                    $("#dataModal").modal();
+                    $('#dataModal').modal();
                 },
                 modalHide() {
-                    $("#dataModal").modal('hide');
+                    $('#dataModal').modal('hide');
                 },
                 scrollUp() {
-                    $("#scrollUp").click();
+                    $('#scrollUp').click();
                 },
                 getSysDict() {
-                    this.comicLabelDict = sysDictUtil.getSysDict("comicLabel");
-                    this.comicStatusDict = sysDictUtil.getSysDict("comicStatus");
-                    this.comicUpdtStatusDict = sysDictUtil.getSysDict("comicUpdtStatus");
-                    this.comicUpdtTimeDict = sysDictUtil.getSysDict("comicUpdtTime");
-                    this.comicShelfStatusDict = sysDictUtil.getSysDict("comicShelfStatus");
+                    this.comicLabelDict = sysDictUtil.getSysDict('comicLabel');
+                    this.comicStatusDict = sysDictUtil.getSysDict('comicStatus');
+                    this.comicUpdtStatusDict = sysDictUtil.getSysDict('comicUpdtStatus');
+                    this.comicUpdtTimeDict = sysDictUtil.getSysDict('comicUpdtTime');
+                    this.comicShelfStatusDict = sysDictUtil.getSysDict('comicShelfStatus');
                 }
             },
             watch: {
                 comicStatus() {
                     this.isUdTimeShow = this.comicStatus == 8;
                     if (this.comicStatus == 0) {
-                        this.comicUdTime = "";
+                        this.comicUdTime = '';
                     }
                 }
             },
@@ -654,7 +654,7 @@
                         return this.comicTag.concat(this.freeLabelArr);
                     },
                     set(value) {
-                        let labelArr = value.split(",");
+                        let labelArr = value.split(',');
                         this.comicTag = labelArr.slice(0, labelArr.length - 4);
                         let tempFreeLabel = [];
                         tempFreeLabel.push(labelArr[labelArr.length - 4]);
@@ -667,7 +667,7 @@
             },
             mounted() {
                 initUtil.initToastr();
-                initUtil.initDatePicker(".datepicker");
+                initUtil.initDatePicker('.datepicker');
                 initUtil.initScrollUp();
                 initUtil.initImgLazyLoad();
                 this.datePickerBind();
@@ -677,7 +677,7 @@
             }
         });
 
-        Vue.filter("cmStatusFilter", function (status, currentEpisodes) {
+        Vue.filter('cmStatusFilter', function (status, currentEpisodes) {
             let arrCmStatus = [];
             let comicStatusDicts = containerVm.comicStatusDict;
             for (let i in comicStatusDicts) {
@@ -685,27 +685,27 @@
             }
             for (let i = 0; i < arrCmStatus.length; i++) {
                 if (status == 0) {
-                    return arrCmStatus[i] + "：全" + currentEpisodes + "话";
+                    return arrCmStatus[i] + '：全' + currentEpisodes + '话';
                 } else if (status == i) {
-                    return arrCmStatus[i] + "：更新至第" + currentEpisodes + "话";
+                    return arrCmStatus[i] + '：更新至第' + currentEpisodes + '话';
                 }
             }
         });
 
-        Vue.filter("cmLabelFilter", function (value) {
-            let arrCmLabel = (value).split(",");
+        Vue.filter('cmLabelFilter', function (value) {
+            let arrCmLabel = (value).split(',');
             let arrNewCmLabel = [];
             for (let i = 0; i < arrCmLabel.length; i++) {
-                if (arrCmLabel[i] != "") {
+                if (arrCmLabel[i] != '') {
                     arrNewCmLabel.push(arrCmLabel[i]);
                 }
             }
             return arrNewCmLabel.toString();
         });
 
-        Vue.filter("cmContentFilter", function (value) {
+        Vue.filter('cmContentFilter', function (value) {
             let subContent = value.substr(0, 200).trim();
-            return subContent + "...";
+            return subContent + '...';
         });
     </script>
 

@@ -12,21 +12,21 @@ var initUtil = {
             closeButton: false, // 是否显示关闭按钮
             debug: false,
             progressBar: false, // 是否显示进度条
-            positionClass: "toast-top-center", // 位置
-            showDuration: "300", // 显示的动画时间
-            hideDuration: "1000", // 消失的动画时间
-            timeOut: "4000", // 展现时间
-            extendedTimeOut: "0", // 加长展示时间
-            showEasing: "swing", // 显示时的动画缓冲方式
-            hideEasing: "linear", // 消失时的动画缓冲方式
-            showMethod: "fadeIn", // 显示时的动画方式
-            hideMethod: "fadeOut" // 消失时的动画方式
+            positionClass: 'toast-top-center', // 位置
+            showDuration: '300', // 显示的动画时间
+            hideDuration: '1000', // 消失的动画时间
+            timeOut: '4000', // 展现时间
+            extendedTimeOut: '0', // 加长展示时间
+            showEasing: 'swing', // 显示时的动画缓冲方式
+            hideEasing: 'linear', // 消失时的动画缓冲方式
+            showMethod: 'fadeIn', // 显示时的动画方式
+            hideMethod: 'fadeOut' // 消失时的动画方式
         };
     },
     // BootSideMenu初始化方法
     initSideMenu(obj) {
         $(obj).BootSideMenu({
-            side: "left",
+            side: 'left',
             autoClose: false
         });
     },
@@ -43,7 +43,7 @@ var initUtil = {
             todayBtn: 'linked',
             clearBtn: true,
             weekStart: 1,
-            minViewMode: "month",
+            minViewMode: 'month',
             todayHighlight: true
         });
     },
@@ -61,7 +61,7 @@ var initUtil = {
     },
     // jquery图片懒加载初始化方法
     initImgLazyLoad() {
-        $("img").unveil(100);
+        $('img').unveil(100);
     }
 };
 
@@ -69,7 +69,7 @@ var bootBoxUtil = {
     // bootbox alert封装方法(无返回事件)
     bootBoxAlert(msg) {
         bootbox.alert({
-            size: "small",
+            size: 'small',
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
             message: msg,
             closeButton: false,
@@ -84,7 +84,7 @@ var bootBoxUtil = {
     // bootbox alert封装方法(自定义返回事件)
     bootBoxAlertWithCall(msg, callbackFunction) {
         bootbox.alert({
-            size: "small",
+            size: 'small',
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
             message: msg,
             closeButton: false,
@@ -101,7 +101,7 @@ var bootBoxUtil = {
     // bootbox confirm封装方法
     bootBoxConfirm(msg, callbackFunction) {
         bootbox.confirm({
-            size: "small",
+            size: 'small',
             title: "<span class='font-size-16'><i class='fa fa-info-circle fa-lg'></i>&nbsp;&nbsp;提示</span>",
             message: msg,
             buttons: {
@@ -128,25 +128,25 @@ var bootBoxUtil = {
 var datePickerUtil = {
     // 设置date-picker选中日期封装方法
     setDate(obj, val) {
-        $(obj).datepicker("setDate", val);
+        $(obj).datepicker('setDate', val);
     },
     // 清空date-picker选中日期封装方法
     clearDate(obj) {
-        $(obj).datepicker("clearDates");
+        $(obj).datepicker('clearDates');
     }
 };
 
 var sysDictUtil = {
     // 字典获取方法
     getSysDict(dictCode) {
-        let dictData = "";
+        let dictData = '';
         $.ajax({
-            url: "/sys/dict/getByDictCode",
+            url: '/sys/dict/getByDictCode',
             data: {
                 dictCode: dictCode
             },
-            type: "post",
-            dataType: "json",
+            type: 'post',
+            dataType: 'json',
             async: false,
             success(res) {
                 if (res.code == 200) {
