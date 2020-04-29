@@ -10,10 +10,7 @@ import org.cny.yurayura.system.util.VerifyCodeUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.imageio.ImageIO;
@@ -72,7 +69,7 @@ public class ManagerController {
     @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("管理员登入")
-    public ApiResult login(MangerLoginDTO dto, @ApiIgnore HttpSession session
+    public ApiResult login(@RequestBody MangerLoginDTO dto, @ApiIgnore HttpSession session
             , @ApiIgnore HttpServletResponse response) {
 
         if (StringUtils.isEmpty(dto.getManagerName().trim())) {
