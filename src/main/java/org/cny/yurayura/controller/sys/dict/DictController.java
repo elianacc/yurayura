@@ -46,24 +46,18 @@ public class DictController {
     /**
      * 分页查询系统数据字典
      *
-     * @param pageNum
-     * @param pageSize
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPage")
     @ApiOperation("分页查询系统数据字典")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "页记录数", defaultValue = "20", dataType = "int")
-    })
-    public ApiResult getPage(Integer pageNum, Integer pageSize, DictSelectDTO dto) {
-        if (StringUtils.isEmpty(pageNum)) {
+    public ApiResult getPage(DictSelectDTO dto) {
+        if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
-        } else if (StringUtils.isEmpty(pageSize)) {
-            pageSize = 10; //页记录数默认10
+        } else if (StringUtils.isEmpty(dto.getPageSize())) {
+            dto.setPageSize(10); //页记录数默认10
         }
-        return iDictService.getPage(pageNum, pageSize, dto);
+        return iDictService.getPage(dto);
     }
 
     /**

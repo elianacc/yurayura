@@ -29,9 +29,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Override
-    public ApiResult getPageToB(Integer pageNum, Integer pageSize, UserSelectDTO dto) {
+    public ApiResult getPageToB(UserSelectDTO dto) {
         // 设置分页
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         List<User> userList = userMapper.selectList(queryWrapper
                 .select("id", "user_avatar_url", "user_name", "user_sex", "user_status", "user_reg_time"

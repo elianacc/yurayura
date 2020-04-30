@@ -48,24 +48,18 @@ public class ComicController {
     /**
      * 分页查询番剧（B端）
      *
-     * @param pageNum
-     * @param pageSize
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询番剧（B端）")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页码", defaultValue = "1", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "页记录数", defaultValue = "10", dataType = "int")
-    })
-    public ApiResult getPageToB(Integer pageNum, Integer pageSize, ComicSelectDTO dto) {
-        if (StringUtils.isEmpty(pageNum)) {
+    public ApiResult getPageToB(ComicSelectDTO dto) {
+        if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
-        } else if (StringUtils.isEmpty(pageSize)) {
-            pageSize = 10; //页记录数默认10
+        } else if (StringUtils.isEmpty(dto.getPageSize())) {
+            dto.setPageSize(10); //页记录数默认10
         }
-        return iComicService.getPageToB(pageNum, pageSize, dto);
+        return iComicService.getPageToB(dto);
     }
 
     /**

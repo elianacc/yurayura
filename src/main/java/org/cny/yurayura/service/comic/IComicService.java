@@ -18,12 +18,10 @@ public interface IComicService extends IService<Comic> {
     /**
      * 分页查询番剧（B端）
      *
-     * @param pageNum
-	 * @param pageSize
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPageToB(Integer pageNum, Integer pageSize, ComicSelectDTO dto);
+    public ApiResult getPageToB(ComicSelectDTO dto);
 
     /**
      * 添加番剧

@@ -40,4 +40,16 @@ public class ComicSelectDTO implements Serializable {
     @ApiModelProperty(value = "上架状态")
     private Integer comicShelfStatus;
 
+    /**
+     * 页码
+     */
+    @ApiModelProperty(value = "页码", required = true)
+    private Integer pageNum;
+
+    /**
+     * 页记录数
+     */
+    @ApiModelProperty(value = "页记录数")
+    private Integer pageSize;
+
 }

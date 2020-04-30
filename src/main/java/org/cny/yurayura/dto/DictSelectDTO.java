@@ -28,4 +28,16 @@ public class DictSelectDTO implements Serializable {
     @ApiModelProperty(value = "字典编码")
     private String dictCode;
 
+    /**
+     * 页码
+     */
+    @ApiModelProperty(value = "页码", required = true)
+    private Integer pageNum;
+
+    /**
+     * 页记录数
+     */
+    @ApiModelProperty(value = "页记录数")
+    private Integer pageSize;
+
 }

@@ -40,4 +40,16 @@ public class UserSelectDTO implements Serializable {
     @ApiModelProperty(value = "状态")
     private Integer userStatus;
 
+    /**
+     * 页码
+     */
+    @ApiModelProperty(value = "页码", required = true)
+    private Integer pageNum;
+
+    /**
+     * 页记录数
+     */
+    @ApiModelProperty(value = "页记录数")
+    private Integer pageSize;
+
 }

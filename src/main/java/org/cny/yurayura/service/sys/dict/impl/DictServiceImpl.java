@@ -34,9 +34,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     private RedisUtil redisUtil;
 
     @Override
-    public ApiResult getPage(Integer pageNum, Integer pageSize, DictSelectDTO dto) {
+    public ApiResult getPage(DictSelectDTO dto) {
         // 设置分页
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
                 .like(!StringUtils.isEmpty(dto.getDictCode()), "dict_code", dto.getDictCode())
