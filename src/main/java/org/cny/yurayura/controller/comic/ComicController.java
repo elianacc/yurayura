@@ -9,10 +9,7 @@ import org.cny.yurayura.service.comic.IComicService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -53,7 +50,7 @@ public class ComicController {
      */
     @PostMapping("/getPageToB")
     @ApiOperation("分页查询番剧（B端）")
-    public ApiResult getPageToB(ComicSelectDTO dto) {
+    public ApiResult getPageToB(@RequestBody ComicSelectDTO dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {

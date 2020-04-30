@@ -20,30 +20,29 @@
                 </div>
             </div>
             <div class="col-8 mt-4">
-                <form id="selectContentForm" ref="selectContentForm">
+                <form @submit.prevent="selectContent">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名</span>
                         </div>
-                        <input type="text" class="form-control" name="comicName"/>
+                        <input type="text" class="form-control" v-model="selectFormData.comicName"/>
                         <div class="input-group-prepend">
                             <span class="input-group-text">状态</span>
                         </div>
-                        <select class="custom-select" name="comicStatus">
+                        <select class="custom-select" v-model="selectFormData.comicStatus">
                             <option value="" selected></option>
                             <option :value="item.dictVal" v-for="item in comicStatusDict">{{item.dictName}}</option>
                         </select>
                         <div class="input-group-prepend">
                             <span class="input-group-text">上架状态</span>
                         </div>
-                        <select class="custom-select" name="comicShelfStatus">
+                        <select class="custom-select" v-model="selectFormData.comicShelfStatus">
                             <option value="" selected></option>
                             <option :value="item.dictVal" v-for="item in comicShelfStatusDict">{{item.dictName}}
                             </option>
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-dark btn-twitter btn-sm" type="button"
-                                    @click="selectContent">
+                            <button class="btn btn-dark btn-twitter btn-sm" type="submit">
                                 <i class="fa fa-filter"></i>&nbsp;&nbsp;查询
                             </button>
                             <button class="btn btn-dark btn-twitter btn-sm" type="button"
@@ -317,6 +316,11 @@
         const containerVm = new Vue({
             el: '#container',
             data: {
+                selectFormData: {
+                    comicName: '',
+                    comicStatus: '',
+                    comicShelfStatus: ''
+                },
                 ids: [],
                 nowPageNum: 1,
                 pageInfo: '',
@@ -350,22 +354,22 @@
             },
             methods: {
                 getPage() {
-                    $('#selectContentForm').ajaxSubmit({
+                    let sendData = this.selectFormData;
+                    sendData.pageNum = this.nowPageNum;
+                    sendData.pageSize = 10;
+                    axios({
+                        method: 'post',
                         url: '/comic/getPageToB',
-                        data: {
-                            pageNum: this.nowPageNum,
-                            pageSize: 10
-                        },
-                        type: 'post',
-                        dataType: 'json',
-                        success(res) {
-                            if (res.code == 200) {
-                                containerVm.pageInfo = res.data;
-                            } else if (res.code == 100) {
-                                containerVm.pageInfo = '';
-                            } else if (res.code == 500) {
-                                bootBoxUtil.alert(res.msg);
-                            }
+                        headers: {'Content-Type': 'application/json;charset=utf-8'},
+                        data: JSON.stringify(sendData),
+                        responseType: 'json'
+                    }).then(function (res) {
+                        if (res.data.code == 200) {
+                            containerVm.pageInfo = res.data.data;
+                        } else if (res.data.code == 100) {
+                            containerVm.pageInfo = '';
+                        } else if (res.data.code == 500) {
+                            bootBoxUtil.alert(res.data.msg);
                         }
                     });
                 },
@@ -374,7 +378,9 @@
                     this.getPage();
                 },
                 clearSelectContent() {
-                    this.$refs.selectContentForm.reset();
+                    this.selectFormData.comicName = '';
+                    this.selectFormData.comicStatus = '';
+                    this.selectFormData.comicShelfStatus = '';
                     this.selectContent();
                 },
                 toFirstPage() {
@@ -439,64 +445,63 @@
                         if (containerVm.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
-                            $.ajax({
+                            let sendData = new FormData();
+                            sendData.append('ids', containerVm.ids.toString());
+                            axios({
+                                method: 'post',
                                 url: '/comic/deleteBatchByIds',
-                                data: {
-                                    ids: containerVm.ids.toString()
-                                },
-                                type: 'post',
-                                dataType: 'json',
-                                success(res) {
-                                    if (res.code == 200) {
-                                        toastr.success(res.msg);
-                                        containerVm.getPage();
-                                    } else if (res.code == 100) {
-                                        toastr.error(res.msg);
-                                    } else if (res.code == 500) {
-                                        bootBoxUtil.alert(res.msg);
-                                    }
+                                data: sendData,
+                                responseType: 'json'
+                            }).then(function (res) {
+                                if (res.data.code == 200) {
+                                    toastr.success(res.data.msg);
+                                    containerVm.ids = [];
+                                    containerVm.getPage();
+                                } else if (res.data.code == 100) {
+                                    toastr.error(res.data.msg);
+                                } else if (res.data.code == 500) {
+                                    bootBoxUtil.alert(res.data.msg);
                                 }
                             });
                         }
                     });
                 },
                 modalSetVal(id) {
-                    $.ajax({
+                    let sendData = new FormData();
+                    sendData.append('id', id);
+                    axios({
+                        method: 'post',
                         url: '/comic/getById',
-                        data: {
-                            id: id
-                        },
-                        type: 'post',
-                        dataType: 'json',
-                        success(res) {
-                            if (res.code == 200) {
-                                containerVm.id = res.data.id;
-                                containerVm.comicName = res.data.comicName;
-                                containerVm.comicTime = res.data.comicTime;
-                                containerVm.comicContent = res.data.comicContent;
-                                if (res.data.comicStatus == 0) {
-                                    containerVm.comicStatus = 0;
-                                } else {
-                                    containerVm.comicStatus = 8;
-                                    containerVm.comicUdTime = res.data.comicStatus;
-                                }
-                                containerVm.comicCurrentEpisodes = res.data.comicCurrentEpisodes;
-                                containerVm.comicLabel = res.data.comicLabel;
-                                let fileName = res.data.comicImageUrl;
-                                let fileNewNameStart = fileName.lastIndexOf('/');
-                                containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
-                                containerVm.cmImgFilePv = res.data.comicImageUrl;
-                                containerVm.comicLink = res.data.comicLink;
-                                containerVm.comicShelfStatus = res.data.comicShelfStatus;
-                                containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
-                                containerVm.cmImgFilePvTmp = res.data.comicImageUrl;
-                                datePickerUtil.setDate('.datepicker', res.data.comicTime);
-                                containerVm.modalShow();
-                            } else if (res.code == 100) {
-                                toastr.error(res.msg);
-                            } else if (res.code == 500) {
-                                bootBoxUtil.alert(res.msg);
+                        data: sendData,
+                        responseType: 'json'
+                    }).then(function (res) {
+                        if (res.data.code == 200) {
+                            containerVm.id = res.data.data.id;
+                            containerVm.comicName = res.data.data.comicName;
+                            containerVm.comicTime = res.data.data.comicTime;
+                            containerVm.comicContent = res.data.data.comicContent;
+                            if (res.data.data.comicStatus == 0) {
+                                containerVm.comicStatus = 0;
+                            } else {
+                                containerVm.comicStatus = 8;
+                                containerVm.comicUdTime = res.data.data.comicStatus;
                             }
+                            containerVm.comicCurrentEpisodes = res.data.data.comicCurrentEpisodes;
+                            containerVm.comicLabel = res.data.data.comicLabel;
+                            let fileName = res.data.data.comicImageUrl;
+                            let fileNewNameStart = fileName.lastIndexOf('/');
+                            containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
+                            containerVm.cmImgFilePv = res.data.data.comicImageUrl;
+                            containerVm.comicLink = res.data.data.comicLink;
+                            containerVm.comicShelfStatus = res.data.data.comicShelfStatus;
+                            containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
+                            containerVm.cmImgFilePvTmp = res.data.data.comicImageUrl;
+                            datePickerUtil.setDate('.datepicker', res.data.data.comicTime);
+                            containerVm.modalShow();
+                        } else if (res.data.code == 100) {
+                            toastr.error(res.data.msg);
+                        } else if (res.data.code == 500) {
+                            bootBoxUtil.alert(res.data.msg);
                         }
                     });
                 },

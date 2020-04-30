@@ -7,6 +7,7 @@ import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.cny.yurayura.service.sys.dict.IDictService;
@@ -51,7 +52,7 @@ public class DictController {
      */
     @PostMapping("/getPage")
     @ApiOperation("分页查询系统数据字典")
-    public ApiResult getPage(DictSelectDTO dto) {
+    public ApiResult getPage(@RequestBody DictSelectDTO dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
