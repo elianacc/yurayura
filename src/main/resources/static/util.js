@@ -137,25 +137,26 @@ const datePickerUtil = {
 
 const sysDictUtil = {
     // 字典获取方法
-    async get(dictCode) {
+    get(dictCode) {
         let dictData = '';
-        let sendData = new FormData();
-        sendData.append('dictCode', dictCode);
-        let res = await axios({
-            method: 'post',
+        $.ajax({
             url: '/sys/dict/getByDictCode',
-            data: sendData,
-            responseType: 'json'
+            data: {
+                dictCode: dictCode
+            },
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success(res) {
+                if (res.code == 200) {
+                    dictData = res.data;
+                } else if (res.code == 100) {
+                    console.log(res.msg);
+                } else if (res.code == 500) {
+                    console.log('字典编码：' + dictCode + '对应系统数据字典获取异常');
+                }
+            }
         });
-        if (res.data.code == 200) {
-            console.log(res.data.data);
-            console.log(typeof res.data.data);
-            dictData = res.data.data;
-        } else if (res.data.code == 100) {
-            console.log(res.data.msg);
-        } else if (res.data.code == 500) {
-            console.log('字典编码：' + dictCode + '对应系统数据字典获取异常');
-        }
         return dictData;
     }
 };
