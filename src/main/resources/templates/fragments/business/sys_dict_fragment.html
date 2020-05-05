@@ -365,7 +365,7 @@
                     } else if (this.dictVal.trim() == '') {
                         toastr.warning('字典值不能为空');
                     } else {
-                        $("#dataForm").ajaxSubmit({
+                        $('#dataForm').ajaxSubmit({
                             url: '/sys/dict/update',
                             type: 'post',
                             dataType: 'json',

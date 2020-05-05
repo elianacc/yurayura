@@ -163,7 +163,7 @@
         <div class="modal fade" id="dataModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="dataForm" enctype="multipart/form-data">
+                    <form @submit.prevent="submitContent">
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <strong>{{modalTitle}}</strong>
@@ -420,7 +420,7 @@
                     } else if (this.comicContent.length > 500) {
                         toastr.warning('简介不能超过500个字符');
                     } else {
-                        $("#dataForm").ajaxSubmit({
+                        $('#dataForm').ajaxSubmit({
                             url: '/comic/insert',
                             type: 'post',
                             dataType: 'json',
