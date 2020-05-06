@@ -461,12 +461,12 @@
                         if (containerVm.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
-                            let sendData = new FormData();
-                            sendData.append('ids', containerVm.ids.toString());
                             axios({
                                 method: 'post',
                                 url: '/comic/deleteBatchByIds',
-                                data: sendData,
+                                params: {
+                                    ids: containerVm.ids.toString()
+                                },
                                 responseType: 'json'
                             }).then(function (res) {
                                 if (res.data.code == 200) {
@@ -483,12 +483,12 @@
                     });
                 },
                 modalSetVal(id) {
-                    let sendData = new FormData();
-                    sendData.append('id', id);
                     axios({
                         method: 'post',
                         url: '/comic/getById',
-                        data: sendData,
+                        params: {
+                            id: id
+                        },
                         responseType: 'json'
                     }).then(function (res) {
                         if (res.data.code == 200) {
