@@ -130,7 +130,7 @@
         <div class="modal fade" id="dataModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="dataForm">
+                    <form @submit.prevent="submitContent">
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <strong>{{modalTitle}}</strong>
@@ -142,34 +142,34 @@
                         <div class="modal-body">
                             <div class="form-group d-none">
                                 <label class="col-form-label"> id：</label>
-                                <input type="text" class="form-control form-control-sm" name="id" v-model="id"/>
+                                <input type="text" class="form-control form-control-sm" v-model="id"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典编码：</label>
-                                <input type="text" class="form-control form-control-sm" name="dictCode"
-                                       placeholder="请输入字典编码" v-model="dictCode"/>
+                                <input type="text" class="form-control form-control-sm" placeholder="请输入字典编码"
+                                       v-model="dictCode"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典名：</label>
-                                <input type="text" class="form-control form-control-sm" name="dictName"
-                                       placeholder="请输入字典名" v-model="dictName"/>
+                                <input type="text" class="form-control form-control-sm" placeholder="请输入字典名"
+                                       v-model="dictName"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典值：</label>
-                                <input type="text" class="form-control form-control-sm" name="dictVal"
-                                       placeholder="请输入字典值" v-model="dictVal"/>
+                                <input type="text" class="form-control form-control-sm" placeholder="请输入字典值"
+                                       v-model="dictVal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 状态：</label>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="dictStatus1" name="dictStatus"
-                                           class="custom-control-input form-control-sm" value="1" v-model="dictStatus"/>
+                                    <input type="radio" id="dictStatus1" class="custom-control-input form-control-sm"
+                                           value="1" v-model="dictStatus"/>
                                     <label class="custom-control-label font-size-14"
                                            for="dictStatus1">启用</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="dictStatus2" name="dictStatus"
-                                           class="custom-control-input form-control-sm" value="0" v-model="dictStatus"/>
+                                    <input type="radio" id="dictStatus2" class="custom-control-input form-control-sm"
+                                           value="0" v-model="dictStatus"/>
                                     <label class="custom-control-label font-size-14"
                                            for="dictStatus2">禁用</label>
                                 </div>
@@ -179,12 +179,7 @@
                             <button type="button" class="btn btn-danger font-size-14" data-dismiss="modal">
                                 <i class="fa fa-close"></i>&nbsp;&nbsp;关闭
                             </button>
-                            <button type="button" class="btn btn-primary font-size-14"
-                                    @click="insertContent" v-show="isInsertModal">
-                                <i class="fa fa-check"></i>&nbsp;&nbsp;提交
-                            </button>
-                            <button type="button" class="btn btn-primary font-size-14"
-                                    @click="updateContent" v-show="!isInsertModal">
+                            <button type="submit" class="btn btn-primary font-size-14">
                                 <i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;提交
                             </button>
                         </div>
@@ -209,7 +204,6 @@
                 nowPageNum: 1,
                 pageInfo: '',
                 modalTitle: '',
-                isInsertModal: false,
                 id: 0,
                 dictCode: '',
                 dictName: '',
@@ -272,10 +266,13 @@
                 },
                 insertModalOpen() {
                     this.modalTitle = '『添加窗口』';
-                    this.isInsertModal = true;
                     this.modalShow();
                 },
-                insertContent() {
+                updateModalOpen(id) {
+                    this.modalTitle = '『修改窗口』';
+                    this.modalSetVal(id);
+                },
+                submitContent() {
                     if (this.dictCode.trim() == '') {
                         toastr.warning('字典编码不能为空');
                     } else if (this.dictName.trim() == '') {
@@ -283,22 +280,38 @@
                     } else if (this.dictVal.trim() == '') {
                         toastr.warning('字典值不能为空');
                     } else {
-                        $('#dataForm').ajaxSubmit({
-                            url: '/sys/dict/insert',
-                            type: 'post',
-                            dataType: 'json',
-                            success(res) {
-                                if (res.code == 200) {
-                                    toastr.success(res.msg);
+                        let sendData = new FormData();
+                        sendData.append('id', this.id);
+                        sendData.append('dictCode', this.dictCode);
+                        sendData.append('dictName', this.dictName);
+                        sendData.append('dictVal', this.dictVal);
+                        sendData.append('dictStatus', this.dictStatus);
+                        let sendUrl = '';
+                        if (this.id == 0) {
+                            sendUrl = '/sys/dict/insert';
+                        } else {
+                            sendUrl = '/sys/dict/update';
+                        }
+                        axios({
+                            method: 'post',
+                            url: sendUrl,
+                            data: sendData,
+                            responseType: 'json'
+                        }).then(function (res) {
+                            if (res.data.code == 200) {
+                                toastr.success(res.data.msg);
+                                if (containerVm.id == 0) {
                                     containerVm.clearSelectContent();
-                                    containerVm.modalHide();
-                                } else if (res.code == 100) {
-                                    toastr.error(res.msg);
-                                } else if (res.code == 101) {
-                                    console.log(res.msg);
-                                } else if (res.code == 500) {
-                                    bootBoxUtil.alert(res.msg);
+                                } else {
+                                    containerVm.getPage();
                                 }
+                                containerVm.modalHide();
+                            } else if (res.data.code == 100) {
+                                toastr.error(res.data.msg);
+                            } else if (res.data.code == 101) {
+                                console.log(res.data.msg);
+                            } else if (res.data.code == 500) {
+                                bootBoxUtil.alert(res.data.msg);
                             }
                         });
                     }
@@ -351,39 +364,6 @@
                             bootBoxUtil.alert(res.data.msg);
                         }
                     });
-                },
-                updateModalOpen(id) {
-                    this.modalTitle = '『修改窗口』';
-                    this.isInsertModal = false;
-                    this.modalSetVal(id);
-                },
-                updateContent() {
-                    if (this.dictCode.trim() == '') {
-                        toastr.warning('字典编码不能为空');
-                    } else if (this.dictName.trim() == '') {
-                        toastr.warning('字典名不能为空');
-                    } else if (this.dictVal.trim() == '') {
-                        toastr.warning('字典值不能为空');
-                    } else {
-                        $('#dataForm').ajaxSubmit({
-                            url: '/sys/dict/update',
-                            type: 'post',
-                            dataType: 'json',
-                            success(res) {
-                                if (res.code == 200) {
-                                    toastr.success(res.msg);
-                                    containerVm.getPage();
-                                    containerVm.modalHide();
-                                } else if (res.code == 100) {
-                                    toastr.error(res.msg);
-                                } else if (res.code == 101) {
-                                    console.log(res.msg);
-                                } else if (res.code == 500) {
-                                    bootBoxUtil.alert(res.msg);
-                                }
-                            }
-                        });
-                    }
                 },
                 modalReset() {
                     $('#dataModal').on('hidden.bs.modal', function () {

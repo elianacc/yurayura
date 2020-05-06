@@ -111,7 +111,7 @@ public class ComicController {
     @ApiOperation("修改番剧")
     public ApiResult update(ComicInstAndUpdtDTO dto
             , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
-        if (StringUtils.isEmpty(dto.getId())) {
+        if (dto.getId() == 0) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");

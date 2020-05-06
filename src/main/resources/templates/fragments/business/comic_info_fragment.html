@@ -175,18 +175,18 @@
                         <div class="modal-body">
                             <div class="form-group d-none">
                                 <label class="col-form-label"> id：</label>
-                                <input type="text" class="form-control form-control-sm" name="id" v-model="id"/>
+                                <input type="text" class="form-control form-control-sm" v-model="id"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 番剧名：</label>
-                                <input type="text" class="form-control form-control-sm" name="comicName"
-                                       placeholder="请输入番剧名字" v-model="comicName" :disabled="isDetailModal"/>
+                                <input type="text" class="form-control form-control-sm" placeholder="请输入番剧名字"
+                                       v-model="comicName" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 时间：</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control form-control-sm datepicker"
-                                           name="comicTime" placeholder="0000-00-00" v-model="comicTime"
+                                           placeholder="0000-00-00" v-model="comicTime"
                                            :disabled="isDetailModal"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -195,15 +195,14 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 简介：</label>
-                                <textarea class="form-control form-control-sm" name="comicContent" placeholder="请输入简介"
-                                          rows="6"
+                                <textarea class="form-control form-control-sm" placeholder="请输入简介" rows="6"
                                           v-model="comicContent" :disabled="isDetailModal"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 状态：</label>
                                 <div class="custom-control custom-radio custom-control-inline"
                                      v-for="item in comicUpdtStatusDict">
-                                    <input type="radio" :id="'comicUpdtStatus-'+ item.id" name="comicStatus"
+                                    <input type="radio" :id="'comicUpdtStatus-'+ item.id"
                                            class="custom-control-input form-control-sm" :value="item.dictVal"
                                            v-model="comicStatus"
                                            :disabled="isDetailModal"/>
@@ -212,17 +211,17 @@
                                 </div>
                             </div>
                             <div class="form-group" v-show="isUdTimeShow">
-                                <select class="form-control form-control-sm" name="comicUdTime" v-model="comicUdTime"
+                                <select class="form-control form-control-sm" v-model="comicUdTime"
                                         :disabled="isDetailModal">
-                                    <option value="" selected disabled>----请选择更新时间----</option>
+                                    <option value="8" selected disabled>----请选择更新时间----</option>
                                     <option :value="item.dictVal" v-for="item in comicUpdtTimeDict">{{item.dictName}}
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 当前话数：</label>
-                                <input type="number" class="form-control form-control-sm" name="comicCurrentEpisodes"
-                                       placeholder="请输入当前话数" v-model="comicCurrentEpisodes"
+                                <input type="number" class="form-control form-control-sm" placeholder="请输入当前话数"
+                                       v-model="comicCurrentEpisodes"
                                        :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
@@ -230,8 +229,7 @@
                                 <div class="custom-control custom-checkbox custom-control-inline"
                                      v-for="item in comicLabelDict">
                                     <input type="checkbox" class="custom-control-input form-control-sm"
-                                           :id="'comicTag-'+ item.id" :value="item.dictVal" name="comicTag"
-                                           v-model="comicTag"
+                                           :id="'comicTag-'+ item.id" :value="item.dictVal" v-model="comicTag"
                                            :disabled="isDetailModal"/>
                                     <label class="custom-control-label font-size-14" :for="'comicTag-'+ item.id">
                                         <i class="fa fa-tag"></i> {{item.dictName}}</label>
@@ -241,30 +239,24 @@
                                 <label class="col-form-label font-size-14"> 自定义标签：</label>
                                 <div class='row'>
                                     <input type="text" class="form-control form-control-sm col-2 ml-3"
-                                           name="freelabel" placeholder="标签一" v-model="freeLabelA"
-                                           :disabled="isDetailModal"/>
+                                           placeholder="标签一" v-model="freeLabelA" :disabled="isDetailModal"/>
                                     <input type="text" class="form-control form-control-sm col-2 offset-1"
-                                           name="freelabel" placeholder="标签二" v-model="freeLabelB"
-                                           :disabled="isDetailModal"/>
+                                           placeholder="标签二" v-model="freeLabelB" :disabled="isDetailModal"/>
                                     <input type="text" class="form-control form-control-sm col-2 offset-1"
-                                           name="freelabel" placeholder="标签三" v-model="freeLabelC"
-                                           :disabled="isDetailModal"/>
-                                    <input type="text"
-                                           class="form-control form-control-sm col-2 offset-1"
-                                           name="freelabel" placeholder="标签四" v-model="freeLabelD"
-                                           :disabled="isDetailModal"/>
+                                           placeholder="标签三" v-model="freeLabelC" :disabled="isDetailModal"/>
+                                    <input type="text" class="form-control form-control-sm col-2 offset-1"
+                                           placeholder="标签四" v-model="freeLabelD" :disabled="isDetailModal"/>
                                 </div>
                             </div>
                             <div class="form-group d-none">
                                 <label class="col-form-label font-size-14"> 标签汇总：</label>
-                                <input type="text" class="form-control form-control-sm"
-                                       name="comicLabel" v-model="comicLabel"/>
+                                <input type="text" class="form-control form-control-sm" v-model="comicLabel"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 上传图片：</label>
                                 <div class="custom-file" v-show="!isDetailModal">
                                     <input type="file" class="custom-file-input form-control-sm"
-                                           name="cmImgFile" @change="cmImgFileChange" ref="cmImgFile"/>
+                                           @change="cmImgFileChange" ref="cmImgFile"/>
                                     <label class="custom-file-label font-size-14">{{cmImgFileLb}}</label>
                                 </div>
                                 <br/> <br/>
@@ -272,17 +264,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 观看地址：</label>
-                                <input type="url" class="form-control form-control-sm" name="comicLink"
-                                       placeholder="请输入观看地址" v-model="comicLink" :disabled="isDetailModal"/>
+                                <input type="url" class="form-control form-control-sm" placeholder="请输入观看地址"
+                                       v-model="comicLink" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 上架状态：</label>
                                 <div class="custom-control custom-radio custom-control-inline"
                                      v-for="item in comicShelfStatusDict">
-                                    <input type="radio" :id="'comicShelfStatus-'+ item.id" name="comicShelfStatus"
+                                    <input type="radio" :id="'comicShelfStatus-'+ item.id"
                                            class="custom-control-input form-control-sm" :value="item.dictVal"
-                                           v-model="comicShelfStatus"
-                                           :disabled="isDetailModal"/>
+                                           v-model="comicShelfStatus" :disabled="isDetailModal"/>
                                     <label class="custom-control-label font-size-14"
                                            :for="'comicShelfStatus-'+ item.id">{{item.dictName}}</label>
                                 </div>
@@ -292,12 +283,7 @@
                             <button type="button" class="btn btn-danger font-size-14" data-dismiss="modal">
                                 <i class="fa fa-close"></i>&nbsp;&nbsp;关闭
                             </button>
-                            <button type="button" class="btn btn-primary font-size-14"
-                                    @click="insertContent" v-show="isInsertModal">
-                                <i class="fa fa-check"></i>&nbsp;&nbsp;提交
-                            </button>
-                            <button type="button" class="btn btn-primary font-size-14"
-                                    @click="updateContent" v-show="!isInsertModal && !isDetailModal">
+                            <button type="submit" class="btn btn-primary font-size-14" v-show="!isDetailModal">
                                 <i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;提交
                             </button>
                         </div>
@@ -325,7 +311,6 @@
                 nowPageNum: 1,
                 pageInfo: '',
                 modalTitle: '',
-                isInsertModal: false,
                 isDetailModal: false,
                 isUdTimeShow: false,
                 id: 0,
@@ -333,7 +318,7 @@
                 comicTime: '',
                 comicContent: '',
                 comicStatus: 0,
-                comicUdTime: '',
+                comicUdTime: 8,
                 comicCurrentEpisodes: 1,
                 comicTag: [],
                 freeLabelA: '',
@@ -411,31 +396,62 @@
                 insertModalOpen() {
                     this.modalTitle = '『添加窗口』';
                     this.isDetailModal = false;
-                    this.isInsertModal = true;
                     this.modalShow();
                 },
-                insertContent() {
+                updateModalOpen(id) {
+                    this.modalTitle = '『修改窗口』';
+                    this.isDetailModal = false;
+                    this.modalSetVal(id);
+                },
+                detailModalOpen(id) {
+                    this.modalTitle = '『详情窗口』';
+                    this.isDetailModal = true;
+                    this.modalSetVal(id);
+                },
+                submitContent() {
                     if (this.comicName.trim() == '') {
                         toastr.warning('名称不能为空');
                     } else if (this.comicContent.length > 500) {
                         toastr.warning('简介不能超过500个字符');
                     } else {
-                        $('#dataForm').ajaxSubmit({
-                            url: '/comic/insert',
-                            type: 'post',
-                            dataType: 'json',
-                            success(res) {
-                                if (res.code == 200) {
-                                    toastr.success(res.msg);
+                        let sendData = new FormData();
+                        sendData.append('id', this.id);
+                        sendData.append('comicName', this.comicName);
+                        sendData.append('comicTime', this.comicTime);
+                        sendData.append('comicContent', this.comicContent);
+                        sendData.append('comicStatus', this.comicStatus);
+                        sendData.append('comicUdTime', this.comicUdTime);
+                        sendData.append('comicCurrentEpisodes', this.comicCurrentEpisodes);
+                        sendData.append('comicLabel', this.comicLabel);
+                        sendData.append('cmImgFile', this.$refs.cmImgFile.files[0]);
+                        sendData.append('comicLink', this.comicLink);
+                        sendData.append('comicShelfStatus', this.comicShelfStatus);
+                        let sendUrl = '';
+                        if (this.id == 0) {
+                            sendUrl = '/comic/insert';
+                        } else {
+                            sendUrl = '/comic/update';
+                        }
+                        axios({
+                            method: 'post',
+                            url: sendUrl,
+                            data: sendData,
+                            responseType: 'json'
+                        }).then(function (res) {
+                            if (res.data.code == 200) {
+                                toastr.success(res.data.msg);
+                                if (containerVm.id == 0) {
                                     containerVm.clearSelectContent();
-                                    containerVm.modalHide();
-                                } else if (res.code == 100) {
-                                    toastr.error(res.msg);
-                                } else if (res.code == 101) {
-                                    console.log(res.msg);
-                                } else if (res.code == 500) {
-                                    bootBoxUtil.alert(res.msg);
+                                } else {
+                                    containerVm.getPage();
                                 }
+                                containerVm.modalHide();
+                            } else if (res.data.code == 100) {
+                                toastr.error(res.data.msg);
+                            } else if (res.data.code == 101) {
+                                console.log(res.data.msg);
+                            } else if (res.data.code == 500) {
+                                bootBoxUtil.alert(res.data.msg);
                             }
                         });
                     }
@@ -478,7 +494,7 @@
                         if (res.data.code == 200) {
                             containerVm.id = res.data.data.id;
                             containerVm.comicName = res.data.data.comicName;
-                            containerVm.comicTime = res.data.data.comicTime;
+                            containerVm.comicTime = res.data.data.comicTime == null ? '' : res.data.data.comicTime;
                             containerVm.comicContent = res.data.data.comicContent;
                             if (res.data.data.comicStatus == 0) {
                                 containerVm.comicStatus = 0;
@@ -505,44 +521,6 @@
                         }
                     });
                 },
-                detailModalOpen(id) {
-                    this.modalTitle = '『详情窗口』';
-                    this.isDetailModal = true;
-                    this.isInsertModal = false;
-                    this.modalSetVal(id);
-                },
-                updateModalOpen(id) {
-                    this.modalTitle = '『修改窗口』';
-                    this.isDetailModal = false;
-                    this.isInsertModal = false;
-                    this.modalSetVal(id);
-                },
-                updateContent() {
-                    if (this.comicName.trim() == '') {
-                        toastr.warning('名称不能为空');
-                    } else if (this.comicContent.length > 500) {
-                        toastr.warning('简介不能超过500个字符');
-                    } else {
-                        $('#dataForm').ajaxSubmit({
-                            url: '/comic/update',
-                            type: 'post',
-                            dataType: 'json',
-                            success(res) {
-                                if (res.code == 200) {
-                                    toastr.success(res.msg);
-                                    containerVm.getPage();
-                                    containerVm.modalHide();
-                                } else if (res.code == 100) {
-                                    toastr.error(res.msg);
-                                } else if (res.code == 101) {
-                                    console.log(res.msg);
-                                } else if (res.code == 500) {
-                                    bootBoxUtil.alert(res.msg);
-                                }
-                            }
-                        });
-                    }
-                },
                 datePickerBind() {
                     $('.datepicker').datepicker().on('hide', function () {
                         containerVm.comicTime = $(this).val();
@@ -554,7 +532,7 @@
                         let fileName = file.name;
                         if (!/.(gif|jpg|jpeg|png|GIF|JPG|JPEG|PNG)$/.test(fileName)) {
                             toastr.warning('图片格式必须是.gif,jpeg,jpg,png中的一种');
-                            if (this.isInsertModal) {
+                            if (this.id == 0) {
                                 this.cmImgFileLb = '示例图片.jpg';
                                 this.cmImgFilePv = '/images/tpjxz.jpg';
                             } else {
@@ -564,7 +542,7 @@
                             this.$refs.cmImgFile.value = '';
                         } else if ((file.size).toFixed(2) >= 102400) {
                             toastr.warning('图片不能超过100KB');
-                            if (this.isInsertModal) {
+                            if (this.id == 0) {
                                 this.cmImgFileLb = '示例图片.jpg';
                                 this.cmImgFilePv = '/images/tpjxz.jpg';
                             } else {
@@ -581,7 +559,7 @@
                             }
                         }
                     } else {
-                        if (this.isInsertModal) {
+                        if (this.id == 0) {
                             this.cmImgFileLb = '示例图片.jpg';
                             this.cmImgFilePv = '/images/tpjxz.jpg';
                         } else {
@@ -597,7 +575,7 @@
                         containerVm.comicTime = '';
                         containerVm.comicContent = '';
                         containerVm.comicStatus = 0;
-                        containerVm.comicUdTime = '';
+                        containerVm.comicUdTime = 8;
                         containerVm.comicCurrentEpisodes = 1;
                         containerVm.comicTag = [];
                         containerVm.freeLabelA = '';
@@ -633,7 +611,7 @@
                 comicStatus() {
                     this.isUdTimeShow = this.comicStatus == 8;
                     if (this.comicStatus == 0) {
-                        this.comicUdTime = '';
+                        this.comicUdTime = 8;
                     }
                 }
             },

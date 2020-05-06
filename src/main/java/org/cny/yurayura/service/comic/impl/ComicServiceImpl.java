@@ -11,6 +11,7 @@ import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
+import org.cny.yurayura.enumerate.ComicStatusEnum;
 import org.cny.yurayura.enumerate.ImgUploadResultEnum;
 import org.cny.yurayura.service.comic.IComicService;
 import org.cny.yurayura.system.util.FileUtil;
@@ -67,8 +68,8 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @SneakyThrows
     @Override
     public ApiResult insert(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile) {
-        // 有更新时间,更新状态为更新时间
-        Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
+        // 更新状态为非完结，更新状态为更新时间
+        Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
@@ -128,8 +129,8 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @SneakyThrows
     @Override
     public ApiResult update(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile) {
-        // 有更新时间,更新状态为更新时间
-        Integer comicStatus = StringUtils.isEmpty(dto.getComicUdTime()) ? dto.getComicStatus() : dto.getComicUdTime();
+        // 更新状态为非完结，更新状态为更新时间
+        Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
         String imgUplRes = FileUtil.imageUpload(cmImgFile);
