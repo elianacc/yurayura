@@ -80,10 +80,10 @@
                                 <label class="custom-control-label" :for="'customCheck-'+ index"></label>
                             </div>
                         </td>
-                        <td class="box">
+                        <td class="mask">
                             <img :src="item.comicImageUrl" class="table-cmimg rounded"/>
                             <a :href="item.comicLink" target="_blank">
-                                <div class="bmbox"><i class="fa fa-play-circle-o fa-5x"></i><br/><br/><br/></div>
+                                <div class="mask-content"><i class="fa fa-play-circle-o fa-5x"></i><br/><br/><br/></div>
                             </a>
                         </td>
                         <td class="font-size-12 text-center align-middle">{{item.comicName}}<span
@@ -707,14 +707,14 @@
         }
 
         /* 番剧图片遮罩 */
-        .box {
+        .r2 .c1 .mask {
             width: 165px;
             height: 217px;
             position: relative;
             cursor: pointer;
         }
 
-        .box .bmbox {
+        .r2 .c1 .mask .mask-content {
             width: 165px;
             height: 217px;
             background: black;
@@ -729,7 +729,7 @@
             border-radius: .25rem;
         }
 
-        .box:hover .bmbox {
+        .r2 .c1 .mask:hover .mask-content {
             width: 165px;
             height: 217px;
             background: rgba(0, 0, 0, 0.5);
