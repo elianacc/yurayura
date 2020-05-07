@@ -25,7 +25,7 @@ spring:
   servlet:
     multipart:
       # 上传文件位置
-      location: D://yurayura_data/upload/
+      location: D://yurayura-v1/upload/
       # 单个文件的最大值
       max-file-size: 10MB
       # 总上传文件的最大值
