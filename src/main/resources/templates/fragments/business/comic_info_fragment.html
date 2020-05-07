@@ -58,7 +58,7 @@
         <!-- 数据表格row -->
         <div class="row mt-3 r2">
             <div class="col-10 offset-2 c1">
-                <table class="table table-dark table-borderless rounded bg-twittercont" v-show="pageInfo != ''">
+                <table class="table table-dark table-borderless rounded bg-twitter" v-show="pageInfo != ''">
                     <thead>
                     <tr>
                         <td class="text-center"></td>
@@ -118,39 +118,39 @@
         <!-- 数据表格信息及分页row -->
         <div class="row mt-4 mb-5 r3">
             <div class="col-2 offset-2">
-                <span class="badge badge-dark bg-twittercont font-size-14"
+                <span class="badge badge-dark bg-twitter font-size-14"
                       v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo != ''"></span>
-                <span class="badge badge-dark bg-twittercont font-size-14" v-show="pageInfo == ''">共0页/0个</span>
+                <span class="badge badge-dark bg-twitter font-size-14" v-show="pageInfo == ''">共0页/0个</span>
             </div>
             <div class="col-8 c2">
                 <nav v-show="pageInfo != ''">
                     <ul class="pagination float-right font-size-14">
                         <li class='page-item'>
-                            <a class='page-link bg-twittercont border-twittercont text-white'
+                            <a class='page-link bg-twitter border-twitter text-white'
                                href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
                                @click="toFirstPage">首页</a>
                         </li>
                         <li class='page-item'>
-                            <a class='page-link bg-twittercont border-twittercont text-white'
+                            <a class='page-link bg-twitter border-twitter text-white'
                                href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
                                @click="toPrePage">上一页</a>
                         </li>
                         <div v-for="item in pageInfo.navigatepageNums">
                             <li class='page-item active' v-if="pageInfo.pageNum == item">
-                                <a class='page-link border-twittercont'
+                                <a class='page-link border-twitter'
                                    href='javascript:void(0)'>{{item}}</a>
                             </li>
                             <li class='page-item' v-else>
-                                <a class='page-link bg-twittercont border-twittercont text-white'
+                                <a class='page-link bg-twitter border-twitter text-white'
                                    href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
                             </li>
                         </div>
                         <li class='page-item'>
-                            <a class='page-link bg-twittercont border-twittercont text-white'
+                            <a class='page-link bg-twitter border-twitter text-white'
                                href='javascript:void(0)' v-show="!pageInfo.isLastPage" @click="toNextPage">下一页</a>
                         </li>
                         <li class='page-item'>
-                            <a class='page-link bg-twittercont border-twittercont text-white'
+                            <a class='page-link bg-twitter border-twitter text-white'
                                href='javascript:void(0)' v-show="!pageInfo.isLastPage"
                                @click="toLastPage(pageInfo.pages)">末页</a>
                         </li>
