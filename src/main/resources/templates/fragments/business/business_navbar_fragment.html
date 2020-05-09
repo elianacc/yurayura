@@ -14,7 +14,7 @@
     <script type='module'>
         import {bootBoxUtil} from '/util.js';
 
-        const navBarVm = new Vue({
+        new Vue({
             el: '#navbar',
             methods: {
                 logoutManager() {
@@ -22,7 +22,6 @@
                         axios({
                             method: 'post',
                             url: '/sys/manager/logout',
-                            data: null,
                             responseType: 'json'
                         }).then(function (res) {
                             if (res.data.code == 200) {
