@@ -27,20 +27,20 @@
                             <div class="form-group">
                                 <label class='font-size-14'>用户名</label>
                                 <input type="text" class="form-control"
-                                       :class="{'is-invalid':isInValid[0]}" v-model="formData.managerName"/>
+                                       :class="{'is-invalid':isInValid[0]}" v-model.trim="formData.managerName"/>
                                 <div class="invalid-feedback">{{isInValidText[0]}}</div>
                             </div>
                             <div class="form-group">
                                 <label class='font-size-14'>密码</label>
                                 <input type="password" class="form-control"
-                                       :class="{'is-invalid':isInValid[1]}" v-model="formData.managerPassword"/>
+                                       :class="{'is-invalid':isInValid[1]}" v-model.trim="formData.managerPassword"/>
                                 <div class="invalid-feedback">{{isInValidText[1]}}</div>
                             </div>
                             <div class="form-group">
                                 <label class='font-size-14'>验证码</label>
                                 <div class='row pl-3'>
                                     <input type="text" class="form-control col-7"
-                                           :class="{'is-invalid':isInValid[2]}" v-model="formData.verifyCode"/>
+                                           :class="{'is-invalid':isInValid[2]}" v-model.trim="formData.verifyCode"/>
                                     <div class="col-5">
                                         <img ref="verifyImage" src="/sys/manager/getVerifyCode"
                                              @click="loadVerifyImage"/>
@@ -90,13 +90,13 @@
             },
             methods: {
                 validataForm() {
-                    if (this.formData.managerName.trim() == '') {
+                    if (this.formData.managerName == '') {
                         Vue.set(this.isInValid, 0, true);
                         return false;
-                    } else if (this.formData.managerPassword.trim() == '') {
+                    } else if (this.formData.managerPassword == '') {
                         Vue.set(this.isInValid, 1, true);
                         return false;
-                    } else if (this.formData.verifyCode.trim() == '') {
+                    } else if (this.formData.verifyCode == '') {
                         Vue.set(this.isInValid, 2, true);
                         return false;
                     } else {
