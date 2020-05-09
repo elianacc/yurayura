@@ -25,7 +25,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">字典编码</span>
                         </div>
-                        <input type="text" class="form-control" v-model="selectFormData.dictCode"/>
+                        <input type="text" class="form-control" v-model.trim="selectFormData.dictCode"/>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="submit">
                                 <i class="fa fa-filter"></i>&nbsp;&nbsp;查询
@@ -147,17 +147,17 @@
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典编码：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入字典编码"
-                                       v-model="dictCode"/>
+                                       v-model.trim="dictCode"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典名：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入字典名"
-                                       v-model="dictName"/>
+                                       v-model.trim="dictName"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 字典值：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入字典值"
-                                       v-model="dictVal"/>
+                                       v-model.trim="dictVal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 状态：</label>
@@ -273,11 +273,11 @@
                     this.modalSetVal(id);
                 },
                 submitContent() {
-                    if (this.dictCode.trim() == '') {
+                    if (this.dictCode == '') {
                         toastr.warning('字典编码不能为空');
-                    } else if (this.dictName.trim() == '') {
+                    } else if (this.dictName == '') {
                         toastr.warning('字典名不能为空');
-                    } else if (this.dictVal.trim() == '') {
+                    } else if (this.dictVal == '') {
                         toastr.warning('字典值不能为空');
                     } else {
                         let sendData = new FormData();

@@ -25,7 +25,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名</span>
                         </div>
-                        <input type="text" class="form-control" v-model="selectFormData.comicName"/>
+                        <input type="text" class="form-control" v-model.trim="selectFormData.comicName"/>
                         <div class="input-group-prepend">
                             <span class="input-group-text">状态</span>
                         </div>
@@ -180,13 +180,13 @@
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 番剧名：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入番剧名字"
-                                       v-model="comicName" :disabled="isDetailModal"/>
+                                       v-model.trim="comicName" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 时间：</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control form-control-sm datepicker"
-                                           placeholder="0000-00-00" v-model="comicTime"
+                                           placeholder="0000-00-00" v-model.trim="comicTime"
                                            :disabled="isDetailModal"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -196,7 +196,7 @@
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 简介：</label>
                                 <textarea class="form-control form-control-sm" placeholder="请输入简介" rows="6"
-                                          v-model="comicContent" :disabled="isDetailModal"></textarea>
+                                          v-model.trim="comicContent" :disabled="isDetailModal"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 状态：</label>
@@ -221,7 +221,7 @@
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 当前话数：</label>
                                 <input type="number" class="form-control form-control-sm" placeholder="请输入当前话数"
-                                       v-model="comicCurrentEpisodes"
+                                       v-model.number="comicCurrentEpisodes"
                                        :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
@@ -239,13 +239,13 @@
                                 <label class="col-form-label font-size-14"> 自定义标签：</label>
                                 <div class='row'>
                                     <input type="text" class="form-control form-control-sm col-2 ml-3"
-                                           placeholder="标签一" v-model="freeLabelA" :disabled="isDetailModal"/>
+                                           placeholder="标签一" v-model.trim="freeLabelA" :disabled="isDetailModal"/>
                                     <input type="text" class="form-control form-control-sm col-2 offset-1"
-                                           placeholder="标签二" v-model="freeLabelB" :disabled="isDetailModal"/>
+                                           placeholder="标签二" v-model.trim="freeLabelB" :disabled="isDetailModal"/>
                                     <input type="text" class="form-control form-control-sm col-2 offset-1"
-                                           placeholder="标签三" v-model="freeLabelC" :disabled="isDetailModal"/>
+                                           placeholder="标签三" v-model.trim="freeLabelC" :disabled="isDetailModal"/>
                                     <input type="text" class="form-control form-control-sm col-2 offset-1"
-                                           placeholder="标签四" v-model="freeLabelD" :disabled="isDetailModal"/>
+                                           placeholder="标签四" v-model.trim="freeLabelD" :disabled="isDetailModal"/>
                                 </div>
                             </div>
                             <div class="form-group d-none">
@@ -265,7 +265,7 @@
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 观看地址：</label>
                                 <input type="url" class="form-control form-control-sm" placeholder="请输入观看地址"
-                                       v-model="comicLink" :disabled="isDetailModal"/>
+                                       v-model.trim="comicLink" :disabled="isDetailModal"/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label font-size-14"> 上架状态：</label>
@@ -409,7 +409,7 @@
                     this.modalSetVal(id);
                 },
                 submitContent() {
-                    if (this.comicName.trim() == '') {
+                    if (this.comicName == '') {
                         toastr.warning('名称不能为空');
                     } else if (this.comicContent.length > 500) {
                         toastr.warning('简介不能超过500个字符');
