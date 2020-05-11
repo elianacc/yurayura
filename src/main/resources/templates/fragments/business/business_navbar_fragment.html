@@ -22,6 +22,9 @@
                         axios({
                             method: 'post',
                             url: '/sys/manager/logout',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
                             responseType: 'json'
                         }).then(function (res) {
                             if (res.data.code == 200) {

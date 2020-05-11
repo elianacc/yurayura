@@ -345,7 +345,10 @@
                     axios({
                         method: 'post',
                         url: '/comic/getPageToB',
-                        headers: {'Content-Type': 'application/json;charset=utf-8'},
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
                         data: JSON.stringify(sendData),
                         responseType: 'json'
                     }).then(function (res) {
@@ -435,6 +438,9 @@
                         axios({
                             method: 'post',
                             url: sendUrl,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
                             data: sendData,
                             responseType: 'json'
                         }).then(function (res) {
@@ -464,6 +470,9 @@
                             axios({
                                 method: 'post',
                                 url: '/comic/deleteBatchByIds',
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                },
                                 params: {
                                     ids: containerVm.ids.toString()
                                 },
@@ -486,6 +495,9 @@
                     axios({
                         method: 'post',
                         url: '/comic/getById',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
                         params: {
                             id: id
                         },

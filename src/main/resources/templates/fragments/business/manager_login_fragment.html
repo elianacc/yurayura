@@ -109,7 +109,10 @@
                         axios({
                             method: 'post',
                             url: '/sys/manager/login',
-                            headers: {'Content-Type': 'application/json;charset=utf-8'},
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
                             data: JSON.stringify(this.formData),
                             responseType: 'json'
                         }).then(function (res) {
