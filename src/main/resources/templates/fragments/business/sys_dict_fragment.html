@@ -218,7 +218,10 @@
                     axios({
                         method: 'post',
                         url: '/sys/dict/getPage',
-                        headers: {'Content-Type': 'application/json;charset=utf-8'},
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
                         data: JSON.stringify(sendData),
                         responseType: 'json'
                     }).then(function (res) {
@@ -295,6 +298,9 @@
                         axios({
                             method: 'post',
                             url: sendUrl,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
                             data: sendData,
                             responseType: 'json'
                         }).then(function (res) {
@@ -324,6 +330,9 @@
                             axios({
                                 method: 'post',
                                 url: '/sys/dict/deleteBatchByIds',
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                },
                                 params: {
                                     ids: containerVm.ids.toString()
                                 },
@@ -346,6 +355,9 @@
                     axios({
                         method: 'post',
                         url: '/sys/dict/getById',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
                         params: {
                             id: id
                         },
