@@ -194,7 +194,7 @@
     <script type='module'>
         import {initUtil, bootBoxUtil} from '/util.js';
 
-        const containerVm = new Vue({
+        new Vue({
             el: '#container',
             data: {
                 selectFormData: {
@@ -224,11 +224,11 @@
                         },
                         data: JSON.stringify(sendData),
                         responseType: 'json'
-                    }).then(function (res) {
+                    }).then(res => {
                         if (res.data.code == 200) {
-                            containerVm.pageInfo = res.data.data;
+                            this.pageInfo = res.data.data;
                         } else if (res.data.code == 100) {
-                            containerVm.pageInfo = '';
+                            this.pageInfo = '';
                         } else if (res.data.code == 500) {
                             bootBoxUtil.alert(res.data.msg);
                         }
@@ -303,15 +303,15 @@
                             },
                             data: sendData,
                             responseType: 'json'
-                        }).then(function (res) {
+                        }).then(res => {
                             if (res.data.code == 200) {
                                 toastr.success(res.data.msg);
-                                if (containerVm.id == 0) {
-                                    containerVm.clearSelectContent();
+                                if (this.id == 0) {
+                                    this.clearSelectContent();
                                 } else {
-                                    containerVm.getPage();
+                                    this.getPage();
                                 }
-                                containerVm.modalHide();
+                                this.modalHide();
                             } else if (res.data.code == 100) {
                                 toastr.error(res.data.msg);
                             } else if (res.data.code == 101) {
@@ -323,8 +323,8 @@
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.confirm('确定要删除选中项吗？', function () {
-                        if (containerVm.ids.length == 0) {
+                    bootBoxUtil.confirm('确定要删除选中项吗？', () => {
+                        if (this.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
                             axios({
@@ -334,14 +334,14 @@
                                     'X-Requested-With': 'XMLHttpRequest'
                                 },
                                 params: {
-                                    ids: containerVm.ids.toString()
+                                    ids: this.ids.toString()
                                 },
                                 responseType: 'json'
-                            }).then(function (res) {
+                            }).then(res => {
                                 if (res.data.code == 200) {
                                     toastr.success(res.data.msg);
-                                    containerVm.ids = [];
-                                    containerVm.getPage();
+                                    this.ids = [];
+                                    this.getPage();
                                 } else if (res.data.code == 100) {
                                     toastr.error(res.data.msg);
                                 } else if (res.data.code == 500) {
@@ -362,14 +362,14 @@
                             id: id
                         },
                         responseType: 'json'
-                    }).then(function (res) {
+                    }).then(res => {
                         if (res.data.code == 200) {
-                            containerVm.id = res.data.data.id;
-                            containerVm.dictCode = res.data.data.dictCode;
-                            containerVm.dictName = res.data.data.dictName;
-                            containerVm.dictVal = res.data.data.dictVal;
-                            containerVm.dictStatus = res.data.data.dictStatus;
-                            containerVm.modalShow();
+                            this.id = res.data.data.id;
+                            this.dictCode = res.data.data.dictCode;
+                            this.dictName = res.data.data.dictName;
+                            this.dictVal = res.data.data.dictVal;
+                            this.dictStatus = res.data.data.dictStatus;
+                            this.modalShow();
                         } else if (res.data.code == 100) {
                             toastr.error(res.data.msg);
                         } else if (res.data.code == 500) {
@@ -378,12 +378,12 @@
                     });
                 },
                 modalReset() {
-                    $('#dataModal').on('hidden.bs.modal', function () {
-                        containerVm.id = 0;
-                        containerVm.dictCode = '';
-                        containerVm.dictName = '';
-                        containerVm.dictVal = '';
-                        containerVm.dictStatus = 1;
+                    $('#dataModal').on('hidden.bs.modal', () => {
+                        this.id = 0;
+                        this.dictCode = '';
+                        this.dictName = '';
+                        this.dictVal = '';
+                        this.dictStatus = 1;
                     });
                 },
                 modalShow() {

@@ -18,7 +18,7 @@
             el: '#navbar',
             methods: {
                 logoutManager() {
-                    bootBoxUtil.confirm('确定要注销吗？', function () {
+                    bootBoxUtil.confirm('确定要注销吗？', () => {
                         axios({
                             method: 'post',
                             url: '/sys/manager/logout',
@@ -26,7 +26,7 @@
                                 'X-Requested-With': 'XMLHttpRequest'
                             },
                             responseType: 'json'
-                        }).then(function (res) {
+                        }).then(res => {
                             if (res.data.code == 200) {
                                 location.reload();
                             } else if (res.data.code == 100) {
