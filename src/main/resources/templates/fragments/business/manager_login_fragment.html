@@ -119,7 +119,7 @@
                             if (res.data.code == 200) {
                                 this.isContainerShow = false;
                                 spinnerVm.isSpinnerShow = true;
-                                setTimeout(function () {
+                                setTimeout(() => {
                                     location.replace('/business/comic_info');
                                 }, 2000);
                             } else if (res.data.code == 100) {
