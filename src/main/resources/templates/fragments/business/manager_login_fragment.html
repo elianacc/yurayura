@@ -69,7 +69,7 @@
     <script type='module'>
         import {initUtil, bootBoxUtil} from '/util.js';
 
-        const containerVm = new Vue({
+        new Vue({
             el: '#container',
             data: {
                 isContainerShow: true,
@@ -115,17 +115,17 @@
                             },
                             data: JSON.stringify(this.formData),
                             responseType: 'json'
-                        }).then(function (res) {
+                        }).then(res => {
                             if (res.data.code == 200) {
-                                containerVm.isContainerShow = false;
+                                this.isContainerShow = false;
                                 spinnerVm.isSpinnerShow = true;
                                 setTimeout(function () {
                                     location.replace('/business/comic_info');
                                 }, 2000);
                             } else if (res.data.code == 100) {
-                                containerVm.loadVerifyImage();
-                                containerVm.formData.managerPassword = '';
-                                containerVm.formData.verifyCode = '';
+                                this.loadVerifyImage();
+                                this.formData.managerPassword = '';
+                                this.formData.verifyCode = '';
                                 toastr.error(res.data.msg);
                             } else if (res.data.code == 101) {
                                 console.log(res.data.msg);

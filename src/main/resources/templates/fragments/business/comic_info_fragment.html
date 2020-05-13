@@ -187,7 +187,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control form-control-sm datepicker"
                                            placeholder="0000-00-00" v-model.trim="comicTime"
-                                           :disabled="isDetailModal"/>
+                                           :disabled="isDetailModal" ref="comicTime"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                     </div>
@@ -299,7 +299,7 @@
     <script type='module'>
         import {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil} from '/util.js';
 
-        const containerVm = new Vue({
+        new Vue({
             el: '#container',
             data: {
                 selectFormData: {
@@ -351,11 +351,11 @@
                         },
                         data: JSON.stringify(sendData),
                         responseType: 'json'
-                    }).then(function (res) {
+                    }).then(res => {
                         if (res.data.code == 200) {
-                            containerVm.pageInfo = res.data.data;
+                            this.pageInfo = res.data.data;
                         } else if (res.data.code == 100) {
-                            containerVm.pageInfo = '';
+                            this.pageInfo = '';
                         } else if (res.data.code == 500) {
                             bootBoxUtil.alert(res.data.msg);
                         }
@@ -443,15 +443,15 @@
                             },
                             data: sendData,
                             responseType: 'json'
-                        }).then(function (res) {
+                        }).then(res => {
                             if (res.data.code == 200) {
                                 toastr.success(res.data.msg);
-                                if (containerVm.id == 0) {
-                                    containerVm.clearSelectContent();
+                                if (this.id == 0) {
+                                    this.clearSelectContent();
                                 } else {
-                                    containerVm.getPage();
+                                    this.getPage();
                                 }
-                                containerVm.modalHide();
+                                this.modalHide();
                             } else if (res.data.code == 100) {
                                 toastr.error(res.data.msg);
                             } else if (res.data.code == 101) {
@@ -463,8 +463,8 @@
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.confirm('确定要删除选中项吗？', function () {
-                        if (containerVm.ids.length == 0) {
+                    bootBoxUtil.confirm('确定要删除选中项吗？', () => {
+                        if (this.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
                             axios({
@@ -474,14 +474,14 @@
                                     'X-Requested-With': 'XMLHttpRequest'
                                 },
                                 params: {
-                                    ids: containerVm.ids.toString()
+                                    ids: this.ids.toString()
                                 },
                                 responseType: 'json'
-                            }).then(function (res) {
+                            }).then(res => {
                                 if (res.data.code == 200) {
                                     toastr.success(res.data.msg);
-                                    containerVm.ids = [];
-                                    containerVm.getPage();
+                                    this.ids = [];
+                                    this.getPage();
                                 } else if (res.data.code == 100) {
                                     toastr.error(res.data.msg);
                                 } else if (res.data.code == 500) {
@@ -502,30 +502,30 @@
                             id: id
                         },
                         responseType: 'json'
-                    }).then(function (res) {
+                    }).then(res => {
                         if (res.data.code == 200) {
-                            containerVm.id = res.data.data.id;
-                            containerVm.comicName = res.data.data.comicName;
-                            containerVm.comicTime = res.data.data.comicTime == null ? '' : res.data.data.comicTime;
-                            containerVm.comicContent = res.data.data.comicContent;
+                            this.id = res.data.data.id;
+                            this.comicName = res.data.data.comicName;
+                            this.comicTime = res.data.data.comicTime == null ? '' : res.data.data.comicTime;
+                            this.comicContent = res.data.data.comicContent;
                             if (res.data.data.comicStatus == 0) {
-                                containerVm.comicStatus = 0;
+                                this.comicStatus = 0;
                             } else {
-                                containerVm.comicStatus = 8;
-                                containerVm.comicUdTime = res.data.data.comicStatus;
+                                this.comicStatus = 8;
+                                this.comicUdTime = res.data.data.comicStatus;
                             }
-                            containerVm.comicCurrentEpisodes = res.data.data.comicCurrentEpisodes;
-                            containerVm.comicLabel = res.data.data.comicLabel;
+                            this.comicCurrentEpisodes = res.data.data.comicCurrentEpisodes;
+                            this.comicLabel = res.data.data.comicLabel;
                             let fileName = res.data.data.comicImageUrl;
                             let fileNewNameStart = fileName.lastIndexOf('/');
-                            containerVm.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
-                            containerVm.cmImgFilePv = res.data.data.comicImageUrl;
-                            containerVm.comicLink = res.data.data.comicLink;
-                            containerVm.comicShelfStatus = res.data.data.comicShelfStatus;
-                            containerVm.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
-                            containerVm.cmImgFilePvTmp = res.data.data.comicImageUrl;
+                            this.cmImgFileLb = fileName.substring(fileNewNameStart + 1);
+                            this.cmImgFilePv = res.data.data.comicImageUrl;
+                            this.comicLink = res.data.data.comicLink;
+                            this.comicShelfStatus = res.data.data.comicShelfStatus;
+                            this.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
+                            this.cmImgFilePvTmp = res.data.data.comicImageUrl;
                             datePickerUtil.setDate('.datepicker', res.data.data.comicTime);
-                            containerVm.modalShow();
+                            this.modalShow();
                         } else if (res.data.code == 100) {
                             toastr.error(res.data.msg);
                         } else if (res.data.code == 500) {
@@ -534,8 +534,8 @@
                     });
                 },
                 datePickerBind() {
-                    $('.datepicker').datepicker().on('hide', function () {
-                        containerVm.comicTime = $(this).val();
+                    $('.datepicker').datepicker().on('hide', () => {
+                        this.comicTime = this.$refs.comicTime.value;
                     });
                 },
                 cmImgFileChange(e) {
@@ -566,8 +566,8 @@
                             this.cmImgFileLb = fileName;
                             let reader = new FileReader();
                             reader.readAsDataURL(file);
-                            reader.onload = function (e) {
-                                containerVm.cmImgFilePv = e.target.result;
+                            reader.onload = e => {
+                                this.cmImgFilePv = e.target.result;
                             }
                         }
                     } else {
@@ -581,24 +581,24 @@
                     }
                 },
                 modalReset() {
-                    $('#dataModal').on('hidden.bs.modal', function () {
-                        containerVm.id = 0;
-                        containerVm.comicName = '';
-                        containerVm.comicTime = '';
-                        containerVm.comicContent = '';
-                        containerVm.comicStatus = 0;
-                        containerVm.comicUdTime = 8;
-                        containerVm.comicCurrentEpisodes = 1;
-                        containerVm.comicTag = [];
-                        containerVm.freeLabelA = '';
-                        containerVm.freeLabelB = '';
-                        containerVm.freeLabelC = '';
-                        containerVm.freeLabelD = '';
-                        containerVm.cmImgFileLb = '示例图片.jpg';
-                        containerVm.cmImgFilePv = '/images/tpjxz.jpg';
-                        containerVm.comicLink = '';
-                        containerVm.comicShelfStatus = 1;
-                        containerVm.$refs.cmImgFile.value = '';
+                    $('#dataModal').on('hidden.bs.modal', () => {
+                        this.id = 0;
+                        this.comicName = '';
+                        this.comicTime = '';
+                        this.comicContent = '';
+                        this.comicStatus = 0;
+                        this.comicUdTime = 8;
+                        this.comicCurrentEpisodes = 1;
+                        this.comicTag = [];
+                        this.freeLabelA = '';
+                        this.freeLabelB = '';
+                        this.freeLabelC = '';
+                        this.freeLabelD = '';
+                        this.cmImgFileLb = '示例图片.jpg';
+                        this.cmImgFilePv = '/images/tpjxz.jpg';
+                        this.comicLink = '';
+                        this.comicShelfStatus = 1;
+                        this.$refs.cmImgFile.value = '';
                         datePickerUtil.clearDate('.datepicker');
                     });
                 },
@@ -673,11 +673,8 @@
         });
 
         Vue.filter('cmStatusFilter', function (status, currentEpisodes) {
-            let arrCmStatus = [];
-            let comicStatusDicts = containerVm.comicStatusDict;
-            for (let i in comicStatusDicts) {
-                arrCmStatus.push(comicStatusDicts[i].dictName);
-            }
+            let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新'
+                , '更新中'];
             for (let i = 0; i < arrCmStatus.length; i++) {
                 if (status == 0) {
                     return arrCmStatus[i] + '：全' + currentEpisodes + '话';
