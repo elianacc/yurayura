@@ -1,10 +1,10 @@
 /**
- * util.js
+ * common.js
  * 通用jQuery插件init方法,jQuery插件封装方法，字典获取方法
  * @author EliaNaCc
  * @since 2019-11-06
  */
-const initUtil = {
+const init = {
     // toast初始化方法
     initToastr() {
         toastr.options = {
@@ -64,7 +64,7 @@ const initUtil = {
     }
 };
 
-const bootBoxUtil = {
+const bootBox = {
     // bootbox alert封装方法(无返回事件)
     alert(msg) {
         bootbox.alert({
@@ -124,7 +124,7 @@ const bootBoxUtil = {
     }
 };
 
-const datePickerUtil = {
+const datePicker = {
     // 设置date-picker选中日期封装方法
     setDate(obj, val) {
         $(obj).datepicker('setDate', val);
@@ -135,7 +135,7 @@ const datePickerUtil = {
     }
 };
 
-const sysDictUtil = {
+const sysDict = {
     // 字典获取方法
     get(dictCode) {
         let dictData = '';
@@ -161,4 +161,4 @@ const sysDictUtil = {
     }
 };
 
-export {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil};
+export {init, bootBox, datePicker, sysDict};

@@ -12,13 +12,13 @@
     </nav>
 
     <script type='module'>
-        import {bootBoxUtil} from '/util.js';
+        import {bootBox} from '/common.js';
 
         new Vue({
             el: '#navbar',
             methods: {
                 logoutManager() {
-                    bootBoxUtil.confirm('确定要注销吗？', () => {
+                    bootBox.confirm('确定要注销吗？', () => {
                         axios({
                             method: 'post',
                             url: '/sys/manager/logout',
@@ -32,7 +32,7 @@
                             } else if (res.data.code == 100) {
                                 toastr.error(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.alert(res.data.msg);
+                                bootBox.alert(res.data.msg);
                             }
                         });
                     });

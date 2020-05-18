@@ -192,7 +192,7 @@
 
     <script src='/plugins/jquery.scrollUp.min.js'></script>
     <script type='module'>
-        import {initUtil, bootBoxUtil} from '/util.js';
+        import {init, bootBox} from '/common.js';
 
         new Vue({
             el: '#container',
@@ -230,7 +230,7 @@
                         } else if (res.data.code == 100) {
                             this.pageInfo = '';
                         } else if (res.data.code == 500) {
-                            bootBoxUtil.alert(res.data.msg);
+                            bootBox.alert(res.data.msg);
                         }
                     });
                 },
@@ -317,13 +317,13 @@
                             } else if (res.data.code == 101) {
                                 console.log(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.alert(res.data.msg);
+                                bootBox.alert(res.data.msg);
                             }
                         });
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.confirm('确定要删除选中项吗？', () => {
+                    bootBox.confirm('确定要删除选中项吗？', () => {
                         if (this.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
@@ -345,7 +345,7 @@
                                 } else if (res.data.code == 100) {
                                     toastr.error(res.data.msg);
                                 } else if (res.data.code == 500) {
-                                    bootBoxUtil.alert(res.data.msg);
+                                    bootBox.alert(res.data.msg);
                                 }
                             });
                         }
@@ -373,7 +373,7 @@
                         } else if (res.data.code == 100) {
                             toastr.error(res.data.msg);
                         } else if (res.data.code == 500) {
-                            bootBoxUtil.alert(res.data.msg);
+                            bootBox.alert(res.data.msg);
                         }
                     });
                 },
@@ -397,8 +397,8 @@
                 }
             },
             mounted() {
-                initUtil.initToastr();
-                initUtil.initScrollUp();
+                init.initToastr();
+                init.initScrollUp();
                 this.modalReset();
                 this.getPage();
             }

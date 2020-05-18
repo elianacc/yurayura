@@ -13,12 +13,12 @@
 <!-- WEB SITE JS -->
 <script src="/app.js"></script>
 <script type="module">
-    import {bootBoxUtil} from "/util.js";
+    import {bootBox} from "/common.js";
 
     new Vue({
         el: '#container',
         mounted() {
-            bootBoxUtil.alertWithCall("管理员还未登入，请先登入！", () => {
+            bootBox.alertWithCall("管理员还未登入，请先登入！", () => {
                 location.href = "/business/manager_login";
             });
         }

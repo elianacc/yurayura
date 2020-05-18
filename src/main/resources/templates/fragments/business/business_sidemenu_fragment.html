@@ -41,7 +41,7 @@
     <script src='/plugins/BootSideMenu.js'></script>
     <script src='/plugins/metisMenu.min.js'></script>
     <script type='module'>
-        import {initUtil} from '/util.js';
+        import {init} from '/common.js';
 
         new Vue({
             el: '#bootSideMenu',
@@ -59,8 +59,8 @@
                 }
             },
             mounted() {
-                initUtil.initSideMenu('#bootSideMenu');
-                initUtil.initMetisMenu('.metismenu');
+                init.initSideMenu('#bootSideMenu');
+                init.initMetisMenu('.metismenu');
             }
         });
     </script>

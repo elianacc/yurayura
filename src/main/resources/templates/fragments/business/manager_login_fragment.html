@@ -67,7 +67,7 @@
 
     <script src='/plugins/base64.min.js'></script>
     <script type='module'>
-        import {initUtil, bootBoxUtil} from '/util.js';
+        import {init, bootBox} from '/common.js';
 
         new Vue({
             el: '#container',
@@ -130,7 +130,7 @@
                             } else if (res.data.code == 101) {
                                 console.log(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.alert(res.data.msg);
+                                bootBox.alert(res.data.msg);
                             }
                         });
                     }
@@ -151,7 +151,7 @@
                 }
             },
             mounted() {
-                initUtil.initToastr();
+                init.initToastr();
             }
         });
 
