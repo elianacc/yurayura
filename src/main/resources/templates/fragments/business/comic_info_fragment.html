@@ -297,7 +297,7 @@
     <script src='/plugins/jquery.scrollUp.min.js'></script>
     <script src='/plugins/jquery.unveil.js'></script>
     <script type='module'>
-        import {initUtil, bootBoxUtil, datePickerUtil, sysDictUtil} from '/util.js';
+        import {init, bootBox, datePicker, sysDict} from '/common.js';
 
         new Vue({
             el: '#container',
@@ -357,7 +357,7 @@
                         } else if (res.data.code == 100) {
                             this.pageInfo = '';
                         } else if (res.data.code == 500) {
-                            bootBoxUtil.alert(res.data.msg);
+                            bootBox.alert(res.data.msg);
                         }
                     });
                 },
@@ -457,13 +457,13 @@
                             } else if (res.data.code == 101) {
                                 console.log(res.data.msg);
                             } else if (res.data.code == 500) {
-                                bootBoxUtil.alert(res.data.msg);
+                                bootBox.alert(res.data.msg);
                             }
                         });
                     }
                 },
                 deleteBatch() {
-                    bootBoxUtil.confirm('确定要删除选中项吗？', () => {
+                    bootBox.confirm('确定要删除选中项吗？', () => {
                         if (this.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
@@ -485,7 +485,7 @@
                                 } else if (res.data.code == 100) {
                                     toastr.error(res.data.msg);
                                 } else if (res.data.code == 500) {
-                                    bootBoxUtil.alert(res.data.msg);
+                                    bootBox.alert(res.data.msg);
                                 }
                             });
                         }
@@ -524,12 +524,12 @@
                             this.comicShelfStatus = res.data.data.comicShelfStatus;
                             this.cmImgFileLbTmp = fileName.substring(fileNewNameStart + 1);
                             this.cmImgFilePvTmp = res.data.data.comicImageUrl;
-                            datePickerUtil.setDate('.datepicker', res.data.data.comicTime);
+                            datePicker.setDate('.datepicker', res.data.data.comicTime);
                             this.modalShow();
                         } else if (res.data.code == 100) {
                             toastr.error(res.data.msg);
                         } else if (res.data.code == 500) {
-                            bootBoxUtil.alert(res.data.msg);
+                            bootBox.alert(res.data.msg);
                         }
                     });
                 },
@@ -599,7 +599,7 @@
                         this.comicLink = '';
                         this.comicShelfStatus = 1;
                         this.$refs.cmImgFile.value = '';
-                        datePickerUtil.clearDate('.datepicker');
+                        datePicker.clearDate('.datepicker');
                     });
                 },
                 modalShow() {
@@ -612,11 +612,11 @@
                     document.getElementById('scrollUp').click();
                 },
                 getSysDict() {
-                    this.comicLabelDict = sysDictUtil.get('comicLabel');
-                    this.comicStatusDict = sysDictUtil.get('comicStatus');
-                    this.comicUpdtStatusDict = sysDictUtil.get('comicUpdtStatus');
-                    this.comicUpdtTimeDict = sysDictUtil.get('comicUpdtTime');
-                    this.comicShelfStatusDict = sysDictUtil.get('comicShelfStatus');
+                    this.comicLabelDict = sysDict.get('comicLabel');
+                    this.comicStatusDict = sysDict.get('comicStatus');
+                    this.comicUpdtStatusDict = sysDict.get('comicUpdtStatus');
+                    this.comicUpdtTimeDict = sysDict.get('comicUpdtTime');
+                    this.comicShelfStatusDict = sysDict.get('comicShelfStatus');
                 }
             },
             watch: {
@@ -661,10 +661,10 @@
                 }
             },
             mounted() {
-                initUtil.initToastr();
-                initUtil.initDatePicker('.datepicker');
-                initUtil.initScrollUp();
-                initUtil.initImgLazyLoad();
+                init.initToastr();
+                init.initDatePicker('.datepicker');
+                init.initScrollUp();
+                init.initImgLazyLoad();
                 this.datePickerBind();
                 this.modalReset();
                 this.getSysDict();
