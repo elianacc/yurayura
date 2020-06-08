@@ -13,7 +13,7 @@ YuraYura是一个兴趣使然的项目，主要的功能是做番剧的导视，
 ##### 前端：
 
 - ​    Bootstrap 4
-- ​    Vue.js（单页应用）
+- ​    Vue.js（多页应用）
 - ​    jQuery
 - ​    thymeleaf（主要用于组合html碎片，数据绑定使用vue）
 
