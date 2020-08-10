@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -84,5 +85,11 @@ public class ComicInstAndUpdtDTO implements Serializable {
      */
     @ApiModelProperty(value = "更新时间 1：周一更新...")
     private Integer comicUdTime;
+
+    /**
+     * 图片文件
+     */
+    @ApiModelProperty(value = "图片文件")
+    private MultipartFile cmImgFile;
 
 }

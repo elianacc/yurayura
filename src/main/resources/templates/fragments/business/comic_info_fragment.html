@@ -426,7 +426,9 @@
                         sendData.append('comicUdTime', this.comicUdTime);
                         sendData.append('comicCurrentEpisodes', this.comicCurrentEpisodes);
                         sendData.append('comicLabel', this.comicLabel);
-                        sendData.append('cmImgFile', this.$refs.cmImgFile.files[0]);
+                        if (this.$refs.cmImgFile.value != '') {
+                            sendData.append('cmImgFile', this.$refs.cmImgFile.files[0]);
+                        }
                         sendData.append('comicLink', this.comicLink);
                         sendData.append('comicShelfStatus', this.comicShelfStatus);
                         let sendUrl = '';

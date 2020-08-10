@@ -22,10 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,12 +65,12 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public ApiResult insert(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile) {
+    public ApiResult insert(ComicInstAndUpdtDTO dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
+        String imgUplRes = FileUtil.imageUpload(dto.getCmImgFile());
 
         Comic comic = new Comic();
         ComicUserData comicUserData = new ComicUserData();
@@ -123,12 +121,12 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public ApiResult update(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile) {
+    public ApiResult update(ComicInstAndUpdtDTO dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
+        String imgUplRes = FileUtil.imageUpload(dto.getCmImgFile());
 
         Comic comic = new Comic();
 

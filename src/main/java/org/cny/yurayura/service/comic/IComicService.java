@@ -5,7 +5,6 @@ import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.vo.ApiResult;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,10 +28,9 @@ public interface IComicService extends IService<Comic> {
      * 添加番剧
      *
      * @param dto
-	 * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult insert(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile);
+    public ApiResult insert(ComicInstAndUpdtDTO dto);
 
     /**
      * 批量删除番剧（根据id组）
@@ -46,9 +44,8 @@ public interface IComicService extends IService<Comic> {
      * 修改番剧
      *
      * @param dto
-	 * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult update(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile);
+    public ApiResult update(ComicInstAndUpdtDTO dto);
 
 }

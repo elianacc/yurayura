@@ -1,16 +1,17 @@
 package org.cny.yurayura.controller.comic;
 
 
-import io.swagger.annotations.*;
-import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
 import org.cny.yurayura.dto.ComicSelectDTO;
 import org.cny.yurayura.service.comic.IComicService;
+import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -65,14 +66,12 @@ public class ComicController {
      * 添加番剧
      *
      * @param dto
-     * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    public ApiResult insert(ComicInstAndUpdtDTO dto
-            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
+    public ApiResult insert(ComicInstAndUpdtDTO dto) {
         if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
@@ -82,7 +81,7 @@ public class ComicController {
         } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
-        return iComicService.insert(dto, cmImgFile);
+        return iComicService.insert(dto);
     }
 
     /**
@@ -105,14 +104,12 @@ public class ComicController {
      * 修改番剧
      *
      * @param dto
-     * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    public ApiResult update(ComicInstAndUpdtDTO dto
-            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
+    public ApiResult update(ComicInstAndUpdtDTO dto) {
         if (dto.getId() == 0) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dto.getComicName().trim())) {
@@ -124,6 +121,6 @@ public class ComicController {
         } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
-        return iComicService.update(dto, cmImgFile);
+        return iComicService.update(dto);
     }
 }
