@@ -6,13 +6,12 @@ import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.cny.yurayura.service.sys.dict.IDictService;
 import org.cny.yurayura.vo.ApiResult;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 系统数据字典 controller
@@ -92,8 +91,8 @@ public class DictController {
     @PostMapping("/deleteBatchByIds")
     @ApiOperation("批量删除系统数据字典（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
-    public ApiResult deleteBatchByIds(String ids) {
-        if (StringUtils.isEmpty(ids)) {
+    public ApiResult deleteBatchByIds(@RequestParam("ids") List<Integer> ids) {
+        if (ids.isEmpty()) {
             return ApiResult.warn("id组不能为空");
         }
         return iDictService.deleteBatchByIds(ids);

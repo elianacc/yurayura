@@ -61,16 +61,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdList = new ArrayList<>();
-        String[] delIdArr = ids.split(",");
-        for (String delIdStr : delIdArr) {
-            delIdList.add(Integer.parseInt(delIdStr));
-            Dict dict = dictMapper.selectById(Integer.parseInt(delIdStr));
+    public ApiResult deleteBatchByIds(List<Integer> ids) {
+        for (Integer id : ids) {
+            Dict dict = dictMapper.selectById(id);
             // 删除redis中的字典记录
             redisUtil.lRemove(dict.getDictCode(), 0, dict);
         }
-        dictMapper.deleteBatchIds(delIdList);
+        dictMapper.deleteBatchIds(ids);
         return ApiResult.success("删除成功");
     }
 

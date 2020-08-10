@@ -106,15 +106,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdList = new ArrayList<>();
-        String[] delIdArr = ids.split(",");
-        for (String delIdStr : delIdArr) {
-            delIdList.add(Integer.parseInt(delIdStr));
-        }
-        List<Comic> delComicList = comicMapper.selectBatchIds(delIdList);
-        comicMapper.deleteBatchIds(delIdList);
-        comicUserDataMapper.deleteBatchByComicId(delIdList);
+    public ApiResult deleteBatchByIds(List<Integer> ids) {
+        List<Comic> delComicList = comicMapper.selectBatchIds(ids);
+        comicMapper.deleteBatchIds(ids);
+        comicUserDataMapper.deleteBatchByComicId(ids);
         for (Comic comic : delComicList) {
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {

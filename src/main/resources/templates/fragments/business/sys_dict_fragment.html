@@ -327,15 +327,15 @@
                         if (this.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
+                            let sendData = new FormData();
+                            sendData.append('ids', this.ids);
                             axios({
                                 method: 'post',
                                 url: '/sys/dict/deleteBatchByIds',
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest'
                                 },
-                                params: {
-                                    ids: this.ids.toString()
-                                },
+                                data: sendData,
                                 responseType: 'json'
                             }).then(res => {
                                 if (res.data.code == 200) {

@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * 番剧 controller
  *
@@ -92,8 +94,8 @@ public class ComicController {
     @PostMapping("/deleteBatchByIds")
     @ApiOperation("批量删除番剧（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
-    public ApiResult deleteBatchByIds(String ids) {
-        if (StringUtils.isEmpty(ids)) {
+    public ApiResult deleteBatchByIds(@RequestParam("ids") List<Integer> ids) {
+        if (ids.isEmpty()) {
             return ApiResult.warn("id组不能为空");
         }
         return iComicService.deleteBatchByIds(ids);

@@ -5,6 +5,8 @@ import org.cny.yurayura.dto.DictSelectDTO;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.cny.yurayura.vo.ApiResult;
 
+import java.util.List;
+
 /**
  * 系统数据字典 service
  *
@@ -35,7 +37,7 @@ public interface IDictService extends IService<Dict> {
      * @param ids
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult deleteBatchByIds(String ids);
+    public ApiResult deleteBatchByIds(List<Integer> ids);
 
     /**
      * 修改系统数据字典
