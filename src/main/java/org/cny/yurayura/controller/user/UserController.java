@@ -3,7 +3,6 @@ package org.cny.yurayura.controller.user;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.dto.UserSelectDTO;
 import org.cny.yurayura.service.user.IUserService;
@@ -58,7 +57,7 @@ public class UserController {
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); //页记录数默认10
         }
-        return iUserService.getPageToB(dto);
+        return iUserService.getPage4B(dto);
     }
 
 }

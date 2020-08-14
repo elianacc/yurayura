@@ -59,7 +59,7 @@ public class ComicController {
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); //页记录数默认10
         }
-        return iComicService.getPageToB(dto);
+        return iComicService.getPage4B(dto);
     }
 
     /**

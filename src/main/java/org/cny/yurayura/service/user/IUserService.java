@@ -20,6 +20,6 @@ public interface IUserService extends IService<User> {
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPageToB(UserSelectDTO dto);
+    public ApiResult getPage4B(UserSelectDTO dto);
 
 }

@@ -22,7 +22,7 @@ public interface IComicService extends IService<Comic> {
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPageToB(ComicSelectDTO dto);
+    public ApiResult getPage4B(ComicSelectDTO dto);
 
     /**
      * 添加番剧

@@ -29,7 +29,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Override
-    public ApiResult getPageToB(UserSelectDTO dto) {
+    public ApiResult getPage4B(UserSelectDTO dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

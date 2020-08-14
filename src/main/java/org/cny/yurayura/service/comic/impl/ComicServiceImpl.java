@@ -44,7 +44,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     private String defaultUplCmImg;
 
     @Override
-    public ApiResult getPageToB(ComicSelectDTO dto) {
+    public ApiResult getPage4B(ComicSelectDTO dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
