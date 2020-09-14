@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-8 mt-4">
-                <form @submit.prevent="selectContent">
+                <form @submit.prevent="selectContent" id="selectForm">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名</span>
@@ -39,6 +39,15 @@
                         <select class="custom-select" v-model="selectFormData.comicShelfStatus">
                             <option value="" selected></option>
                             <option :value="item.dictVal" v-for="item in comicShelfStatusDict">{{item.dictName}}
+                            </option>
+                        </select>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">标签</span>
+                        </div>
+                        <select class="selectpicker" v-model="selectFormData.comicTag" multiple
+                                data-selected-text-format="count > 100" data-size="5" data-actions-box="true"
+                                title="请选择标签" data-width="160px">
+                            <option :value="item.dictVal" v-for="item in comicLabelDict">{{item.dictName}}
                             </option>
                         </select>
                         <div class="input-group-append">
@@ -296,6 +305,8 @@
 
     <script src='/plugins/jquery.scrollUp.min.js'></script>
     <script src='/plugins/jquery.unveil.js'></script>
+    <script src='/plugins/bootstrap-select.min.js'></script>
+    <script src='/plugins/bootstrap-select.zh-CN.min.js'></script>
     <script type='module'>
         import {init, bootBox, datePicker, sysDict} from '/common.js';
 
@@ -305,7 +316,8 @@
                 selectFormData: {
                     comicName: '',
                     comicStatus: '',
-                    comicShelfStatus: ''
+                    comicShelfStatus: '',
+                    comicTag: []
                 },
                 ids: [],
                 nowPageNum: 1,
@@ -704,6 +716,8 @@
     </script>
 
     <style>
+        @import '/plugins/bootstrap-select.min.css';
+
         /* 番剧图片 */
         .r2 .c1 .table-cmimg {
             width: 165px;
@@ -753,6 +767,25 @@
             text-align: center;
             padding-top: 68px;
             border-radius: .25rem;
+        }
+
+        #selectForm .bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:active, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        #selectForm .bootstrap-select .btn-light:not(:disabled):not(.disabled).active, .bootstrap-select .btn-light:not(:disabled):not(.disabled):active, .bootstrap-select .show > .btn-light.dropdown-toggle {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        #selectForm .bootstrap-select .btn:not(:disabled):not(.disabled) {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        #selectForm .bootstrap-select .dropdown-menu {
+            font-size: 12px;
         }
     </style>
 
