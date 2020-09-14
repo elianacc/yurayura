@@ -13,5 +13,11 @@ import java.util.List;
  * @since 2019-11-18
  */
 public interface ComicMapper extends BaseMapper<Comic> {
+    /**
+     * 查询番剧（根据番剧查询dto）
+     *
+     * @param dto
+     * @return java.util.List<org.cny.yurayura.entity.comic.Comic>
+     */
     List<Comic> getListBySelectDto(ComicSelectDto dto);
 }
