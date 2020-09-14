@@ -1,14 +1,13 @@
 package org.cny.yurayura.service.comic.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.SneakyThrows;
 import org.cny.yurayura.dao.comic.ComicMapper;
 import org.cny.yurayura.dao.comic.ComicUserDataMapper;
-import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
-import org.cny.yurayura.dto.ComicSelectDTO;
+import org.cny.yurayura.dto.ComicInstAndUpdtDto;
+import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
 import org.cny.yurayura.enumerate.ComicStatusEnum;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,17 +42,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     private String defaultUplCmImg;
 
     @Override
-    public ApiResult getPage4B(ComicSelectDTO dto) {
+    public ApiResult getPage4B(ComicSelectDto dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
-        List<Comic> comicList = comicMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(dto.getComicName()), "comic_name", dto.getComicName())
-                .eq(!StringUtils.isEmpty(dto.getComicStatus())
-                        , "comic_status", dto.getComicStatus())
-                .eq(!StringUtils.isEmpty(dto.getComicShelfStatus())
-                        , "comic_shelf_status", dto.getComicShelfStatus())
-                .orderByDesc("id"));
+        List<Comic> comicList = comicMapper.getListBySelectDto(dto);
         PageInfo<Comic> pageInfo = new PageInfo<>(comicList, 5);
         if (pageInfo.getTotal() == 0) {
             return ApiResult.warn("查询不到数据");
@@ -65,7 +56,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public ApiResult insert(ComicInstAndUpdtDTO dto) {
+    public ApiResult insert(ComicInstAndUpdtDto dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
@@ -121,7 +112,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public ApiResult update(ComicInstAndUpdtDTO dto) {
+    public ApiResult update(ComicInstAndUpdtDto dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 

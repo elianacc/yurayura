@@ -1,7 +1,7 @@
 package org.cny.yurayura.service.sys.manager;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.cny.yurayura.dto.MangerLoginDTO;
+import org.cny.yurayura.dto.MangerLoginDto;
 import org.cny.yurayura.entity.sys.manager.Manager;
 import org.cny.yurayura.vo.ApiResult;
 
@@ -24,5 +24,5 @@ public interface IManagerService extends IService<Manager> {
 	 * @param response
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult login(MangerLoginDTO dto, HttpSession session, HttpServletResponse response);
+    public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response);
 }

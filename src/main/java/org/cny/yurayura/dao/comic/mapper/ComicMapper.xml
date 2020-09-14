@@ -23,4 +23,29 @@
         id, comic_name, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_create_time, comic_update_time
     </sql>
 
+    <select id="getListBySelectDto" resultType="org.cny.yurayura.entity.comic.Comic">
+        select
+            <include refid="Base_Column_List" />
+        from
+            yurayura_comic t
+        <where>
+            <if test="comicName != null and comicName != ''">
+                t.comic_name like CONCAT('%',#{comicName},'%')
+            </if>
+            <if test="comicStatus != null">
+                and t.comic_status = #{comicStatus}
+            </if>
+            <if test="comicShelfStatus != null">
+                and t.comic_shelf_status = #{comicShelfStatus}
+            </if>
+            <if test="comicTag != null and comicTag.size() > 0">
+                and
+                <foreach collection="comicTag" item="tag" open="(" separator="or" close=")">
+                    t.comic_label like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+        </where>
+        order by t.id desc
+    </select>
+
 </mapper>

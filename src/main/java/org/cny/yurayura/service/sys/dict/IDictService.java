@@ -1,7 +1,7 @@
 package org.cny.yurayura.service.sys.dict;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.cny.yurayura.dto.DictSelectDTO;
+import org.cny.yurayura.dto.DictSelectDto;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.cny.yurayura.vo.ApiResult;
 
@@ -21,7 +21,7 @@ public interface IDictService extends IService<Dict> {
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPage(DictSelectDTO dto);
+    public ApiResult getPage(DictSelectDto dto);
 
     /**
      * 添加系统数据字典

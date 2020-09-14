@@ -356,7 +356,7 @@
                     sendData.pageSize = 10;
                     axios({
                         method: 'post',
-                        url: '/comic/getPageToB',
+                        url: '/comic/getPage4B',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8',
                             'X-Requested-With': 'XMLHttpRequest'
@@ -378,9 +378,11 @@
                     this.getPage();
                 },
                 clearSelectContent() {
+                    $('#selectForm .filter-option-inner-inner').empty();
                     this.selectFormData.comicName = '';
                     this.selectFormData.comicStatus = '';
                     this.selectFormData.comicShelfStatus = '';
+                    this.selectFormData.comicTag = [];
                     this.selectContent();
                 },
                 toFirstPage() {

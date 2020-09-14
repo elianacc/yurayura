@@ -4,8 +4,8 @@ package org.cny.yurayura.controller.comic;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
-import org.cny.yurayura.dto.ComicSelectDTO;
+import org.cny.yurayura.dto.ComicInstAndUpdtDto;
+import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.service.comic.IComicService;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
@@ -51,9 +51,9 @@ public class ComicController {
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToB")
+    @PostMapping("/getPage4B")
     @ApiOperation("分页查询番剧（B端）")
-    public ApiResult getPageToB(@RequestBody ComicSelectDTO dto) {
+    public ApiResult getPage4B(@RequestBody ComicSelectDto dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
@@ -71,7 +71,7 @@ public class ComicController {
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    public ApiResult insert(ComicInstAndUpdtDTO dto) {
+    public ApiResult insert(ComicInstAndUpdtDto dto) {
         if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
@@ -109,7 +109,7 @@ public class ComicController {
     @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    public ApiResult update(ComicInstAndUpdtDTO dto) {
+    public ApiResult update(ComicInstAndUpdtDto dto) {
         if (dto.getId() == 0) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dto.getComicName().trim())) {

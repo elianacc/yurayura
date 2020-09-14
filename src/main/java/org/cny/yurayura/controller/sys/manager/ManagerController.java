@@ -4,7 +4,7 @@ package org.cny.yurayura.controller.sys.manager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
-import org.cny.yurayura.dto.MangerLoginDTO;
+import org.cny.yurayura.dto.MangerLoginDto;
 import org.cny.yurayura.service.sys.manager.IManagerService;
 import org.cny.yurayura.system.util.VerifyCodeUtil;
 import org.cny.yurayura.vo.ApiResult;
@@ -69,7 +69,7 @@ public class ManagerController {
     @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("管理员登入")
-    public ApiResult login(@RequestBody MangerLoginDTO dto, @ApiIgnore HttpSession session
+    public ApiResult login(@RequestBody MangerLoginDto dto, @ApiIgnore HttpSession session
             , @ApiIgnore HttpServletResponse response) {
 
         if (StringUtils.isEmpty(dto.getManagerName().trim())) {

@@ -18,7 +18,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "系统管理员登入dto")
-public class MangerLoginDTO implements Serializable {
+public class MangerLoginDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

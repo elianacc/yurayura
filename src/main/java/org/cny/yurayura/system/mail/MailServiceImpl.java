@@ -1,7 +1,7 @@
 package org.cny.yurayura.system.mail;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cny.yurayura.dto.MailDTO;
+import org.cny.yurayura.dto.MailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -45,7 +45,7 @@ public class MailServiceImpl implements MailService {
      */
     @Async
     @Override
-    public void sendTextMail(MailDTO dto) {
+    public void sendTextMail(MailDto dto) {
         // 建立邮件消息
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(sendEmail); // 发送人的邮箱
@@ -68,7 +68,7 @@ public class MailServiceImpl implements MailService {
      */
     @Async
     @Override
-    public void sendHtmlMail(MailDTO dto, boolean isShowHtml) {
+    public void sendHtmlMail(MailDto dto, boolean isShowHtml) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             // 是否发送的邮件是富文本（附件，图片，html等）
@@ -109,7 +109,7 @@ public class MailServiceImpl implements MailService {
      */
     @Async
     @Override
-    public void sendTemplateMail(MailDTO dto, String templatePosition) {
+    public void sendTemplateMail(MailDto dto, String templatePosition) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);

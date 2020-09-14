@@ -3,7 +3,7 @@ package org.cny.yurayura.controller.sys.dict;
 
 import io.swagger.annotations.*;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
-import org.cny.yurayura.dto.DictSelectDTO;
+import org.cny.yurayura.dto.DictSelectDto;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +51,7 @@ public class DictController {
      */
     @PostMapping("/getPage")
     @ApiOperation("分页查询系统数据字典")
-    public ApiResult getPage(@RequestBody DictSelectDTO dto) {
+    public ApiResult getPage(@RequestBody DictSelectDto dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {

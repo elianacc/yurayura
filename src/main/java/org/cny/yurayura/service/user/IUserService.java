@@ -1,8 +1,7 @@
 package org.cny.yurayura.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
-import org.cny.yurayura.dto.UserSelectDTO;
+import org.cny.yurayura.dto.UserSelectDto;
 import org.cny.yurayura.entity.user.User;
 import org.cny.yurayura.vo.ApiResult;
 
@@ -20,6 +19,6 @@ public interface IUserService extends IService<User> {
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPage4B(UserSelectDTO dto);
+    public ApiResult getPage4B(UserSelectDto dto);
 
 }

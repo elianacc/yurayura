@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.cny.yurayura.dao.user.UserMapper;
-import org.cny.yurayura.dto.UserSelectDTO;
+import org.cny.yurayura.dto.UserSelectDto;
 import org.cny.yurayura.entity.user.User;
 import org.cny.yurayura.service.user.IUserService;
 import org.cny.yurayura.vo.ApiResult;
@@ -29,7 +29,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Override
-    public ApiResult getPage4B(UserSelectDTO dto) {
+    public ApiResult getPage4B(UserSelectDto dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

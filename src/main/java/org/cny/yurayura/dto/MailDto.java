@@ -19,7 +19,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "邮件参数dto")
-public class MailDTO implements Serializable {
+public class MailDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -4,7 +4,7 @@ package org.cny.yurayura.controller.user;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.cny.yurayura.dto.UserSelectDTO;
+import org.cny.yurayura.dto.UserSelectDto;
 import org.cny.yurayura.service.user.IUserService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +49,9 @@ public class UserController {
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToB")
+    @PostMapping("/getPage4B")
     @ApiOperation("分页查询用户（B端）")
-    public ApiResult getPageToB(UserSelectDTO dto) {
+    public ApiResult getPage4B(UserSelectDto dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
