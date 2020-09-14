@@ -25,9 +25,9 @@
 
     <select id="getListBySelectDto" resultType="org.cny.yurayura.entity.comic.Comic">
         select
-            <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from
-            yurayura_comic t
+        yurayura_comic t
         <where>
             <if test="comicName != null and comicName != ''">
                 t.comic_name like CONCAT('%',#{comicName},'%')
