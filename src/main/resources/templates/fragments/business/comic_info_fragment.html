@@ -691,24 +691,21 @@
         Vue.filter('cmStatusFilter', function (status, currentEpisodes) {
             let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新'
                 , '更新中'];
-            for (let i = 0; i < arrCmStatus.length; i++) {
+            let res = '';
+            arrCmStatus.forEach((cmStatus, index) => {
                 if (status == 0) {
-                    return arrCmStatus[i] + '：全' + currentEpisodes + '话';
-                } else if (status == i) {
-                    return arrCmStatus[i] + '：更新至第' + currentEpisodes + '话';
+                    res = cmStatus + '：全' + currentEpisodes + '话';
+                } else if (status == index) {
+                    res = cmStatus + '：更新至第' + currentEpisodes + '话';
                 }
-            }
+            });
+            return res;
         });
 
         Vue.filter('cmLabelFilter', function (value) {
             let arrCmLabel = (value).split(',');
-            let arrNewCmLabel = [];
-            for (let i = 0; i < arrCmLabel.length; i++) {
-                if (arrCmLabel[i] != '') {
-                    arrNewCmLabel.push(arrCmLabel[i]);
-                }
-            }
-            return arrNewCmLabel.toString();
+            arrCmLabel = arrCmLabel.filter(label => label != '');
+            return arrCmLabel.toString();
         });
 
         Vue.filter('cmContentFilter', function (value) {

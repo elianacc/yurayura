@@ -99,13 +99,13 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         List<Comic> delComicList = comicMapper.selectBatchIds(ids);
         comicMapper.deleteBatchIds(ids);
         comicUserDataMapper.deleteBatchByComicId(ids);
-        for (Comic comic : delComicList) {
+        delComicList.forEach(comic -> {
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
                 FileUtil.fileDelete(comic.getComicImageUrl());
             }
-        }
+        });
         return ApiResult.success("删除成功");
     }
 
