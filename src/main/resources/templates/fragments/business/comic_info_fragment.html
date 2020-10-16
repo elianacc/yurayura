@@ -308,7 +308,7 @@
     <script src='/plugins/bootstrap-select.min.js'></script>
     <script src='/plugins/bootstrap-select.zh-CN.min.js'></script>
     <script type='module'>
-        import {init, bootBox, datePicker, sysDict} from '/common.js';
+        import {init, bootBox, datePicker, sysDict, imgVerificat} from '/common.js';
 
         new Vue({
             el: '#container',
@@ -557,19 +557,8 @@
                 cmImgFileChange(e) {
                     if (e.target.files.length != 0) {
                         let file = e.target.files[0];
-                        let fileName = file.name;
-                        if (!/.(gif|jpg|jpeg|png|GIF|JPG|JPEG|PNG)$/.test(fileName)) {
-                            toastr.warning('图片格式必须是.gif,jpeg,jpg,png中的一种');
-                            if (this.id == 0) {
-                                this.cmImgFileLb = '示例图片.jpg';
-                                this.cmImgFilePv = '/images/tpjxz.jpg';
-                            } else {
-                                this.cmImgFileLb = this.cmImgFileLbTmp;
-                                this.cmImgFilePv = this.cmImgFilePvTmp;
-                            }
-                            this.$refs.cmImgFile.value = '';
-                        } else if ((file.size).toFixed(2) >= 102400) {
-                            toastr.warning('图片不能超过100KB');
+                        let vfcRs = imgVerificat.confirm(file, 102400);
+                        if (!vfcRs) {
                             if (this.id == 0) {
                                 this.cmImgFileLb = '示例图片.jpg';
                                 this.cmImgFilePv = '/images/tpjxz.jpg';
@@ -579,7 +568,7 @@
                             }
                             this.$refs.cmImgFile.value = '';
                         } else {
-                            this.cmImgFileLb = fileName;
+                            this.cmImgFileLb = file.name;
                             let reader = new FileReader();
                             reader.readAsDataURL(file);
                             reader.onload = e => {
