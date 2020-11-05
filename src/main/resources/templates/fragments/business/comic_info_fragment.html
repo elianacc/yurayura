@@ -625,9 +625,9 @@
                 }
             },
             watch: {
-                comicStatus() {
-                    this.isUdTimeShow = this.comicStatus == 8;
-                    if (this.comicStatus == 0) {
+                comicStatus(val) {
+                    this.isUdTimeShow = val == 8;
+                    if (val == 0) {
                         this.comicUdTime = 8;
                     }
                 }
