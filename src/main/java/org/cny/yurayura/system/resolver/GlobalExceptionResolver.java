@@ -1,7 +1,6 @@
 package org.cny.yurayura.system.resolver;
 
 import com.alibaba.fastjson.JSON;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.cny.yurayura.dto.MailDto;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +35,6 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
     @Value("${yurayura.receive-email}")
     private String receiveEmail;
 
-    @SneakyThrows
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
                                          Exception exception) {
@@ -67,7 +66,11 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 
         if (isAjax) { // ajax请求下的异常
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JSON.toJSONString(ApiResult.fail("请求接口异常，请联系开发人员！")));
+            try {
+                response.getWriter().write(JSON.toJSONString(ApiResult.fail("请求接口异常，请联系开发人员！")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return new ModelAndView();
         } else { // 页面请求下的异常
             response.setContentType("text/html;charset=UTF-8");

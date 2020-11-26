@@ -6,6 +6,7 @@ import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.vo.ApiResult;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public interface IComicService extends IService<Comic> {
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult insert(ComicInstAndUpdtDto dto);
+    public ApiResult insert(ComicInstAndUpdtDto dto) throws IOException;
 
     /**
      * 批量删除番剧（根据id组）
@@ -46,6 +47,6 @@ public interface IComicService extends IService<Comic> {
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult update(ComicInstAndUpdtDto dto);
+    public ApiResult update(ComicInstAndUpdtDto dto) throws IOException;
 
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class ComicController {
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    public ApiResult insert(ComicInstAndUpdtDto dto) {
+    public ApiResult insert(ComicInstAndUpdtDto dto) throws IOException {
         if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
@@ -109,7 +110,7 @@ public class ComicController {
     @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    public ApiResult update(ComicInstAndUpdtDto dto) {
+    public ApiResult update(ComicInstAndUpdtDto dto) throws IOException {
         if (dto.getId() == 0) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dto.getComicName().trim())) {

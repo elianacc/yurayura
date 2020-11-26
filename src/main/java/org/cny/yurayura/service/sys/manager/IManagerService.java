@@ -7,6 +7,7 @@ import org.cny.yurayura.vo.ApiResult;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 系统管理员 service
@@ -24,5 +25,5 @@ public interface IManagerService extends IService<Manager> {
 	 * @param response
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response);
+    public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException;
 }
