@@ -3,6 +3,7 @@ package org.cny.yurayura.service.comic.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.SneakyThrows;
 import org.cny.yurayura.dao.comic.ComicMapper;
 import org.cny.yurayura.dao.comic.ComicUserDataMapper;
 import org.cny.yurayura.dto.ComicInstAndUpdtDto;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -54,8 +54,9 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @SneakyThrows
     @Override
-    public ApiResult insert(ComicInstAndUpdtDto dto) throws IOException {
+    public ApiResult insert(ComicInstAndUpdtDto dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
@@ -109,8 +110,9 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @SneakyThrows
     @Override
-    public ApiResult update(ComicInstAndUpdtDto dto) throws IOException {
+    public ApiResult update(ComicInstAndUpdtDto dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 

@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 /**
  * 系统管理员 controller
@@ -71,7 +70,7 @@ public class ManagerController {
     @PostMapping("/login")
     @ApiOperation("管理员登入")
     public ApiResult login(@RequestBody MangerLoginDto dto, @ApiIgnore HttpSession session
-            , @ApiIgnore HttpServletResponse response) throws UnsupportedEncodingException {
+            , @ApiIgnore HttpServletResponse response) {
 
         if (StringUtils.isEmpty(dto.getManagerName().trim())) {
             return ApiResult.warn("用户名不能为空");

@@ -2,6 +2,7 @@ package org.cny.yurayura.service.sys.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.cny.yurayura.dao.sys.manager.ManagerMapper;
 import org.cny.yurayura.dto.MangerLoginDto;
@@ -18,7 +19,6 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
@@ -34,8 +34,9 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     @Autowired
     private ManagerMapper managerMapper;
 
+    @SneakyThrows
     @Override
-    public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException {
+    public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response) {
         // 获取服务器生成验证码
         Object managerVerifyCode = session.getAttribute("managerVerifyCode");
         // 验证码session失效

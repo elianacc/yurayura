@@ -6,7 +6,6 @@ import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.vo.ApiResult;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public interface IComicService extends IService<Comic> {
     /**
      * 分页查询番剧（B端）
      *
-	 * @param dto
+     * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
     public ApiResult getPage4B(ComicSelectDto dto);
@@ -31,7 +30,7 @@ public interface IComicService extends IService<Comic> {
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult insert(ComicInstAndUpdtDto dto) throws IOException;
+    public ApiResult insert(ComicInstAndUpdtDto dto);
 
     /**
      * 批量删除番剧（根据id组）
@@ -47,6 +46,6 @@ public interface IComicService extends IService<Comic> {
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult update(ComicInstAndUpdtDto dto) throws IOException;
+    public ApiResult update(ComicInstAndUpdtDto dto);
 
 }
