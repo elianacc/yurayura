@@ -36,3 +36,12 @@
 .btn-warning {
     background-color: #f5b700;
 }
+
+/* 去除bootstrap按钮聚焦时的边框 */
+button:focus,
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: none;
+    color: #fff;
+}
