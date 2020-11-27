@@ -38,6 +38,10 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response) throws UnsupportedEncodingException {
         // 获取服务器生成验证码
         Object managerVerifyCode = session.getAttribute("managerVerifyCode");
+        // 验证码session失效
+        if(StringUtils.isEmpty(managerVerifyCode)) {
+            return ApiResult.warn("验证码过期，请刷新验证码");
+        }
         if (managerVerifyCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
             Manager manager = new Manager();
             BeanUtils.copyProperties(dto, manager);
