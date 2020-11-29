@@ -22,6 +22,6 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowCredentials(true) // 是否支持跨域用户凭证
                 .allowedHeaders(CorsConfiguration.ALL) // 当前站点支持的跨域请求头是什么
                 .allowedMethods(CorsConfiguration.ALL) // 当前站点支持的跨域请求类型是什么
-                .maxAge(3600); // 超时时长设置为1小时。 时间单位是秒
+                .maxAge(3600); // 超时时长设置为1小时，时间单位是秒
     }
 }
