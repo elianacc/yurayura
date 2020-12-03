@@ -77,7 +77,7 @@ public class ManagerController {
         } else if (StringUtils.isEmpty(dto.getManagerPassword().trim())) {
             return ApiResult.warn("密码不能为空");
         } else if (StringUtils.isEmpty(dto.getVerifyCode().trim())) {
-            return ApiResult.warn("密码不能为空");
+            return ApiResult.warn("验证码不能为空");
         }
         return iManagerService.login(dto, session, response);
     }
