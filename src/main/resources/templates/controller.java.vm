@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Service}.${table.serviceName};
-import org.cny.yurayura.vo.ApiResult;
+#if(${cfg.isGenertGetIdMethod})
+import org.cny.${cfg.moduleName}.vo.ApiResult;
+#end
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
@@ -29,23 +31,24 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("/#if(${controllerMappingHyphenStyle})#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#else${table.entityPath}#end")
+@RequestMapping("/#if(${controllerMappingHyphenStyle})#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#else#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#end")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
-#if(${superControllerClass})
-public class ${table.controllerName} extends ${superControllerClass} {
-#else
-    #if(${swagger2})
-@Api(tags = "$!{table.comment}API")
+    #if(${superControllerClass})
+    public class ${table.controllerName} extends ${superControllerClass} {
+    #else
+        #if(${swagger2})
+        @Api(tags = "$!{table.comment}API")
+        #end
+    public class ${table.controllerName} {
     #end
-public class ${table.controllerName} {
-#end
 
-    @Autowired
-    private ${table.serviceName} i${entity}Service;
+@Autowired
+private ${table.serviceName} i${entity}Service;
 
+    #if(${cfg.isGenertGetIdMethod})
     /**
      * 查询$!{table.comment}（根据id）
      *
@@ -53,16 +56,17 @@ public class ${table.controllerName} {
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getById")
-    #if(${swagger2})
-    @ApiOperation("查询$!{table.comment}（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    #end
+        #if(${swagger2})
+        @ApiOperation("查询$!{table.comment}（根据id）")
+        @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
+        #end
     public ApiResult getById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+            if (StringUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
+            }
+            return ApiResult.success("查询成功", i${entity}Service.getById(id));
+            }
+    #end
         }
-        return ApiResult.success("查询成功", i${entity}Service.getById(id));
-    }
-}
 
 #end
