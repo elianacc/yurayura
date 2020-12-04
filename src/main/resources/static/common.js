@@ -161,4 +161,18 @@ const sysDict = {
     }
 };
 
-export {init, bootBox, datePicker, sysDict};
+const imgVerificat = {
+    // 常见图片合法性验证
+    confirm(imgFile, imgLimit) {
+        if (!/.(gif|jpg|jpeg|png|GIF|JPG|JPEG|PNG)$/.test(imgFile.name)) {
+            toastr.warning('图片格式必须是.gif,jpeg,jpg,png中的一种');
+            return false;
+        } else if ((imgFile.size).toFixed(2) >= imgLimit) {
+            toastr.warning('图片不能超过' + imgLimit / 1024 + 'KB');
+            return false;
+        }
+        return true;
+    }
+};
+
+export {init, bootBox, datePicker, sysDict, imgVerificat};

@@ -1,16 +1,19 @@
 package org.cny.yurayura.controller.comic;
 
 
-import io.swagger.annotations.*;
-import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
-import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
-import org.cny.yurayura.dto.ComicSelectDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import org.cny.yurayura.dto.ComicInstAndUpdtDto;
+import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.service.comic.IComicService;
+import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 番剧 controller
@@ -48,29 +51,27 @@ public class ComicController {
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPageToB")
+    @PostMapping("/getPage4B")
     @ApiOperation("分页查询番剧（B端）")
-    public ApiResult getPageToB(@RequestBody ComicSelectDTO dto) {
+    public ApiResult getPage4B(@RequestBody ComicSelectDto dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); //页记录数默认10
         }
-        return iComicService.getPageToB(dto);
+        return iComicService.getPage4B(dto);
     }
 
     /**
      * 添加番剧
      *
      * @param dto
-     * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    public ApiResult insert(ComicInstAndUpdtDTO dto
-            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
+    public ApiResult insert(ComicInstAndUpdtDto dto) {
         if (StringUtils.isEmpty(dto.getComicName().trim())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
@@ -80,7 +81,7 @@ public class ComicController {
         } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
-        return iComicService.insert(dto, cmImgFile);
+        return iComicService.insert(dto);
     }
 
     /**
@@ -92,8 +93,8 @@ public class ComicController {
     @PostMapping("/deleteBatchByIds")
     @ApiOperation("批量删除番剧（根据id组）")
     @ApiImplicitParam(name = "ids", value = "id组", required = true)
-    public ApiResult deleteBatchByIds(String ids) {
-        if (StringUtils.isEmpty(ids)) {
+    public ApiResult deleteBatchByIds(@RequestParam("ids") List<Integer> ids) {
+        if (ids.isEmpty()) {
             return ApiResult.warn("id组不能为空");
         }
         return iComicService.deleteBatchByIds(ids);
@@ -103,14 +104,12 @@ public class ComicController {
      * 修改番剧
      *
      * @param dto
-     * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改番剧")
-    public ApiResult update(ComicInstAndUpdtDTO dto
-            , @ApiParam(value = "图片文件") @RequestParam(value = "cmImgFile", required = false) MultipartFile cmImgFile) {
+    public ApiResult update(ComicInstAndUpdtDto dto) {
         if (dto.getId() == 0) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dto.getComicName().trim())) {
@@ -122,6 +121,6 @@ public class ComicController {
         } else if (dto.getComicContent().length() > 500) {
             return ApiResult.warn("简介不能超过500个字符");
         }
-        return iComicService.update(dto, cmImgFile);
+        return iComicService.update(dto);
     }
 }

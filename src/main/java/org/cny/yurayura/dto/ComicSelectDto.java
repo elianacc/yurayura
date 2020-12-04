@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 番剧查询 dto
@@ -18,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "番剧查询dto")
-public class ComicSelectDTO implements Serializable {
+public class ComicSelectDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,6 +40,12 @@ public class ComicSelectDTO implements Serializable {
      */
     @ApiModelProperty(value = "上架状态")
     private Integer comicShelfStatus;
+
+    /**
+     * 标签
+     */
+    @ApiModelProperty(value = "标签")
+    private List<String> comicTag;
 
     /**
      * 页码

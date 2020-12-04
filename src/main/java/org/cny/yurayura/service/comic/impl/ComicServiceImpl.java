@@ -1,14 +1,13 @@
 package org.cny.yurayura.service.comic.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.SneakyThrows;
 import org.cny.yurayura.dao.comic.ComicMapper;
 import org.cny.yurayura.dao.comic.ComicUserDataMapper;
-import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
-import org.cny.yurayura.dto.ComicSelectDTO;
+import org.cny.yurayura.dto.ComicInstAndUpdtDto;
+import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.entity.comic.ComicUserData;
 import org.cny.yurayura.enumerate.ComicStatusEnum;
@@ -21,11 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,17 +42,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     private String defaultUplCmImg;
 
     @Override
-    public ApiResult getPageToB(ComicSelectDTO dto) {
+    public ApiResult getPage4B(ComicSelectDto dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        QueryWrapper<Comic> queryWrapper = new QueryWrapper<>();
-        List<Comic> comicList = comicMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(dto.getComicName()), "comic_name", dto.getComicName())
-                .eq(!StringUtils.isEmpty(dto.getComicStatus())
-                        , "comic_status", dto.getComicStatus())
-                .eq(!StringUtils.isEmpty(dto.getComicShelfStatus())
-                        , "comic_shelf_status", dto.getComicShelfStatus())
-                .orderByDesc("id"));
+        List<Comic> comicList = comicMapper.getListBySelectDto(dto);
         PageInfo<Comic> pageInfo = new PageInfo<>(comicList, 5);
         if (pageInfo.getTotal() == 0) {
             return ApiResult.warn("查询不到数据");
@@ -67,12 +56,12 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public ApiResult insert(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile) {
+    public ApiResult insert(ComicInstAndUpdtDto dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
+        String imgUplRes = FileUtil.imageUpload(dto.getCmImgFile());
 
         Comic comic = new Comic();
         ComicUserData comicUserData = new ComicUserData();
@@ -106,34 +95,29 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdList = new ArrayList<>();
-        String[] delIdArr = ids.split(",");
-        for (String delIdStr : delIdArr) {
-            delIdList.add(Integer.parseInt(delIdStr));
-        }
-        List<Comic> delComicList = comicMapper.selectBatchIds(delIdList);
-        comicMapper.deleteBatchIds(delIdList);
-        comicUserDataMapper.deleteBatchByComicId(delIdList);
-        for (Comic comic : delComicList) {
+    public ApiResult deleteBatchByIds(List<Integer> ids) {
+        List<Comic> delComicList = comicMapper.selectBatchIds(ids);
+        comicMapper.deleteBatchIds(ids);
+        comicUserDataMapper.deleteBatchByComicId(ids);
+        delComicList.forEach(comic -> {
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
                 // 删除番剧图片
                 FileUtil.fileDelete(comic.getComicImageUrl());
             }
-        }
+        });
         return ApiResult.success("删除成功");
     }
 
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public ApiResult update(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile) {
+    public ApiResult update(ComicInstAndUpdtDto dto) {
         // 更新状态为非完结，更新状态为更新时间
         Integer comicStatus = dto.getComicStatus().intValue() == ComicStatusEnum.FINISHED.getStatusId() ? dto.getComicStatus() : dto.getComicUdTime();
 
         // 获取图片上传结果
-        String imgUplRes = FileUtil.imageUpload(cmImgFile);
+        String imgUplRes = FileUtil.imageUpload(dto.getCmImgFile());
 
         Comic comic = new Comic();
 

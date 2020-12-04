@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.cny.yurayura.dao.sys.manager.ManagerMapper;
-import org.cny.yurayura.dto.MangerLoginDTO;
+import org.cny.yurayura.dto.MangerLoginDto;
 import org.cny.yurayura.entity.sys.manager.Manager;
 import org.cny.yurayura.enumerate.ManagerStatusEnum;
 import org.cny.yurayura.service.sys.manager.IManagerService;
@@ -36,9 +36,13 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     @SneakyThrows
     @Override
-    public ApiResult login(MangerLoginDTO dto, HttpSession session, HttpServletResponse response) {
+    public ApiResult login(MangerLoginDto dto, HttpSession session, HttpServletResponse response) {
         // 获取服务器生成验证码
         Object managerVerifyCode = session.getAttribute("managerVerifyCode");
+        // 验证码session失效
+        if(StringUtils.isEmpty(managerVerifyCode)) {
+            return ApiResult.warn("验证码过期，请刷新验证码");
+        }
         if (managerVerifyCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
             Manager manager = new Manager();
             BeanUtils.copyProperties(dto, manager);

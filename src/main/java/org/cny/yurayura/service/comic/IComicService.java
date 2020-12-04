@@ -1,11 +1,12 @@
 package org.cny.yurayura.service.comic;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.cny.yurayura.dto.ComicInstAndUpdtDTO;
-import org.cny.yurayura.dto.ComicSelectDTO;
+import org.cny.yurayura.dto.ComicInstAndUpdtDto;
+import org.cny.yurayura.dto.ComicSelectDto;
 import org.cny.yurayura.entity.comic.Comic;
 import org.cny.yurayura.vo.ApiResult;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 番剧 service
@@ -18,19 +19,18 @@ public interface IComicService extends IService<Comic> {
     /**
      * 分页查询番剧（B端）
      *
-	 * @param dto
+     * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPageToB(ComicSelectDTO dto);
+    public ApiResult getPage4B(ComicSelectDto dto);
 
     /**
      * 添加番剧
      *
      * @param dto
-	 * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult insert(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile);
+    public ApiResult insert(ComicInstAndUpdtDto dto);
 
     /**
      * 批量删除番剧（根据id组）
@@ -38,15 +38,14 @@ public interface IComicService extends IService<Comic> {
      * @param ids
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult deleteBatchByIds(String ids);
+    public ApiResult deleteBatchByIds(List<Integer> ids);
 
     /**
      * 修改番剧
      *
      * @param dto
-	 * @param cmImgFile
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult update(ComicInstAndUpdtDTO dto, MultipartFile cmImgFile);
+    public ApiResult update(ComicInstAndUpdtDto dto);
 
 }

@@ -25,14 +25,23 @@
 .font-size-38{font-size:2.375rem}
 .font-size-40{font-size:2.5rem} /*h1*/
 
+/* 按钮样式重写 */
+.btn-warning {
+    background-color: #f5b700;
+}
+
+/* 去除bootstrap按钮聚焦时的边框 */
+button:focus,
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: none;
+    color: #fff;
+}
+
 /* 文件浏览样式重写 */
 .custom-file-label::after {
     color: #fff;
     content: "浏览文件";
     background-color: #007bff;
-}
-
-/* 按钮样式重写 */
-.btn-warning {
-    background-color: #f5b700;
 }

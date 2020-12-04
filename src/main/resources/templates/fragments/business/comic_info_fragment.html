@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-8 mt-4">
-                <form @submit.prevent="selectContent">
+                <form @submit.prevent="selectContent" id="selectForm">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
                             <span class="input-group-text">番剧名</span>
@@ -39,6 +39,15 @@
                         <select class="custom-select" v-model="selectFormData.comicShelfStatus">
                             <option value="" selected></option>
                             <option :value="item.dictVal" v-for="item in comicShelfStatusDict">{{item.dictName}}
+                            </option>
+                        </select>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">标签</span>
+                        </div>
+                        <select class="selectpicker" v-model="selectFormData.comicTag" multiple
+                                data-selected-text-format="count > 100" data-size="5" data-actions-box="true"
+                                title="请选择标签" data-width="160px">
+                            <option :value="item.dictVal" v-for="item in comicLabelDict">{{item.dictName}}
                             </option>
                         </select>
                         <div class="input-group-append">
@@ -296,8 +305,10 @@
 
     <script src='/plugins/jquery.scrollUp.min.js'></script>
     <script src='/plugins/jquery.unveil.js'></script>
+    <script src='/plugins/bootstrap-select.min.js'></script>
+    <script src='/plugins/bootstrap-select.zh-CN.min.js'></script>
     <script type='module'>
-        import {init, bootBox, datePicker, sysDict} from '/common.js';
+        import {init, bootBox, datePicker, sysDict, imgVerificat} from '/common.js';
 
         new Vue({
             el: '#container',
@@ -305,7 +316,8 @@
                 selectFormData: {
                     comicName: '',
                     comicStatus: '',
-                    comicShelfStatus: ''
+                    comicShelfStatus: '',
+                    comicTag: []
                 },
                 ids: [],
                 nowPageNum: 1,
@@ -344,7 +356,7 @@
                     sendData.pageSize = 10;
                     axios({
                         method: 'post',
-                        url: '/comic/getPageToB',
+                        url: '/comic/getPage4B',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8',
                             'X-Requested-With': 'XMLHttpRequest'
@@ -366,9 +378,11 @@
                     this.getPage();
                 },
                 clearSelectContent() {
+                    $('#selectForm .filter-option-inner-inner').empty();
                     this.selectFormData.comicName = '';
                     this.selectFormData.comicStatus = '';
                     this.selectFormData.comicShelfStatus = '';
+                    this.selectFormData.comicTag = [];
                     this.selectContent();
                 },
                 toFirstPage() {
@@ -426,7 +440,9 @@
                         sendData.append('comicUdTime', this.comicUdTime);
                         sendData.append('comicCurrentEpisodes', this.comicCurrentEpisodes);
                         sendData.append('comicLabel', this.comicLabel);
-                        sendData.append('cmImgFile', this.$refs.cmImgFile.files[0]);
+                        if (this.$refs.cmImgFile.value != '') {
+                            sendData.append('cmImgFile', this.$refs.cmImgFile.files[0]);
+                        }
                         sendData.append('comicLink', this.comicLink);
                         sendData.append('comicShelfStatus', this.comicShelfStatus);
                         let sendUrl = '';
@@ -467,15 +483,15 @@
                         if (this.ids.length == 0) {
                             toastr.warning('请至少选择一项删除');
                         } else {
+                            let sendData = new FormData();
+                            sendData.append('ids', this.ids);
                             axios({
                                 method: 'post',
                                 url: '/comic/deleteBatchByIds',
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest'
                                 },
-                                params: {
-                                    ids: this.ids.toString()
-                                },
+                                data: sendData,
                                 responseType: 'json'
                             }).then(res => {
                                 if (res.data.code == 200) {
@@ -541,19 +557,8 @@
                 cmImgFileChange(e) {
                     if (e.target.files.length != 0) {
                         let file = e.target.files[0];
-                        let fileName = file.name;
-                        if (!/.(gif|jpg|jpeg|png|GIF|JPG|JPEG|PNG)$/.test(fileName)) {
-                            toastr.warning('图片格式必须是.gif,jpeg,jpg,png中的一种');
-                            if (this.id == 0) {
-                                this.cmImgFileLb = '示例图片.jpg';
-                                this.cmImgFilePv = '/images/tpjxz.jpg';
-                            } else {
-                                this.cmImgFileLb = this.cmImgFileLbTmp;
-                                this.cmImgFilePv = this.cmImgFilePvTmp;
-                            }
-                            this.$refs.cmImgFile.value = '';
-                        } else if ((file.size).toFixed(2) >= 102400) {
-                            toastr.warning('图片不能超过100KB');
+                        let vfcRs = imgVerificat.confirm(file, 102400);
+                        if (!vfcRs) {
                             if (this.id == 0) {
                                 this.cmImgFileLb = '示例图片.jpg';
                                 this.cmImgFilePv = '/images/tpjxz.jpg';
@@ -563,7 +568,7 @@
                             }
                             this.$refs.cmImgFile.value = '';
                         } else {
-                            this.cmImgFileLb = fileName;
+                            this.cmImgFileLb = file.name;
                             let reader = new FileReader();
                             reader.readAsDataURL(file);
                             reader.onload = e => {
@@ -620,9 +625,9 @@
                 }
             },
             watch: {
-                comicStatus() {
-                    this.isUdTimeShow = this.comicStatus == 8;
-                    if (this.comicStatus == 0) {
+                comicStatus(val) {
+                    this.isUdTimeShow = val == 8;
+                    if (val == 0) {
                         this.comicUdTime = 8;
                     }
                 }
@@ -675,24 +680,21 @@
         Vue.filter('cmStatusFilter', function (status, currentEpisodes) {
             let arrCmStatus = ['已完结', '周一更新', '周二更新', '周三更新', '周四更新', '周五更新', '周六更新', '周日更新'
                 , '更新中'];
-            for (let i = 0; i < arrCmStatus.length; i++) {
+            let res = '';
+            arrCmStatus.forEach((cmStatus, index) => {
                 if (status == 0) {
-                    return arrCmStatus[i] + '：全' + currentEpisodes + '话';
-                } else if (status == i) {
-                    return arrCmStatus[i] + '：更新至第' + currentEpisodes + '话';
+                    res = cmStatus + '：全' + currentEpisodes + '话';
+                } else if (status == index) {
+                    res = cmStatus + '：更新至第' + currentEpisodes + '话';
                 }
-            }
+            });
+            return res;
         });
 
         Vue.filter('cmLabelFilter', function (value) {
             let arrCmLabel = (value).split(',');
-            let arrNewCmLabel = [];
-            for (let i = 0; i < arrCmLabel.length; i++) {
-                if (arrCmLabel[i] != '') {
-                    arrNewCmLabel.push(arrCmLabel[i]);
-                }
-            }
-            return arrNewCmLabel.toString();
+            arrCmLabel = arrCmLabel.filter(label => label != '');
+            return arrCmLabel.toString();
         });
 
         Vue.filter('cmContentFilter', function (value) {
@@ -702,6 +704,8 @@
     </script>
 
     <style>
+        @import '/plugins/bootstrap-select.min.css';
+
         /* 番剧图片 */
         .r2 .c1 .table-cmimg {
             width: 165px;
@@ -751,6 +755,25 @@
             text-align: center;
             padding-top: 68px;
             border-radius: .25rem;
+        }
+
+        #selectForm .bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:active, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        #selectForm .bootstrap-select .btn-light:not(:disabled):not(.disabled).active, .bootstrap-select .btn-light:not(:disabled):not(.disabled):active, .bootstrap-select .show > .btn-light.dropdown-toggle {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        #selectForm .bootstrap-select .btn:not(:disabled):not(.disabled) {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        #selectForm .bootstrap-select .dropdown-menu {
+            font-size: 12px;
         }
     </style>
 

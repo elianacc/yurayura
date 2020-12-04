@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.cny.yurayura.dao.sys.dict.DictMapper;
-import org.cny.yurayura.dto.DictSelectDTO;
+import org.cny.yurayura.dto.DictSelectDto;
 import org.cny.yurayura.entity.sys.dict.Dict;
 import org.cny.yurayura.enumerate.DictStatusEnum;
 import org.cny.yurayura.service.sys.dict.IDictService;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     private RedisUtil redisUtil;
 
     @Override
-    public ApiResult getPage(DictSelectDTO dto) {
+    public ApiResult getPage(DictSelectDto dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
@@ -61,16 +60,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ApiResult deleteBatchByIds(String ids) {
-        List<Integer> delIdList = new ArrayList<>();
-        String[] delIdArr = ids.split(",");
-        for (String delIdStr : delIdArr) {
-            delIdList.add(Integer.parseInt(delIdStr));
-            Dict dict = dictMapper.selectById(Integer.parseInt(delIdStr));
+    public ApiResult deleteBatchByIds(List<Integer> ids) {
+        ids.forEach(id -> {
+            Dict dict = dictMapper.selectById(id);
             // 删除redis中的字典记录
             redisUtil.lRemove(dict.getDictCode(), 0, dict);
-        }
-        dictMapper.deleteBatchIds(delIdList);
+        });
+        dictMapper.deleteBatchIds(ids);
         return ApiResult.success("删除成功");
     }
 

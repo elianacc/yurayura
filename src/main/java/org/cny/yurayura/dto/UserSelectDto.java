@@ -9,24 +9,36 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 系统数据字典查询 dto
+ * 用户查询dto
  *
  * @author CNY
- * @since 2020-03-24
+ * @since 2020-03-30
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "系统数据字典查询dto")
-public class DictSelectDTO implements Serializable {
+@ApiModel(value = "用户查询dto")
+public class UserSelectDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 字典编码
+     * 用户名
      */
-    @ApiModelProperty(value = "字典编码")
-    private String dictCode;
+    @ApiModelProperty(value = "用户名")
+    private String userName;
+
+    /**
+     * 性别
+     */
+    @ApiModelProperty(value = "性别")
+    private String userSex;
+
+    /**
+     * 状态- 0：正常，3：小黑屋3天，7：小黑屋7天，30：小黑屋30天，365：小黑屋365天，999：小黑屋永久
+     */
+    @ApiModelProperty(value = "状态")
+    private Integer userStatus;
 
     /**
      * 页码

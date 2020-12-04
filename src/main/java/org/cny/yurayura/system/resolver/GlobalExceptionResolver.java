@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.cny.yurayura.dto.MailDTO;
+import org.cny.yurayura.dto.MailDto;
 import org.cny.yurayura.system.exception.CustomizeException;
 import org.cny.yurayura.system.mail.MailService;
 import org.cny.yurayura.vo.ApiResult;
@@ -57,7 +57,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         log.error(errorMsg);
 
         // 发送错误信息邮件
-        MailDTO dto = new MailDTO();
+        MailDto dto = new MailDto();
         dto.setTitle("yurayura报错信息");
         dto.setReceiveEmail(receiveEmail);
         Map<String, Object> map = new HashMap<>();
