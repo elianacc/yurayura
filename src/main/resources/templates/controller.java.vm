@@ -36,17 +36,17 @@ import ${superControllerClassPackage};
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
-    #if(${superControllerClass})
-    public class ${table.controllerName} extends ${superControllerClass} {
-    #else
-        #if(${swagger2})
-        @Api(tags = "$!{table.comment}API")
-        #end
-    public class ${table.controllerName} {
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+    #if(${swagger2})
+@Api(tags = "$!{table.comment}API")
     #end
+public class ${table.controllerName} {
+#end
 
-@Autowired
-private ${table.serviceName} i${entity}Service;
+    @Autowired
+    private ${table.serviceName} i${entity}Service;
 
     #if(${cfg.isGenertGetIdMethod})
     /**
@@ -56,17 +56,17 @@ private ${table.serviceName} i${entity}Service;
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/getById")
-        #if(${swagger2})
-        @ApiOperation("查询$!{table.comment}（根据id）")
-        @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-        #end
-    public ApiResult getById(Integer id) {
-            if (StringUtils.isEmpty(id)) {
-            return ApiResult.warn("id不能为空");
-            }
-            return ApiResult.success("查询成功", i${entity}Service.getById(id));
-            }
+    #if(${swagger2})
+    @ApiOperation("查询$!{table.comment}（根据id）")
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     #end
+    public ApiResult getById(Integer id) {
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("id不能为空");
         }
+        return ApiResult.success("查询成功", i${entity}Service.getById(id));
+    }
+    #end
+}
 
 #end
