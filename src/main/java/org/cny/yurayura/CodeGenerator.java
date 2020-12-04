@@ -72,9 +72,11 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("org.cny");
-        pc.setModuleName(scanner("请输入模块名"));
-        String isSysModule = scanner("是否是后端系统子模块？（如果是输入Y/y,不是请随意输入）");
+        String moduleName = scanner("请输入模块名");
+        pc.setModuleName(moduleName);
+        String isSysModule = scanner("是否是属于系统子模块？（如果是输入Y/y,不是请随意输入）");
         String submoduleName = scanner("请输入子模块名");
+        String isGenertGetIdMethod = scanner("是否需要生成根据id查询Controller？（如果需要输入Y/y,不需要请随意输入）");
         submoduleName = isSysModule.equalsIgnoreCase("y") ? "sys." + submoduleName : submoduleName;
         // 自定义包名
         pc.setEntity("entity." + submoduleName);
@@ -91,6 +93,8 @@ public class CodeGenerator {
             public void initMap() {
                 Map<String, Object> map = new HashMap<>();
                 map.put("isSysModule", isSysModule.equalsIgnoreCase("y"));
+                map.put("isGenertGetIdMethod", isGenertGetIdMethod.equalsIgnoreCase("y"));
+                map.put("moduleName", moduleName);
                 this.setMap(map);
             }
         };
