@@ -3,7 +3,6 @@ package org.cny.yurayura.entity.sys.manager;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -18,7 +17,7 @@ import lombok.experimental.Accessors;
  * 系统管理员 entity
  *
  * @author CNY
- * @since 2020-04-03
+ * @since 2020-12-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -67,6 +66,12 @@ public class Manager implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime managerUpdateTime;
+
+    /**
+     * 管理员权限
+     */
+    @ApiModelProperty(value = "管理员权限")
+    private String managerPermission;
 
 
 }
