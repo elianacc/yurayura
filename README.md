@@ -1,4 +1,4 @@
-### YuraYura项目简介及技术构成（V1.1.1 shiro分支）
+### YuraYura项目简介及技术构成
 
 
 
