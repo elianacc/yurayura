@@ -46,20 +46,20 @@ public class ComicController {
     }
 
     /**
-     * 分页查询番剧（B端）
+     * 分页查询番剧
      *
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPage4B")
-    @ApiOperation("分页查询番剧（B端）")
-    public ApiResult getPage4B(@RequestBody ComicSelectDto dto) {
+    @PostMapping("/getPage")
+    @ApiOperation("分页查询番剧")
+    public ApiResult getPage(@RequestBody ComicSelectDto dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); //页记录数默认10
         }
-        return iComicService.getPage4B(dto);
+        return iComicService.getPage(dto);
     }
 
     /**

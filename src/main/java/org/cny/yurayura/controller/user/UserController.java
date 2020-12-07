@@ -44,20 +44,20 @@ public class UserController {
     }
 
     /**
-     * 分页查询用户（B端）
+     * 分页查询用户
      *
 	 * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @PostMapping("/getPage4B")
-    @ApiOperation("分页查询用户（B端）")
-    public ApiResult getPage4B(UserSelectDto dto) {
+    @PostMapping("/getPage")
+    @ApiOperation("分页查询用户")
+    public ApiResult getPage(UserSelectDto dto) {
         if (StringUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (StringUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); //页记录数默认10
         }
-        return iUserService.getPage4B(dto);
+        return iUserService.getPage(dto);
     }
 
 }

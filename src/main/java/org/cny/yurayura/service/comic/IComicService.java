@@ -17,12 +17,12 @@ import java.util.List;
 public interface IComicService extends IService<Comic> {
 
     /**
-     * 分页查询番剧（B端）
+     * 分页查询番剧
      *
      * @param dto
      * @return org.cny.yurayura.vo.ApiResult
      */
-    public ApiResult getPage4B(ComicSelectDto dto);
+    public ApiResult getPage(ComicSelectDto dto);
 
     /**
      * 添加番剧
