@@ -55,6 +55,7 @@ public class PreventRepeatSubmitAspect {
         try {
             return pjp.proceed();
         } catch (Throwable throwable) {
+            throwable.printStackTrace();
             throw new CustomizeException(500, "提交进程异常！");
         }
     }
