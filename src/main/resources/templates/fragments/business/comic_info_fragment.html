@@ -6,15 +6,15 @@
         <!-- 操作按钮及数据筛选表单row -->
         <div class="row mt-5">
             <div class="col-2 offset-2 mt-4">
-                <div class="btn-group float-left" shiro:haspermission="manage">
+                <div class="btn-group float-left">
                     <button type="button"
                             class="btn btn-dark btn-twitter btn-sm"
-                            @click="insertModalOpen">
+                            @click="insertModalOpen" shiro:haspermission="insert">
                         <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;添加
                     </button>
                     <button type="button"
                             class="btn btn-dark btn-twitter btn-sm"
-                            @click="deleteBatch">
+                            @click="deleteBatch" shiro:haspermission="delete">
                         <i class='fa fa-trash'></i>&nbsp;&nbsp;删除
                     </button>
                 </div>
@@ -111,7 +111,7 @@
                             </button>
                             <br/><br/>
                             <button type="button" class="btn btn-info btn-sm font-size-14"
-                                    @click="updateModalOpen(item.id)" shiro:haspermission="manage">
+                                    @click="updateModalOpen(item.id)" shiro:haspermission="update">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
                             </button>
                         </td>

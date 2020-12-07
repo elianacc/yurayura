@@ -46,7 +46,9 @@ public class ShiroConfig {
         fillterMap.put("/business/comic_info", "authc");
 
         fillterMap.put("/comic/get*", "perms[select]");
-        fillterMap.put("/comic/**", "perms[manage]");
+        fillterMap.put("/comic/insert*", "perms[insert]");
+        fillterMap.put("/comic/delete*", "perms[delete]");
+        fillterMap.put("/comic/update*", "perms[update]");
         fillterMap.put("/sys/dict/getByDictCode", "perms[select]");
         fillterMap.put("/sys/dict/**", "perms[sys]");
 
