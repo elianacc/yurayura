@@ -1,4 +1,4 @@
-### YuraYura项目简介及技术构成
+### YuraYura项目简介及技术构成（V1.1.1 shiro分支）
 
 
 
@@ -25,6 +25,7 @@ PS: 本项目为yurayura项目的后端部分，前后端未分离，后会用Vu
 - ​    数据库持久层： mybatis + mybatis plus
 - ​    自动生成代码工具： mybatis plus generator（mpg）
 - ​    分页工具： mybatis pagehelper
+- ​    安全框架： shiro
 - ​    日志： logback
 - ​    项目构建： Maven
 - ​    代码简化工具： lombok
@@ -45,7 +46,6 @@ PS: 本项目为yurayura项目的后端部分，前后端未分离，后会用Vu
 - ​    系统数据字典
 - ​    外部静态资源访问处理
 - ​    视图控制器
-- ​    认证拦截器（后将用shiro代替）
 - ​    跨域处理
 
 ##### 开发工具：

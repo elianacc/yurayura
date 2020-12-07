@@ -3,6 +3,8 @@ package org.cny.yurayura.controller.sys.manager;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.MangerLoginDto;
 import org.cny.yurayura.service.sys.manager.IManagerService;
@@ -82,17 +84,17 @@ public class ManagerController {
         return iManagerService.login(dto, session, response);
     }
 
-    /**
-     * 管理员注销
-     *
-     * @param session
-     * @return org.cny.yurayura.vo.ApiResult
-     */
+   /**
+    * 管理员注销
+    *
+    * @param
+    * @return org.cny.yurayura.vo.ApiResult
+    */
     @PostMapping("/logout")
     @ApiOperation("管理员注销")
-    public ApiResult logout(@ApiIgnore HttpSession session) {
-        // 移除管理员session
-        session.removeAttribute("managerSession");
+    public ApiResult logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
         return ApiResult.success("管理员注销成功");
     }
 

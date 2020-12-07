@@ -1,4 +1,4 @@
-<div data-th-fragment="comic_info_fragment">
+<div data-th-fragment="comic_info_fragment" xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 
     <!-- container -->
     <div class="container p-0" id="container">
@@ -6,7 +6,7 @@
         <!-- 操作按钮及数据筛选表单row -->
         <div class="row mt-5">
             <div class="col-2 offset-2 mt-4">
-                <div class="btn-group float-left">
+                <div class="btn-group float-left" shiro:haspermission="manage">
                     <button type="button"
                             class="btn btn-dark btn-twitter btn-sm"
                             @click="insertModalOpen">
@@ -111,7 +111,7 @@
                             </button>
                             <br/><br/>
                             <button type="button" class="btn btn-info btn-sm font-size-14"
-                                    @click="updateModalOpen(item.id)">
+                                    @click="updateModalOpen(item.id)" shiro:haspermission="manage">
                                 <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
                             </button>
                         </td>

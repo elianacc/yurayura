@@ -1,4 +1,5 @@
-<div data-th-fragment="business_sidemenu_fragment" xmlns:th="http://www.thymeleaf.org">
+<div data-th-fragment="business_sidemenu_fragment" xmlns:th="http://www.thymeleaf.org"
+     xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 
     <!-- BootSideMenu -->
     <div id="bootSideMenu">
@@ -6,12 +7,12 @@
         <div class="side-user text-white p-1">
             <img src="/images/xiaomai.jpg"
                  class="img-thumbnail rounded" width="23%"/>
-            <span class="ml-3 font-weight-normal" th:text="'管理员：'+${session.managerSession.managerName}"></span>
+            <span class="ml-3 font-weight-normal" th:text="'系统用户：'+${session.managerSession.managerName}"></span>
         </div>
         <!-- metisMenu -->
         <nav class="sidebar-nav">
             <ul class="metismenu">
-                <li class="mm-active font-size-14">
+                <li class="mm-active font-size-14" shiro:hasPermission="sys">
                     <a class="has-arrow"
                        href="#" aria-expanded="true"><i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;系统管理</a>
                     <ul>
