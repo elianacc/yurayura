@@ -62,7 +62,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
                 // js无法读取cookie，防止xss攻击
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
-                log.info("管理员：{}，登入成功", currentManger.getManagerName());
+                log.info("系统用户：{}，登入成功", currentManger.getManagerName());
                 return ApiResult.success("管理员登入成功");
             } catch (UnknownAccountException uae) {
                 return ApiResult.warn("用户不存在");
