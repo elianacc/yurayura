@@ -2,6 +2,7 @@ package org.cny.yurayura.controller.sys.manager;
 
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -35,6 +36,22 @@ public class ManagerController {
 
     @Autowired
     private IManagerService iManagerService;
+
+    /**
+     * 查询系统管理员（根据id）
+     *
+     * @param id
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/getById")
+    @ApiOperation("查询系统管理员（根据id）")
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
+    public ApiResult getById(Integer id) {
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("id不能为空");
+        }
+        return ApiResult.success("查询成功", iManagerService.getById(id));
+    }
 
     /**
      * 获取管理员登入数字加英文验证码及图片
@@ -84,12 +101,12 @@ public class ManagerController {
         return iManagerService.login(dto, session, response);
     }
 
-   /**
-    * 管理员注销
-    *
-    * @param
-    * @return org.cny.yurayura.vo.ApiResult
-    */
+    /**
+     * 管理员注销
+     *
+     * @param
+     * @return org.cny.yurayura.vo.ApiResult
+     */
     @PostMapping("/logout")
     @ApiOperation("管理员注销")
     public ApiResult logout() {

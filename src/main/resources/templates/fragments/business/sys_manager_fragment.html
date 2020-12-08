@@ -1,0 +1,376 @@
+<div data-th-fragment="sys_manager_fragment" xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+    <!-- container -->
+    <div class="container p-0" id="container">
+
+        <!-- 操作按钮及数据筛选表单row -->
+        <div class="row mt-5">
+            <div class="col-2 offset-2 mt-4">
+                <div class="btn-group float-left" shiro:haspermission="sys">
+                    <button type="button"
+                            class="btn btn-dark btn-twitter btn-sm"
+                            @click="insertModalOpen">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;添加
+                    </button>
+                    <button type="button"
+                            class="btn btn-dark btn-twitter btn-sm"
+                            @click="deleteBatch">
+                        <i class='fa fa-trash'></i>&nbsp;&nbsp;删除
+                    </button>
+                </div>
+            </div>
+            <div class="col-4 offset-4 mt-4">
+                <form @submit.prevent="selectContent">
+                    <div class="input-group input-group-sm float-right">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">XXXXXXXXXX</span>
+                        </div>
+                        <input type="text" class="form-control" v-model.trim="selectFormData.XXXXXXXXXX"/>
+
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-twitter btn-sm" type="submit">
+                                <i class="fa fa-filter"></i>&nbsp;&nbsp;查询
+                            </button>
+                            <button class="btn btn-dark btn-twitter btn-sm" type="button"
+                                    @click="clearSelectContent">
+                                <i class="fa fa-eraser"></i>&nbsp;&nbsp;清空
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 数据表格row -->
+        <div class="row mt-3 r2">
+            <div class="col-10 offset-2 c1">
+                <table class="table table-dark table-borderless rounded bg-twitter" v-show="pageInfo">
+                    <thead>
+                    <tr>
+                        <td class="text-center"></td>
+                        <td class="text-center font-size-14" style="width:20%">XXXXXXXXXX</td>
+
+                        <td class="text-center font-size-14" style="width:15%">管理</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item,index) in pageInfo.list" :key="index">
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input"
+                                       :id="'customCheck-'+ index" :value="item.id" v-model="tbCheckIds"/>
+                                <label class="custom-control-label" :for="'customCheck-'+ index"></label>
+                            </div>
+                        </td>
+                        <td class="font-size-12 text-center align-middle">{{item.XXXXXXXXXX}}</td>
+
+                        <td class="text-center align-middle">
+                            <button type="button" class="btn btn-info btn-sm font-size-14"
+                                    @click="updateModalOpen(item.id)" shiro:haspermission="sys">
+                                <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;修改
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex align-items-center justify-content-center flex-row lead text-white font-size-14">
+                    <span v-show="!pageInfo"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;查询不到数据</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据表格信息及分页row -->
+        <div class="row mt-4 mb-5 r3">
+            <div class="col-2 offset-2">
+                <span class="badge badge-dark bg-twitter font-size-14"
+                      v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo"></span>
+                <span class="badge badge-dark bg-twitter font-size-14" v-show="!pageInfo">共0页/0个</span>
+            </div>
+            <div class="col-8 c2">
+                <nav v-show="pageInfo">
+                    <ul class="pagination float-right font-size-14">
+                        <li class='page-item'>
+                            <a class='page-link bg-twitter border-twitter text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
+                               @click="toFirstPage">首页</a>
+                        </li>
+                        <li class='page-item'>
+                            <a class='page-link bg-twitter border-twitter text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isFirstPage"
+                               @click="toPrePage">上一页</a>
+                        </li>
+                        <div v-for="item in pageInfo.navigatepageNums">
+                            <li class='page-item active' v-if="pageInfo.pageNum == item">
+                                <a class='page-link border-twitter'
+                                   href='javascript:void(0)'>{{item}}</a>
+                            </li>
+                            <li class='page-item' v-else>
+                                <a class='page-link bg-twitter border-twitter text-white'
+                                   href='javascript:void(0)' @click="toClickPage(item)">{{item}}</a>
+                            </li>
+                        </div>
+                        <li class='page-item'>
+                            <a class='page-link bg-twitter border-twitter text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isLastPage" @click="toNextPage">下一页</a>
+                        </li>
+                        <li class='page-item'>
+                            <a class='page-link bg-twitter border-twitter text-white'
+                               href='javascript:void(0)' v-show="!pageInfo.isLastPage"
+                               @click="toLastPage(pageInfo.pages)">末页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- 数据模态框 -->
+        <div class="modal fade" id="dataModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form @submit.prevent="submitContent">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <strong>{{modalTitle}}</strong>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span><i class="fa fa-window-close text-white font-size-30"></i></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group d-none">
+                                <label class="col-form-label"> id：</label>
+                                <input type="text" class="form-control form-control-sm" v-model="modalFormData.id"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label font-size-14"> XXXXXXXXXX：</label>
+                                <input type="text" class="form-control form-control-sm" placeholder=""
+                                       v-model.trim="modalFormData.XXXXXXXXXX"/>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger font-size-14" data-dismiss="modal">
+                                <i class="fa fa-close"></i>&nbsp;&nbsp;关闭
+                            </button>
+                            <button type="submit" class="btn btn-primary font-size-14">
+                                <i class="fa fa-check fa-lg"></i>&nbsp;&nbsp;提交
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src='/plugins/jquery.scrollUp.min.js'></script>
+    <script type='module'>
+        import {init, bootBox} from '/common.js';
+
+        new Vue({
+            el: '#container',
+            data: {
+                selectFormData: {
+
+                },
+                tbCheckIds: [],
+                nowPageNum: 1,
+                pageInfo: '',
+                modalTitle: '',
+                modalFormData: {
+                    id: 0,
+
+                }
+            },
+            methods: {
+                getPage() {
+                    let sendData = this.selectFormData;
+                    sendData.pageNum = this.nowPageNum;
+                    sendData.pageSize = 10;
+                    axios({
+                        method: 'post',
+                        url: 'XXXXXXXXXX/getPage',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        data: JSON.stringify(sendData),
+                        responseType: 'json'
+                    }).then(res => {
+                        if (res.data.code == 200) {
+                            this.pageInfo = res.data.data;
+                        } else if (res.data.code == 100) {
+                            this.pageInfo = '';
+                        } else if (res.data.code == 500) {
+                            bootBox.alert(res.data.msg);
+                        }
+                    });
+                },
+                selectContent() {
+                    this.nowPageNum = 1;
+                    this.getPage();
+                },
+                clearSelectContent() {
+                    this.selectFormData.XXXXXXXXXX = '';
+
+                    this.selectContent();
+                },
+                toFirstPage() {
+                    this.nowPageNum = 1;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toPrePage() {
+                    this.nowPageNum = this.nowPageNum - 1;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toNextPage() {
+                    this.nowPageNum = this.nowPageNum + 1;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toLastPage(lastPage) {
+                    this.nowPageNum = lastPage;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                toClickPage(clickPage) {
+                    this.nowPageNum = clickPage;
+                    this.getPage();
+                    this.scrollUp();
+                },
+                insertModalOpen() {
+                    this.modalTitle = '『添加窗口』';
+                    this.modalShow();
+                },
+                updateModalOpen(id) {
+                    this.modalTitle = '『修改窗口』';
+                    this.modalSetVal(id);
+                },
+                submitContent() {
+                    if (!this.modalFormData.XXXXXXXXXX) {
+                        toastr.warning('XXXXXXXXXX');
+                    } else {
+                        let sendData = new FormData();
+                        sendData.append('id', this.modalFormData.id);
+                        sendData.append('XXXXXXXXXX', this.modalFormData.XXXXXXXXXX);
+
+                        let sendUrl = '';
+                        if (this.modalFormData.id == 0) {
+                            sendUrl = 'XXXXXXXXXX/insert';
+                        } else {
+                            sendUrl = 'XXXXXXXXXX/update';
+                        }
+                        axios({
+                            method: 'post',
+                            url: sendUrl,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            data: sendData,
+                            responseType: 'json'
+                        }).then(res => {
+                            if (res.data.code == 200) {
+                                toastr.success(res.data.msg);
+                                if (this.modalFormData.id == 0) {
+                                    this.clearSelectContent();
+                                } else {
+                                    this.getPage();
+                                }
+                                this.modalHide();
+                            } else if (res.data.code == 100) {
+                                toastr.error(res.data.msg);
+                            } else if (res.data.code == 101) {
+                                console.log(res.data.msg);
+                            } else if (res.data.code == 500) {
+                                bootBox.alert(res.data.msg);
+                            }
+                        });
+                    }
+                },
+                deleteBatch() {
+                    bootBox.confirm('确定要删除选中项吗？', () => {
+                        if (this.tbCheckIds.length == 0) {
+                            toastr.warning('请至少选择一项删除');
+                        } else {
+                            let sendData = new FormData();
+                            sendData.append('ids', this.tbCheckIds);
+                            axios({
+                                method: 'post',
+                                url: 'XXXXXXXXXX/deleteBatchByIds',
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                },
+                                data: sendData,
+                                responseType: 'json'
+                            }).then(res => {
+                                if (res.data.code == 200) {
+                                    toastr.success(res.data.msg);
+                                    this.tbCheckIds = [];
+                                    this.getPage();
+                                } else if (res.data.code == 100) {
+                                    toastr.error(res.data.msg);
+                                } else if (res.data.code == 500) {
+                                    bootBox.alert(res.data.msg);
+                                }
+                            });
+                        }
+                    });
+                },
+                modalSetVal(id) {
+                    axios({
+                        method: 'post',
+                        url: 'XXXXXXXXXX/getById',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        params: {
+                            id: id
+                        },
+                        responseType: 'json'
+                    }).then(res => {
+                        if (res.data.code == 200) {
+                            this.modalFormData.id = res.data.data.id;
+                            this.modalFormData.XXXXXXXXXX = res.data.data.XXXXXXXXXX;
+
+                            this.modalShow();
+                        } else if (res.data.code == 100) {
+                            toastr.error(res.data.msg);
+                        } else if (res.data.code == 500) {
+                            bootBox.alert(res.data.msg);
+                        }
+                    });
+                },
+                modalReset() {
+                    $('#dataModal').on('hidden.bs.modal', () => {
+                        this.modalFormData.id = 0;
+                        this.modalFormData.XXXXXXXXXX = '';
+
+                    });
+                },
+                modalShow() {
+                    $('#dataModal').modal();
+                },
+                modalHide() {
+                    $('#dataModal').modal('hide');
+                },
+                scrollUp() {
+                    document.getElementById('scrollUp').click();
+                }
+            },
+            mounted() {
+                init.initToastr();
+                init.initScrollUp();
+                this.modalReset();
+                this.getPage();
+            }
+        });
+
+    </script>
+
+    <style>
+
+    </style>
+
+</div>

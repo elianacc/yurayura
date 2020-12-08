@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Yura~yura~后台管理 - (●'◡'●)ﾉ♥</title>
+    <link href="/images/yura.ico" rel="icon">
+    <link href="/app.css" rel="stylesheet">
+    <link href="/business.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- WEB SITE JS -->
+<script src="/app.js"></script>
+
+<div th:replace="fragments/business/business_navbar_fragment :: business_navbar_fragment"></div>
+<div th:replace="fragments/business/business_sidemenu_fragment :: business_sidemenu_fragment"></div>
+<div th:replace="fragments/business/sys_manager_fragment :: sys_manager_fragment"></div>
+
+</body>
+</html>
