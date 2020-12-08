@@ -33,7 +33,7 @@ public class ShiroConfig {
 
         /*
          *  添加shiro内置过滤器
-         *  anno: 无需认证即可访问
+         *  anon: 无需认证即可访问
          *  authc: 必须认证才可访问
          *  user: 必须拥有记住我功能才可访问
          *  perms: 必须拥有某个权限才可访问
@@ -43,6 +43,7 @@ public class ShiroConfig {
 
         fillterMap.put("/business/business_index", "authc");
         fillterMap.put("/business/sys_dict", "authc");
+        fillterMap.put("/business/sys_manager", "authc");
         fillterMap.put("/business/comic_info", "authc");
 
         fillterMap.put("/comic/get*", "perms[select]");
@@ -51,6 +52,10 @@ public class ShiroConfig {
         fillterMap.put("/comic/update*", "perms[update]");
         fillterMap.put("/sys/dict/getByDictCode", "perms[select]");
         fillterMap.put("/sys/dict/**", "perms[sys]");
+        fillterMap.put("/sys/manager/getVerifyCode", "anon");
+        fillterMap.put("/sys/manager/login", "anon");
+        fillterMap.put("/sys/manager/logout", "anon");
+        fillterMap.put("/sys/manager/**", "perms[sys]");
 
         filterFactoryBean.setFilterChainDefinitionMap(fillterMap);
         filterFactoryBean.setLoginUrl("/business/manager_unlogin");

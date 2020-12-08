@@ -23,10 +23,9 @@
                 <form @submit.prevent="selectContent">
                     <div class="input-group input-group-sm float-right">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">XXXXXXXXXX</span>
+                            <span class="input-group-text">管理员名</span>
                         </div>
-                        <input type="text" class="form-control" v-model.trim="selectFormData.XXXXXXXXXX"/>
-
+                        <input type="text" class="form-control" v-model.trim="selectFormData.managerName"/>
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-twitter btn-sm" type="submit">
                                 <i class="fa fa-filter"></i>&nbsp;&nbsp;查询
@@ -48,9 +47,12 @@
                     <thead>
                     <tr>
                         <td class="text-center"></td>
-                        <td class="text-center font-size-14" style="width:20%">XXXXXXXXXX</td>
-
-                        <td class="text-center font-size-14" style="width:15%">管理</td>
+                        <td class="text-center font-size-14" style="width:20%">管理员名</td>
+                        <td class="text-center font-size-14" style="width:20%">管理员权限</td>
+                        <td class="text-center font-size-14" style="width:15%">创建时间</td>
+                        <td class="text-center font-size-14" style="width:15%">更新时间</td>
+                        <td class="text-center font-size-14" style="width:10%">状态</td>
+                        <td class="text-center font-size-14" style="width:20%">管理</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,8 +64,11 @@
                                 <label class="custom-control-label" :for="'customCheck-'+ index"></label>
                             </div>
                         </td>
-                        <td class="font-size-12 text-center align-middle">{{item.XXXXXXXXXX}}</td>
-
+                        <td class="font-size-12 text-center align-middle">{{item.managerName}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.managerPermission | managerPermissionFilter}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.managerCreateTime}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.managerUpdateTime}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.managerStatus | managerStatusFilter}}</td>
                         <td class="text-center align-middle">
                             <button type="button" class="btn btn-info btn-sm font-size-14"
                                     @click="updateModalOpen(item.id)" shiro:haspermission="sys">
@@ -171,7 +176,7 @@
             el: '#container',
             data: {
                 selectFormData: {
-
+                    managerName: ''
                 },
                 tbCheckIds: [],
                 nowPageNum: 1,
@@ -186,10 +191,10 @@
                 getPage() {
                     let sendData = this.selectFormData;
                     sendData.pageNum = this.nowPageNum;
-                    sendData.pageSize = 10;
+                    sendData.pageSize = 20;
                     axios({
                         method: 'post',
-                        url: 'XXXXXXXXXX/getPage',
+                        url: '/sys/manager/getPage',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8',
                             'X-Requested-With': 'XMLHttpRequest'
@@ -211,8 +216,7 @@
                     this.getPage();
                 },
                 clearSelectContent() {
-                    this.selectFormData.XXXXXXXXXX = '';
-
+                    this.selectFormData.managerName = '';
                     this.selectContent();
                 },
                 toFirstPage() {
@@ -364,6 +368,39 @@
                 init.initScrollUp();
                 this.modalReset();
                 this.getPage();
+            }
+        });
+
+        Vue.filter('managerPermissionFilter', function (value) {
+            let permArr = value.split(',');
+            let permNewArr = [];
+            permArr.forEach(perm => {
+               switch (perm) {
+                   case 'sys':
+                       permNewArr.push('系统管理');
+                       break;
+                   case 'insert':
+                       permNewArr.push('插入');
+                       break;
+                   case 'delete':
+                       permNewArr.push('删除');
+                       break;
+                   case 'update':
+                       permNewArr.push('更新');
+                       break;
+                   case 'select':
+                       permNewArr.push('查询');
+                       break;
+               }
+            });
+            return permNewArr.toString();
+        });
+
+        Vue.filter('managerStatusFilter', function (value) {
+            if (value == 1) {
+                return '启用';
+            } else {
+                return '禁用';
             }
         });
 

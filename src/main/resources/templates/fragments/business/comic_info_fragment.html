@@ -694,7 +694,7 @@
         });
 
         Vue.filter('cmLabelFilter', function (value) {
-            let arrCmLabel = (value).split(',');
+            let arrCmLabel = value.split(',');
             arrCmLabel = arrCmLabel.filter(label => label != '');
             return arrCmLabel.toString();
         });

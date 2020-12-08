@@ -18,6 +18,8 @@
                     <ul>
                         <li><a :href="sideMenuUrl.menuA[0]">
                             <i class="fa fa-book fa-lg"></i>&nbsp;&nbsp;数据字典管理</a></li>
+                        <li><a :href="sideMenuUrl.menuA[1]">
+                            <i class="fa fa-user-secret fa-lg"></i>&nbsp;&nbsp;管理员管理</a></li>
                     </ul>
                 </li>
                 <li class="mm-active font-size-14">
@@ -49,7 +51,8 @@
             data: {
                 sideMenuUrl: {
                     menuA: [
-                        '/business/sys_dict'
+                        '/business/sys_dict',
+                        '/business/sys_manager'
                     ],
                     menuB: [
                         '/business/comic_info'
@@ -104,7 +107,7 @@
         }
 
         .sidebar-nav .metismenu li:first-child {
-            margin-top: 0px;
+            margin-top: 0;
         }
 
         .sidebar-nav .metismenu > li {

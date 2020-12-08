@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.cny.yurayura.dto.ManagerSelectDto;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.MangerLoginDto;
 import org.cny.yurayura.service.sys.manager.IManagerService;
@@ -51,6 +52,23 @@ public class ManagerController {
             return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iManagerService.getById(id));
+    }
+
+    /**
+     * 分页查询系统管理员
+     *
+     * @param dto
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/getPage")
+    @ApiOperation("分页查询系统管理员")
+    public ApiResult getPage(@RequestBody ManagerSelectDto dto) {
+        if (StringUtils.isEmpty(dto.getPageNum())) {
+            return ApiResult.warn("页码不能为空");
+        } else if (StringUtils.isEmpty(dto.getPageSize())) {
+            dto.setPageSize(10); //页记录数默认10
+        }
+        return iManagerService.getPage(dto);
     }
 
     /**
