@@ -90,13 +90,13 @@
             },
             methods: {
                 validataForm() {
-                    if (this.formData.managerName == '') {
+                    if (!this.formData.managerName) {
                         Vue.set(this.isInValid, 0, true);
                         return false;
-                    } else if (this.formData.managerPassword == '') {
+                    } else if (!this.formData.managerPassword) {
                         Vue.set(this.isInValid, 1, true);
                         return false;
-                    } else if (this.formData.verifyCode == '') {
+                    } else if (!this.formData.verifyCode) {
                         Vue.set(this.isInValid, 2, true);
                         return false;
                     } else {
