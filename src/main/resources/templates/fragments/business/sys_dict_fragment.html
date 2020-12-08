@@ -43,7 +43,7 @@
         <!-- 数据表格row -->
         <div class="row mt-3 r2">
             <div class="col-10 offset-2 c1">
-                <table class="table table-dark table-borderless rounded bg-twitter" v-show="pageInfo != ''">
+                <table class="table table-dark table-borderless rounded bg-twitter" v-show="pageInfo">
                     <thead>
                     <tr>
                         <td class="text-center"></td>
@@ -86,11 +86,11 @@
         <div class="row mt-4 mb-5 r3">
             <div class="col-2 offset-2">
                 <span class="badge badge-dark bg-twitter font-size-14"
-                      v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo != ''"></span>
+                      v-text="'共' + pageInfo.pages + '页/' + pageInfo.total + '个'" v-show="pageInfo"></span>
                 <span class="badge badge-dark bg-twitter font-size-14" v-show="!pageInfo">共0页/0个</span>
             </div>
             <div class="col-8 c2">
-                <nav v-show="pageInfo != ''">
+                <nav v-show="pageInfo">
                     <ul class="pagination float-right font-size-14">
                         <li class='page-item'>
                             <a class='page-link bg-twitter border-twitter text-white'
