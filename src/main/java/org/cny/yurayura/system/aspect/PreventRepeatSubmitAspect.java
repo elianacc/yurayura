@@ -3,6 +3,7 @@ package org.cny.yurayura.system.aspect;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -56,7 +57,7 @@ public class PreventRepeatSubmitAspect {
             return pjp.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            throw new CustomizeException(500, "提交进程异常！", throwable.getMessage());
+            throw new CustomizeException(500, "提交进程异常！", ExceptionUtils.getStackTrace(throwable));
         }
     }
 }
