@@ -70,11 +70,11 @@ public class DictController {
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
     public ApiResult insert(@RequestBody Dict dict) {
-        if (StringUtils.isEmpty(dict.getDictCode().trim())) {
+        if (StringUtils.isEmpty(dict.getDictCode())) {
             return ApiResult.warn("字典编码不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictName().trim())) {
+        } else if (StringUtils.isEmpty(dict.getDictName())) {
             return ApiResult.warn("字典名不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictVal().trim())) {
+        } else if (StringUtils.isEmpty(dict.getDictVal())) {
             return ApiResult.warn("字典值不能为空");
         } else if (StringUtils.isEmpty(dict.getDictStatus())) {
             return ApiResult.warn("字典状态不能为空");
@@ -110,11 +110,11 @@ public class DictController {
     public ApiResult update(@RequestBody Dict dict) {
         if (dict.getId() == 0) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictCode().trim())) {
+        } else if (StringUtils.isEmpty(dict.getDictCode())) {
             return ApiResult.warn("字典编码不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictName().trim())) {
+        } else if (StringUtils.isEmpty(dict.getDictName())) {
             return ApiResult.warn("字典名不能为空");
-        } else if (StringUtils.isEmpty(dict.getDictVal().trim())) {
+        } else if (StringUtils.isEmpty(dict.getDictVal())) {
             return ApiResult.warn("字典值不能为空");
         } else if (StringUtils.isEmpty(dict.getDictStatus())) {
             return ApiResult.warn("字典状态不能为空");
@@ -132,7 +132,7 @@ public class DictController {
     @ApiOperation("查询系统数据字典（根据字典编码）")
     @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true)
     public ApiResult getByDictCode(String dictCode) {
-        if (StringUtils.isEmpty(dictCode.trim())) {
+        if (StringUtils.isEmpty(dictCode)) {
             return ApiResult.warn("字典编码不能为空");
         }
         return iDictService.getByDictCode(dictCode);

@@ -72,7 +72,7 @@ public class ComicController {
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
     public ApiResult insert(ComicInstAndUpdtDto dto) {
-        if (StringUtils.isEmpty(dto.getComicName().trim())) {
+        if (StringUtils.isEmpty(dto.getComicName())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
             return ApiResult.warn("状态不能为空");
@@ -112,7 +112,7 @@ public class ComicController {
     public ApiResult update(ComicInstAndUpdtDto dto) {
         if (dto.getId() == 0) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(dto.getComicName().trim())) {
+        } else if (StringUtils.isEmpty(dto.getComicName())) {
             return ApiResult.warn("名称不能为空");
         } else if (StringUtils.isEmpty(dto.getComicStatus())) {
             return ApiResult.warn("状态不能为空");

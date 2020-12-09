@@ -155,9 +155,13 @@
                                        v-model.trim="modalFormData.managerName"/>
                             </div>
                             <div class="form-group">
-                                <label class="font-size-14"> 密码：</label>
+                                <label class="font-size-14" v-if="isInsertModal"> 密码：</label>
+                                <label class="font-size-14" v-else> 修改密码：</label>
                                 <input type="password" class="form-control form-control-sm" placeholder="请输入密码"
-                                       v-model.trim="modalFormData.managerPassword"/>
+                                       v-model.trim="modalFormData.managerPassword" v-if="isInsertModal"/>
+                                <input type="password" class="form-control form-control-sm"
+                                       placeholder="修改密码为空使用此管理员旧密码"
+                                       v-model.trim="modalFormData.managerPassword" v-else/>
                             </div>
                             <div class="form-group">
                                 <label class="font-size-14"> 权限：</label><br/>
@@ -186,7 +190,7 @@
                                 </div>
                             </div>
                             <div class="form-group" v-show="!isInsertModal">
-                                <label class="font-size-14">注意：权限更新后，此用户需重新登入后生效！</label>
+                                <label class="font-size-14">注意：权限修改后，此用户需重新登入后生效！</label>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -301,7 +305,7 @@
                 submitContent() {
                     if (!this.modalFormData.managerName) {
                         toastr.warning('管理员名不能为空');
-                    } else if (!this.modalFormData.managerPassword) {
+                    } else if (!this.modalFormData.managerPassword && this.isInsertModal) {
                         toastr.warning('管理员密码不能为空');
                     } else if (!this.modalFormData.managerPermArr.toString()) {
                         toastr.warning('管理员权限不能为空');
@@ -313,7 +317,9 @@
                             sendUrl = '/sys/manager/update';
                         }
                         let sendData = this.modalFormData;
-                        sendData.managerPassword = Base64.encode(sendData.managerPassword);
+                        if (sendData.managerPassword) {
+                            sendData.managerPassword = Base64.encode(sendData.managerPassword);
+                        }
                         sendData.managerPermission = sendData.managerPermArr.toString();
                         axios({
                             method: 'post',
@@ -388,7 +394,6 @@
                             this.modalFormData = {
                                 id: res.data.data.id,
                                 managerName: res.data.data.managerName,
-                                managerPassword: res.data.data.managerPassword,
                                 managerPermArr: res.data.data.managerPermission.split(','),
                                 managerStatus: res.data.data.managerStatus
                             };
@@ -448,7 +453,7 @@
                         permNewArr.push('删除');
                         break;
                     case 'update':
-                        permNewArr.push('更新');
+                        permNewArr.push('修改');
                         break;
                     case 'select':
                         permNewArr.push('查询');

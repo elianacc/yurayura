@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * 番剧插入与更新 dto
+ * 番剧插入与修改 dto
  *
  * @author CNY
  * @since 2019-11-21
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "番剧插入与更新dto")
+@ApiModel(value = "番剧插入与修改dto")
 public class ComicInstAndUpdtDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

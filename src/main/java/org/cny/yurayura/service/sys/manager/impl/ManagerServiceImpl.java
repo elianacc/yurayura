@@ -78,6 +78,13 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ApiResult update(Manager manager) {
+        // 修改密码为空时使用此管理员旧密码
+        if (StringUtils.isEmpty(manager.getManagerPassword())) {
+            Manager updateManager = managerMapper.selectById(manager.getId());
+            manager.setManagerPassword(updateManager.getManagerPassword());
+        } else {
+            manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
+        }
         managerMapper.updateById(manager);
         return ApiResult.success("修改成功");
     }

@@ -83,9 +83,9 @@ public class ManagerController {
     @PostMapping("/insert")
     @ApiOperation("添加系统管理员")
     public ApiResult insert(@RequestBody Manager manager) {
-        if (StringUtils.isEmpty(manager.getManagerName().trim())) {
+        if (StringUtils.isEmpty(manager.getManagerName())) {
             return ApiResult.warn("管理员名不能为空");
-        } else if (StringUtils.isEmpty(manager.getManagerPassword().trim())) {
+        } else if (StringUtils.isEmpty(manager.getManagerPassword())) {
             return ApiResult.warn("管理员密码不能为空");
         } else if (StringUtils.isEmpty(manager.getManagerPermission())) {
             return ApiResult.warn("管理员权限不能为空");
@@ -123,10 +123,6 @@ public class ManagerController {
     public ApiResult update(@RequestBody Manager manager) {
         if (manager.getId() == 0) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(manager.getManagerName().trim())) {
-            return ApiResult.warn("管理员名不能为空");
-        } else if (StringUtils.isEmpty(manager.getManagerPassword().trim())) {
-            return ApiResult.warn("管理员密码不能为空");
         } else if (StringUtils.isEmpty(manager.getManagerPermission())) {
             return ApiResult.warn("管理员权限不能为空");
         } else if (StringUtils.isEmpty(manager.getManagerStatus())) {
@@ -173,11 +169,11 @@ public class ManagerController {
     public ApiResult login(@RequestBody MangerLoginDto dto, @ApiIgnore HttpSession session
             , @ApiIgnore HttpServletResponse response) {
 
-        if (StringUtils.isEmpty(dto.getManagerName().trim())) {
+        if (StringUtils.isEmpty(dto.getManagerName())) {
             return ApiResult.warn("用户名不能为空");
-        } else if (StringUtils.isEmpty(dto.getManagerPassword().trim())) {
+        } else if (StringUtils.isEmpty(dto.getManagerPassword())) {
             return ApiResult.warn("密码不能为空");
-        } else if (StringUtils.isEmpty(dto.getVerifyCode().trim())) {
+        } else if (StringUtils.isEmpty(dto.getVerifyCode())) {
             return ApiResult.warn("验证码不能为空");
         }
         return iManagerService.login(dto, session, response);
