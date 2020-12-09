@@ -20,6 +20,7 @@ import org.cny.yurayura.service.sys.manager.IManagerService;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
@@ -27,6 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -54,6 +56,30 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
             return ApiResult.warn("查询不到数据");
         }
         return ApiResult.success("分页查询成功", pageInfo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ApiResult insert(Manager manager) {
+        manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
+        manager.setManagerCreateTime(LocalDateTime.now());
+        manager.setManagerUpdateTime(null);
+        managerMapper.insert(manager);
+        return ApiResult.success("添加成功");
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ApiResult deleteBatchByIds(List<Integer> ids) {
+        managerMapper.deleteBatchIds(ids);
+        return ApiResult.success("删除成功");
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ApiResult update(Manager manager) {
+        managerMapper.updateById(manager);
+        return ApiResult.success("修改成功");
     }
 
     @SneakyThrows

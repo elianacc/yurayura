@@ -65,10 +65,13 @@
                             </div>
                         </td>
                         <td class="font-size-12 text-center align-middle">{{item.managerName}}</td>
-                        <td class="font-size-12 text-center align-middle">{{item.managerPermission | managerPermissionFilter}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.managerPermission |
+                            managerPermissionFilter}}
+                        </td>
                         <td class="font-size-12 text-center align-middle">{{item.managerCreateTime}}</td>
                         <td class="font-size-12 text-center align-middle">{{item.managerUpdateTime}}</td>
-                        <td class="font-size-12 text-center align-middle">{{item.managerStatus | managerStatusFilter}}</td>
+                        <td class="font-size-12 text-center align-middle">{{item.managerStatus | managerStatusFilter}}
+                        </td>
                         <td class="text-center align-middle">
                             <button type="button" class="btn btn-info btn-sm font-size-14"
                                     @click="updateModalOpen(item.id)" shiro:haspermission="sys">
@@ -143,15 +146,48 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group d-none">
-                                <label class="col-form-label"> id：</label>
+                                <label class="font-size-14"> id：</label>
                                 <input type="text" class="form-control form-control-sm" v-model="modalFormData.id"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label font-size-14"> XXXXXXXXXX：</label>
-                                <input type="text" class="form-control form-control-sm" placeholder=""
-                                       v-model.trim="modalFormData.XXXXXXXXXX"/>
+                                <label class="font-size-14"> 管理员名：</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="请输入管理员名"
+                                       v-model.trim="modalFormData.managerName"/>
                             </div>
-
+                            <div class="form-group">
+                                <label class="font-size-14"> 密码：</label>
+                                <input type="password" class="form-control form-control-sm" placeholder="请输入密码"
+                                       v-model.trim="modalFormData.managerPassword"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-size-14"> 权限：</label><br/>
+                                <div class="custom-control custom-checkbox custom-control-inline"
+                                     v-for="item in managerPermissionDict">
+                                    <input type="checkbox" class="custom-control-input form-control-sm"
+                                           :id="'managerPerm-'+ item.id" :value="item.dictVal"
+                                           v-model="modalFormData.managerPermArr"/>
+                                    <label class="custom-control-label font-size-14" :for="'managerPerm-'+ item.id">
+                                        <i class="fa fa-shield"></i> {{item.dictName}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-size-14"> 状态：</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="managerStatus1" class="custom-control-input form-control-sm"
+                                           value="1" v-model="modalFormData.managerStatus"/>
+                                    <label class="custom-control-label font-size-14"
+                                           for="managerStatus1">启用</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="managerStatus2" class="custom-control-input form-control-sm"
+                                           value="0" v-model="modalFormData.managerStatus"/>
+                                    <label class="custom-control-label font-size-14"
+                                           for="managerStatus2">禁用</label>
+                                </div>
+                            </div>
+                            <div class="form-group" v-show="!isInsertModal">
+                                <label class="font-size-14">注意：权限更新后，此用户需重新登入后生效！</label>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger font-size-14" data-dismiss="modal">
@@ -169,8 +205,9 @@
     </div>
 
     <script src='/plugins/jquery.scrollUp.min.js'></script>
+    <script src='/plugins/base64.min.js'></script>
     <script type='module'>
-        import {init, bootBox} from '/common.js';
+        import {init, bootBox, sysDict} from '/common.js';
 
         new Vue({
             el: '#container',
@@ -182,10 +219,15 @@
                 nowPageNum: 1,
                 pageInfo: '',
                 modalTitle: '',
+                isInsertModal: true,
                 modalFormData: {
                     id: 0,
-
-                }
+                    managerName: '',
+                    managerPassword: '',
+                    managerPermArr: [],
+                    managerStatus: 1
+                },
+                managerPermissionDict: ''
             },
             methods: {
                 getPage() {
@@ -216,7 +258,9 @@
                     this.getPage();
                 },
                 clearSelectContent() {
-                    this.selectFormData.managerName = '';
+                    this.selectFormData = {
+                        managerName: ''
+                    };
                     this.selectContent();
                 },
                 toFirstPage() {
@@ -246,33 +290,39 @@
                 },
                 insertModalOpen() {
                     this.modalTitle = '『添加窗口』';
+                    this.isInsertModal = true;
                     this.modalShow();
                 },
                 updateModalOpen(id) {
                     this.modalTitle = '『修改窗口』';
+                    this.isInsertModal = false;
                     this.modalSetVal(id);
                 },
                 submitContent() {
-                    if (!this.modalFormData.XXXXXXXXXX) {
-                        toastr.warning('XXXXXXXXXX');
+                    if (!this.modalFormData.managerName) {
+                        toastr.warning('管理员名不能为空');
+                    } else if (!this.modalFormData.managerPassword) {
+                        toastr.warning('管理员密码不能为空');
+                    } else if (!this.modalFormData.managerPermArr.toString()) {
+                        toastr.warning('管理员权限不能为空');
                     } else {
-                        let sendData = new FormData();
-                        sendData.append('id', this.modalFormData.id);
-                        sendData.append('XXXXXXXXXX', this.modalFormData.XXXXXXXXXX);
-
                         let sendUrl = '';
                         if (this.modalFormData.id == 0) {
-                            sendUrl = 'XXXXXXXXXX/insert';
+                            sendUrl = '/sys/manager/insert';
                         } else {
-                            sendUrl = 'XXXXXXXXXX/update';
+                            sendUrl = '/sys/manager/update';
                         }
+                        let sendData = this.modalFormData;
+                        sendData.managerPassword = Base64.encode(sendData.managerPassword);
+                        sendData.managerPermission = sendData.managerPermArr.toString();
                         axios({
                             method: 'post',
                             url: sendUrl,
                             headers: {
+                                'Content-Type': 'application/json;charset=utf-8',
                                 'X-Requested-With': 'XMLHttpRequest'
                             },
-                            data: sendData,
+                            data: JSON.stringify(sendData),
                             responseType: 'json'
                         }).then(res => {
                             if (res.data.code == 200) {
@@ -302,7 +352,7 @@
                             sendData.append('ids', this.tbCheckIds);
                             axios({
                                 method: 'post',
-                                url: 'XXXXXXXXXX/deleteBatchByIds',
+                                url: '/sys/manager/deleteBatchByIds',
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest'
                                 },
@@ -325,7 +375,7 @@
                 modalSetVal(id) {
                     axios({
                         method: 'post',
-                        url: 'XXXXXXXXXX/getById',
+                        url: '/sys/manager/getById',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         },
@@ -335,9 +385,13 @@
                         responseType: 'json'
                     }).then(res => {
                         if (res.data.code == 200) {
-                            this.modalFormData.id = res.data.data.id;
-                            this.modalFormData.XXXXXXXXXX = res.data.data.XXXXXXXXXX;
-
+                            this.modalFormData = {
+                                id: res.data.data.id,
+                                managerName: res.data.data.managerName,
+                                managerPassword: res.data.data.managerPassword,
+                                managerPermArr: res.data.data.managerPermission.split(','),
+                                managerStatus: res.data.data.managerStatus
+                            };
                             this.modalShow();
                         } else if (res.data.code == 100) {
                             toastr.error(res.data.msg);
@@ -348,9 +402,13 @@
                 },
                 modalReset() {
                     $('#dataModal').on('hidden.bs.modal', () => {
-                        this.modalFormData.id = 0;
-                        this.modalFormData.XXXXXXXXXX = '';
-
+                        this.modalFormData = {
+                            id: 0,
+                            managerName: '',
+                            managerPassword: '',
+                            managerPermArr: [],
+                            managerStatus: 1
+                        };
                     });
                 },
                 modalShow() {
@@ -361,12 +419,16 @@
                 },
                 scrollUp() {
                     document.getElementById('scrollUp').click();
+                },
+                getSysDict() {
+                    this.managerPermissionDict = sysDict.get('managerPermission');
                 }
             },
             mounted() {
                 init.initToastr();
                 init.initScrollUp();
                 this.modalReset();
+                this.getSysDict();
                 this.getPage();
             }
         });
@@ -375,23 +437,23 @@
             let permArr = value.split(',');
             let permNewArr = [];
             permArr.forEach(perm => {
-               switch (perm) {
-                   case 'sys':
-                       permNewArr.push('系统管理');
-                       break;
-                   case 'insert':
-                       permNewArr.push('插入');
-                       break;
-                   case 'delete':
-                       permNewArr.push('删除');
-                       break;
-                   case 'update':
-                       permNewArr.push('更新');
-                       break;
-                   case 'select':
-                       permNewArr.push('查询');
-                       break;
-               }
+                switch (perm) {
+                    case 'sys':
+                        permNewArr.push('系统管理');
+                        break;
+                    case 'insert':
+                        permNewArr.push('添加');
+                        break;
+                    case 'delete':
+                        permNewArr.push('删除');
+                        break;
+                    case 'update':
+                        permNewArr.push('更新');
+                        break;
+                    case 'select':
+                        permNewArr.push('查询');
+                        break;
+                }
             });
             return permNewArr.toString();
         });

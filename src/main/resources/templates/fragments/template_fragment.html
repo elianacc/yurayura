@@ -138,11 +138,11 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group d-none">
-                                <label class="col-form-label"> id：</label>
+                                <label class="font-size-14"> id：</label>
                                 <input type="text" class="form-control form-control-sm" v-model="modalFormData.id"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label font-size-14"> XXXXXXXXXX：</label>
+                                <label class="font-size-14"> XXXXXXXXXX：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder=""
                                        v-model.trim="modalFormData.XXXXXXXXXX"/>
                             </div>
@@ -211,8 +211,10 @@
                     this.getPage();
                 },
                 clearSelectContent() {
-                    this.selectFormData.XXXXXXXXXX = '';
+                    this.selectFormData = {
+                        XXXXXXXXXX: ''
 
+                    };
                     this.selectContent();
                 },
                 toFirstPage() {
@@ -252,9 +254,14 @@
                     if (!this.modalFormData.XXXXXXXXXX) {
                         toastr.warning('XXXXXXXXXX');
                     } else {
-                        let sendData = new FormData();
-                        sendData.append('id', this.modalFormData.id);
-                        sendData.append('XXXXXXXXXX', this.modalFormData.XXXXXXXXXX);
+                        // 提交表单存在文件时用FormData
+                        // let sendData = new FormData();
+                        // Object.keys(this.modalFormData).forEach(key => {
+                        //     sendData.append(key, this.modalFormData[key]);
+                        // });
+                        // if (this.$refs.XXXXXXXXXX.value) {
+                        //     sendData.append('cmImgFile', this.$refs.XXXXXXXXXX.files[0]);
+                        // }
 
                         let sendUrl = '';
                         if (this.modalFormData.id == 0) {
@@ -266,9 +273,12 @@
                             method: 'post',
                             url: sendUrl,
                             headers: {
+                                'Content-Type': 'application/json;charset=utf-8', // 提交表单不存在文件设置请求头为json
                                 'X-Requested-With': 'XMLHttpRequest'
                             },
-                            data: sendData,
+                            // 提交表单不存在文件直接传json参数
+                            data: JSON.stringify(this.modalFormData),
+                            //data: sendData,
                             responseType: 'json'
                         }).then(res => {
                             if (res.data.code == 200) {
@@ -331,8 +341,11 @@
                         responseType: 'json'
                     }).then(res => {
                         if (res.data.code == 200) {
-                            this.modalFormData.id = res.data.data.id;
-                            this.modalFormData.XXXXXXXXXX = res.data.data.XXXXXXXXXX;
+                            this.modalFormData = {
+                                id: res.data.data.id,
+                                XXXXXXXXXX: res.data.data.XXXXXXXXXX,
+
+                            };
 
                             this.modalShow();
                         } else if (res.data.code == 100) {
@@ -344,8 +357,11 @@
                 },
                 modalReset() {
                     $('#dataModal').on('hidden.bs.modal', () => {
-                        this.modalFormData.id = 0;
-                        this.modalFormData.XXXXXXXXXX = '';
+                        this.modalFormData = {
+                            id: 0,
+                            XXXXXXXXXX: '',
+
+                        };
 
                     });
                 },

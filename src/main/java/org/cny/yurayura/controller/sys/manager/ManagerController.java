@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.cny.yurayura.dto.ManagerSelectDto;
+import org.cny.yurayura.entity.sys.manager.Manager;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.dto.MangerLoginDto;
 import org.cny.yurayura.service.sys.manager.IManagerService;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * 系统管理员 controller
@@ -69,6 +71,68 @@ public class ManagerController {
             dto.setPageSize(10); //页记录数默认10
         }
         return iManagerService.getPage(dto);
+    }
+
+    /**
+     * 添加系统管理员
+     *
+     * @param manager
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PreventRepeatSubmit
+    @PostMapping("/insert")
+    @ApiOperation("添加系统管理员")
+    public ApiResult insert(@RequestBody Manager manager) {
+        if (StringUtils.isEmpty(manager.getManagerName().trim())) {
+            return ApiResult.warn("管理员名不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerPassword().trim())) {
+            return ApiResult.warn("管理员密码不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerPermission())) {
+            return ApiResult.warn("管理员权限不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerStatus())) {
+            return ApiResult.warn("管理员状态不能为空");
+        }
+        return iManagerService.insert(manager);
+    }
+
+    /**
+     * 批量删除系统管理员（根据id组）
+     *
+     * @param ids
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PostMapping("/deleteBatchByIds")
+    @ApiOperation("批量删除系统管理员（根据id组）")
+    @ApiImplicitParam(name = "ids", value = "id组", required = true)
+    public ApiResult deleteBatchByIds(@RequestParam("ids") List<Integer> ids) {
+        if (ids.isEmpty()) {
+            return ApiResult.warn("id组不能为空");
+        }
+        return iManagerService.deleteBatchByIds(ids);
+    }
+
+    /**
+     * 修改系统管理员
+     *
+     * @param manager
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @PreventRepeatSubmit
+    @PostMapping("/update")
+    @ApiOperation("修改系统管理员")
+    public ApiResult update(@RequestBody Manager manager) {
+        if (manager.getId() == 0) {
+            return ApiResult.warn("id不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerName().trim())) {
+            return ApiResult.warn("管理员名不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerPassword().trim())) {
+            return ApiResult.warn("管理员密码不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerPermission())) {
+            return ApiResult.warn("管理员权限不能为空");
+        } else if (StringUtils.isEmpty(manager.getManagerStatus())) {
+            return ApiResult.warn("管理员状态不能为空");
+        }
+        return iManagerService.update(manager);
     }
 
     /**

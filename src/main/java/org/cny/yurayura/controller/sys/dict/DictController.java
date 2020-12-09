@@ -69,7 +69,7 @@ public class DictController {
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
-    public ApiResult insert(Dict dict) {
+    public ApiResult insert(@RequestBody Dict dict) {
         if (StringUtils.isEmpty(dict.getDictCode().trim())) {
             return ApiResult.warn("字典编码不能为空");
         } else if (StringUtils.isEmpty(dict.getDictName().trim())) {
@@ -107,7 +107,7 @@ public class DictController {
     @PreventRepeatSubmit
     @PostMapping("/update")
     @ApiOperation("修改系统数据字典")
-    public ApiResult update(Dict dict) {
+    public ApiResult update(@RequestBody Dict dict) {
         if (dict.getId() == 0) {
             return ApiResult.warn("id不能为空");
         } else if (StringUtils.isEmpty(dict.getDictCode().trim())) {

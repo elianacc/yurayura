@@ -141,26 +141,26 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group d-none">
-                                <label class="col-form-label"> id：</label>
+                                <label class="font-size-14"> id：</label>
                                 <input type="text" class="form-control form-control-sm" v-model="modalFormData.id"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label font-size-14"> 字典编码：</label>
+                                <label class="font-size-14"> 字典编码：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入字典编码"
                                        v-model.trim="modalFormData.dictCode"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label font-size-14"> 字典名：</label>
+                                <label class="font-size-14"> 字典名：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入字典名"
                                        v-model.trim="modalFormData.dictName"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label font-size-14"> 字典值：</label>
+                                <label class="font-size-14"> 字典值：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入字典值"
                                        v-model.trim="modalFormData.dictVal"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label font-size-14"> 状态：</label>
+                                <label class="font-size-14"> 状态：</label>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="dictStatus1" class="custom-control-input form-control-sm"
                                            value="1" v-model="modalFormData.dictStatus"/>
@@ -241,7 +241,9 @@
                     this.getPage();
                 },
                 clearSelectContent() {
-                    this.selectFormData.dictCode = '';
+                    this.selectFormData = {
+                        dictCode: ''
+                    };
                     this.selectContent();
                 },
                 toFirstPage() {
@@ -285,12 +287,6 @@
                     } else if (!this.modalFormData.dictVal) {
                         toastr.warning('字典值不能为空');
                     } else {
-                        let sendData = new FormData();
-                        sendData.append('id', this.modalFormData.id);
-                        sendData.append('dictCode', this.modalFormData.dictCode);
-                        sendData.append('dictName', this.modalFormData.dictName);
-                        sendData.append('dictVal', this.modalFormData.dictVal);
-                        sendData.append('dictStatus', this.modalFormData.dictStatus);
                         let sendUrl = '';
                         if (this.modalFormData.id == 0) {
                             sendUrl = '/sys/dict/insert';
@@ -301,9 +297,10 @@
                             method: 'post',
                             url: sendUrl,
                             headers: {
+                                'Content-Type': 'application/json;charset=utf-8',
                                 'X-Requested-With': 'XMLHttpRequest'
                             },
-                            data: sendData,
+                            data: JSON.stringify(this.modalFormData),
                             responseType: 'json'
                         }).then(res => {
                             if (res.data.code == 200) {
@@ -366,11 +363,13 @@
                         responseType: 'json'
                     }).then(res => {
                         if (res.data.code == 200) {
-                            this.modalFormData.id = res.data.data.id;
-                            this.modalFormData.dictCode = res.data.data.dictCode;
-                            this.modalFormData.dictName = res.data.data.dictName;
-                            this.modalFormData.dictVal = res.data.data.dictVal;
-                            this.modalFormData.dictStatus = res.data.data.dictStatus;
+                            this.modalFormData = {
+                                id: res.data.data.id,
+                                dictCode: res.data.data.dictCode,
+                                dictName: res.data.data.dictName,
+                                dictVal: res.data.data.dictVal,
+                                dictStatus: res.data.data.dictStatus,
+                            };
                             this.modalShow();
                         } else if (res.data.code == 100) {
                             toastr.error(res.data.msg);
@@ -381,11 +380,13 @@
                 },
                 modalReset() {
                     $('#dataModal').on('hidden.bs.modal', () => {
-                        this.modalFormData.id = 0;
-                        this.modalFormData.dictCode = '';
-                        this.modalFormData.dictName = '';
-                        this.modalFormData.dictVal = '';
-                        this.modalFormData.dictStatus = 1;
+                        this.modalFormData = {
+                            id: 0,
+                            dictCode: '',
+                            dictName: '',
+                            dictVal: '',
+                            dictStatus: 1
+                        };
                     });
                 },
                 modalShow() {
