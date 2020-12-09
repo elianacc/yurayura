@@ -44,7 +44,7 @@ public class PreventRepeatSubmitAspect {
         String key = sessionId + "-" + request.getServletPath();
         if (StringUtils.isEmpty(key)) {
             log.error("提交key为空！");
-            return new CustomizeException(500, "提交的key（sessionId+请求url）为空");
+            return new CustomizeException(500, "提交进程异常！", "提交的key（sessionId+请求url）为空");
         }
         if (CACHES.getIfPresent(key) != null) {
             log.warn("请勿重复提交！");
@@ -56,7 +56,7 @@ public class PreventRepeatSubmitAspect {
             return pjp.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            throw new CustomizeException(500, "提交进程异常！");
+            throw new CustomizeException(500, "提交进程异常！", throwable.getMessage());
         }
     }
 }

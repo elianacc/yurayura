@@ -29,5 +29,9 @@ public class CustomizeException extends RuntimeException implements Serializable
      * 异常信息
      */
     private String errorMsg;
+    /**
+     * 异常详情
+     */
+    private String errorDetail;
 
 }
