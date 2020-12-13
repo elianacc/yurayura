@@ -152,7 +152,9 @@
                             <div class="form-group">
                                 <label class="font-size-14"> 管理员名：</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="请输入管理员名"
-                                       v-model.trim="modalFormData.managerName"/>
+                                       v-model.trim="modalFormData.managerName" v-if="isInsertModal"/>
+                                <input type="text" class="form-control form-control-sm"
+                                       v-model.trim="modalFormData.managerName" v-else readonly/>
                             </div>
                             <div class="form-group">
                                 <label class="font-size-14" v-if="isInsertModal"> 密码：</label>
