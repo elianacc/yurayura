@@ -45,3 +45,8 @@ button:focus,
     content: "浏览文件";
     background-color: #007bff;
 }
+
+/* vue v-cloak样式 */
+[v-cloak] {
+    display: none;
+}

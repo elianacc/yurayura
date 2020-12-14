@@ -43,7 +43,7 @@
         <!-- 数据表格row -->
         <div class="row mt-3 r2">
             <div class="col-10 offset-2 c1">
-                <table class="table table-dark table-borderless rounded bg-twitter" v-show="pageInfo">
+                <table class="table table-dark table-borderless rounded bg-twitter" v-show="pageInfo" v-cloak>
                     <thead>
                     <tr>
                         <td class="text-center"></td>
@@ -95,7 +95,7 @@
                 <span class="badge badge-dark bg-twitter font-size-14" v-show="!pageInfo">共0页/0个</span>
             </div>
             <div class="col-8 c2">
-                <nav v-show="pageInfo">
+                <nav v-show="pageInfo" v-cloak>
                     <ul class="pagination float-right font-size-14">
                         <li class='page-item'>
                             <a class='page-link bg-twitter border-twitter text-white'
