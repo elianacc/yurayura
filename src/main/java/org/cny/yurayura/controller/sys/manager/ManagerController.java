@@ -132,14 +132,14 @@ public class ManagerController {
     }
 
     /**
-     * 获取管理员登入数字加英文验证码及图片
+     * 获取系统管理员登入数字加英文验证码及图片
      *
      * @param response
      * @param session
      * @return void
      */
     @GetMapping("/getVerifyCode")
-    @ApiOperation("获取管理员登入数字加英文验证码及图片")
+    @ApiOperation("获取系统管理员登入数字加英文验证码及图片")
     public void getVerifyCode(@ApiIgnore HttpServletResponse response, @ApiIgnore HttpSession session)
             throws IOException {
         // 利用图片工具生成图片
@@ -156,7 +156,7 @@ public class ManagerController {
     }
 
     /**
-     * 管理员登入
+     * 系统管理员登入
      *
      * @param dto
      * @param session
@@ -165,7 +165,7 @@ public class ManagerController {
      */
     @PreventRepeatSubmit
     @PostMapping("/login")
-    @ApiOperation("管理员登入")
+    @ApiOperation("系统管理员登入")
     public ApiResult login(@RequestBody MangerLoginDto dto, @ApiIgnore HttpSession session
             , @ApiIgnore HttpServletResponse response) {
 
@@ -180,13 +180,13 @@ public class ManagerController {
     }
 
     /**
-     * 管理员注销
+     * 系统管理员注销
      *
      * @param
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PostMapping("/logout")
-    @ApiOperation("管理员注销")
+    @ApiOperation("系统管理员注销")
     public ApiResult logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();

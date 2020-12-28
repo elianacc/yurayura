@@ -51,7 +51,7 @@ public interface IManagerService extends IService<Manager> {
     public ApiResult update(Manager manager);
 
     /**
-     * 管理员登入
+     * 系统管理员登入
      *
      * @param dto
      * @param session
