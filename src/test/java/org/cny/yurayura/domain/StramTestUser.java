@@ -1,4 +1,4 @@
-package org.cny.yurayura;
+package org.cny.yurayura.domain;
 
 /**
  * 测试-用户

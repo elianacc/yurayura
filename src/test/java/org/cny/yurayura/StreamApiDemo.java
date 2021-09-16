@@ -1,5 +1,7 @@
 package org.cny.yurayura;
 
+import org.cny.yurayura.domain.StramTestUser;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
