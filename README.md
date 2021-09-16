@@ -1,15 +1,16 @@
+# YuraYura
+
+
+
 ## 简介
 
-> 本分支为网站B端管理前后端未分离项目，已终止开发
+> 本分支对网站B端接口部分(yurayura-business-service)，B端页面展示部分(yurayura-business-vue)，C端接口部分(未进行)，C端页面展示部分(未进行)项目代码进行汇总存储
 >
-> 新网站B端管理前后端分离项目地址请移步主分支
+> B端接口部分—SpringBoot项目地址 https://github.com/elianacc/yurayura-business-service
 >
-> 后端技术构成基本与新后端接口项目相同，前端技术构成如下
-
-## 前端
-
-- ​    Bootstrap 4
-- ​    Vue.js（多页应用）
-- ​    jQuery
-- ​    thymeleaf（主要用于组合html碎片，数据绑定使用vue）
+> B端页面展示部分—Vue CLI 4项目地址 https://github.com/elianacc/yurayura-business-vue
+>
+> C端接口部分（暂无）
+>
+> C端页面展示部分（暂无）
 
