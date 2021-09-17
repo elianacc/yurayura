@@ -36,11 +36,9 @@ http {
     ....
 	
     upstream yurayura-business-service {
-      server 192.168.xx.xx weight=1;
-    }
-	
-    upstream yurayura-business-service {
-      server 192.168.xx.xx:xxxx weight=1;
+      server 192.168.x.10 weight=1;
+      server 192.168.x.11 weight=1;
+      ....
     }
     
     server {
