@@ -30,7 +30,9 @@ nginx.conf
 
 ```
 ....
+
 http {
+
 	....
 	
 	upstream yurayura-business-service {
