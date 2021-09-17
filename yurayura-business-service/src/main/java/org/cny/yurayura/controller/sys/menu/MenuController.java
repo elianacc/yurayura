@@ -91,11 +91,10 @@ public class MenuController {
             return ApiResult.warn("标题、标识不能超过20个字符，图标样式不能超过30个字符");
         }
         String warn = iMenuService.insert(menu);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("添加成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("添加成功");
     }
 
     /**
@@ -126,11 +125,10 @@ public class MenuController {
             return ApiResult.warn("标题、标识不能超过20个字符，图标样式不能超过30个字符");
         }
         String warn = iMenuService.update(menu);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("修改成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("修改成功");
     }
 }
 

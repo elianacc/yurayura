@@ -91,11 +91,10 @@ public class PermissionController {
             return ApiResult.warn("权限名称不能超过20个字符");
         }
         String warn = iPermissionService.insert(permission, permissionBtnVal);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("添加成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("添加成功");
     }
 
     /**
@@ -128,11 +127,10 @@ public class PermissionController {
             return ApiResult.warn("权限名称不能超过20个字符");
         }
         String warn = iPermissionService.update(permission, permissionBtnVal);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("修改成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("修改成功");
     }
 
     /**

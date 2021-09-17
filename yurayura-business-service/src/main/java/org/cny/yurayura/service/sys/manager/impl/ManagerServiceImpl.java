@@ -127,6 +127,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         // 验证码session失效
         if (StringUtils.isEmpty(managerVerifyCode)) {
             warn = "验证码过期，请重新输入";
+            return warn;
         }
         if (managerVerifyCode.toString().equalsIgnoreCase(dto.getVerifyCode())) {
             // 封装用户登入数据(用户名+密码)为token

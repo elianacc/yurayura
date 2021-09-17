@@ -101,11 +101,10 @@ public class ManagerController {
             return ApiResult.warn("管理员名不能超过20个字符");
         }
         String warn = iManagerService.insert(manager, permissionIdArr);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("添加成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("添加成功");
     }
 
     /**
@@ -126,11 +125,10 @@ public class ManagerController {
             return ApiResult.warn("状态不能为空");
         }
         String warn = iManagerService.update(manager, permissionIdArr);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("修改成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("修改成功");
     }
 
     /**
@@ -179,12 +177,11 @@ public class ManagerController {
             return ApiResult.warn("验证码不能为空");
         }
         String warn = iManagerService.login(dto, session, response);
-        if (StringUtils.isEmpty(warn)) {
-            Map<String, Object> currentManagerMsg = iManagerService.getCurrentManagerMsg();
-            return ApiResult.success("管理员登入成功", currentManagerMsg);
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        Map<String, Object> currentManagerMsg = iManagerService.getCurrentManagerMsg();
+        return ApiResult.success("管理员登入成功", currentManagerMsg);
     }
 
     /**

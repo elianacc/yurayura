@@ -91,11 +91,10 @@ public class DictController {
             return ApiResult.warn("字典编码只能包含字母，以小写字母开头");
         }
         String warn = iDictService.insert(dict);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("添加成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("添加成功");
     }
 
     /**
@@ -126,11 +125,10 @@ public class DictController {
             return ApiResult.warn("字典编码只能包含字母，以小写字母开头");
         }
         String warn = iDictService.update(dict);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("修改成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("修改成功");
     }
 
     /**
