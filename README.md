@@ -33,17 +33,17 @@ nginx.conf
 
 http {
 
-	....
+    ....
 	
-	upstream yurayura-business-service {
+    upstream yurayura-business-service {
       server 192.168.xx.xx weight=1;
     }
 	
-	upstream yurayura-business-service {
+    upstream yurayura-business-service {
       server 192.168.xx.xx:xxxx weight=1;
     }
     
-	server {
+    server {
       listen       80;
       server_name  192.168.xx.xx;
       location / {
@@ -66,7 +66,7 @@ http {
       }
     }
     
-   ....
+    ....
    
 }
 ```
