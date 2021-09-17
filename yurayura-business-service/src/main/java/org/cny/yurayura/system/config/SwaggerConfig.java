@@ -32,8 +32,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("org.cny.yurayura.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfoBuilder()
-                        .title("Yura-Yura-Servive API")
-                        .description("Yura-Yura-Servive 在线api文档")
+                        .title("YuraYura-Business-Servive API")
+                        .description("网站B端在线接口文档")
                         .version("1.0.1-SNAPSHOT")
                         .contact(new Contact("EliaNaCc", "https://github.com/elianacc/yurayura-business-service"
                                 , "438507003@qq.com"))
