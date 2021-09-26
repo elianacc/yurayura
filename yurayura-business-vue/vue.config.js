@@ -9,6 +9,7 @@ module.exports = {
   assetsDir: '', // 相对于outputDir的静态资源(js、css、img、fonts)目录
   lintOnSave: false, // 是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码
   runtimeCompiler: false, // 是否使用包含运行时编译器的 Vue 构建版本
+  transpileDependencies: ['bootstrap'], // 使用babel转译node_modules中的依赖（解决Edge,IE下不兼容某些安装依赖的问题）
   productionSourceMap: !IS_PROD, // 生产环境的 source map
   parallel: require('os').cpus().length > 1, // 是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建
   chainWebpack: config => {

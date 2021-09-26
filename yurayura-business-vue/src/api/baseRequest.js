@@ -1,5 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
+import router from '../router'
+import { MessageBox, Notification } from 'element-ui'
 
 // 解决和后端session不同步的问题，让axios请求带上cookie
 axios.defaults.withCredentials = true
@@ -21,8 +23,30 @@ function apiAxios (method, url, params, success, header) {
     headers: header
   }).then(res => {
     success(res.data)
+    if (res.data.code === 401 || res.data.code === 405) {
+      MessageBox.alert(res.data.msg, '提示', {
+        confirmButtonText: '确定'
+      }).then(() => {
+        if (res.data.code === 401) {
+          router.push('/manager_login')
+        } else if (res.data.code === 405 && method === 'GET') {
+          router.go(-1)
+        }
+      })
+    }
+    if (res.data.code === 500) {
+      Notification.error({
+        title: '错误',
+        message: res.data.msg,
+        duration: 0
+      })
+    }
   }).catch(err => {
-    console.log(`axios请求错误:${err.message}`)
+    Notification.error({
+      title: '错误',
+      message: `axios请求错误:${err.message}`,
+      duration: 0
+    })
   })
 }
 

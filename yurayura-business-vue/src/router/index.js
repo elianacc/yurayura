@@ -99,6 +99,15 @@ router.beforeEach((to, from, next) => {
       }
     })
   } else {
+    if (to.name !== 'Notfound') {
+      api.get(apiUrl.SYS_MANAGER_JUDGEAUTHEN, null, res => {
+        if (res.code === 200) {
+          next('/business/index')
+        } else {
+          next()
+        }
+      })
+    }
     next()
   }
 })

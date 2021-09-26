@@ -1,5 +1,5 @@
 <template>
-  <div v-if="containerShow">
+  <div>
     <!-- 操作按钮及数据筛选表单row -->
     <div class="row mt-4 r1">
 
@@ -350,7 +350,6 @@ export default {
   },
   data () {
     return {
-      containerShow: true,
       selectForm: {
         comicName: '',
         comicStatus: '',
@@ -410,22 +409,6 @@ export default {
           this.pageInfo = res.data
         } else if (res.code === 102) {
           this.pageInfo = {}
-        } else if (res.code === 401 || res.code === 405) {
-          this.$alert(res.msg, '提示', {
-            confirmButtonText: '确定'
-          }).then(() => {
-            if (res.code === 401) {
-              this.$router.push('/manager_login')
-            } else {
-              this.containerShow = false
-            }
-          })
-        } else if (res.code === 500) {
-          this.$notify.error({
-            title: '错误',
-            message: res.msg,
-            duration: 0
-          })
         }
       })
     },
@@ -459,20 +442,6 @@ export default {
               this.getPage()
             } else if (res.code === 102) {
               this.$message.error(res.msg)
-            } else if (res.code === 401 || res.code === 405) {
-              this.$alert(res.msg, '提示', {
-                confirmButtonText: '确定'
-              }).then(() => {
-                if (res.code === 401) {
-                  this.$router.push('/manager_login')
-                }
-              })
-            } else if (res.code === 500) {
-              this.$notify.error({
-                title: '错误',
-                message: res.msg,
-                duration: 0
-              })
             }
           })
         })
@@ -565,20 +534,6 @@ export default {
               this.dataDialogVisible = false
             } else if (res.code === 102) {
               this.$message.error(res.msg)
-            } else if (res.code === 401 || res.code === 405) {
-              this.$alert(res.msg, '提示', {
-                confirmButtonText: '确定'
-              }).then(() => {
-                if (res.code === 401) {
-                  this.$router.push('/manager_login')
-                }
-              })
-            } else if (res.code === 500) {
-              this.$notify.error({
-                title: '错误',
-                message: res.msg,
-                duration: 0
-              })
             }
           }
           if (this.dataDialogForm.id === 0) {

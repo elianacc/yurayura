@@ -25,7 +25,7 @@ export default {
     },
     CLEAR_EDITABLE_TABS_VALUE (state) {
       state.editableTabsValue = ''
-    },
+    }
   },
   state: {
     sideMenuDftActive: '',

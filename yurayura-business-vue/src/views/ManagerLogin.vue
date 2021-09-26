@@ -110,7 +110,6 @@ export default {
           delete this.loginForm.verifyImage
           this.$api.post(this.$apiUrl.SYS_MANAGER_LOGIN, JSON.stringify(this.loginForm), res => {
             if (res.code === 200) {
-              this.$store.commit('manager/SET_MANAGER_MSG', res.data)
               this.$store.dispatch('menutab/resetMenuAndTab')
               setTimeout(() => {
                 loading.close()
@@ -121,13 +120,6 @@ export default {
               this.$refs.loginForm.resetFields()
               loading.close()
               this.$message.error(res.msg)
-            } else if (res.code === 500) {
-              loading.close()
-              this.$notify.error({
-                title: '错误',
-                message: res.msg,
-                duration: 0
-              })
             }
           })
         }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="containerShow">
+  <div>
     <!-- 操作按钮row -->
     <div class="row mt-4 r1">
       <div class="col-2">
@@ -183,7 +183,6 @@ export default {
       callback()
     }
     return {
-      containerShow: true,
       dataList: [],
       dataDialogTitle: '',
       dataDialogVisible: false,
@@ -210,22 +209,6 @@ export default {
       this.$api.get(this.$apiUrl.SYS_MENU_GETTREELIST, null, res => {
         if (res.code === 200) {
           this.dataList = res.data
-        } else if (res.code === 401 || res.code === 405) {
-          this.$alert(res.msg, '提示', {
-            confirmButtonText: '确定'
-          }).then(() => {
-            if (res.code === 401) {
-              this.$router.push('/manager_login')
-            } else {
-              this.containerShow = false
-            }
-          })
-        } else if (res.code === 500) {
-          this.$notify.error({
-            title: '错误',
-            message: res.msg,
-            duration: 0
-          })
         }
       })
     },
@@ -277,20 +260,6 @@ export default {
               location.reload()
             } else if (res.code === 102) {
               this.$message.error(res.msg)
-            } else if (res.code === 401 || res.code === 405) {
-              this.$alert(res.msg, '提示', {
-                confirmButtonText: '确定'
-              }).then(() => {
-                if (res.code === 401) {
-                  this.$router.push('/manager_login')
-                }
-              })
-            } else if (res.code === 500) {
-              this.$notify.error({
-                title: '错误',
-                message: res.msg,
-                duration: 0
-              })
             }
           }
           if (this.dataDialogForm.id === 0) {

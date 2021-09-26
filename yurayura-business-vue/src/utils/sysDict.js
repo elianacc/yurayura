@@ -13,7 +13,7 @@ export default {
     }).then(res => {
       if (res.data.code === 200) {
         dictData = res.data.data
-      } else if (res.data.code === 100) {
+      } else if (res.data.code === 102) {
         console.log(res.data.msg)
       } else if (res.data.code === 500) {
         console.log(`字典编码：${dictCode}对应系统数据字典获取异常`)
