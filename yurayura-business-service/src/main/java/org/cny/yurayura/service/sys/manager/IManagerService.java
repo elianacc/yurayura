@@ -58,10 +58,9 @@ public interface IManagerService extends IService<Manager> {
      *
      * @param dto
      * @param session
-     * @param response
      * @return java.lang.String
      */
-    public String login(ManagerLoginDto dto, HttpSession session, HttpServletResponse response);
+    public String login(ManagerLoginDto dto, HttpSession session);
 
     /**
      * 获取当前登入管理员信息

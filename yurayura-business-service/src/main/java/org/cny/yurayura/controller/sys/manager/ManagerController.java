@@ -160,14 +160,12 @@ public class ManagerController {
      *
      * @param dto
      * @param session
-     * @param response
      * @return org.cny.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("系统管理员登入")
-    public ApiResult login(@RequestBody ManagerLoginDto dto, @ApiIgnore HttpSession session
-            , @ApiIgnore HttpServletResponse response) {
+    public ApiResult login(@RequestBody ManagerLoginDto dto, @ApiIgnore HttpSession session) {
 
         if (StringUtils.isEmpty(dto.getManagerName())) {
             return ApiResult.warn("用户名不能为空");
@@ -176,12 +174,11 @@ public class ManagerController {
         } else if (StringUtils.isEmpty(dto.getVerifyCode())) {
             return ApiResult.warn("验证码不能为空");
         }
-        String warn = iManagerService.login(dto, session, response);
+        String warn = iManagerService.login(dto, session);
         if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
-        Map<String, Object> currentManagerMsg = iManagerService.getCurrentManagerMsg();
-        return ApiResult.success("管理员登入成功", currentManagerMsg);
+        return ApiResult.success("管理员登入成功");
     }
 
     /**
@@ -233,7 +230,7 @@ public class ManagerController {
      * @param
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @GetMapping("/notAuthentication")
+    @RequestMapping("/notAuthentication")
     @ApiIgnore
     public ApiResult notAuthentication() {
         return ApiResult.notAuthentication();
@@ -245,7 +242,7 @@ public class ManagerController {
      * @param
      * @return org.cny.yurayura.vo.ApiResult
      */
-    @GetMapping("/notAuthorization")
+    @RequestMapping("/notAuthorization")
     @ApiIgnore
     public ApiResult notAuthorization() {
         return ApiResult.notAuthorization();

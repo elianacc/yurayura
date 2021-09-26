@@ -45,7 +45,7 @@ public class FileUtil {
                     // 新文件名
                     String fileNewName;
                     // 上传文件路径
-                    String path = "D://yurayura-business-service-v1/upload/" + category;
+                    String path = "D://yurayura-upload-resource/upload/" + category;
                     // 生成不重复的32位新文件名
                     fileNewName = UUID.randomUUID().toString().replace("-", "") + fileEndName;
                     File newFile = new File(path, fileNewName);
@@ -72,7 +72,7 @@ public class FileUtil {
      * @return void
      */
     public static void fileDelete(String dPath) {
-        File file = new File("D://yurayura-business-service-v1" + dPath);
+        File file = new File("D://yurayura-upload-resource" + dPath);
         if (file.isFile() && file.exists()) { // 上传文件路径不为空
             file.delete(); // 删除文件
         }

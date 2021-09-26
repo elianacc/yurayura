@@ -92,11 +92,10 @@ public class ComicController {
             return ApiResult.warn("名称不能超过30个字符");
         }
         String warn = iComicService.insert(dto);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("添加成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("添加成功");
     }
 
     /**
@@ -142,10 +141,9 @@ public class ComicController {
             return ApiResult.warn("名称不能超过30个字符");
         }
         String warn = iComicService.update(dto);
-        if (StringUtils.isEmpty(warn)) {
-            return ApiResult.success("修改成功");
-        } else {
+        if (!StringUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
+        return ApiResult.success("修改成功");
     }
 }

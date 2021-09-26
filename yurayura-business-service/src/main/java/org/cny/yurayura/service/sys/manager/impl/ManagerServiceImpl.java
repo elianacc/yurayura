@@ -10,7 +10,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.cny.yurayura.dao.sys.manager.ManagerMapper;
 import org.cny.yurayura.dao.sys.permission.PermissionMapper;
@@ -25,10 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -120,7 +116,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     @SneakyThrows
     @Override
-    public String login(ManagerLoginDto dto, HttpSession httpSession, HttpServletResponse response) {
+    public String login(ManagerLoginDto dto, HttpSession httpSession) {
         String warn = "";
         // 获取服务器生成验证码
         Object managerVerifyCode = httpSession.getAttribute("managerVerifyCode");
@@ -138,26 +134,12 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
                 // 当前用户登入
                 subject.login(token);
                 Manager currentManager = (Manager) subject.getPrincipal();
-                Session session = subject.getSession();
-                // 存入shiro的session
-                session.setAttribute("managerSession", currentManager);
-                // 设置session过期时间为24小时
-                session.setTimeout(1000 * 60 * 60 * 24);
-                // 将sessionId存入浏览器对应sessionId的cookie
-                Cookie cookie = new Cookie("JSESSIONID", URLEncoder.encode(String.valueOf(session.getId()), "utf-8"));
-                cookie.setPath("/");
-                // 设置sessionId cookie有效期为24小时，关闭浏览器session也不会消失，记住登入
-                cookie.setMaxAge(60 * 60 * 24);
-                // js无法读取cookie，防止xss攻击
-                cookie.setHttpOnly(true);
-                response.addCookie(cookie);
                 log.info("管理员：{}，登入成功", currentManager.getManagerName());
             } catch (UnknownAccountException uae) {
                 warn = "用户不存在";
             } catch (IncorrectCredentialsException ice) {
                 warn = "密码错误";
             }
-
         } else {
             warn = "验证码错误";
         }

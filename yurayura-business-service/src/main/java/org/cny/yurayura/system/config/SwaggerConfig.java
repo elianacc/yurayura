@@ -34,7 +34,7 @@ public class SwaggerConfig {
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("YuraYura-Business-Servive API")
                         .description("网站B端在线接口文档")
-                        .version("1.0.1-SNAPSHOT")
+                        .version("1.0.2-SNAPSHOT")
                         .contact(new Contact("EliaNaCc", "https://github.com/elianacc/yurayura-business-service"
                                 , "438507003@qq.com"))
                         .license("Apache License")

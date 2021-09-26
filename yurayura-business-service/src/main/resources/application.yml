@@ -33,11 +33,10 @@ spring:
     mode: HTML
     encoding: UTF-8
     cache: false
+  # session存储方式
+  session:
+    store-type: redis
 
 # mybatis plus配置
 mybatis-plus:
   mapper-locations: classpath:org/cny/yurayura/dao/**/*.xml
-
-# mybatis pagehelper配置
-pagehelper:
-  helper-dialect: mysql
