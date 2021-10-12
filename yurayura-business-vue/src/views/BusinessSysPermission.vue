@@ -6,7 +6,7 @@
       <div class="col-2">
         <button type="button"
                 class="btn btn-primary font-size-14 me-2"
-                v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_insert`)"
+                v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`)"
                 @click="insertDialogOpen">
           <i class="fa fa-plus-circle me-2"></i>添加按钮权限
         </button>
@@ -29,30 +29,16 @@
           <el-form-item label="权限类型"
                         prop="permissionType"
                         label-width="4.5rem">
-            <el-select v-model="selectForm.permissionType"
-                       clearable
-                       placeholder="请选择">
-              <el-option value="1"
-                         label="菜单">
-              </el-option>
-              <el-option value="2"
-                         label="按钮">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.permissionType"
+                             dictCode="permissionType">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="状态"
                         prop="permissionStatus"
                         label-width="3rem">
-            <el-select v-model="selectForm.permissionStatus"
-                       clearable
-                       placeholder="请选择">
-              <el-option value="1"
-                         label="启用">
-              </el-option>
-              <el-option value="0"
-                         label="禁用">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.permissionStatus"
+                             dictCode="enableStatus">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="所属子菜单"
                         prop="permissionBelongSubmenuName"
@@ -100,21 +86,19 @@
           <el-table-column label="所属子菜单"
                            width="200">
             <template slot-scope="scope">
-              <span>{{scope.row.permissionBelongSubmenuName | permissionBelongFilter(menuSubs)}}</span>
+              {{scope.row.permissionBelongSubmenuName | permissionBelongFilter(menuSubs)}}
             </template>
           </el-table-column>
           <el-table-column label="权限类型"
                            width="200">
             <template slot-scope="scope">
-              <span v-if="scope.row.permissionType === 1">菜单</span>
-              <span v-else>按钮</span>
+              {{scope.row.permissionType | sysDictFormatFilter('permissionType')}}
             </template>
           </el-table-column>
           <el-table-column label="状态"
                            width="200">
             <template slot-scope="scope">
-              <span v-if="scope.row.permissionStatus === 1">启用</span>
-              <span v-else>禁用</span>
+              {{scope.row.permissionStatus | sysDictFormatFilter('enableStatus')}}
             </template>
           </el-table-column>
           <el-table-column label="序号"
@@ -126,7 +110,7 @@
             <template slot-scope="scope">
               <button type="button"
                       class="btn btn-info btn-twitter font-size-14 text-white shadow"
-                      v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`)"
+                      v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
                       @click="updateDialogOpen(scope.row.id)">
                 <i class="fa fa-pencil-square-o me-2"></i>修改
               </button>
@@ -180,47 +164,28 @@
                         prop="permissionType"
                         label-width="10rem"
                         v-if="dataDialogForm.id !== 0">
-            <el-radio-group v-model="dataDialogForm.permissionType"
-                            disabled>
-              <el-radio :label="1"
-                        border>
-                菜单
-              </el-radio>
-              <el-radio :label="2"
-                        border>
-                按钮
-              </el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.permissionType"
+                                  dictCode="permissionType"
+                                  disabled>
+            </sys-dict-radio-group>
           </el-form-item>
           <el-form-item label="权限按钮"
                         prop="permissionBtnVal"
                         label-width="10rem"
                         v-show="dataDialogForm.permBtnGrpShow">
-            <el-select v-model="dataDialogForm.permissionBtnVal"
-                       clearable
-                       placeholder="----请选择权限按钮----"
-                       class="w-50"
-                       :disabled="dataDialogForm.id !== 0">
-              <el-option v-for="item in permissionBtnDict"
-                         :key="item.id"
-                         :value="item.dictVal"
-                         :label="item.dictName">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="dataDialogForm.permissionBtnVal"
+                             dictCode="permissionBtn"
+                             placeholder="----请选择权限按钮----"
+                             customClass="w-50"
+                             :disabled="dataDialogForm.id !== 0">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="状态"
                         prop="permissionStatus"
                         label-width="10rem">
-            <el-radio-group v-model="dataDialogForm.permissionStatus">
-              <el-radio :label="1"
-                        border>
-                启用
-              </el-radio>
-              <el-radio :label="0"
-                        border>
-                禁用
-              </el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.permissionStatus"
+                                  dictCode="enableStatus">
+            </sys-dict-radio-group>
           </el-form-item>
           <el-form-item label="序号"
                         prop="permissionSeq"
@@ -254,6 +219,8 @@
 
 <script>
 import BusinessPagination from '@components/BusinessPagination.vue'
+import { getMenuSubAll } from '@api/sysMenu'
+import { getSysPermissionPage, insertSysPermission, updateSysPermission } from '@api/sysPermission'
 
 export default {
   name: 'BusinessSysPermission',
@@ -294,19 +261,15 @@ export default {
         permissionBelongSubmenuName: [{ required: true, message: '所属子菜单不能为空', trigger: 'blur' }],
         permissionBtnVal: [{ validator: checkPermissionBtnVal, trigger: 'blur' }]
       },
-      menuSubs: [],
-      permissionBtnDict: []
+      menuSubs: []
     }
   },
   methods: {
-    async getSysDict () {
-      this.permissionBtnDict = await this.$sysDict.get('permissionBtn')
-    },
     getPage () {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      this.$api.get(this.$apiUrl.SYS_PERMISSION_GETPAGE, sendData, res => {
+      getSysPermissionPage(sendData, res => {
         if (res.code === 200) {
           this.pageInfo = res.data
         } else if (res.code === 102) {
@@ -362,13 +325,9 @@ export default {
             }
           }
           if (this.dataDialogForm.id === 0) {
-            this.$api.post(this.$apiUrl.SYS_PERMISSION_INSERT, this.$qs.stringify(this.dataDialogForm), submitCallback, {
-              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            })
+            insertSysPermission(this.dataDialogForm, submitCallback)
           } else {
-            this.$api.put(this.$apiUrl.SYS_PERMISSION_UPDATE, this.$qs.stringify(this.dataDialogForm), submitCallback, {
-              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            })
+            updateSysPermission(this.dataDialogForm, submitCallback)
           }
         }
       })
@@ -388,7 +347,7 @@ export default {
       this.$refs.dataDialogForm.clearValidate()
     },
     getAllMenuSub () {
-      this.$api.get(this.$apiUrl.SYS_MENUSUB_GETALL, null, res => {
+      getMenuSubAll(res => {
         if (res.code === 200) {
           this.menuSubs = res.data
         }
@@ -401,7 +360,6 @@ export default {
     }
   },
   mounted () {
-    this.getSysDict()
     this.getPage()
     this.getAllMenuSub()
   }

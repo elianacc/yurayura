@@ -86,6 +86,16 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 获取所有 key
+     *
+     * @param
+     * @return java.util.Set<java.lang.String>
+     */
+    public Set<String> getListKey() {
+        return redisTemplate.keys("*");
+    }
+
 //    ============================== String ==============================
 
     /**

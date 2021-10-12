@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -110,5 +112,21 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
                 .eq("dict_code", dictCode)
                 .eq("dict_status", EnableStatusEnum.ENABLE.getStatusId())
                 .orderByAsc("dict_seq"));
+    }
+
+    @Override
+    public List<Dict> getAll() {
+        Set<String> keys = redisUtil.getListKey();
+        List<Dict> dictList = new ArrayList<>();
+        if (!keys.isEmpty()) {
+            keys.forEach(key -> {
+                if (!key.contains("yurayura-business-service-session")) {
+                    List<Object> objList = redisUtil.lGet(key, 0, -1);
+                    List<Dict> dictListForKey = JSON.parseArray(JSON.toJSONString(objList), Dict.class);
+                    dictList.addAll(dictListForKey);
+                }
+            });
+        }
+        return dictList;
     }
 }

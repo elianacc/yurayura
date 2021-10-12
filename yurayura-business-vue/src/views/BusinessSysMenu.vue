@@ -6,7 +6,7 @@
         <div class="btn-group">
           <button type="button"
                   class="btn btn-primary font-size-14"
-                  v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_insert`)"
+                  v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`)"
                   @click="insertMainMenuDialogOpen">
             <i class="fa fa-plus-circle me-2"></i>添加主菜单
           </button>
@@ -24,7 +24,7 @@
           <el-table-column label="标题"
                            width="200">
             <template slot-scope="scope">
-              <i class="fa fa-list-ul me-1"
+              <i class="fa fa-list-ul fa-lg me-1"
                  v-if="scope.row.menuType === 1"></i>
               <i class="fa fa-link me-1"
                  v-else></i>
@@ -46,8 +46,7 @@
           <el-table-column label="类型"
                            width="100">
             <template slot-scope="scope">
-              <span v-if="scope.row.menuType === 1">一级菜单</span>
-              <span v-else>二级菜单</span>
+              {{scope.row.menuType | sysDictFormatFilter('menuType')}}
             </template>
           </el-table-column>
           <el-table-column label="序号"
@@ -57,8 +56,7 @@
           <el-table-column label="状态"
                            width="100">
             <template slot-scope="scope">
-              <span v-if="scope.row.menuStatus === 1">显示</span>
-              <span v-else>隐藏</span>
+              {{scope.row.menuStatus | sysDictFormatFilter('menuStatus')}}
             </template>
           </el-table-column>
           <el-table-column label="操作"
@@ -67,13 +65,13 @@
               <div class="btn-group shadow">
                 <button type="button"
                         class="btn btn-success btn-twitter font-size-14"
-                        v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_insert`) && scope.row.menuType === 1"
+                        v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`) && scope.row.menuType === 1"
                         @click="insertSubMenuDialogOpen(scope.row.id)">
                   <i class="fa fa-plus me-2"></i>添加子菜单
                 </button>
                 <button type="button"
                         class="btn btn-info btn-twitter font-size-14 text-white"
-                        v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`)"
+                        v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
                         @click="updateDialogOpen(scope.row.menuType, scope.row.menuName, scope.row.menuPid)">
                   <i class="fa fa-pencil-square-o me-2"></i>修改
                 </button>
@@ -142,16 +140,9 @@
           <el-form-item label="状态"
                         prop="menuStatus"
                         label-width="10rem">
-            <el-radio-group v-model="dataDialogForm.menuStatus">
-              <el-radio :label="1"
-                        border>
-                显示
-              </el-radio>
-              <el-radio :label="0"
-                        border>
-                隐藏
-              </el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.menuStatus"
+                                  dictCode="menuStatus">
+            </sys-dict-radio-group>
           </el-form-item>
         </el-form>
         <div slot="footer"
@@ -170,6 +161,8 @@
 </template>
 
 <script>
+import { getSysMenuTreeList, insertSysMenu, updateSysMenu, insertSysMenuSub, updateSysMenuSub } from '@api/sysMenu'
+
 export default {
   name: 'BusinessSysMenu',
   data () {
@@ -206,7 +199,7 @@ export default {
   },
   methods: {
     getTreeList () {
-      this.$api.get(this.$apiUrl.SYS_MENU_GETTREELIST, null, res => {
+      getSysMenuTreeList(res => {
         if (res.code === 200) {
           this.dataList = res.data
         }
@@ -225,7 +218,7 @@ export default {
     },
     updateDialogOpen (menuType, menuName, menuPid) {
       this.dataDialogTitle = menuType === 1 ? '『修改主菜单窗口』' : '『修改子菜单窗口』'
-      this.isMainMenuDialog = menuType === 1 ? true : false
+      this.isMainMenuDialog = menuType === 1
       this.dataDialogOpenAndSetVal(menuType, menuName, menuPid)
     },
     dataDialogOpenAndSetVal (menuType, menuName, menuPid) {
@@ -263,9 +256,17 @@ export default {
             }
           }
           if (this.dataDialogForm.id === 0) {
-            this.$api.post(this.isMainMenuDialog ? this.$apiUrl.SYS_MENU_INSERT : this.$apiUrl.SYS_MENUSUB_INSERT, JSON.stringify(this.dataDialogForm), submitCallback)
+            if (this.isMainMenuDialog) {
+              insertSysMenu(this.dataDialogForm, submitCallback)
+            } else {
+              insertSysMenuSub(this.dataDialogForm, submitCallback)
+            }
           } else {
-            this.$api.put(this.isMainMenuDialog ? this.$apiUrl.SYS_MENU_UPDATE : this.$apiUrl.SYS_MENUSUB_UPDATE, JSON.stringify(this.dataDialogForm), submitCallback)
+            if (this.isMainMenuDialog) {
+              updateSysMenu(this.dataDialogForm, submitCallback)
+            } else {
+              updateSysMenuSub(this.dataDialogForm, submitCallback)
+            }
           }
         }
       })

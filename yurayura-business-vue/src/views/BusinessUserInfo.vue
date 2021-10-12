@@ -23,16 +23,9 @@
           <el-form-item label="性别"
                         prop="userSex"
                         label-width="3rem">
-            <el-select v-model="selectForm.userSex"
-                       clearable
-                       placeholder="请选择">
-              <el-option value="1"
-                         label="男">
-              </el-option>
-              <el-option value="0"
-                         label="女">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.userSex"
+                             dictCode="userSex">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="手机号"
                         prop="userPhoneNumber"
@@ -43,15 +36,9 @@
           <el-form-item label="状态"
                         prop="userStatus"
                         label-width="3rem">
-            <el-select v-model="selectForm.userStatus"
-                       clearable
-                       placeholder="请选择">
-              <el-option v-for="item in userStatusDict"
-                         :key="item.id"
-                         :value="item.dictVal"
-                         :label="item.dictName">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.userStatus"
+                             dictCode="userStatus">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item>
             <div class="btn-group">
@@ -95,8 +82,7 @@
           <el-table-column label="性别"
                            width="100">
             <template slot-scope="scope">
-              <span v-if="scope.row.userSex === 1">男</span>
-              <span v-else>女</span>
+              {{scope.row.userSex | sysDictFormatFilter('userSex')}}
             </template>
           </el-table-column>
           <el-table-column label="生日"
@@ -120,7 +106,7 @@
           <el-table-column label="状态"
                            width="150">
             <template slot-scope="scope">
-              {{scope.row.userStatus | userStatusFilter}}
+              {{scope.row.userStatus | sysDictFormatFilter('userStatus')}}
             </template>
           </el-table-column>
           <el-table-column label="注册时间"
@@ -133,13 +119,13 @@
               <div class="btn-group shadow">
                 <button type="button"
                         class="btn btn-info btn-twitter font-size-14 text-white"
-                        v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`)"
+                        v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
                         @click="updateStatusDialogOpen(scope.row.id)">
                   <i class="fa fa-pencil-square-o me-2"></i>调整状态
                 </button>
                 <button type="button"
                         class="btn btn-warning btn-twitter font-size-14 text-white"
-                        v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`)"
+                        v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
                         @click="resetAvatar(scope.row.id)">
                   <i class="fa fa-retweet me-2"></i>重置头像
                 </button>
@@ -165,15 +151,10 @@
                  size="small">
           <el-form-item label="状态"
                         label-width="10rem">
-            <el-select v-model="updateStatusDialogForm.userStatus"
-                       placeholder="请选择"
-                       class="w-75">
-              <el-option v-for="item in userStatusDict"
-                         :key="item.id"
-                         :value="item.dictVal"
-                         :label="item.dictName">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="updateStatusDialogForm.userStatus"
+                             dictCode="userStatus"
+                             customClass="w-75">
+            </sys-dict-select>
           </el-form-item>
         </el-form>
         <div slot="footer"
@@ -193,6 +174,7 @@
 
 <script>
 import BusinessPagination from '@components/BusinessPagination.vue'
+import { getUserPage, updateUserStatus, updateUserAvatarDefault } from '@api/user'
 
 export default {
   name: 'BusinessUserInfo',
@@ -215,19 +197,15 @@ export default {
       updateStatusDialogForm: {
         id: 0,
         userStatus: '0'
-      },
-      userStatusDict: []
+      }
     }
   },
   methods: {
-    async getSysDict () {
-      this.userStatusDict = await this.$sysDict.get('userStatus')
-    },
     getPage () {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      this.$api.get(this.$apiUrl.USER_GETPAGE, sendData, res => {
+      getUserPage(sendData, res => {
         if (res.code === 200) {
           this.pageInfo = res.data
         } else if (res.code === 102) {
@@ -259,15 +237,13 @@ export default {
       this.updateStatusDialogVisible = true
     },
     submitContent () {
-      this.$api.put(this.$apiUrl.USER_UPDATESTATUS, this.$qs.stringify(this.updateStatusDialogForm), res => {
+      updateUserStatus(this.updateStatusDialogForm, res => {
         if (res.code === 200) {
           this.$message.success(res.msg)
           this.updateStatusDialogVisible = false
         } else if (res.code === 102) {
           this.$message.error(res.msg)
         }
-      }, {
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       })
     },
     resetAvatar (id) {
@@ -276,15 +252,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$api.put(this.$apiUrl.USER_UPDATEAVATARDEFAULT, this.$qs.stringify({ id }), res => {
+        updateUserAvatarDefault(id, res => {
           if (res.code === 200) {
             this.$message.success(res.msg)
             this.getPage()
           } else if (res.code === 102) {
             this.$message.error(res.msg)
           }
-        }, {
-          'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
         })
       })
     },
@@ -297,7 +271,6 @@ export default {
     }
   },
   mounted () {
-    this.getSysDict()
     this.getPage()
   }
 }

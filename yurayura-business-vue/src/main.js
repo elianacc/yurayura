@@ -3,12 +3,9 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import filter from './filter'
-import qs from 'qs'
-import api from '@api/baseRequest'
-import apiUrl from '@api/baseUrl'
-import sysDict from '@utils/sysDict'
-import common from '@utils/common'
-import '@utils/dialogDrag.js'
+import './directive'
+import SysDictSelect from '@components/SysDictSelect.vue'
+import SysDictRadioGroup from '@components/SysDictRadioGroup.vue'
 import {
   Col, Button,
   Form, FormItem, Input, InputNumber, Select, Option, DatePicker, RadioGroup, Radio, CheckboxGroup, CheckboxButton, Upload,
@@ -23,6 +20,9 @@ import '@css/font-awesome.min.css'
 import '@css/bootstrap-extend.css'
 
 Vue.config.productionTip = false
+
+Vue.component('sys-dict-select', SysDictSelect)
+Vue.component('sys-dict-radio-group', SysDictRadioGroup)
 
 // Basic
 Vue.use(Col)
@@ -64,11 +64,6 @@ Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$notify = Notification
-Vue.prototype.$qs = qs
-Vue.prototype.$api = api
-Vue.prototype.$apiUrl = apiUrl
-Vue.prototype.$sysDict = sysDict
-Vue.prototype.$common = common
 
 // 全局设置过滤器
 Object.keys(filter).forEach(key => {

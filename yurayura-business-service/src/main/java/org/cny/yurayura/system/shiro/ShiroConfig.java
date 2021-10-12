@@ -51,6 +51,7 @@ public class ShiroConfig {
         fillterMap.put("/api/sys/menuSub/insert*", "perms[sys_menu_insert]");
         fillterMap.put("/api/sys/menuSub/update*", "perms[sys_menu_update]");
 
+        fillterMap.put("/api/sys/dict/getAll", "authc");
         fillterMap.put("/api/sys/dict/getByDictCode", "authc");
         fillterMap.put("/api/sys/dict/get*", "perms[sys_dict_select]");
         fillterMap.put("/api/sys/dict/insert*", "perms[sys_dict_insert]");

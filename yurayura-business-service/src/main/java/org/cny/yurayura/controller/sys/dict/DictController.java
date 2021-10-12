@@ -150,5 +150,21 @@ public class DictController {
         }
         return ApiResult.success("查询成功", dictList);
     }
+
+    /**
+     * 查询所有系统数据字典
+     *
+     * @param
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @GetMapping("/getAll")
+    @ApiOperation("查询所有系统数据字典")
+    public ApiResult getAll() {
+        List<Dict> dictList = iDictService.getAll();
+        if (dictList.isEmpty()) {
+            return ApiResult.warn("系统数据字典在redis中不存在，请添加");
+        }
+        return ApiResult.success("查询成功", dictList);
+    }
 }
 

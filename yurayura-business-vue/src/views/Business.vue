@@ -57,9 +57,7 @@
 
                 <el-menu-item :index="item.menuIndex"
                               v-for="item in submenu.menuSubList"
-                              :key="item.menuName"
-                              :route="{path:item.menuIndex,query:{menuName:item.menuName}}"
-                              @click="addTab(item.menuTitle, item.menuName, item.menuIndex)">
+                              :key="item.menuName">
                   <i :class="item.menuIconClass"
                      class="me-2"></i>{{item.menuTitle}}
                 </el-menu-item>
@@ -106,6 +104,10 @@
 </template>
 
 <script>
+import { getSysSideMenu, getSysMenuSubByIndex } from '@api/sysMenu'
+import { sysManagerLogout, getCurrentSysManagerMsg } from '@api/sysManager'
+import { getSysDictAll } from '@api/sysDict'
+
 export default {
   name: 'Business',
   data () {
@@ -119,7 +121,7 @@ export default {
   },
   methods: {
     getSideMenu () {
-      this.$api.get(this.$apiUrl.SYS_MENU_GETSYSSIDEMENU, null, res => {
+      getSysSideMenu(res => {
         if (res.code === 200) {
           this.sideMenu = res.data
         }
@@ -131,7 +133,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$api.get(this.$apiUrl.SYS_MANAGER_LOGOUT, null, res => {
+        sysManagerLogout(res => {
           if (res.code === 200) {
             this.$store.commit('manager/CLEAR_MANAGER_MSG')
             this.$router.push('/manager_login')
@@ -147,23 +149,14 @@ export default {
           if (tab.name === targetName) {
             let nextTab = tabs[index + 1] || tabs[index - 1]
             if (nextTab) {
-              activeName = nextTab.name
-              this.sideMenuDftActive = nextTab.index
-              if (activeName === 'index') {
-                this.$router.push(nextTab.index)
-              } else {
-                this.$router.push({ path: nextTab.index, query: { menuName: nextTab.name } })
-              }
+              this.$router.push(nextTab.index)
             } else {
               this.$router.push('/business')
             }
           }
         })
       }
-      if (tabs.length !== 1) {
-        this.editableTabsValue = activeName
-        this.editableTabs = tabs.filter(tab => tab.name !== targetName)
-      }
+      this.editableTabs = tabs.filter(tab => tab.name !== targetName)
     },
     addTab (tabTitle, tabName, tabIndex) {
       let newTabName = tabName
@@ -179,17 +172,23 @@ export default {
     },
     tabClick (target) {
       let nowTab = this.editableTabs.find(tab => tab.name === target.name)
-      this.sideMenuDftActive = nowTab.index
-      if (nowTab.name === 'index') {
-        this.$router.push(nowTab.index)
-      } else {
-        this.$router.push({ path: nowTab.index, query: { menuName: nowTab.name } })
-      }
+      this.$router.push(nowTab.index)
     },
     getCurrentManagerMsg () {
-      this.$api.get(this.$apiUrl.SYS_MANAGER_GETCURRENTMANAGERMSG, null, res => {
+      getCurrentSysManagerMsg(res => {
         if (res.code === 200) {
           this.$store.commit('manager/SET_MANAGER_MSG', res.data)
+        }
+      })
+    },
+    getAllDict () {
+      getSysDictAll(res => {
+        if (res.code === 200) {
+          this.$store.commit('dict/SET_DICT_LIST', res.data)
+        } else if (res.code === 102) {
+          this.$alert(res.msg, '提示', {
+            confirmButtonText: '确定'
+          })
         }
       })
     }
@@ -202,30 +201,21 @@ export default {
         if (to.name === 'Business') {
           this.sideMenuDftActive = ''
           this.editableTabsValue = ''
-          this.editableTabs = []
         } else {
-          if (to.name === 'BusinessIndex' && to.path !== this.sideMenuDftActive) {
+          if (to.name === 'BusinessIndex') {
             this.addTab('首页', 'index', '/business/index')
           }
-          if (to.name !== 'BusinessIndex' && to.path !== this.sideMenuDftActive) {
-            if (to.query.menuName === undefined) {
-              this.$router.replace('/Notfound')
-            } else {
-              let index = to.path.charAt(to.path.length - 1) === '/' ? to.path.substring(0, to.path.length - 1) : to.path
-              let lastIndex = index.substring(index.lastIndexOf('/') + 1, index.length)
-              if (lastIndex === to.query.menuName) {
-                this.$api.get(this.$apiUrl.SYS_MENUSUB_GETBYINDEX, { index }, res => {
-                  if (res.code === 200) {
-                    let nowItem = res.data
-                    this.addTab(nowItem.menuTitle, nowItem.menuName, nowItem.menuIndex)
-                  } else if (res.code === 102) {
-                    this.$message.error(res.msg)
-                  }
-                })
-              } else {
-                this.$router.replace('/Notfound')
+          if (to.name !== 'BusinessIndex') {
+            let index = to.path.charAt(to.path.length - 1) === '/' ? to.path.substring(0, to.path.length - 1) : to.path
+            getSysMenuSubByIndex(index, res => {
+              if (res.code === 200) {
+                this.getAllDict()
+                let nowItem = res.data
+                this.addTab(nowItem.menuTitle, nowItem.menuName, nowItem.menuIndex)
+              } else if (res.code === 102) {
+                this.$message.error(res.msg)
               }
-            }
+            })
           }
         }
       },

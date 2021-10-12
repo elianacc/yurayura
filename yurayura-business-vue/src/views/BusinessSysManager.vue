@@ -7,7 +7,7 @@
       <div class="col-2">
         <button type="button"
                 class="btn btn-primary font-size-14 me-2"
-                v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_insert`)"
+                v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`)"
                 @click="insertDialogOpen">
           <i class="fa fa-plus-circle me-2"></i>添加
         </button>
@@ -30,16 +30,9 @@
           <el-form-item label="状态"
                         prop="managerStatus"
                         label-width="3rem">
-            <el-select v-model="selectForm.managerStatus"
-                       clearable
-                       placeholder="请选择">
-              <el-option value="1"
-                         label="启用">
-              </el-option>
-              <el-option value="0"
-                         label="禁用">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.managerStatus"
+                             dictCode="enableStatus">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item>
             <div class="btn-group">
@@ -82,8 +75,7 @@
           <el-table-column label="状态"
                            width="200">
             <template slot-scope="scope">
-              <span v-if="scope.row.managerStatus === 1">启用</span>
-              <span v-else>禁用</span>
+              {{scope.row.managerStatus | sysDictFormatFilter('enableStatus')}}
             </template>
           </el-table-column>
           <el-table-column label="操作"
@@ -91,7 +83,7 @@
             <template slot-scope="scope">
               <button type="button"
                       class="btn btn-info btn-twitter font-size-14 text-white shadow"
-                      v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`) && scope.row.managerName !== 'admin'"
+                      v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`) && scope.row.managerName !== 'admin'"
                       @click="updateDialogOpen(scope.row.id)">
                 <i class="fa fa-pencil-square-o me-2"></i>修改
               </button>
@@ -150,16 +142,9 @@
           <el-form-item label="状态"
                         prop="managerStatus"
                         label-width="10rem">
-            <el-radio-group v-model="dataDialogForm.managerStatus">
-              <el-radio :label="1"
-                        border>
-                启用
-              </el-radio>
-              <el-radio :label="0"
-                        border>
-                禁用
-              </el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.managerStatus"
+                                  dictCode="enableStatus">
+            </sys-dict-radio-group>
           </el-form-item>
         </el-form>
         <div slot="footer"
@@ -180,6 +165,8 @@
 <script>
 import BusinessPagination from '@components/BusinessPagination.vue'
 import { Base64 } from 'js-base64'
+import { getSysManagerPage, insertSysManager, updateSysManager } from '@api/sysManager'
+import { getSysPermissionAuthorTree } from '@api/sysPermission'
 
 export default {
   name: 'BusinessSysManager',
@@ -225,7 +212,7 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      this.$api.get(this.$apiUrl.SYS_MANAGER_GETPAGE, sendData, res => {
+      getSysManagerPage(sendData, res => {
         if (res.code === 200) {
           this.pageInfo = res.data
         } else if (res.code === 102) {
@@ -289,13 +276,9 @@ export default {
             }
           }
           if (this.dataDialogForm.id === 0) {
-            this.$api.post(this.$apiUrl.SYS_MANAGER_INSERT, this.$qs.stringify(sendData, { arrayFormat: 'repeat' }), submitCallback, {
-              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            })
+            insertSysManager(sendData, submitCallback)
           } else {
-            this.$api.put(this.$apiUrl.SYS_MANAGER_UPDATE, this.$qs.stringify(sendData, { arrayFormat: 'repeat' }), submitCallback, {
-              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            })
+            updateSysManager(sendData, submitCallback)
           }
         }
       })
@@ -312,7 +295,7 @@ export default {
       this.$refs.permissionAuthorTree.setCheckedKeys([])
     },
     getPermissionAuthorTree () {
-      this.$api.get(this.$apiUrl.SYS_PERMISSION_GETPERMISSIONAUTHORTREE, null, res => {
+      getSysPermissionAuthorTree(res => {
         if (res.code === 200) {
           this.permissionAuthorTreeList = res.data
         }

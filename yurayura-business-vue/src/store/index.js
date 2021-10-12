@@ -4,22 +4,24 @@ import createVuexAlong from 'vuex-along'
 
 import manager from './manager'
 import menutab from './menutab'
+import dict from './dict'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     manager,
-    menutab
+    menutab,
+    dict
   },
   plugins: [createVuexAlong({
     name: 'yurayura-business-vuex-along',
     local: {
-      list: ['menutab'],
+      list: ['menutab', 'dict'],
       isFilter: true
     },
     session: {
-      list: ['menutab']
+      list: ['menutab', 'dict']
     }
   })]
 })

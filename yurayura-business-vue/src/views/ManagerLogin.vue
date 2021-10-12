@@ -72,6 +72,7 @@
 
 <script>
 import { Base64 } from 'js-base64'
+import { sysManagerLogin } from '@api/sysManager'
 
 export default {
   name: 'ManagerLogin',
@@ -108,7 +109,7 @@ export default {
           })
           this.loginForm.managerPassword = Base64.encode(this.loginForm.managerPassword)
           delete this.loginForm.verifyImage
-          this.$api.post(this.$apiUrl.SYS_MANAGER_LOGIN, JSON.stringify(this.loginForm), res => {
+          sysManagerLogin(this.loginForm, res => {
             if (res.code === 200) {
               this.$store.dispatch('menutab/resetMenuAndTab')
               setTimeout(() => {
@@ -126,11 +127,11 @@ export default {
       })
     },
     loadVerifyImage () {
-      this.loginForm.verifyImage = `${this.$apiUrl.SYS_MANAGER_GETVERIFYCODE}?randomId=${Math.random()}`
+      this.loginForm.verifyImage = `/api/sys/manager/getVerifyCode?randomId=${Math.random()}`
     }
   },
   mounted () {
-    this.loginForm.verifyImage = `${this.$apiUrl.SYS_MANAGER_GETVERIFYCODE}?randomId=${Math.random()}`
+    this.loginForm.verifyImage = `/api/sys/manager/getVerifyCode?randomId=${Math.random()}`
   }
 }
 </script>

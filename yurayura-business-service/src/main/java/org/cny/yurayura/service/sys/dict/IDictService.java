@@ -55,4 +55,12 @@ public interface IDictService extends IService<Dict> {
      */
     public List<Dict> getByDictCode(String dictCode);
 
+    /**
+     * 查询所有系统数据字典（只从redis获取）
+     *
+     * @param
+     * @return java.util.List<org.cny.yurayura.entity.sys.dict.Dict>
+     */
+    public List<Dict> getAll();
+
 }

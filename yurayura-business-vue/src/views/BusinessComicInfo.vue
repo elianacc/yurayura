@@ -6,7 +6,7 @@
       <div class="col-2">
         <button type="button"
                 class="btn btn-primary font-size-14 me-2"
-                v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_insert`)"
+                v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`)"
                 @click="insertDialogOpen">
           <i class="fa fa-plus-circle me-2"></i>添加
         </button>
@@ -14,7 +14,7 @@
                 class="btn btn-danger font-size-14"
                 style="position: relative; top: 0.03125rem;"
                 @click="deleteBatch"
-                v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_deleteBatch`)">
+                v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_deleteBatch`)">
           <i class="fa fa-trash me-2"></i>删除
         </button>
       </div>
@@ -36,47 +36,26 @@
           <el-form-item label="状态"
                         prop="comicStatus"
                         label-width="3rem">
-            <el-select v-model="selectForm.comicStatus"
-                       clearable
-                       placeholder="请选择">
-              <el-option v-for="item in comicStatusDict"
-                         :key="item.id"
-                         :value="item.dictVal"
-                         :label="item.dictName">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.comicStatus"
+                             dictCode="comicStatus">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="上架状态"
                         prop="comicShelfStatus"
                         label-width="5rem">
-            <el-select v-model="selectForm.comicShelfStatus"
-                       clearable
-                       placeholder="请选择">
-              <el-option value="1"
-                         label="上架">
-              </el-option>
-              <el-option value="0"
-                         label="下架">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.comicShelfStatus"
+                             dictCode="comicShelfStatus">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="标签"
                         prop="comicTag"
                         label-width="3rem">
-            <el-select v-model="selectForm.comicTag"
-                       clearable
-                       multiple
-                       filterable
-                       allow-create
-                       default-first-option
-                       collapse-tags
-                       placeholder="请选择或输入标签">
-              <el-option v-for="item in comicLabelDict"
-                         :key="item.id"
-                         :value="item.dictVal"
-                         :label="item.dictName">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.comicTag"
+                             dictCode="comicLabel"
+                             placeholder="请选择或输入标签"
+                             isMultiple
+                             allowCreate>
+            </sys-dict-select>
           </el-form-item>
           <el-form-item>
             <div class="btn-group">
@@ -133,16 +112,16 @@
                            width="350"
                            prop="comicContent">
           </el-table-column>
-          <el-table-column label="状态"
+          <el-table-column label="当前状态"
                            width="200">
             <template slot-scope="scope">
-              <span>{{scope.row.comicStatus | cmStatusFilter(scope.row.comicCurrentEpisodes, comicStatusDict)}}</span>
+              {{scope.row.comicStatus | comicCurrentStatusFilter(scope.row.comicCurrentEpisodes)}}
             </template>
           </el-table-column>
           <el-table-column label="标签"
                            width="200">
             <template slot-scope="scope">
-              <span>{{scope.row.comicLabel | cmLabelFilter}}</span>
+              {{scope.row.comicLabel | comicLabelShowFilter}}
             </template>
           </el-table-column>
           <el-table-column label="放送时间"
@@ -154,7 +133,7 @@
             <template slot-scope="scope">
               <button type="button"
                       class="btn btn-info btn-twitter font-size-14 text-white shadow"
-                      v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`)"
+                      v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
                       @click="updateDialogOpen(scope.row.id)">
                 <i class="fa fa-pencil-square-o me-2"></i>修改
               </button>
@@ -222,29 +201,19 @@
           <el-form-item label="状态"
                         prop="comicStatus"
                         label-width="10rem">
-            <el-radio-group v-model="dataDialogForm.comicStatus">
-              <el-radio :label="0"
-                        border>已完结
-              </el-radio>
-              <el-radio :label="8"
-                        border>更新中
-              </el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.comicStatus"
+                                  dictCode="comicUpdtStatus">
+            </sys-dict-radio-group>
           </el-form-item>
           <el-form-item label="更新时间"
                         prop="comicUdTime"
                         label-width="10rem"
                         v-show="dataDialogForm.cmUdTimeShow">
-            <el-select v-model="dataDialogForm.comicUdTime"
-                       clearable
-                       placeholder="----请选择更新时间----"
-                       class="w-50">
-              <el-option v-for="item in comicUpdtTimeDict"
-                         :key="item.id"
-                         :value="item.dictVal"
-                         :label="item.dictName">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="dataDialogForm.comicUdTime"
+                             dictCode="comicUpdtTime"
+                             placeholder="----请选择更新时间----"
+                             customClass="w-50">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item label="当前话数"
                         prop="comicCurrentEpisodes"
@@ -258,12 +227,11 @@
           <el-form-item label="标签"
                         prop="cmTag"
                         label-width="10rem">
-            <el-checkbox-group v-model="dataDialogForm.cmTag"
-                               fill="#007bff">
-              <el-checkbox-button v-for="item in comicLabelDict"
-                                  :label="item.dictVal"
-                                  :key="item.id"><i class="fa fa-paperclip me-2"></i>{{item.dictName}}</el-checkbox-button>
-            </el-checkbox-group>
+            <sys-dict-checkbox-btn-group v-model="dataDialogForm.cmTag"
+                                         dictCode="comicLabel"
+                                         fill="#007bff"
+                                         iconClass="fa fa-paperclip me-2">
+            </sys-dict-checkbox-btn-group>
           </el-form-item>
           <el-form-item label="自定义标签"
                         label-width="10rem">
@@ -275,7 +243,7 @@
               {{tag}}
             </el-tag>
             <el-input class="input-new-tag"
-                      v-focus
+                      v-focusInput
                       v-if="dataDialogForm.customTagInputVisible"
                       v-model.trim="dataDialogForm.customTagInput"
                       ref="customTagInput"
@@ -317,12 +285,9 @@
           <el-form-item label="上架状态"
                         prop="comicShelfStatus"
                         label-width="10rem">
-            <el-radio-group v-model="dataDialogForm.comicShelfStatus">
-              <el-radio :label="1"
-                        border>上架</el-radio>
-              <el-radio :label="0"
-                        border>下架</el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.comicShelfStatus"
+                                  dictCode="comicShelfStatus">
+            </sys-dict-radio-group>
           </el-form-item>
         </el-form>
         <div slot="footer"
@@ -342,11 +307,15 @@
 
 <script>
 import BusinessPagination from '@components/BusinessPagination.vue'
+import SysDictCheckboxBtnGroup from '@components/SysDictCheckboxBtnGroup.vue'
+import { getComicPage, insertComic, updateComic, deleteComicBatchByIds } from '@api/comic'
+import { uploadImgIsCorrect } from '@utils/common'
 
 export default {
   name: 'BusinessComicInfo',
   components: {
-    BusinessPagination
+    BusinessPagination,
+    SysDictCheckboxBtnGroup
   },
   data () {
     return {
@@ -385,18 +354,10 @@ export default {
       dataDialogFormRule: {
         comicName: [{ required: true, message: '番剧名不能为空', trigger: 'blur' }],
         comicTime: [{ required: true, message: '放送时间不能为空', trigger: 'blur' }]
-      },
-      comicLabelDict: [],
-      comicStatusDict: [],
-      comicUpdtTimeDict: []
+      }
     }
   },
   methods: {
-    async getSysDict () {
-      this.comicStatusDict = await this.$sysDict.get('comicStatus')
-      this.comicLabelDict = await this.$sysDict.get('comicLabel')
-      this.comicUpdtTimeDict = await this.$sysDict.get('comicUpdtTime')
-    },
     tbSelectionChange (val) {
       this.multipleSelection = val
     },
@@ -404,7 +365,7 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      this.$api.get(this.$apiUrl.COMIC_GETPAGE, sendData, res => {
+      getComicPage(sendData, res => {
         if (res.code === 200) {
           this.pageInfo = res.data
         } else if (res.code === 102) {
@@ -434,8 +395,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let sendData = { ids: this.multipleSelection.map(selt => selt.id) }
-          this.$api.delete(this.$apiUrl.COMIC_DELETEBATCHBYIDS, sendData, res => {
+          deleteComicBatchByIds(this.multipleSelection.map(selt => selt.id), res => {
             if (res.code === 200) {
               this.$message.success(res.msg)
               this.multipleSelection = []
@@ -461,11 +421,9 @@ export default {
       this.dataDialogForm.cmImgUplUrl = currentComic.comicImageUrl
       this.dataDialogForm.cmImgUplUrlTmp = currentComic.comicImageUrl
       this.dataDialogForm.comicStatus = currentComic.comicStatus !== 0 ? 8 : 0
-      this.dataDialogForm.cmUdTimeShow = currentComic.comicStatus !== 0 ? true : false
+      this.dataDialogForm.cmUdTimeShow = currentComic.comicStatus !== 0
       this.dataDialogForm.comicUdTime = currentComic.comicStatus !== 0 && currentComic.comicStatus !== 8 ? currentComic.comicStatus.toString() : ''
       this.diaLogComicLabel = currentComic.comicLabel
-      this.dataDialogForm.customTagInputVisible = false
-      this.dataDialogForm.customTagInput = ''
       this.dataDialogVisible = true
     },
     customTagClose (tag) {
@@ -494,15 +452,13 @@ export default {
       this.$message.warning('只能上传一张图片')
     },
     cmImgUplChange (file) {
-      this.$common.imgVerificat(file.raw, 102400, res => {
-        if (res) {
-          this.$message.warning(res)
-          this.$refs.dialogComicImgUpl.clearFiles()
-        } else {
-          this.dataDialogForm.cmImgUplUrl = ''
-          this.dataDialogForm.comicImgFile = file.raw
-        }
-      })
+      let isCorrect = uploadImgIsCorrect(file.raw, 102400)
+      if (isCorrect) {
+        this.dataDialogForm.cmImgUplUrl = ''
+        this.dataDialogForm.comicImgFile = file.raw
+      } else {
+        this.$refs.dialogComicImgUpl.clearFiles()
+      }
     },
     cmImgUplDel () {
       this.dataDialogForm.cmImgUplUrl = this.dataDialogForm.cmImgUplUrlTmp
@@ -511,17 +467,14 @@ export default {
     submitContent () {
       this.$refs.dataDialogForm.validate(valid => {
         if (valid) {
-          let sendData = new FormData()
-          Object.keys(this.dataDialogForm).forEach(key => {
-            sendData.append(key, this.dataDialogForm[key])
-          })
+          let sendData = { ...this.dataDialogForm }
           let comicLabelArr = [...this.diaLogComicLabel]
           for (let index = 0; index < 4 - this.dataDialogForm.customTag.length; index++) {
             comicLabelArr.push('')
           }
-          sendData.append('comicLabel', comicLabelArr)
+          sendData.comicLabel = comicLabelArr
           if (!this.dataDialogForm.comicImgFile) {
-            sendData.delete('comicImgFile')
+            delete sendData.comicImgFile
           }
           let submitCallback = res => {
             if (res.code === 200) {
@@ -537,9 +490,9 @@ export default {
             }
           }
           if (this.dataDialogForm.id === 0) {
-            this.$api.post(this.$apiUrl.COMIC_INSERT, sendData, submitCallback)
+            insertComic(sendData, submitCallback)
           } else {
-            this.$api.put(this.$apiUrl.COMIC_UPDATE, sendData, submitCallback)
+            updateComic(sendData, submitCallback)
           }
         }
       })
@@ -591,18 +544,7 @@ export default {
       }
     }
   },
-  directives: {
-    // 注册一个局部的自定义指令 v-focus
-    focus: {
-      // 指令的定义
-      inserted (el) {
-        // 聚焦元素
-        el.querySelector('input').focus()
-      }
-    }
-  },
   mounted () {
-    this.getSysDict()
     this.getPage()
   }
 }

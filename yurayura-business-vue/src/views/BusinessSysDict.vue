@@ -6,7 +6,7 @@
       <div class="col-2">
         <button type="button"
                 class="btn btn-primary font-size-14 me-2"
-                v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_insert`)"
+                v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`)"
                 @click="insertDialogOpen">
           <i class="fa fa-plus-circle me-2"></i>添加
         </button>
@@ -29,16 +29,9 @@
           <el-form-item label="状态"
                         prop="dictStatus"
                         label-width="3rem">
-            <el-select v-model="selectForm.dictStatus"
-                       clearable
-                       placeholder="请选择">
-              <el-option value="1"
-                         label="启用">
-              </el-option>
-              <el-option value="0"
-                         label="禁用">
-              </el-option>
-            </el-select>
+            <sys-dict-select v-model="selectForm.dictStatus"
+                             dictCode="enableStatus">
+            </sys-dict-select>
           </el-form-item>
           <el-form-item>
             <div class="btn-group">
@@ -77,8 +70,7 @@
           <el-table-column label="状态"
                            width="200">
             <template slot-scope="scope">
-              <span v-if="scope.row.dictStatus === 1">启用</span>
-              <span v-else>禁用</span>
+              {{scope.row.dictStatus | sysDictFormatFilter('enableStatus')}}
             </template>
           </el-table-column>
           <el-table-column label="序号"
@@ -90,7 +82,7 @@
             <template slot-scope="scope">
               <button type="button"
                       class="btn btn-info btn-twitter font-size-14 text-white shadow"
-                      v-if="$store.getters['manager/managerPermission'].includes(`${$route.query.menuName}_update`)"
+                      v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
                       @click="updateDialogOpen(scope.row.id)">
                 <i class="fa fa-pencil-square-o me-2"></i>修改
               </button>
@@ -146,16 +138,9 @@
           <el-form-item label="状态"
                         prop="dictStatus"
                         label-width="10rem">
-            <el-radio-group v-model="dataDialogForm.dictStatus">
-              <el-radio :label="1"
-                        border>
-                启用
-              </el-radio>
-              <el-radio :label="0"
-                        border>
-                禁用
-              </el-radio>
-            </el-radio-group>
+            <sys-dict-radio-group v-model="dataDialogForm.dictStatus"
+                                  dictCode="enableStatus">
+            </sys-dict-radio-group>
           </el-form-item>
           <el-form-item label="序号"
                         prop="dictSeq"
@@ -184,6 +169,7 @@
 
 <script>
 import BusinessPagination from '@components/BusinessPagination.vue'
+import { getSysDictPage, insertSysDict, updateSysDict } from '@api/sysDict'
 
 export default {
   name: 'BusinessSysDict',
@@ -230,7 +216,7 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      this.$api.get(this.$apiUrl.SYS_DICT_GETPAGE, sendData, res => {
+      getSysDictPage(sendData, res => {
         if (res.code === 200) {
           this.pageInfo = res.data
         } else if (res.code === 102) {
@@ -281,9 +267,9 @@ export default {
             }
           }
           if (this.dataDialogForm.id === 0) {
-            this.$api.post(this.$apiUrl.SYS_DICT_INSERT, JSON.stringify(this.dataDialogForm), submitCallback)
+            insertSysDict(this.dataDialogForm, submitCallback)
           } else {
-            this.$api.put(this.$apiUrl.SYS_DICT_UPDATE, JSON.stringify(this.dataDialogForm), submitCallback)
+            updateSysDict(this.dataDialogForm, submitCallback)
           }
         }
       })
