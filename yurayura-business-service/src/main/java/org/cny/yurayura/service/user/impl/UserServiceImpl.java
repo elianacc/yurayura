@@ -11,7 +11,7 @@ import org.cny.yurayura.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -37,13 +37,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         List<User> userList = userMapper.selectList(queryWrapper
                 .select(User.class, i -> !i.getColumn().equals("user_password"))
-                .nested(!StringUtils.isEmpty(dto.getUserNameKeyword()), i -> i.like("user_name", dto.getUserNameKeyword())
+                .nested(!ObjectUtils.isEmpty(dto.getUserNameKeyword()), i -> i.like("user_name", dto.getUserNameKeyword())
                         .or()
                         .like("user_nickname", dto.getUserNameKeyword())
                 )
-                .eq(!StringUtils.isEmpty(dto.getUserSex()), "user_sex", dto.getUserSex())
-                .eq(!StringUtils.isEmpty(dto.getUserStatus()), "user_status", dto.getUserStatus())
-                .eq(!StringUtils.isEmpty(dto.getUserPhoneNumber()), "user_phone_number", dto.getUserPhoneNumber())
+                .eq(!ObjectUtils.isEmpty(dto.getUserSex()), "user_sex", dto.getUserSex())
+                .eq(!ObjectUtils.isEmpty(dto.getUserStatus()), "user_status", dto.getUserStatus())
+                .eq(!ObjectUtils.isEmpty(dto.getUserPhoneNumber()), "user_phone_number", dto.getUserPhoneNumber())
                 .orderByDesc("id"));
         return new PageInfo<>(userList, 5);
     }

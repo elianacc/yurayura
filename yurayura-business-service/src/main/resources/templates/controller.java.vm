@@ -3,7 +3,7 @@ package ${package.Controller};
 #if(${swagger2})
 import io.swagger.annotations.*;
 #end
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class ${table.controllerName} {
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     #end
     public ApiResult getById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+        if (ObjectUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", i${entity}Service.getById(id));

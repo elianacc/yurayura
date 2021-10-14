@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -94,7 +94,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         }
         if (oldManager.getManagerName().equals(manager.getManagerName())) {
             // 修改密码为空时使用此管理员旧密码
-            if (StringUtils.isEmpty(manager.getManagerPassword())) {
+            if (ObjectUtils.isEmpty(manager.getManagerPassword())) {
                 manager.setManagerPassword(oldManager.getManagerPassword());
             } else {
                 manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
@@ -121,7 +121,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         // 获取服务器生成验证码
         Object managerVerifyCode = httpSession.getAttribute("managerVerifyCode");
         // 验证码session失效
-        if (StringUtils.isEmpty(managerVerifyCode)) {
+        if (ObjectUtils.isEmpty(managerVerifyCode)) {
             warn = "验证码过期，请重新输入";
             return warn;
         }

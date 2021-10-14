@@ -14,7 +14,7 @@ import org.cny.yurayura.system.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,8 +42,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(dto.getDictCode()), "dict_code", dto.getDictCode())
-                .eq(!StringUtils.isEmpty(dto.getDictStatus()), "dict_status", dto.getDictStatus())
+                .like(!ObjectUtils.isEmpty(dto.getDictCode()), "dict_code", dto.getDictCode())
+                .eq(!ObjectUtils.isEmpty(dto.getDictStatus()), "dict_status", dto.getDictStatus())
                 .orderByAsc("dict_code", "dict_seq"));
         return new PageInfo<>(dictList, 5);
     }

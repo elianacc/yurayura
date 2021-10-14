@@ -80,8 +80,9 @@ public class RedisUtil {
             if (key.length == 1) {
                 redisTemplate.delete(key[0]);
             } else {
-                // 传入一个 Collection<String> 集合
-                redisTemplate.delete(CollectionUtils.arrayToList(key));
+                for (String s : key) {
+                    redisTemplate.delete(s);
+                }
             }
         }
     }

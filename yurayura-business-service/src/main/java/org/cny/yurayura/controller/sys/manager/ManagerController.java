@@ -15,7 +15,7 @@ import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.system.util.VerifyCodeUtil;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -52,7 +52,7 @@ public class ManagerController {
     @ApiOperation("查询系统管理员（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+        if (ObjectUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iManagerService.getById(id));
@@ -67,9 +67,9 @@ public class ManagerController {
     @GetMapping("/getPage")
     @ApiOperation("分页查询系统管理员")
     public ApiResult getPage(ManagerSelectDto dto) {
-        if (StringUtils.isEmpty(dto.getPageNum())) {
+        if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
-        } else if (StringUtils.isEmpty(dto.getPageSize())) {
+        } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); // 页记录数默认10
         }
         PageInfo<Map<String, Object>> pageInfo = iManagerService.getPage(dto);
@@ -91,17 +91,17 @@ public class ManagerController {
     @ApiOperation("添加系统管理员")
     @ApiImplicitParam(name = "permissionIdArr", value = "拥有权限组")
     public ApiResult insert(Manager manager, @RequestParam(value = "permissionIdArr", required = false) List<Integer> permissionIdArr) {
-        if (StringUtils.isEmpty(manager.getManagerName())) {
+        if (ObjectUtils.isEmpty(manager.getManagerName())) {
             return ApiResult.warn("管理员名不能为空");
-        } else if (StringUtils.isEmpty(manager.getManagerPassword())) {
+        } else if (ObjectUtils.isEmpty(manager.getManagerPassword())) {
             return ApiResult.warn("管理员密码不能为空");
-        } else if (StringUtils.isEmpty(manager.getManagerStatus())) {
+        } else if (ObjectUtils.isEmpty(manager.getManagerStatus())) {
             return ApiResult.warn("状态不能为空");
         } else if (manager.getManagerName().length() > 20) {
             return ApiResult.warn("管理员名不能超过20个字符");
         }
         String warn = iManagerService.insert(manager, permissionIdArr);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("添加成功");
@@ -119,13 +119,13 @@ public class ManagerController {
     @ApiOperation("修改系统管理员")
     @ApiImplicitParam(name = "permissionIdArr", value = "拥有权限组")
     public ApiResult update(Manager manager, @RequestParam(value = "permissionIdArr", required = false) List<Integer> permissionIdArr) {
-        if (StringUtils.isEmpty(manager.getId())) {
+        if (ObjectUtils.isEmpty(manager.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(manager.getManagerStatus())) {
+        } else if (ObjectUtils.isEmpty(manager.getManagerStatus())) {
             return ApiResult.warn("状态不能为空");
         }
         String warn = iManagerService.update(manager, permissionIdArr);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("修改成功");
@@ -167,15 +167,15 @@ public class ManagerController {
     @ApiOperation("系统管理员登入")
     public ApiResult login(@RequestBody ManagerLoginDto dto, @ApiIgnore HttpSession session) {
 
-        if (StringUtils.isEmpty(dto.getManagerName())) {
+        if (ObjectUtils.isEmpty(dto.getManagerName())) {
             return ApiResult.warn("用户名不能为空");
-        } else if (StringUtils.isEmpty(dto.getManagerPassword())) {
+        } else if (ObjectUtils.isEmpty(dto.getManagerPassword())) {
             return ApiResult.warn("密码不能为空");
-        } else if (StringUtils.isEmpty(dto.getVerifyCode())) {
+        } else if (ObjectUtils.isEmpty(dto.getVerifyCode())) {
             return ApiResult.warn("验证码不能为空");
         }
         String warn = iManagerService.login(dto, session);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("管理员登入成功");

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class CodeGenerator {
         System.out.println(tip);
         if (scanner.hasNext()) {
             String ipt = scanner.next();
-            if (!StringUtils.isEmpty(ipt)) {
+            if (!ObjectUtils.isEmpty(ipt)) {
                 return ipt;
             }
         }

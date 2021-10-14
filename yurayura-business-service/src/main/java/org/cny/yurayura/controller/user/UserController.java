@@ -11,8 +11,11 @@ import org.cny.yurayura.service.user.IUserService;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户 controller
@@ -38,7 +41,7 @@ public class UserController {
     @ApiOperation("查询用户（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+        if (ObjectUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iUserService.getById(id));
@@ -53,9 +56,9 @@ public class UserController {
     @GetMapping("/getPage")
     @ApiOperation("分页查询用户")
     public ApiResult getPage(UserSelectDto dto) {
-        if (StringUtils.isEmpty(dto.getPageNum())) {
+        if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
-        } else if (StringUtils.isEmpty(dto.getPageSize())) {
+        } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); // 页记录数默认10
         }
         PageInfo<User> pageInfo = iUserService.getPage(dto);
@@ -75,9 +78,9 @@ public class UserController {
     @PutMapping("/updateStatus")
     @ApiOperation("修改状态（根据id）")
     public ApiResult updateStatus(User user) {
-        if (StringUtils.isEmpty(user.getId())) {
+        if (ObjectUtils.isEmpty(user.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(user.getUserStatus())) {
+        } else if (ObjectUtils.isEmpty(user.getUserStatus())) {
             return ApiResult.warn("状态不能为空");
         }
         iUserService.updateStatus(user);
@@ -93,7 +96,7 @@ public class UserController {
     @PutMapping("/updateAvatarDefault")
     @ApiOperation("重置为默认头像（根据id）")
     public ApiResult updateAvatarDefault(User user) {
-        if (StringUtils.isEmpty(user.getId())) {
+        if (ObjectUtils.isEmpty(user.getId())) {
             return ApiResult.warn("id不能为空");
         }
         iUserService.updateAvatarDefault(user);

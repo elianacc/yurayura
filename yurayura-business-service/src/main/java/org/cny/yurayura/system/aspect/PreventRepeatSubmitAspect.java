@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.cny.yurayura.system.exception.CustomizeException;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -43,7 +43,7 @@ public class PreventRepeatSubmitAspect {
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
         // 提交key为sessionId+url
         String key = sessionId + "-" + request.getServletPath();
-        if (StringUtils.isEmpty(key)) {
+        if (ObjectUtils.isEmpty(key)) {
             log.error("提交key为空！");
             return new CustomizeException(500, "提交进程异常！", "提交的key（sessionId+请求url）为空");
         }

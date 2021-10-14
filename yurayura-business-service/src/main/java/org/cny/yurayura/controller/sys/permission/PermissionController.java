@@ -1,16 +1,18 @@
 package org.cny.yurayura.controller.sys.permission;
 
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.cny.yurayura.dto.PermissionSelectDto;
 import org.cny.yurayura.entity.sys.permission.Permission;
 import org.cny.yurayura.enumerate.PermissionTypeEnum;
-import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.cny.yurayura.service.sys.permission.IPermissionService;
+import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 系统权限 controller
@@ -36,7 +38,7 @@ public class PermissionController {
     @ApiOperation("查询系统权限（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+        if (ObjectUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iPermissionService.getById(id));
@@ -51,9 +53,9 @@ public class PermissionController {
     @GetMapping("/getPage")
     @ApiOperation("分页查询系统权限")
     public ApiResult getPage(PermissionSelectDto dto) {
-        if (StringUtils.isEmpty(dto.getPageNum())) {
+        if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
-        } else if (StringUtils.isEmpty(dto.getPageSize())) {
+        } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
             dto.setPageSize(10); // 页记录数默认10
         }
         PageInfo<Permission> pageInfo = iPermissionService.getPage(dto);
@@ -75,23 +77,23 @@ public class PermissionController {
     @ApiOperation("添加系统权限")
     @ApiImplicitParam(name = "permissionBtnVal", value = "权限按钮值")
     public ApiResult insert(Permission permission, String permissionBtnVal) {
-        if (StringUtils.isEmpty(permission.getPermissionName())) {
+        if (ObjectUtils.isEmpty(permission.getPermissionName())) {
             return ApiResult.warn("权限名称不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionBelongSubmenuName())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionBelongSubmenuName())) {
             return ApiResult.warn("所属子菜单标识不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionType())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionType())) {
             return ApiResult.warn("权限类型不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionStatus())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionSeq())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (StringUtils.isEmpty(permissionBtnVal) && permission.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
+        } else if (ObjectUtils.isEmpty(permissionBtnVal) && permission.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
             return ApiResult.warn("权限类型为按钮时权限按钮不能为空");
         } else if (permission.getPermissionName().length() > 20) {
             return ApiResult.warn("权限名称不能超过20个字符");
         }
         String warn = iPermissionService.insert(permission, permissionBtnVal);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("添加成功");
@@ -109,25 +111,25 @@ public class PermissionController {
     @ApiOperation("修改系统权限")
     @ApiImplicitParam(name = "permissionBtnVal", value = "权限按钮值")
     public ApiResult update(Permission permission, String permissionBtnVal) {
-        if (StringUtils.isEmpty(permission.getId())) {
+        if (ObjectUtils.isEmpty(permission.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionName())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionName())) {
             return ApiResult.warn("权限名称不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionBelongSubmenuName())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionBelongSubmenuName())) {
             return ApiResult.warn("所属子菜单标识不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionType())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionType())) {
             return ApiResult.warn("权限类型不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionStatus())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (StringUtils.isEmpty(permission.getPermissionSeq())) {
+        } else if (ObjectUtils.isEmpty(permission.getPermissionSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (StringUtils.isEmpty(permissionBtnVal) && permission.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
+        } else if (ObjectUtils.isEmpty(permissionBtnVal) && permission.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
             return ApiResult.warn("权限类型为按钮时权限按钮不能为空");
         } else if (permission.getPermissionName().length() > 20) {
             return ApiResult.warn("权限名称不能超过20个字符");
         }
         String warn = iPermissionService.update(permission, permissionBtnVal);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("修改成功");

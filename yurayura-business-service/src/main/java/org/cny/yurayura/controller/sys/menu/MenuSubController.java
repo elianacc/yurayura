@@ -8,7 +8,7 @@ import org.cny.yurayura.service.sys.menu.IMenuSubService;
 import org.cny.yurayura.system.annotation.PreventRepeatSubmit;
 import org.cny.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,7 +35,7 @@ public class MenuSubController {
     @ApiOperation("查询系统子菜单（根据id）")
     @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
     public ApiResult getById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+        if (ObjectUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
         return ApiResult.success("查询成功", iMenuSubService.getById(id));
@@ -51,19 +51,19 @@ public class MenuSubController {
     @PostMapping("/insert")
     @ApiOperation("添加系统子菜单")
     public ApiResult insert(@RequestBody MenuSub menuSub) {
-        if (StringUtils.isEmpty(menuSub.getMenuTitle())) {
+        if (ObjectUtils.isEmpty(menuSub.getMenuTitle())) {
             return ApiResult.warn("标题不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuName())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuName())) {
             return ApiResult.warn("标识不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuIconClass())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuIconClass())) {
             return ApiResult.warn("图标样式不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuSeq())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuIndex())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuIndex())) {
             return ApiResult.warn("路径不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuPid())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuPid())) {
             return ApiResult.warn("父菜单id不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuStatus())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuStatus())) {
             return ApiResult.warn("状态不能为空");
         } else if (!menuSub.getMenuName().matches("^[a-z][a-z_]*$")) {
             return ApiResult.warn("标识只能包含小写字母下划线，以小写字母开头");
@@ -71,7 +71,7 @@ public class MenuSubController {
             return ApiResult.warn("标题、标识不能超过20个字符，图标样式不能超过30个字符");
         }
         String warn = iMenuSubService.insert(menuSub);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("添加成功");
@@ -87,21 +87,21 @@ public class MenuSubController {
     @PutMapping("/update")
     @ApiOperation("修改系统子菜单")
     public ApiResult update(@RequestBody MenuSub menuSub) {
-        if (StringUtils.isEmpty(menuSub.getId())) {
+        if (ObjectUtils.isEmpty(menuSub.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuTitle())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuTitle())) {
             return ApiResult.warn("标题不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuName())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuName())) {
             return ApiResult.warn("标识不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuIconClass())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuIconClass())) {
             return ApiResult.warn("图标样式不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuSeq())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuIndex())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuIndex())) {
             return ApiResult.warn("路径不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuStatus())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (StringUtils.isEmpty(menuSub.getMenuPid())) {
+        } else if (ObjectUtils.isEmpty(menuSub.getMenuPid())) {
             return ApiResult.warn("父菜单id不能为空");
         } else if (!menuSub.getMenuName().matches("^[a-z][a-z_]*$")) {
             return ApiResult.warn("标识只能包含小写字母下划线，以小写字母开头");
@@ -109,7 +109,7 @@ public class MenuSubController {
             return ApiResult.warn("标题、标识不能超过20个字符，图标样式不能超过30个字符");
         }
         String warn = iMenuSubService.update(menuSub);
-        if (!StringUtils.isEmpty(warn)) {
+        if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
         return ApiResult.success("修改成功");
@@ -124,7 +124,7 @@ public class MenuSubController {
     @DeleteMapping("/deleteById")
     @ApiOperation("删除系统子菜单（根据id）")
     public ApiResult deleteById(Integer id) {
-        if (StringUtils.isEmpty(id)) {
+        if (ObjectUtils.isEmpty(id)) {
             return ApiResult.warn("id不能为空");
         }
         iMenuSubService.deleteById(id);
@@ -140,7 +140,7 @@ public class MenuSubController {
     @GetMapping("/getByIndex")
     @ApiOperation("查询系统子菜单（根据路径）")
     public ApiResult getByIndex(String index) {
-        if (StringUtils.isEmpty(index)) {
+        if (ObjectUtils.isEmpty(index)) {
             return ApiResult.warn("路径不能为空");
         }
         return ApiResult.success("查询成功", iMenuSubService.getByIndex(index));

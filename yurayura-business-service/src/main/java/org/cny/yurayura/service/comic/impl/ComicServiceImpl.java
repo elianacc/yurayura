@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,7 +57,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         String warn = "";
         Integer comicStatus;
         // 更新状态为非完结，且更新时间不为空，更新状态为更新时间
-        if (dto.getComicStatus().intValue() == ComicStatusEnum.UPDATING.getStatusId() && !StringUtils.isEmpty(dto.getComicUdTime())) {
+        if (dto.getComicStatus().intValue() == ComicStatusEnum.UPDATING.getStatusId() && !ObjectUtils.isEmpty(dto.getComicUdTime())) {
             comicStatus = dto.getComicUdTime();
         } else {
             comicStatus = dto.getComicStatus();
@@ -118,7 +118,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         String warn = "";
         Integer comicStatus;
         // 更新状态为非完结，且更新时间不为空，更新状态为更新时间
-        if (dto.getComicStatus().intValue() == ComicStatusEnum.UPDATING.getStatusId() && !StringUtils.isEmpty(dto.getComicUdTime())) {
+        if (dto.getComicStatus().intValue() == ComicStatusEnum.UPDATING.getStatusId() && !ObjectUtils.isEmpty(dto.getComicUdTime())) {
             comicStatus = dto.getComicUdTime();
         } else {
             comicStatus = dto.getComicStatus();

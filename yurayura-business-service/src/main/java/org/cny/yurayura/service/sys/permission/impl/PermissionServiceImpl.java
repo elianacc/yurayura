@@ -14,7 +14,7 @@ import org.cny.yurayura.service.sys.permission.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -39,10 +39,10 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         List<Permission> permissionList = permissionMapper.selectList(queryWrapper
-                .like(!StringUtils.isEmpty(dto.getPermissionCode()), "permission_code", dto.getPermissionCode())
-                .eq(!StringUtils.isEmpty(dto.getPermissionType()), "permission_type", dto.getPermissionType())
-                .eq(!StringUtils.isEmpty(dto.getPermissionStatus()), "permission_status", dto.getPermissionStatus())
-                .eq(!StringUtils.isEmpty(dto.getPermissionBelongSubmenuName()), "permission_belong_submenu_name", dto.getPermissionBelongSubmenuName())
+                .like(!ObjectUtils.isEmpty(dto.getPermissionCode()), "permission_code", dto.getPermissionCode())
+                .eq(!ObjectUtils.isEmpty(dto.getPermissionType()), "permission_type", dto.getPermissionType())
+                .eq(!ObjectUtils.isEmpty(dto.getPermissionStatus()), "permission_status", dto.getPermissionStatus())
+                .eq(!ObjectUtils.isEmpty(dto.getPermissionBelongSubmenuName()), "permission_belong_submenu_name", dto.getPermissionBelongSubmenuName())
                 .orderByAsc("permission_belong_submenu_name", "permission_seq")
         );
         return new PageInfo<>(permissionList, 5);
@@ -52,7 +52,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public String insert(Permission permission, String permissionBtnVal) {
         String warn = "";
-        if (StringUtils.isEmpty(permissionBtnVal)) {
+        if (ObjectUtils.isEmpty(permissionBtnVal)) {
             permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_select");
         } else {
             permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_" + permissionBtnVal);
@@ -74,7 +74,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public String update(Permission permission, String permissionBtnVal) {
         String warn = "";
-        if (StringUtils.isEmpty(permissionBtnVal)) {
+        if (ObjectUtils.isEmpty(permissionBtnVal)) {
             permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_select");
         } else {
             permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_" + permissionBtnVal);
