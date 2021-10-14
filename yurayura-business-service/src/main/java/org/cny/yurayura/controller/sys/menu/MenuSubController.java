@@ -116,6 +116,22 @@ public class MenuSubController {
     }
 
     /**
+     * 删除系统子菜单（根据id）
+     *
+     * @param id
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @DeleteMapping("/deleteById")
+    @ApiOperation("删除系统子菜单（根据id）")
+    public ApiResult deleteById(Integer id) {
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("id不能为空");
+        }
+        iMenuSubService.deleteById(id);
+        return ApiResult.success("删除成功");
+    }
+
+    /**
      * 查询系统子菜单（根据路径）
      *
      * @param index

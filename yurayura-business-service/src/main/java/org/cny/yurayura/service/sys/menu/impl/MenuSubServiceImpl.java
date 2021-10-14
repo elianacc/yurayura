@@ -66,6 +66,11 @@ public class MenuSubServiceImpl extends ServiceImpl<MenuSubMapper, MenuSub> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Integer id) {
+        MenuSub deleteMenuSub = menuSubMapper.selectById(id);
+        QueryWrapper<Permission> permissionQueryWrapper = new QueryWrapper<>();
+        List<Permission> deletePermissions = permissionMapper.selectList(permissionQueryWrapper.eq("permission_belong_submenu_name", deleteMenuSub.getMenuName()));
+        deletePermissions.forEach(permission -> managerMapper.deleteManagerPermissionByPermissionId(permission.getId()));
+        permissionMapper.delete(permissionQueryWrapper.eq("permission_belong_submenu_name", deleteMenuSub.getMenuName()));
         menuSubMapper.deleteById(id);
     }
 

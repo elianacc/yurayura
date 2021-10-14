@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.cny.yurayura.bo.MenuTreeSelectBo;
+import org.cny.yurayura.dao.sys.manager.ManagerMapper;
 import org.cny.yurayura.dao.sys.menu.MenuMapper;
 import org.cny.yurayura.dao.sys.menu.MenuSubMapper;
+import org.cny.yurayura.dao.sys.permission.PermissionMapper;
 import org.cny.yurayura.entity.sys.manager.Manager;
 import org.cny.yurayura.entity.sys.menu.Menu;
 import org.cny.yurayura.entity.sys.menu.MenuSub;
+import org.cny.yurayura.entity.sys.permission.Permission;
 import org.cny.yurayura.enumerate.MenuTypeEnum;
 import org.cny.yurayura.service.sys.menu.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     private MenuMapper menuMapper;
     @Autowired
     private MenuSubMapper menuSubMapper;
+    @Autowired
+    private PermissionMapper permissionMapper;
+    @Autowired
+    private ManagerMapper managerMapper;
 
     @Override
     public List<MenuTreeSelectBo> getTreeListForCurrentManager() {
@@ -61,6 +68,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     public void deleteById(Integer id) {
         menuMapper.deleteById(id);
         QueryWrapper<MenuSub> queryWrapper = new QueryWrapper<>();
+        List<MenuSub> deleteMenuSubs = menuSubMapper.selectList(queryWrapper.eq("menu_pid", id));
+        deleteMenuSubs.forEach(menuSub -> {
+            QueryWrapper<Permission> permissionQueryWrapper = new QueryWrapper<>();
+            List<Permission> deletePermissions = permissionMapper.selectList(permissionQueryWrapper.eq("permission_belong_submenu_name", menuSub.getMenuName()));
+            deletePermissions.forEach(permission -> managerMapper.deleteManagerPermissionByPermissionId(permission.getId()));
+            permissionMapper.delete(permissionQueryWrapper.eq("permission_belong_submenu_name", menuSub.getMenuName()));
+        });
         menuSubMapper.delete(queryWrapper.eq("menu_pid", id));
     }
 

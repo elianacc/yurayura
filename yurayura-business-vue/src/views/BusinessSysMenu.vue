@@ -75,6 +75,12 @@
                         @click="updateDialogOpen(scope.row.menuType, scope.row.menuName, scope.row.menuPid)">
                   <i class="fa fa-pencil-square-o me-2"></i>修改
                 </button>
+                <button type="button"
+                        class="btn btn-danger btn-twitter font-size-14"
+                        v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_delete`)"
+                        @click="deleteById(scope.row.menuType, scope.row.id)">
+                  <i class="fa fa-trash me-2"></i>删除
+                </button>
               </div>
             </template>
           </el-table-column>
@@ -161,7 +167,7 @@
 </template>
 
 <script>
-import { getSysMenuTreeList, insertSysMenu, updateSysMenu, insertSysMenuSub, updateSysMenuSub } from '@api/sysMenu'
+import { getSysMenuTreeList, insertSysMenu, updateSysMenu, deleteSysMenuById, insertSysMenuSub, updateSysMenuSub, deleteSysMenuSubById } from '@api/sysMenu'
 
 export default {
   name: 'BusinessSysMenu',
@@ -230,6 +236,25 @@ export default {
       }
       Object.keys(this.dataDialogForm).forEach(key => this.dataDialogForm[key] = currentMenu[key])
       this.dataDialogVisible = true
+    },
+    deleteById (menuType, id) {
+      this.$confirm('删除菜单会删除对应的权限及管理员权限，确定要删除选中项吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let callback = res => {
+          if (res.code === 200) {
+            this.$message.success(res.msg)
+            this.getTreeList()
+          }
+        }
+        if (menuType === 1) {
+          deleteSysMenuById(id, callback)
+        } else {
+          deleteSysMenuSubById(id, callback)
+        }
+      })
     },
     dataDialogClose () {
       this.getTreeList()

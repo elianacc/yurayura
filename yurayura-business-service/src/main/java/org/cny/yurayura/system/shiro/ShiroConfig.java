@@ -44,12 +44,14 @@ public class ShiroConfig {
         fillterMap.put("/api/sys/menu/get*", "perms[sys_menu_select]");
         fillterMap.put("/api/sys/menu/insert*", "perms[sys_menu_insert]");
         fillterMap.put("/api/sys/menu/update*", "perms[sys_menu_update]");
+        fillterMap.put("/api/sys/menu/delete*", "perms[sys_menu_delete]");
 
         fillterMap.put("/api/sys/menuSub/getByIndex", "authc");
         fillterMap.put("/api/sys/menuSub/getAll", "authc");
         fillterMap.put("/api/sys/menuSub/get*", "perms[sys_menu_select]");
         fillterMap.put("/api/sys/menuSub/insert*", "perms[sys_menu_insert]");
         fillterMap.put("/api/sys/menuSub/update*", "perms[sys_menu_update]");
+        fillterMap.put("/api/sys/menuSub/delete*", "perms[sys_menu_delete]");
 
         fillterMap.put("/api/sys/dict/getAll", "authc");
         fillterMap.put("/api/sys/dict/getByDictCode", "authc");

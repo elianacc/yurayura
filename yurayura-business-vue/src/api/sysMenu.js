@@ -25,6 +25,11 @@ function updateSysMenu (params, success) {
   request.put('/api/sys/menu/update', JSON.stringify(params), success)
 }
 
+// 删除系统菜单（根据id）
+function deleteSysMenuById (params, success) {
+  request.delete('/api/sys/menu/deleteById', { id: params }, success)
+}
+
 // 添加系统子菜单
 function insertSysMenuSub (params, success) {
   request.post('/api/sys/menuSub/insert', JSON.stringify(params), success)
@@ -33,6 +38,11 @@ function insertSysMenuSub (params, success) {
 // 修改系统子菜单
 function updateSysMenuSub (params, success) {
   request.put('/api/sys/menuSub/update', JSON.stringify(params), success)
+}
+
+// 删除系统子菜单（根据id）
+function deleteSysMenuSubById (params, success) {
+  request.delete('/api/sys/menuSub/deleteById', { id: params }, success)
 }
 
 // 查询所有系统子菜单
@@ -46,7 +56,9 @@ export {
   getSysMenuTreeList,
   insertSysMenu,
   updateSysMenu,
+  deleteSysMenuById,
   insertSysMenuSub,
   updateSysMenuSub,
+  deleteSysMenuSubById,
   getMenuSubAll
 }

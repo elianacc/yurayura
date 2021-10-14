@@ -130,5 +130,21 @@ public class MenuController {
         }
         return ApiResult.success("修改成功");
     }
+
+    /**
+     * 删除系统菜单（根据id）
+     *
+     * @param id
+     * @return org.cny.yurayura.vo.ApiResult
+     */
+    @DeleteMapping("/deleteById")
+    @ApiOperation("删除系统菜单（根据id）")
+    public ApiResult deleteById(Integer id) {
+        if (StringUtils.isEmpty(id)) {
+            return ApiResult.warn("id不能为空");
+        }
+        iMenuService.deleteById(id);
+        return ApiResult.success("删除成功");
+    }
 }
 
