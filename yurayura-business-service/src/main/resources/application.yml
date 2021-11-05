@@ -40,3 +40,33 @@ spring:
 # mybatis plus配置
 mybatis-plus:
   mapper-locations: classpath:org/cny/yurayura/dao/**/*.xml
+
+# SpringBoot指标监控配置
+management:
+  endpoints:
+    # 是否开启所有监控端点
+    enabled-by-default: false
+    # 以web方式暴露所有监控端点
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    # 健康状况端点
+    health:
+      enabled: true
+      show-details: always
+    # SpringBean端点
+    beans:
+      enabled: true
+    # 环境端点
+    env:
+      enabled: true
+    # 应用信息端点
+    info:
+      enabled: true
+    # 日志信息端点
+    loggers:
+      enabled: true
+    # 指标信息端点
+    metrics:
+      enabled: true
