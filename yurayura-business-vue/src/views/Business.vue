@@ -121,10 +121,8 @@ export default {
   },
   methods: {
     getSideMenu () {
-      getSysSideMenu(res => {
-        if (res.code === 200) {
-          this.sideMenu = res.data
-        }
+      getSysSideMenu(success => {
+        this.sideMenu = success.data
       })
     },
     logoutManager () {
@@ -133,11 +131,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        sysManagerLogout(res => {
-          if (res.code === 200) {
-            this.$store.commit('manager/CLEAR_MANAGER_MSG')
-            this.$router.push('/manager_login')
-          }
+        sysManagerLogout(() => {
+          this.$store.commit('manager/CLEAR_MANAGER_MSG')
+          this.$router.push('/manager_login')
         })
       })
     },
@@ -175,21 +171,17 @@ export default {
       this.$router.push(nowTab.index)
     },
     getCurrentManagerMsg () {
-      getCurrentSysManagerMsg(res => {
-        if (res.code === 200) {
-          this.$store.commit('manager/SET_MANAGER_MSG', res.data)
-        }
+      getCurrentSysManagerMsg(success => {
+        this.$store.commit('manager/SET_MANAGER_MSG', success.data)
       })
     },
     getAllDict () {
-      getSysDictAll(res => {
-        if (res.code === 200) {
-          this.$store.commit('dict/SET_DICT_LIST', res.data)
-        } else if (res.code === 102) {
-          this.$alert(res.msg, '提示', {
-            confirmButtonText: '确定'
-          })
-        }
+      getSysDictAll(success => {
+        this.$store.commit('dict/SET_DICT_LIST', success.data)
+      }, warn => {
+        this.$alert(warn.msg, '提示', {
+          confirmButtonText: '确定'
+        })
       })
     }
   },
@@ -207,14 +199,12 @@ export default {
           }
           if (to.name !== 'BusinessIndex') {
             let index = to.path.charAt(to.path.length - 1) === '/' ? to.path.substring(0, to.path.length - 1) : to.path
-            getSysMenuSubByIndex(index, res => {
-              if (res.code === 200) {
-                this.getAllDict()
-                let nowItem = res.data
-                this.addTab(nowItem.menuTitle, nowItem.menuName, nowItem.menuIndex)
-              } else if (res.code === 102) {
-                this.$message.error(res.msg)
-              }
+            getSysMenuSubByIndex(index, success => {
+              this.getAllDict()
+              let nowItem = success.data
+              this.addTab(nowItem.menuTitle, nowItem.menuName, nowItem.menuIndex)
+            }, warn => {
+              this.$message.error(warn.msg)
             })
           }
         }

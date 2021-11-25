@@ -90,22 +90,14 @@ const router = new Router({
 // 设置全局前置守卫
 router.beforeEach((to, from, next) => {
   if (to.name !== 'ManagerLogin' && to.name !== 'HomePage' && to.name !== 'Notfound') {
-    judgeManagerAuthen(res => {
-      if (res.code === 200) {
-        next()
-      } else {
-        next('/manager_login')
-      }
-    })
+    judgeManagerAuthen(() => {
+      next()
+    }, () => { next('/manager_login') })
   } else {
     if (to.name !== 'Notfound') {
-      judgeManagerAuthen(res => {
-        if (res.code === 200) {
-          next('/business/index')
-        } else {
-          next()
-        }
-      })
+      judgeManagerAuthen(() => {
+        next('/business/index')
+      }, () => { next() })
     }
     next()
   }

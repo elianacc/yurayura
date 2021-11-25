@@ -4,9 +4,9 @@
 
 ## 简介
 
-> 本分支仅对网站B端接口部分(yurayura-business-service)，B端页面展示部分(yurayura-business-vue)，C端接口部分(未进行)，C端页面展示部分(未进行)项目源代码进行汇总存储，详情请访问以下地址
+> 本分支仅对网站B端接口项目(yurayura-business)，B端页面展示部分(yurayura-business-vue)，C端接口部分(未进行)，C端页面展示部分(未进行)项目源代码进行汇总存储，详情请访问以下地址
 >
-> B端接口部分—SpringBoot项目地址 https://github.com/elianacc/yurayura-business-service
+> B端SpringBoot接口服务分布式项目地址 https://github.com/elianacc/yurayura-business
 >
 > B端页面展示部分—Vue CLI 4项目地址 https://github.com/elianacc/yurayura-business-vue
 >

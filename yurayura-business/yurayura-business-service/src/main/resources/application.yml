@@ -1,0 +1,72 @@
+# SpringBoot内嵌web容器配置
+server:
+  # SpringBoot内嵌web容器http端口号
+  port: 2333
+  # SpringBoot内嵌tomcat配置
+  tomcat:
+    # 请求编码
+    uri-encoding: UTF-8
+    # 队列长度
+    accept-count: 200
+    # 最大连接数
+    max-connections: 20000
+    # 连接建立超时时间
+    connection-timeout: 10000
+    # 最小,最大线程数
+    threads:
+      min-spare: 10
+      max: 1000
+  # 编码配置（编码过滤器）
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-request: true
+      force-response: true
+      enabled: true
+
+# Spring配置
+spring:
+  profiles:
+    active: dev
+  # thymeleaf配置
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+  # session存储方式
+  session:
+    store-type: redis
+
+# mybatis plus配置
+mybatis-plus:
+  mapper-locations: classpath:org/elianacc/yurayura/dao/**/*.xml
+
+# SpringBoot指标监控配置
+management:
+  endpoints:
+    # 是否开启所有监控端点
+    enabled-by-default: false
+    # 以web方式暴露所有监控端点
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    # 健康状况端点
+    health:
+      enabled: true
+      show-details: always
+    # SpringBean端点
+    beans:
+      enabled: true
+    # 环境端点
+    env:
+      enabled: true
+    # 应用信息端点
+    info:
+      enabled: true
+    # 日志信息端点
+    loggers:
+      enabled: true
+    # 指标信息端点
+    metrics:
+      enabled: true

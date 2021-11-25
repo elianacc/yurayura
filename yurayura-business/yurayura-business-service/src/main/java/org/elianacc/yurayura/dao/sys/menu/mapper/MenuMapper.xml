@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.elianacc.yurayura.dao.sys.menu.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.elianacc.yurayura.entity.sys.menu.Menu">
+        <id column="id" property="id"/>
+        <result column="menu_title" property="menuTitle"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_icon_class" property="menuIconClass"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="menu_seq" property="menuSeq"/>
+        <result column="menu_status" property="menuStatus"/>
+    </resultMap>
+
+    <resultMap id="getTreeListResultMap" type="org.elianacc.yurayura.bo.MenuTreeSelectBo">
+        <id column="id" property="id"/>
+        <result column="menu_title" property="menuTitle"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_icon_class" property="menuIconClass"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="menu_seq" property="menuSeq"/>
+        <result column="menu_status" property="menuStatus"/>
+        <collection property="menuSubList" ofType="org.elianacc.yurayura.entity.sys.menu.MenuSub"
+                    resultMap="menuSubResultMap"/>
+    </resultMap>
+
+    <resultMap id="menuSubResultMap" type="org.elianacc.yurayura.entity.sys.menu.MenuSub">
+        <id column="submenu_id" property="id"/>
+        <result column="submenu_title" property="menuTitle"/>
+        <result column="submenu_name" property="menuName"/>
+        <result column="submenu_index" property="menuIndex"/>
+        <result column="submenu_icon_class" property="menuIconClass"/>
+        <result column="submenu_pid" property="menuPid"/>
+        <result column="submenu_type" property="menuType"/>
+        <result column="submenu_seq" property="menuSeq"/>
+        <result column="submenu_status" property="menuStatus"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, menu_title, menu_name, menu_icon_class, menu_type, menu_seq, menu_status
+    </sql>
+
+    <select id="getTreeList" resultMap="getTreeListResultMap">
+        SELECT
+            m.id,
+            m.menu_title,
+            m.menu_name,
+            m.menu_icon_class,
+            m.menu_type,
+            m.menu_seq,
+            m.menu_status,
+            ms.id submenu_id,
+            ms.menu_title submenu_title,
+            ms.menu_name submenu_name,
+            ms.menu_index submenu_index,
+            ms.menu_icon_class submenu_icon_class,
+            ms.menu_pid submenu_pid,
+            ms.menu_type submenu_type,
+            ms.menu_seq submenu_seq,
+            ms.menu_status submenu_status
+        FROM
+            yurayura_sys_menu m
+                LEFT JOIN yurayura_sys_menu_sub ms ON m.id = ms.menu_pid
+        ORDER BY
+            m.menu_seq,
+            ms.menu_seq
+    </select>
+
+    <select id="getMenuNameAndMenuSubName" resultType="java.lang.String">
+        SELECT DISTINCT
+        substring_index(
+            substring_index(
+            a.menuName,
+            ',',
+            b.help_topic_id + 1
+            ),
+            ',' ,- 1
+        ) menuName
+        FROM
+        (
+            SELECT
+                GROUP_CONCAT(
+                    CONCAT(
+                    m.menu_name,
+                    ',',
+                    IFNULL(ms.menu_name, '')
+                    )
+                ) menuName
+            FROM
+            yurayura_sys_menu m
+            LEFT JOIN yurayura_sys_menu_sub ms ON m.id = ms.menu_pid
+            ORDER BY
+            m.menu_seq,
+            ms.menu_seq
+        ) a
+        JOIN mysql.help_topic b ON b.help_topic_id <![CDATA[<]]> (
+        length(a.menuName) - length(REPLACE(a.menuName, ',', '')) + 1
+        )
+    </select>
+
+    <select id="getTreeListForCurrentManager" resultMap="getTreeListResultMap">
+        SELECT
+            m.id,
+            m.menu_title,
+            m.menu_name,
+            m.menu_icon_class,
+            m.menu_type,
+            m.menu_seq,
+            m.menu_status,
+            ms.id submenu_id,
+            ms.menu_title submenu_title,
+            ms.menu_name submenu_name,
+            ms.menu_index submenu_index,
+            ms.menu_icon_class submenu_icon_class,
+            ms.menu_pid submenu_pid,
+            ms.menu_type submenu_type,
+            ms.menu_seq submenu_seq,
+            ms.menu_status submenu_status
+        FROM
+            yurayura_sys_manager_permission mp
+                LEFT JOIN yurayura_sys_permission p ON mp.permission_id = p.id
+                LEFT JOIN yurayura_sys_menu_sub ms ON ms.menu_name = p.permission_belong_submenu_name
+                LEFT JOIN yurayura_sys_menu m ON m.id = ms.menu_pid
+        WHERE
+            mp.manager_id = #{managerId}
+          AND p.permission_type = 1
+          AND p.permission_status = 1
+          AND ms.menu_status = 1
+          AND m.menu_status = 1
+        ORDER BY
+            m.menu_seq,
+            ms.menu_seq
+    </select>
+
+</mapper>

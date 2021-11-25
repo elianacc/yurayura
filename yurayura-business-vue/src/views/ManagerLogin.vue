@@ -109,19 +109,17 @@ export default {
           })
           this.loginForm.managerPassword = Base64.encode(this.loginForm.managerPassword)
           delete this.loginForm.verifyImage
-          sysManagerLogin(this.loginForm, res => {
-            if (res.code === 200) {
-              this.$store.dispatch('menutab/resetMenuAndTab')
-              setTimeout(() => {
-                loading.close()
-                this.$router.replace('/business/index')
-              }, 1000)
-            } else if (res.code === 102) {
-              this.loadVerifyImage()
-              this.$refs.loginForm.resetFields()
+          sysManagerLogin(this.loginForm, () => {
+            this.$store.dispatch('menutab/resetMenuAndTab')
+            setTimeout(() => {
               loading.close()
-              this.$message.error(res.msg)
-            }
+              this.$router.replace('/business/index')
+            }, 1000)
+          }, warn => {
+            this.loadVerifyImage()
+            this.$refs.loginForm.resetFields()
+            loading.close()
+            this.$message.error(warn.msg)
           })
         }
       })

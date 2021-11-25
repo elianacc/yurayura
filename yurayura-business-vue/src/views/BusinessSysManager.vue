@@ -212,12 +212,10 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      getSysManagerPage(sendData, res => {
-        if (res.code === 200) {
-          this.pageInfo = res.data
-        } else if (res.code === 102) {
-          this.pageInfo = {}
-        }
+      getSysManagerPage(sendData, success => {
+        this.pageInfo = success.data
+      }, () => {
+        this.pageInfo = {}
       })
     },
     selectContent () {
@@ -262,23 +260,20 @@ export default {
           }
           let checkPermIdArr = this.$refs.permissionAuthorTree.getCheckedKeys().filter(permId => permId % 1 === 0)
           sendData.permissionIdArr = checkPermIdArr
-          let submitCallback = res => {
-            if (res.code === 200) {
-              this.$message.success(res.msg)
-              if (this.dataDialogForm.id === 0) {
-                this.$refs.selectForm.resetFields()
-                this.searchContent = { ...this.selectForm }
-                this.currentPageNum = 1
-              }
-              this.dataDialogVisible = false
-            } else if (res.code === 102) {
-              this.$message.error(res.msg)
+          let successCallback = success => {
+            this.$message.success(success.msg)
+            if (this.dataDialogForm.id === 0) {
+              this.$refs.selectForm.resetFields()
+              this.searchContent = { ...this.selectForm }
+              this.currentPageNum = 1
             }
+            this.dataDialogVisible = false
           }
+          let warnCallback = warn => { this.$message.error(warn.msg) }
           if (this.dataDialogForm.id === 0) {
-            insertSysManager(sendData, submitCallback)
+            insertSysManager(sendData, successCallback, warnCallback)
           } else {
-            updateSysManager(sendData, submitCallback)
+            updateSysManager(sendData, successCallback, warnCallback)
           }
         }
       })
@@ -295,10 +290,8 @@ export default {
       this.$refs.permissionAuthorTree.setCheckedKeys([])
     },
     getPermissionAuthorTree () {
-      getSysPermissionAuthorTree(res => {
-        if (res.code === 200) {
-          this.permissionAuthorTreeList = res.data
-        }
+      getSysPermissionAuthorTree(success => {
+        this.permissionAuthorTreeList = success.data
       })
     }
   },

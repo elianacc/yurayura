@@ -1,0 +1,72 @@
+package ${package.Controller};
+
+#if(${swagger2})
+import io.swagger.annotations.*;
+#end
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import ${package.Service}.${table.serviceName};
+#if(${cfg.isGenertGetIdMethod})
+import org.elianacc.${cfg.moduleName}.vo.ApiResult;
+#end
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * $!{table.comment} controller
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("/api/#if(${controllerMappingHyphenStyle})#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#else#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+    #if(${swagger2})
+@Api(tags = "$!{table.comment}API")
+    #end
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private ${table.serviceName} i${entity}Service;
+
+    #if(${cfg.isGenertGetIdMethod})
+    /**
+     * 查询$!{table.comment}（根据id）
+     *
+     * @param id
+     * @return org.elianacc.yurayura.vo.ApiResult
+     */
+    @GetMapping("/getById")
+    #if(${swagger2})
+    @ApiOperation("查询$!{table.comment}（根据id）")
+    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
+    #end
+    public ApiResult getById(Integer id) {
+        if (ObjectUtils.isEmpty(id)) {
+            return ApiResult.warn("id不能为空");
+        }
+        return ApiResult.success("查询成功", i${entity}Service.getById(id));
+    }
+    #end
+}
+
+#end

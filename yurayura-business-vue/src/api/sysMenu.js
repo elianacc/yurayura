@@ -6,8 +6,8 @@ function getSysSideMenu (success) {
 }
 
 // 查询系统子菜单（根据路径）
-function getSysMenuSubByIndex (params, success) {
-  request.get('/api/sys/menuSub/getByIndex', { index: params }, success)
+function getSysMenuSubByIndex (params, success, warn) {
+  request.get('/api/sys/menuSub/getByIndex', { index: params }, success, warn)
 }
 
 // 查询系统菜单树形列表
@@ -16,33 +16,33 @@ function getSysMenuTreeList (success) {
 }
 
 // 添加系统菜单
-function insertSysMenu (params, success) {
-  request.post('/api/sys/menu/insert', JSON.stringify(params), success)
+function insertSysMenu (params, success, warn) {
+  request.post('/api/sys/menu/insert', JSON.stringify(params), success, warn)
 }
 
 // 修改系统菜单
-function updateSysMenu (params, success) {
-  request.put('/api/sys/menu/update', JSON.stringify(params), success)
+function updateSysMenu (params, success, warn) {
+  request.put('/api/sys/menu/update', JSON.stringify(params), success, warn)
 }
 
 // 删除系统菜单（根据id）
-function deleteSysMenuById (params, success) {
-  request.delete('/api/sys/menu/deleteById', { id: params }, success)
+function deleteSysMenuById (params, success, warn) {
+  request.delete('/api/sys/menu/deleteById', { id: params }, success, warn)
 }
 
 // 添加系统子菜单
-function insertSysMenuSub (params, success) {
-  request.post('/api/sys/menuSub/insert', JSON.stringify(params), success)
+function insertSysMenuSub (params, success, warn) {
+  request.post('/api/sys/menuSub/insert', JSON.stringify(params), success, warn)
 }
 
 // 修改系统子菜单
-function updateSysMenuSub (params, success) {
-  request.put('/api/sys/menuSub/update', JSON.stringify(params), success)
+function updateSysMenuSub (params, success, warn) {
+  request.put('/api/sys/menuSub/update', JSON.stringify(params), success, warn)
 }
 
 // 删除系统子菜单（根据id）
-function deleteSysMenuSubById (params, success) {
-  request.delete('/api/sys/menuSub/deleteById', { id: params }, success)
+function deleteSysMenuSubById (params, success, warn) {
+  request.delete('/api/sys/menuSub/deleteById', { id: params }, success, warn)
 }
 
 // 查询所有系统子菜单

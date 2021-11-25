@@ -365,12 +365,10 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      getComicPage(sendData, res => {
-        if (res.code === 200) {
-          this.pageInfo = res.data
-        } else if (res.code === 102) {
-          this.pageInfo = {}
-        }
+      getComicPage(sendData, success => {
+        this.pageInfo = success.data
+      }, () => {
+        this.pageInfo = {}
       })
     },
     selectContent () {
@@ -395,14 +393,12 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteComicBatchByIds(this.multipleSelection.map(selt => selt.id), res => {
-            if (res.code === 200) {
-              this.$message.success(res.msg)
-              this.multipleSelection = []
-              this.getPage()
-            } else if (res.code === 102) {
-              this.$message.error(res.msg)
-            }
+          deleteComicBatchByIds(this.multipleSelection.map(selt => selt.id), success => {
+            this.$message.success(success.msg)
+            this.multipleSelection = []
+            this.getPage()
+          }, warn => {
+            this.$message.error(warn.msg)
           })
         })
       }
@@ -476,23 +472,20 @@ export default {
           if (!this.dataDialogForm.comicImgFile) {
             delete sendData.comicImgFile
           }
-          let submitCallback = res => {
-            if (res.code === 200) {
-              this.$message.success(res.msg)
-              if (this.dataDialogForm.id === 0) {
-                this.$refs.selectForm.resetFields()
-                this.searchContent = { ...this.selectForm }
-                this.currentPageNum = 1
-              }
-              this.dataDialogVisible = false
-            } else if (res.code === 102) {
-              this.$message.error(res.msg)
+          let successCallback = success => {
+            this.$message.success(success.msg)
+            if (this.dataDialogForm.id === 0) {
+              this.$refs.selectForm.resetFields()
+              this.searchContent = { ...this.selectForm }
+              this.currentPageNum = 1
             }
+            this.dataDialogVisible = false
           }
+          let warnCallback = warn => { this.$message.error(warn.msg) }
           if (this.dataDialogForm.id === 0) {
-            insertComic(sendData, submitCallback)
+            insertComic(sendData, successCallback, warnCallback)
           } else {
-            updateComic(sendData, submitCallback)
+            updateComic(sendData, successCallback, warnCallback)
           }
         }
       })

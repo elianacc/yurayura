@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.elianacc.yurayura.dao.sys.permission.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.elianacc.yurayura.entity.sys.permission.Permission">
+        <id column="id" property="id"/>
+        <result column="permission_code" property="permissionCode"/>
+        <result column="permission_name" property="permissionName"/>
+        <result column="permission_type" property="permissionType"/>
+        <result column="permission_status" property="permissionStatus"/>
+        <result column="permission_belong_submenu_name" property="permissionBelongSubmenuName"/>
+        <result column="permission_seq" property="permissionSeq"/>
+    </resultMap>
+
+    <resultMap id="getAuthorTreeListResultMap" type="org.elianacc.yurayura.bo.PermissionAuthorTreeSelectBo">
+        <id column="id" property="id"/>
+        <result column="submenu_title" property="title"/>
+        <collection property="permissionList" ofType="org.elianacc.yurayura.bo.PermissionAuthorPermBo"
+                    resultMap="permissionResultMap"/>
+    </resultMap>
+
+    <resultMap id="permissionResultMap" type="org.elianacc.yurayura.bo.PermissionAuthorPermBo">
+        <id column="permission_id" property="id"/>
+        <result column="permission_name" property="title"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, permission_code, permission_name, permission_type, permission_status, permission_belong_submenu_name, permission_seq
+    </sql>
+
+    <select id="getPermissionAuthorTree" resultMap="getAuthorTreeListResultMap">
+        SELECT
+            m.id,
+            m.menu_title submenu_title,
+            p.id permission_id,
+            p.permission_name
+        FROM
+            (
+                SELECT
+                    1000 + RAND() * (10000 - 1000) id,
+                    ms.menu_title,
+                    p.permission_belong_submenu_name
+                FROM
+                    yurayura_sys_permission p
+                        LEFT JOIN yurayura_sys_menu_sub ms ON p.permission_belong_submenu_name = ms.menu_name
+                GROUP BY
+                    p.permission_belong_submenu_name
+            ) m
+                LEFT JOIN yurayura_sys_permission p ON m.permission_belong_submenu_name = p.permission_belong_submenu_name
+        WHERE
+            p.permission_status = 1
+        ORDER BY
+            m.permission_belong_submenu_name,
+            p.permission_seq
+    </select>
+
+</mapper>

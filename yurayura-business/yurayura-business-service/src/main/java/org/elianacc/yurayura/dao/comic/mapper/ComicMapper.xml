@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.elianacc.yurayura.dao.comic.ComicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.elianacc.yurayura.entity.comic.Comic">
+        <id column="id" property="id"/>
+        <result column="comic_name" property="comicName"/>
+        <result column="comic_score" property="comicScore"/>
+        <result column="comic_content" property="comicContent"/>
+        <result column="comic_time" property="comicTime"/>
+        <result column="comic_image_url" property="comicImageUrl"/>
+        <result column="comic_link" property="comicLink"/>
+        <result column="comic_label" property="comicLabel"/>
+        <result column="comic_status" property="comicStatus"/>
+        <result column="comic_current_episodes" property="comicCurrentEpisodes"/>
+        <result column="comic_shelf_status" property="comicShelfStatus"/>
+        <result column="comic_create_time" property="comicCreateTime"/>
+        <result column="comic_update_time" property="comicUpdateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, comic_name, comic_score, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_create_time, comic_update_time
+    </sql>
+
+    <select id="getListBySelectDto" resultType="org.elianacc.yurayura.entity.comic.Comic">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        yurayura_comic t
+        <where>
+            <if test="comicName != null and comicName != ''">
+                t.comic_name like CONCAT('%',#{comicName},'%')
+            </if>
+            <if test="comicStatus != null">
+                and t.comic_status = #{comicStatus}
+            </if>
+            <if test="comicShelfStatus != null">
+                and t.comic_shelf_status = #{comicShelfStatus}
+            </if>
+            <if test="comicTag != null and comicTag.size() > 0">
+                and
+                <foreach collection="comicTag" item="tag" open="(" separator="or" close=")">
+                    t.comic_label like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+        </where>
+        order by t.id desc
+    </select>
+
+</mapper>

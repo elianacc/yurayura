@@ -205,10 +205,8 @@ export default {
   },
   methods: {
     getTreeList () {
-      getSysMenuTreeList(res => {
-        if (res.code === 200) {
-          this.dataList = res.data
-        }
+      getSysMenuTreeList(success => {
+        this.dataList = success.data
       })
     },
     insertMainMenuDialogOpen () {
@@ -243,16 +241,15 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let callback = res => {
-          if (res.code === 200) {
-            this.$message.success(res.msg)
-            this.getTreeList()
-          }
+        let successCallback = success => {
+          this.$message.success(success.msg)
+          this.getTreeList()
         }
+        let warnCallback = warn => { this.$message.error(warn.msg) }
         if (menuType === 1) {
-          deleteSysMenuById(id, callback)
+          deleteSysMenuById(id, successCallback, warnCallback)
         } else {
-          deleteSysMenuSubById(id, callback)
+          deleteSysMenuSubById(id, successCallback, warnCallback)
         }
       })
     },
@@ -273,24 +270,21 @@ export default {
     submitContent () {
       this.$refs.dataDialogForm.validate(valid => {
         if (valid) {
-          let submitCallback = res => {
-            if (res.code === 200) {
-              location.reload()
-            } else if (res.code === 102) {
-              this.$message.error(res.msg)
-            }
+          let successCallback = () => {
+            location.reload()
           }
+          let warnCallback = warn => { this.$message.error(warn.msg) }
           if (this.dataDialogForm.id === 0) {
             if (this.isMainMenuDialog) {
-              insertSysMenu(this.dataDialogForm, submitCallback)
+              insertSysMenu(this.dataDialogForm, successCallback, warnCallback)
             } else {
-              insertSysMenuSub(this.dataDialogForm, submitCallback)
+              insertSysMenuSub(this.dataDialogForm, successCallback, warnCallback)
             }
           } else {
             if (this.isMainMenuDialog) {
-              updateSysMenu(this.dataDialogForm, submitCallback)
+              updateSysMenu(this.dataDialogForm, successCallback, warnCallback)
             } else {
-              updateSysMenuSub(this.dataDialogForm, submitCallback)
+              updateSysMenuSub(this.dataDialogForm, successCallback, warnCallback)
             }
           }
         }

@@ -269,12 +269,10 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      getSysPermissionPage(sendData, res => {
-        if (res.code === 200) {
-          this.pageInfo = res.data
-        } else if (res.code === 102) {
-          this.pageInfo = {}
-        }
+      getSysPermissionPage(sendData, success => {
+        this.pageInfo = success.data
+      }, () => {
+        this.pageInfo = {}
       })
     },
     selectContent () {
@@ -311,23 +309,20 @@ export default {
     submitContent () {
       this.$refs.dataDialogForm.validate(valid => {
         if (valid) {
-          let submitCallback = res => {
-            if (res.code === 200) {
-              this.$message.success(res.msg)
-              if (this.dataDialogForm.id === 0) {
-                this.$refs.selectForm.resetFields()
-                this.searchContent = { ...this.selectForm }
-                this.currentPageNum = 1
-              }
-              this.dataDialogVisible = false
-            } else if (res.code === 102) {
-              this.$message.error(res.msg)
+          let successCallback = success => {
+            this.$message.success(success.msg)
+            if (this.dataDialogForm.id === 0) {
+              this.$refs.selectForm.resetFields()
+              this.searchContent = { ...this.selectForm }
+              this.currentPageNum = 1
             }
+            this.dataDialogVisible = false
           }
+          let warnCallback = warn => { this.$message.error(warn.msg) }
           if (this.dataDialogForm.id === 0) {
-            insertSysPermission(this.dataDialogForm, submitCallback)
+            insertSysPermission(this.dataDialogForm, successCallback, warnCallback)
           } else {
-            updateSysPermission(this.dataDialogForm, submitCallback)
+            updateSysPermission(this.dataDialogForm, successCallback, warnCallback)
           }
         }
       })
@@ -347,10 +342,8 @@ export default {
       this.$refs.dataDialogForm.clearValidate()
     },
     getAllMenuSub () {
-      getMenuSubAll(res => {
-        if (res.code === 200) {
-          this.menuSubs = res.data
-        }
+      getMenuSubAll(success => {
+        this.menuSubs = success.data
       })
     }
   },

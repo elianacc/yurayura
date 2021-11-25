@@ -205,12 +205,10 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      getUserPage(sendData, res => {
-        if (res.code === 200) {
-          this.pageInfo = res.data
-        } else if (res.code === 102) {
-          this.pageInfo = {}
-        }
+      getUserPage(sendData, success => {
+        this.pageInfo = success.data
+      }, () => {
+        this.pageInfo = {}
       })
     },
     selectContent () {
@@ -237,13 +235,11 @@ export default {
       this.updateStatusDialogVisible = true
     },
     submitContent () {
-      updateUserStatus(this.updateStatusDialogForm, res => {
-        if (res.code === 200) {
-          this.$message.success(res.msg)
-          this.updateStatusDialogVisible = false
-        } else if (res.code === 102) {
-          this.$message.error(res.msg)
-        }
+      updateUserStatus(this.updateStatusDialogForm, success => {
+        this.$message.success(success.msg)
+        this.updateStatusDialogVisible = false
+      }, warn => {
+        this.$message.error(warn.msg)
       })
     },
     resetAvatar (id) {
@@ -252,14 +248,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        updateUserAvatarDefault(id, res => {
-          if (res.code === 200) {
-            this.$message.success(res.msg)
-            this.getPage()
-          } else if (res.code === 102) {
-            this.$message.error(res.msg)
-          }
+        updateUserAvatarDefault(id, success => {
+          this.$message.success(success.msg)
+          this.getPage()
         })
+      }, warn => {
+        this.$message.error(warn.msg)
       })
     },
     updateStatusDialogClose () {

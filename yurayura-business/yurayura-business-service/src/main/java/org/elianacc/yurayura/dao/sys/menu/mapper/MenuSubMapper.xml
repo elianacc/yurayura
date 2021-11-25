@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.elianacc.yurayura.dao.sys.menu.MenuSubMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.elianacc.yurayura.entity.sys.menu.MenuSub">
+        <id column="id" property="id"/>
+        <result column="menu_title" property="menuTitle"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_index" property="menuIndex"/>
+        <result column="menu_icon_class" property="menuIconClass"/>
+        <result column="menu_pid" property="menuPid"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="menu_seq" property="menuSeq"/>
+        <result column="menu_status" property="menuStatus"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, menu_title, menu_name, menu_index, menu_icon_class, menu_pid, menu_type, menu_seq, menu_status
+    </sql>
+
+</mapper>

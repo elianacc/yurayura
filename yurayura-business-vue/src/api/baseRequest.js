@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true
 // axios默认添加ajax请求头标识
 axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json;charset=utf-8' }
 
-function apiAxios (method, url, params, success, header) {
+function apiAxios (method, url, params, success, warn, header) {
   axios({
     method: method,
     url: url,
@@ -22,8 +22,11 @@ function apiAxios (method, url, params, success, header) {
     },
     headers: header
   }).then(res => {
-    success(res.data)
-    if (res.data.code === 401 || res.data.code === 405) {
+    if (res.data.code === 200) {
+      success(res.data)
+    } else if (res.data.code === 102) {
+      warn(res.data)
+    } else if (res.data.code === 401 || res.data.code === 405) {
       MessageBox.alert(res.data.msg, '提示', {
         confirmButtonText: '确定'
       }).then(() => {
@@ -33,8 +36,7 @@ function apiAxios (method, url, params, success, header) {
           router.go(-1)
         }
       })
-    }
-    if (res.data.code === 500) {
+    } else if (res.data.code === 500) {
       Notification.error({
         title: '错误',
         message: res.data.msg,
@@ -51,16 +53,16 @@ function apiAxios (method, url, params, success, header) {
 }
 
 export default {
-  get (url, params, success, header) {
-    return apiAxios('GET', url, params, success, header)
+  get (url, params, success, warn, header) {
+    return apiAxios('GET', url, params, success, warn, header)
   },
-  post (url, params, success, header) {
-    return apiAxios('POST', url, params, success, header)
+  post (url, params, success, warn, header) {
+    return apiAxios('POST', url, params, success, warn, header)
   },
-  put (url, params, success, header) {
-    return apiAxios('PUT', url, params, success, header)
+  put (url, params, success, warn, header) {
+    return apiAxios('PUT', url, params, success, warn, header)
   },
-  delete (url, params, success, header) {
-    return apiAxios('DELETE', url, params, success, header)
+  delete (url, params, success, warn, header) {
+    return apiAxios('DELETE', url, params, success, warn, header)
   }
 }
