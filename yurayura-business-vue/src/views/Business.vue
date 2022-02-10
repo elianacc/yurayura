@@ -42,7 +42,8 @@
                  router
                  style="height: 100vh;">
           <el-scrollbar style="height: 100%;">
-            <div style="height: 2160px;">
+            <div style="height: 1200px;"
+                 class="menu-container">
               <el-menu-item index="/business/index">
                 <i class="el-icon-s-home"></i>
                 <span slot="title">首页</span>
@@ -402,6 +403,13 @@ nav .ms-uncollapse-span {
 }
 .r1 .c1 .el-menu-vertical:not(.el-menu--collapse) {
   width: 210px;
+}
+.r1 .c1 .el-menu-vertical:not(.el-menu--collapse) .menu-container {
+  background-image: url("~@assets/miku-sidemenu.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 0px 580px;
+  background-size: 210px 350px;
 }
 
 /* el侧边导航折叠时隐藏文字 */
