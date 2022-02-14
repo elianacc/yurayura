@@ -55,9 +55,9 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        //生成路径
+        // 生成路径
         gc.setOutputDir("D://mp_generator");
-        //是否覆盖生成
+        // 是否覆盖生成
         gc.setFileOverride(true);
         // 是否生成XML ResultMap
         gc.setBaseResultMap(true);
