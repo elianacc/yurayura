@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Service}.${table.serviceName};
-#if(${cfg.isGenertGetIdMethod})
-import org.elianacc.${cfg.moduleName}.vo.ApiResult;
-#end
+import ${cfg.packageParentPath}.vo.ApiResult;
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
@@ -48,12 +46,11 @@ public class ${table.controllerName} {
     @Autowired
     private ${table.serviceName} i${entity}Service;
 
-    #if(${cfg.isGenertGetIdMethod})
     /**
      * 查询$!{table.comment}（根据id）
      *
      * @param id
-     * @return org.elianacc.yurayura.vo.ApiResult
+     * @return ${cfg.packageParentPath}.vo.ApiResult
      */
     @GetMapping("/getById")
     #if(${swagger2})
@@ -66,7 +63,6 @@ public class ${table.controllerName} {
         }
         return ApiResult.success("查询成功", i${entity}Service.getById(id));
     }
-    #end
 }
 
 #end

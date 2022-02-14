@@ -37,6 +37,19 @@ public class CodeGenerator {
 
 
     public static void main(String[] args) {
+
+        String generatorTable = scanner("请输入需要生成的表名");
+        if (!generatorTable.matches("^[a-zA-Z]([a-zA-Z0-9_]+)?$")) {
+            throw new MybatisPlusException("表名输入异常！");
+        }
+        String modulePackagePath;
+        if (generatorTable.contains("_sys_")) {
+            modulePackagePath = "sys." + generatorTable.substring(generatorTable.indexOf("_") + 5);
+        } else {
+            modulePackagePath = generatorTable.substring(generatorTable.indexOf("_") + 1);
+        }
+        modulePackagePath = modulePackagePath.contains("_") ? modulePackagePath.substring(0, modulePackagePath.indexOf("_")) : modulePackagePath;
+
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -72,19 +85,14 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("org.elianacc");
-        String moduleName = scanner("请输入模块名");
-        pc.setModuleName(moduleName);
-        String isSysModule = scanner("是否是属于系统子模块？（如果是输入Y/y,不是请随意输入）");
-        String submoduleName = scanner("请输入子模块名");
-        String isGenertGetIdMethod = scanner("是否需要生成根据id查询Controller？（如果需要输入Y/y,不需要请随意输入）");
-        submoduleName = isSysModule.equalsIgnoreCase("y") ? "sys." + submoduleName : submoduleName;
+        pc.setModuleName("yurayura");
         // 自定义包名
-        pc.setEntity("entity." + submoduleName);
-        pc.setMapper("dao." + submoduleName);
-        pc.setXml("dao." + submoduleName + ".mapper");
-        pc.setService("service." + submoduleName);
-        pc.setServiceImpl("service." + submoduleName + ".impl");
-        pc.setController("controller." + submoduleName);
+        pc.setEntity("entity." + modulePackagePath);
+        pc.setXml("dao." + modulePackagePath + ".mapper");
+        pc.setMapper("dao." + modulePackagePath);
+        pc.setServiceImpl("service." + modulePackagePath + ".impl");
+        pc.setService("service." + modulePackagePath);
+        pc.setController("controller." + modulePackagePath);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -92,9 +100,8 @@ public class CodeGenerator {
             @Override
             public void initMap() {
                 Map<String, Object> map = new HashMap<>();
-                map.put("isSysModule", isSysModule.equalsIgnoreCase("y"));
-                map.put("isGenertGetIdMethod", isGenertGetIdMethod.equalsIgnoreCase("y"));
-                map.put("moduleName", moduleName);
+                map.put("isSysModule", generatorTable.contains("_sys_"));
+                map.put("packageParentPath", "org.elianacc.yurayura");
                 this.setMap(map);
             }
         };
@@ -117,9 +124,9 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(scanner("请输入表名，多个英文逗号分割（生成多个表时最好是一个子模块内容，否则无法对应）").split(","));
+        strategy.setInclude(generatorTable);
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(isSysModule.equalsIgnoreCase("y") ? "yurayura_sys_" : "yurayura_");
+        strategy.setTablePrefix(generatorTable.contains("_sys_") ? "yurayura_sys_" : "yurayura_");
         mpg.setStrategy(strategy);
 
         mpg.execute();
