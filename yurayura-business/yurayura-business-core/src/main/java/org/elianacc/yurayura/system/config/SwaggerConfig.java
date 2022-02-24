@@ -26,19 +26,22 @@ public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .pathMapping("/")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.elianacc.yurayura.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfoBuilder()
-                        .title("YuraYura-Business-Servive API")
-                        .description("网站B端在线接口文档")
+                        .title("YuraYura Service API")
+                        .description("在线接口文档")
                         .version("1.0.2-SNAPSHOT")
-                        .contact(new Contact("EliaNaCc", "https://github.com/elianacc/yurayura-business"
+                        .contact(new Contact("EliaNaCc", "https://github.com/elianacc/yurayura"
                                 , "438507003@qq.com"))
+                        .termsOfServiceUrl("http://yurayura.org/")
                         .license("Apache License")
                         .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                        .build()).enable(swaggerEnable);
+                        .build())
+                        .groupName("yurayura-service-b")
+                        .enable(swaggerEnable);
     }
 }

@@ -2,11 +2,11 @@ package org.elianacc.yurayura.service.comic;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import org.elianacc.yurayura.dto.ComicInstAndUpdtDto;
+import org.elianacc.yurayura.dto.ComicInsertDto;
 import org.elianacc.yurayura.dto.ComicSelectDto;
+import org.elianacc.yurayura.dto.ComicUpdateDto;
+import org.elianacc.yurayura.dto.IdsDto;
 import org.elianacc.yurayura.entity.comic.Comic;
-
-import java.util.List;
 
 /**
  * 番剧 service
@@ -30,15 +30,15 @@ public interface IComicService extends IService<Comic> {
      * @param dto
      * @return java.lang.String
      */
-    public String insert(ComicInstAndUpdtDto dto);
+    public String insert(ComicInsertDto dto);
 
     /**
-     * 批量删除番剧（根据id组）
+     * 批量删除番剧（根据番剧id组）
      *
-     * @param ids
+     * @param dto
      * @return void
      */
-    public void deleteBatchByIds(List<Integer> ids);
+    public void deleteBatchByIds(IdsDto dto);
 
     /**
      * 修改番剧
@@ -46,6 +46,6 @@ public interface IComicService extends IService<Comic> {
      * @param dto
      * @return java.lang.String
      */
-    public String update(ComicInstAndUpdtDto dto);
+    public String update(ComicUpdateDto dto);
 
 }

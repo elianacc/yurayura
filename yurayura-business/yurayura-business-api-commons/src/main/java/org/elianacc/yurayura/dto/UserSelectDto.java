@@ -31,7 +31,7 @@ public class UserSelectDto implements Serializable {
     /**
      * 性别- 1：男，0：女
      */
-    @ApiModelProperty(value = "性别- 1：男，0：女")
+    @ApiModelProperty(value = "性别- 1：男，0：女", example = "1")
     private Integer userSex;
 
     /**
@@ -43,19 +43,19 @@ public class UserSelectDto implements Serializable {
     /**
      * 状态- 0：正常，-3：小黑屋3天，-7：小黑屋7天，-30：小黑屋30天，-365：小黑屋365天，-999：小黑屋永久
      */
-    @ApiModelProperty(value = "状态- 0：正常，-3：小黑屋3天，-7：小黑屋7天，-30：小黑屋30天，-365：小黑屋365天，-999：小黑屋永久")
+    @ApiModelProperty(value = "状态- 0：正常，-3：小黑屋3天，-7：小黑屋7天，-30：小黑屋30天，-365：小黑屋365天，-999：小黑屋永久", example = "0")
     private Integer userStatus;
 
     /**
      * 页码
      */
-    @ApiModelProperty(value = "页码", required = true)
+    @ApiModelProperty(value = "页码", required = true, example = "1")
     private Integer pageNum;
 
     /**
      * 页记录数
      */
-    @ApiModelProperty(value = "页记录数")
+    @ApiModelProperty(value = "页记录数", example = "10")
     private Integer pageSize;
 
 }

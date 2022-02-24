@@ -3,19 +3,17 @@ package org.elianacc.yurayura.controller.user;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.dto.UserSelectDto;
+import org.elianacc.yurayura.dto.UserUpdateStatusDto;
 import org.elianacc.yurayura.entity.user.User;
 import org.elianacc.yurayura.service.user.IUserService;
 import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户 controller
@@ -32,19 +30,18 @@ public class UserController {
     private IUserService iUserService;
 
     /**
-     * 查询用户（根据id）
+     * 查询用户（根据用户id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询用户（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询用户（根据用户id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iUserService.getById(id));
+        return ApiResult.success("查询成功", iUserService.getById(dto.getId()));
     }
 
     /**
@@ -53,9 +50,9 @@ public class UserController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @GetMapping("/getPage")
+    @PostMapping("/getPage")
     @ApiOperation("分页查询用户")
-    public ApiResult getPage(UserSelectDto dto) {
+    public ApiResult getPage(@RequestBody UserSelectDto dto) {
         if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
@@ -69,37 +66,37 @@ public class UserController {
     }
 
     /**
-     * 修改状态（根据id）
+     * 修改状态（根据用户id）
      *
-     * @param user
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PutMapping("/updateStatus")
-    @ApiOperation("修改状态（根据id）")
-    public ApiResult updateStatus(User user) {
-        if (ObjectUtils.isEmpty(user.getId())) {
+    @ApiOperation("修改状态（根据用户id）")
+    public ApiResult updateStatus(@RequestBody UserUpdateStatusDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (ObjectUtils.isEmpty(user.getUserStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getUserStatus())) {
             return ApiResult.warn("状态不能为空");
         }
-        iUserService.updateStatus(user);
+        iUserService.updateStatus(dto);
         return ApiResult.success("修改状态成功");
     }
 
     /**
-     * 重置为默认头像（根据id）
+     * 重置为默认头像（根据用户id）
      *
-     * @param user
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PutMapping("/updateAvatarDefault")
-    @ApiOperation("重置为默认头像（根据id）")
-    public ApiResult updateAvatarDefault(User user) {
-        if (ObjectUtils.isEmpty(user.getId())) {
+    @ApiOperation("重置为默认头像（根据用户id）")
+    public ApiResult updateAvatarDefault(@RequestBody IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        iUserService.updateAvatarDefault(user);
+        iUserService.updateAvatarDefault(dto);
         return ApiResult.success("重置为默认头像成功");
     }
 

@@ -2,9 +2,11 @@ package org.elianacc.yurayura.controller.sys.permission;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.elianacc.yurayura.dto.IdDto;
+import org.elianacc.yurayura.dto.PermissionInsertDto;
 import org.elianacc.yurayura.dto.PermissionSelectDto;
+import org.elianacc.yurayura.dto.PermissionUpdateDto;
 import org.elianacc.yurayura.entity.sys.permission.Permission;
 import org.elianacc.yurayura.enumerate.PermissionTypeEnum;
 import org.elianacc.yurayura.service.sys.permission.IPermissionService;
@@ -29,19 +31,18 @@ public class PermissionController {
     private IPermissionService iPermissionService;
 
     /**
-     * 查询系统权限（根据id）
+     * 查询系统权限（根据系统权限id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询系统权限（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询系统权限（根据系统权限id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iPermissionService.getById(id));
+        return ApiResult.success("查询成功", iPermissionService.getById(dto.getId()));
     }
 
     /**
@@ -50,9 +51,9 @@ public class PermissionController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @GetMapping("/getPage")
+    @PostMapping("/getPage")
     @ApiOperation("分页查询系统权限")
-    public ApiResult getPage(PermissionSelectDto dto) {
+    public ApiResult getPage(@RequestBody PermissionSelectDto dto) {
         if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
@@ -68,31 +69,29 @@ public class PermissionController {
     /**
      * 添加系统权限
      *
-     * @param permission
-     * @param permissionBtnVal
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统权限")
-    @ApiImplicitParam(name = "permissionBtnVal", value = "权限按钮值")
-    public ApiResult insert(Permission permission, String permissionBtnVal) {
-        if (ObjectUtils.isEmpty(permission.getPermissionName())) {
+    public ApiResult insert(@RequestBody PermissionInsertDto dto) {
+        if (ObjectUtils.isEmpty(dto.getPermissionName())) {
             return ApiResult.warn("权限名称不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionBelongSubmenuName())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionBelongSubmenuName())) {
             return ApiResult.warn("所属子菜单标识不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionType())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionType())) {
             return ApiResult.warn("权限类型不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionSeq())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (ObjectUtils.isEmpty(permissionBtnVal) && permission.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionBtnVal()) && dto.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
             return ApiResult.warn("权限类型为按钮时权限按钮不能为空");
-        } else if (permission.getPermissionName().length() > 20) {
+        } else if (dto.getPermissionName().length() > 20) {
             return ApiResult.warn("权限名称不能超过20个字符");
         }
-        String warn = iPermissionService.insert(permission, permissionBtnVal);
+        String warn = iPermissionService.insert(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
@@ -102,33 +101,25 @@ public class PermissionController {
     /**
      * 修改系统权限
      *
-     * @param permission
-     * @param permissionBtnVal
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统权限")
-    @ApiImplicitParam(name = "permissionBtnVal", value = "权限按钮值")
-    public ApiResult update(Permission permission, String permissionBtnVal) {
-        if (ObjectUtils.isEmpty(permission.getId())) {
+    public ApiResult update(@RequestBody PermissionUpdateDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionName())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionName())) {
             return ApiResult.warn("权限名称不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionBelongSubmenuName())) {
-            return ApiResult.warn("所属子菜单标识不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionType())) {
-            return ApiResult.warn("权限类型不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (ObjectUtils.isEmpty(permission.getPermissionSeq())) {
+        } else if (ObjectUtils.isEmpty(dto.getPermissionSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (ObjectUtils.isEmpty(permissionBtnVal) && permission.getPermissionType() == PermissionTypeEnum.BUTTON.getTypeId().intValue()) {
-            return ApiResult.warn("权限类型为按钮时权限按钮不能为空");
-        } else if (permission.getPermissionName().length() > 20) {
+        } else if (dto.getPermissionName().length() > 20) {
             return ApiResult.warn("权限名称不能超过20个字符");
         }
-        String warn = iPermissionService.update(permission, permissionBtnVal);
+        String warn = iPermissionService.update(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }

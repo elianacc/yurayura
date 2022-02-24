@@ -6,11 +6,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.elianacc.yurayura.dao.sys.dict.DictMapper;
+import org.elianacc.yurayura.dto.DictInsertDto;
 import org.elianacc.yurayura.dto.DictSelectDto;
+import org.elianacc.yurayura.dto.DictUpdateDto;
+import org.elianacc.yurayura.dto.IdsDto;
 import org.elianacc.yurayura.entity.sys.dict.Dict;
 import org.elianacc.yurayura.enumerate.EnableStatusEnum;
 import org.elianacc.yurayura.service.sys.dict.IDictService;
 import org.elianacc.yurayura.system.component.RedisOperate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,13 +54,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String insert(Dict dict) {
+    public String insert(DictInsertDto dto) {
         String warn = "";
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         List<Dict> dictList = dictMapper.selectList(queryWrapper
-                .eq("dict_code", dict.getDictCode())
-                .eq("dict_val", dict.getDictVal()));
+                .eq("dict_code", dto.getDictCode())
+                .eq("dict_val", dto.getDictVal()));
         if (dictList.isEmpty()) {
+            Dict dict = new Dict();
+            BeanUtils.copyProperties(dto, dict);
             dictMapper.insert(dict);
             if (dict.getDictStatus().intValue() == EnableStatusEnum.ENABLE.getStatusId()) {
                 // 插入字典记录到redis
@@ -70,32 +76,30 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteBatchByIds(List<Integer> ids) {
-        ids.forEach(id -> {
+    public void deleteBatchByIds(IdsDto dto) {
+        dto.getIds().forEach(id -> {
             Dict dict = dictMapper.selectById(id);
             // 删除redis中的字典记录
             redisOperate.lRemove(dict.getDictCode(), 0, dict);
         });
-        dictMapper.deleteBatchIds(ids);
+        dictMapper.deleteBatchIds(dto.getIds());
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String update(Dict dict) {
+    public String update(DictUpdateDto dto) {
         String warn = "";
         // 原字典记录
-        Dict oldDict = dictMapper.selectById(dict.getId());
-        if (oldDict.getDictCode().equals(dict.getDictCode()) && oldDict.getDictVal().equals(dict.getDictVal())) {
+        Dict oldDict = dictMapper.selectById(dto.getId());
+            Dict dict = new Dict();
+            BeanUtils.copyProperties(dto, dict);
             // 先从redis删除原字典记录
             redisOperate.lRemove(oldDict.getDictCode(), 0, oldDict);
             if (dict.getDictStatus().intValue() == EnableStatusEnum.ENABLE.getStatusId()) {
                 // 再插入新的字典记录到redis
-                redisOperate.lSet(dict.getDictCode(), dict);
+                redisOperate.lSet(oldDict.getDictCode(), dict);
             }
             dictMapper.updateById(dict);
-        } else {
-            warn = "字典编码和字典值确定后无法修改";
-        }
         return warn;
     }
 

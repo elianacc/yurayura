@@ -2,7 +2,9 @@ package org.elianacc.yurayura.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
+import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.dto.UserSelectDto;
+import org.elianacc.yurayura.dto.UserUpdateStatusDto;
 import org.elianacc.yurayura.entity.user.User;
 
 /**
@@ -22,19 +24,19 @@ public interface IUserService extends IService<User> {
     public PageInfo<User> getPage(UserSelectDto dto);
 
     /**
-     * 修改状态（根据id）
+     * 修改状态（根据用户id）
      *
-     * @param user
+     * @param dto
      * @return void
      */
-    public void updateStatus(User user);
+    public void updateStatus(UserUpdateStatusDto dto);
 
     /**
-     * 修改头像为默认图片（根据id）
+     * 重置为默认头像（根据用户id）
      *
-     * @param user
+     * @param dto
      * @return void
      */
-    public void updateAvatarDefault(User user);
+    public void updateAvatarDefault(IdDto dto);
 
 }

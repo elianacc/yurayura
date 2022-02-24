@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.elianacc.yurayura.dao.user.UserMapper;
+import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.dto.UserSelectDto;
+import org.elianacc.yurayura.dto.UserUpdateStatusDto;
 import org.elianacc.yurayura.entity.user.User;
 import org.elianacc.yurayura.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +51,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public void updateStatus(User user) {
+    public void updateStatus(UserUpdateStatusDto dto) {
+        User user = new User().setId(dto.getId()).setUserStatus(dto.getUserStatus());
         userMapper.updateById(user);
     }
 
     @Override
-    public void updateAvatarDefault(User user) {
-        user.setUserAvatarUrl(defaultUplUserAvatar);
+    public void updateAvatarDefault(IdDto dto) {
+        User user = new User().setId(dto.getId()).setUserAvatarUrl(defaultUplUserAvatar);
         userMapper.updateById(user);
     }
 

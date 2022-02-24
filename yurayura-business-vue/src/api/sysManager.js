@@ -1,5 +1,4 @@
 import request from '@api/baseRequest'
-import qs from 'qs'
 
 // 系统管理员登入
 function sysManagerLogin (params, success, warn) {
@@ -18,21 +17,17 @@ function getCurrentSysManagerMsg (success) {
 
 // 分页查询系统管理员
 function getSysManagerPage (params, success, warn) {
-  request.get('/api/sys/manager/getPage', params, success, warn)
+  request.post('/api/sys/manager/getPage', JSON.stringify(params), success, warn)
 }
 
 // 添加系统管理员
 function insertSysManager (params, success, warn) {
-  request.post('/api/sys/manager/insert', qs.stringify(params, { arrayFormat: 'repeat' }), success, warn, {
-    'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-  })
+  request.post('/api/sys/manager/insert', JSON.stringify(params), success, warn)
 }
 
 // 修改系统管理员
 function updateSysManager (params, success, warn) {
-  request.put('/api/sys/manager/update', qs.stringify(params, { arrayFormat: 'repeat' }), success, warn, {
-    'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-  })
+  request.put('/api/sys/manager/update', JSON.stringify(params), success, warn)
 }
 
 // 判断系统管理员认证状态

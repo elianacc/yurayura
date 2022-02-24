@@ -42,31 +42,31 @@ public class Permission implements Serializable {
     /**
      * 权限名称
      */
-    @ApiModelProperty(value = "权限名称", required = true)
+    @ApiModelProperty(value = "权限名称")
     private String permissionName;
 
     /**
      * 权限类型- 1：菜单，2：按钮
      */
-    @ApiModelProperty(value = "权限类型- 1：菜单，2：按钮", required = true)
+    @ApiModelProperty(value = "权限类型- 1：菜单，2：按钮")
     private Integer permissionType;
 
     /**
      * 状态- 0：禁用，1：启用
      */
-    @ApiModelProperty(value = "状态- 0：禁用，1：启用", required = true)
+    @ApiModelProperty(value = "状态- 0：禁用，1：启用")
     private Integer permissionStatus;
 
     /**
      * 所属子菜单标识
      */
-    @ApiModelProperty(value = "所属子菜单标识", required = true)
+    @ApiModelProperty(value = "所属子菜单标识")
     private String permissionBelongSubmenuName;
 
     /**
      * 序号
      */
-    @ApiModelProperty(value = "序号", required = true)
+    @ApiModelProperty(value = "序号")
     private Integer permissionSeq;
 
 

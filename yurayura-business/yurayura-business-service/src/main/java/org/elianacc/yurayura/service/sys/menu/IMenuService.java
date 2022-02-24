@@ -2,6 +2,9 @@ package org.elianacc.yurayura.service.sys.menu;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.elianacc.yurayura.bo.MenuTreeSelectBo;
+import org.elianacc.yurayura.dto.IdDto;
+import org.elianacc.yurayura.dto.MenuInsertDto;
+import org.elianacc.yurayura.dto.MenuUpdateDto;
 import org.elianacc.yurayura.entity.sys.menu.Menu;
 
 import java.util.List;
@@ -33,24 +36,24 @@ public interface IMenuService extends IService<Menu> {
     /**
      * 添加系统菜单
      *
-     * @param menu
+     * @param dto
      * @return java.lang.String
      */
-    public String insert(Menu menu);
+    public String insert(MenuInsertDto dto);
 
     /**
-     * 删除系统菜单（根据id）
+     * 删除系统菜单（根据系统菜单id）
      *
-     * @param id
+     * @param dto
      * @return void
      */
-    public void deleteById(Integer id);
+    public void deleteById(IdDto dto);
 
     /**
      * 修改系统菜单
      *
-     * @param menu
+     * @param dto
      * @return java.lang.String
      */
-    public String update(Menu menu);
+    public String update(MenuUpdateDto dto);
 }

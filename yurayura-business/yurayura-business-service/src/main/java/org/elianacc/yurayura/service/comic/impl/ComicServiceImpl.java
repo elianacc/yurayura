@@ -6,8 +6,10 @@ import com.github.pagehelper.PageInfo;
 import lombok.SneakyThrows;
 import org.elianacc.yurayura.dao.comic.ComicMapper;
 import org.elianacc.yurayura.dao.comic.ComicUserDataMapper;
-import org.elianacc.yurayura.dto.ComicInstAndUpdtDto;
+import org.elianacc.yurayura.dto.ComicInsertDto;
 import org.elianacc.yurayura.dto.ComicSelectDto;
+import org.elianacc.yurayura.dto.ComicUpdateDto;
+import org.elianacc.yurayura.dto.IdsDto;
 import org.elianacc.yurayura.entity.comic.Comic;
 import org.elianacc.yurayura.entity.comic.ComicUserData;
 import org.elianacc.yurayura.enumerate.ComicStatusEnum;
@@ -53,7 +55,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public String insert(ComicInstAndUpdtDto dto) {
+    public String insert(ComicInsertDto dto) {
         String warn = "";
         Integer comicStatus;
         // 更新状态为非完结，且更新时间不为空，更新状态为更新时间
@@ -98,10 +100,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteBatchByIds(List<Integer> ids) {
-        List<Comic> delComicList = comicMapper.selectBatchIds(ids);
-        comicMapper.deleteBatchIds(ids);
-        comicUserDataMapper.deleteBatchByComicId(ids);
+    public void deleteBatchByIds(IdsDto dto) {
+        List<Comic> delComicList = comicMapper.selectBatchIds(dto.getIds());
+        comicMapper.deleteBatchIds(dto.getIds());
+        comicUserDataMapper.deleteBatchByComicId(dto.getIds());
         delComicList.forEach(comic -> {
             // 如果用的是默认图片的，则不删除
             if (!(comic.getComicImageUrl().equals(defaultUplCmImg))) {
@@ -114,7 +116,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     @Override
-    public String update(ComicInstAndUpdtDto dto) {
+    public String update(ComicUpdateDto dto) {
         String warn = "";
         Integer comicStatus;
         // 更新状态为非完结，且更新时间不为空，更新状态为更新时间

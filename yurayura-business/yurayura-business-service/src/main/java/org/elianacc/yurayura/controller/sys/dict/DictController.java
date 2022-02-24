@@ -5,7 +5,10 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.elianacc.yurayura.dto.DictInsertDto;
 import org.elianacc.yurayura.dto.DictSelectDto;
+import org.elianacc.yurayura.dto.DictUpdateDto;
+import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.entity.sys.dict.Dict;
 import org.elianacc.yurayura.service.sys.dict.IDictService;
 import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
@@ -31,19 +34,18 @@ public class DictController {
     private IDictService iDictService;
 
     /**
-     * 查询系统数据字典（根据id）
+     * 查询系统数据字典（根据系统数据字典id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询系统数据字典（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询系统数据字典（根据系统数据字典id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iDictService.getById(id));
+        return ApiResult.success("查询成功", iDictService.getById(dto.getId()));
     }
 
     /**
@@ -52,9 +54,9 @@ public class DictController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @GetMapping("/getPage")
+    @PostMapping("/getPage")
     @ApiOperation("分页查询系统数据字典")
-    public ApiResult getPage(DictSelectDto dto) {
+    public ApiResult getPage(@RequestBody DictSelectDto dto) {
         if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
@@ -70,29 +72,29 @@ public class DictController {
     /**
      * 添加系统数据字典
      *
-     * @param dict
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
-    public ApiResult insert(@RequestBody Dict dict) {
-        if (ObjectUtils.isEmpty(dict.getDictCode())) {
+    public ApiResult insert(@RequestBody DictInsertDto dto) {
+        if (ObjectUtils.isEmpty(dto.getDictCode())) {
             return ApiResult.warn("字典编码不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictName())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictName())) {
             return ApiResult.warn("字典名不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictVal())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictVal())) {
             return ApiResult.warn("字典值不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictSeq())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (dict.getDictCode().length() > 20 || dict.getDictName().length() > 20 || dict.getDictVal().length() > 20) {
+        } else if (dto.getDictCode().length() > 20 || dto.getDictName().length() > 20 || dto.getDictVal().length() > 20) {
             return ApiResult.warn("字典编码、字典名、字典值不能超过20个字符");
-        } else if (!dict.getDictCode().matches("^[a-z][A-Za-z]*$")) {
+        } else if (!dto.getDictCode().matches("^[a-z][A-Za-z]*$")) {
             return ApiResult.warn("字典编码只能包含字母，以小写字母开头");
         }
-        String warn = iDictService.insert(dict);
+        String warn = iDictService.insert(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
@@ -102,31 +104,25 @@ public class DictController {
     /**
      * 修改系统数据字典
      *
-     * @param dict
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统数据字典")
-    public ApiResult update(@RequestBody Dict dict) {
-        if (ObjectUtils.isEmpty(dict.getId())) {
+    public ApiResult update(@RequestBody DictUpdateDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictCode())) {
-            return ApiResult.warn("字典编码不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictName())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictName())) {
             return ApiResult.warn("字典名不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictVal())) {
-            return ApiResult.warn("字典值不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (ObjectUtils.isEmpty(dict.getDictSeq())) {
+        } else if (ObjectUtils.isEmpty(dto.getDictSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (dict.getDictCode().length() > 20 || dict.getDictName().length() > 20 || dict.getDictVal().length() > 20) {
-            return ApiResult.warn("字典编码、字典名、字典值不能超过20个字符");
-        } else if (!dict.getDictCode().matches("^[a-z][A-Za-z]*$")) {
-            return ApiResult.warn("字典编码只能包含字母，以小写字母开头");
+        } else if (dto.getDictName().length() > 20) {
+            return ApiResult.warn("字典名不能超过20个字符");
         }
-        String warn = iDictService.update(dict);
+        String warn = iDictService.update(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
@@ -141,7 +137,7 @@ public class DictController {
      */
     @GetMapping("/getByDictCode")
     @ApiOperation("查询系统数据字典（根据字典编码）")
-    @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true)
+    @ApiImplicitParam(name = "dictCode", value = "字典编码", required = true, dataTypeClass = String.class)
     public ApiResult getByDictCode(String dictCode) {
         if (ObjectUtils.isEmpty(dictCode)) {
             return ApiResult.warn("字典编码不能为空");

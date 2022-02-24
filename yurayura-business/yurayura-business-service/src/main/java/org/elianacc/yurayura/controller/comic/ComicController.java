@@ -3,10 +3,8 @@ package org.elianacc.yurayura.controller.comic;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.elianacc.yurayura.dto.ComicInstAndUpdtDto;
-import org.elianacc.yurayura.dto.ComicSelectDto;
+import org.elianacc.yurayura.dto.*;
 import org.elianacc.yurayura.entity.comic.Comic;
 import org.elianacc.yurayura.service.comic.IComicService;
 import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
@@ -14,8 +12,6 @@ import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 番剧 controller
@@ -32,19 +28,18 @@ public class ComicController {
     private IComicService iComicService;
 
     /**
-     * 查询番剧（根据id）
+     * 查询番剧（根据番剧id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询番剧（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询番剧（根据番剧id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iComicService.getById(id));
+        return ApiResult.success("查询成功", iComicService.getById(dto.getId()));
     }
 
     /**
@@ -53,9 +48,9 @@ public class ComicController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @GetMapping("/getPage")
+    @PostMapping("/getPage")
     @ApiOperation("分页查询番剧")
-    public ApiResult getPage(ComicSelectDto dto) {
+    public ApiResult getPage(@RequestBody ComicSelectDto dto) {
         if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
@@ -77,7 +72,7 @@ public class ComicController {
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
-    public ApiResult insert(ComicInstAndUpdtDto dto) {
+    public ApiResult insert(ComicInsertDto dto) {
         if (ObjectUtils.isEmpty(dto.getComicName())) {
             return ApiResult.warn("名称不能为空");
         } else if (ObjectUtils.isEmpty(dto.getComicTime())) {
@@ -99,19 +94,18 @@ public class ComicController {
     }
 
     /**
-     * 批量删除番剧（根据id组）
+     * 批量删除番剧（根据番剧id组）
      *
-     * @param ids
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @DeleteMapping("/deleteBatchByIds")
-    @ApiOperation("批量删除番剧（根据id组）")
-    @ApiImplicitParam(name = "ids", value = "id组", required = true)
-    public ApiResult deleteBatchByIds(@RequestParam("ids") List<Integer> ids) {
-        if (ids.isEmpty()) {
+    @PutMapping("/deleteBatchByIds")
+    @ApiOperation("批量删除番剧（根据番剧id组）")
+    public ApiResult deleteBatchByIds(@RequestBody IdsDto dto) {
+        if (dto.getIds().isEmpty()) {
             return ApiResult.warn("id组不能为空");
         }
-        iComicService.deleteBatchByIds(ids);
+        iComicService.deleteBatchByIds(dto);
         return ApiResult.success("删除成功");
     }
 
@@ -124,7 +118,7 @@ public class ComicController {
     @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改番剧")
-    public ApiResult update(ComicInstAndUpdtDto dto) {
+    public ApiResult update(ComicUpdateDto dto) {
         if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         } else if (ObjectUtils.isEmpty(dto.getComicName())) {

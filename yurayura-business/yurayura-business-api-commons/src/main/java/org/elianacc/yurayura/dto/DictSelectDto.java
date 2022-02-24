@@ -31,19 +31,19 @@ public class DictSelectDto implements Serializable {
     /**
      * 状态- 0：禁用，1：启用
      */
-    @ApiModelProperty(value = "状态- 0：禁用，1：启用")
+    @ApiModelProperty(value = "状态- 0：禁用，1：启用", example = "1")
     private Integer dictStatus;
 
     /**
      * 页码
      */
-    @ApiModelProperty(value = "页码", required = true)
+    @ApiModelProperty(value = "页码", required = true, example = "1")
     private Integer pageNum;
 
     /**
      * 页记录数
      */
-    @ApiModelProperty(value = "页记录数")
+    @ApiModelProperty(value = "页记录数", example = "10")
     private Integer pageSize;
 
 }

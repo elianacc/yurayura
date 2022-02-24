@@ -2,8 +2,8 @@ package org.elianacc.yurayura.controller.comic;
 
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.service.comic.IComicUserDataService;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +27,18 @@ public class ComicUserDataController {
     private IComicUserDataService iComicUserDataService;
 
     /**
-     * 查询番剧用户数据（根据id）
+     * 查询番剧用户数据（根据番剧用户数据id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询番剧用户数据（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询番剧用户数据（根据番剧用户数据id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iComicUserDataService.getById(id));
+        return ApiResult.success("查询成功", iComicUserDataService.getById(dto.getId()));
     }
 }
 

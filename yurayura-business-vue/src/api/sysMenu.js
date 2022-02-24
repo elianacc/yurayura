@@ -27,7 +27,7 @@ function updateSysMenu (params, success, warn) {
 
 // 删除系统菜单（根据id）
 function deleteSysMenuById (params, success, warn) {
-  request.delete('/api/sys/menu/deleteById', { id: params }, success, warn)
+  request.put('/api/sys/menu/deleteById', JSON.stringify({ id: params }), success, warn)
 }
 
 // 添加系统子菜单
@@ -42,7 +42,7 @@ function updateSysMenuSub (params, success, warn) {
 
 // 删除系统子菜单（根据id）
 function deleteSysMenuSubById (params, success, warn) {
-  request.delete('/api/sys/menuSub/deleteById', { id: params }, success, warn)
+  request.put('/api/sys/menuSub/deleteById', JSON.stringify({ id: params }), success, warn)
 }
 
 // 查询所有系统子菜单

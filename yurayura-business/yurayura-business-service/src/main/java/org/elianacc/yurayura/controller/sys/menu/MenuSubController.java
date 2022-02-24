@@ -3,7 +3,9 @@ package org.elianacc.yurayura.controller.sys.menu;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.elianacc.yurayura.entity.sys.menu.MenuSub;
+import org.elianacc.yurayura.dto.IdDto;
+import org.elianacc.yurayura.dto.MenuSubInsertDto;
+import org.elianacc.yurayura.dto.MenuSubUpdateDto;
 import org.elianacc.yurayura.service.sys.menu.IMenuSubService;
 import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
@@ -26,51 +28,50 @@ public class MenuSubController {
     private IMenuSubService iMenuSubService;
 
     /**
-     * 查询系统子菜单（根据id）
+     * 查询系统子菜单（根据系统子菜单id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询系统子菜单（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询系统子菜单（根据系统子菜单id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iMenuSubService.getById(id));
+        return ApiResult.success("查询成功", iMenuSubService.getById(dto.getId()));
     }
 
     /**
      * 添加系统子菜单
      *
-     * @param menuSub
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统子菜单")
-    public ApiResult insert(@RequestBody MenuSub menuSub) {
-        if (ObjectUtils.isEmpty(menuSub.getMenuTitle())) {
+    public ApiResult insert(@RequestBody MenuSubInsertDto dto) {
+        if (ObjectUtils.isEmpty(dto.getMenuTitle())) {
             return ApiResult.warn("标题不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuName())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuName())) {
             return ApiResult.warn("标识不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuIconClass())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuIconClass())) {
             return ApiResult.warn("图标样式不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuSeq())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuIndex())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuIndex())) {
             return ApiResult.warn("路径不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuPid())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuPid())) {
             return ApiResult.warn("父菜单id不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (!menuSub.getMenuName().matches("^[a-z][a-z_]*$")) {
+        } else if (!dto.getMenuName().matches("^[a-z][a-z_]*$")) {
             return ApiResult.warn("标识只能包含小写字母下划线，以小写字母开头");
-        } else if (menuSub.getMenuTitle().length() > 20 || menuSub.getMenuName().length() > 20 || menuSub.getMenuIconClass().length() > 30) {
+        } else if (dto.getMenuTitle().length() > 20 || dto.getMenuName().length() > 20 || dto.getMenuIconClass().length() > 30) {
             return ApiResult.warn("标题、标识不能超过20个字符，图标样式不能超过30个字符");
         }
-        String warn = iMenuSubService.insert(menuSub);
+        String warn = iMenuSubService.insert(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
@@ -80,35 +81,27 @@ public class MenuSubController {
     /**
      * 修改系统子菜单
      *
-     * @param menuSub
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统子菜单")
-    public ApiResult update(@RequestBody MenuSub menuSub) {
-        if (ObjectUtils.isEmpty(menuSub.getId())) {
+    public ApiResult update(@RequestBody MenuSubUpdateDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuTitle())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuTitle())) {
             return ApiResult.warn("标题不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuName())) {
-            return ApiResult.warn("标识不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuIconClass())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuIconClass())) {
             return ApiResult.warn("图标样式不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuSeq())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuSeq())) {
             return ApiResult.warn("序号不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuIndex())) {
-            return ApiResult.warn("路径不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getMenuStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (ObjectUtils.isEmpty(menuSub.getMenuPid())) {
-            return ApiResult.warn("父菜单id不能为空");
-        } else if (!menuSub.getMenuName().matches("^[a-z][a-z_]*$")) {
-            return ApiResult.warn("标识只能包含小写字母下划线，以小写字母开头");
-        } else if (menuSub.getMenuTitle().length() > 20 || menuSub.getMenuName().length() > 20 || menuSub.getMenuIconClass().length() > 30) {
-            return ApiResult.warn("标题、标识不能超过20个字符，图标样式不能超过30个字符");
+        } else if (dto.getMenuTitle().length() > 20 || dto.getMenuIconClass().length() > 30) {
+            return ApiResult.warn("标题不能超过20个字符，图标样式不能超过30个字符");
         }
-        String warn = iMenuSubService.update(menuSub);
+        String warn = iMenuSubService.update(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
@@ -116,18 +109,18 @@ public class MenuSubController {
     }
 
     /**
-     * 删除系统子菜单（根据id）
+     * 删除系统子菜单（根据系统子菜单id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @DeleteMapping("/deleteById")
-    @ApiOperation("删除系统子菜单（根据id）")
-    public ApiResult deleteById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @PutMapping("/deleteById")
+    @ApiOperation("删除系统子菜单（根据系统子菜单id）")
+    public ApiResult deleteById(@RequestBody IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        iMenuSubService.deleteById(id);
+        iMenuSubService.deleteById(dto);
         return ApiResult.success("删除成功");
     }
 
@@ -139,6 +132,7 @@ public class MenuSubController {
      */
     @GetMapping("/getByIndex")
     @ApiOperation("查询系统子菜单（根据路径）")
+    @ApiImplicitParam(name = "index", value = "路径", required = true, dataTypeClass = String.class)
     public ApiResult getByIndex(String index) {
         if (ObjectUtils.isEmpty(index)) {
             return ApiResult.warn("路径不能为空");

@@ -251,9 +251,9 @@ export default {
         updateUserAvatarDefault(id, success => {
           this.$message.success(success.msg)
           this.getPage()
+        }, warn => {
+          this.$message.error(warn.msg)
         })
-      }, warn => {
-        this.$message.error(warn.msg)
       })
     },
     updateStatusDialogClose () {

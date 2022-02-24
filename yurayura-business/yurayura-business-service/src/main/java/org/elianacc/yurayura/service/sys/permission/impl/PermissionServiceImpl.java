@@ -7,10 +7,13 @@ import com.github.pagehelper.PageInfo;
 import org.elianacc.yurayura.bo.PermissionAuthorTreeSelectBo;
 import org.elianacc.yurayura.dao.sys.manager.ManagerMapper;
 import org.elianacc.yurayura.dao.sys.permission.PermissionMapper;
+import org.elianacc.yurayura.dto.PermissionInsertDto;
 import org.elianacc.yurayura.dto.PermissionSelectDto;
+import org.elianacc.yurayura.dto.PermissionUpdateDto;
 import org.elianacc.yurayura.entity.sys.permission.Permission;
 import org.elianacc.yurayura.enumerate.EnableStatusEnum;
 import org.elianacc.yurayura.service.sys.permission.IPermissionService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,15 +53,18 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String insert(Permission permission, String permissionBtnVal) {
+    public String insert(PermissionInsertDto dto) {
         String warn = "";
-        if (ObjectUtils.isEmpty(permissionBtnVal)) {
+        Permission permission = new Permission();
+        BeanUtils.copyProperties(dto, permission);
+        if (ObjectUtils.isEmpty(dto.getPermissionBtnVal())) {
             permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_select");
         } else {
-            permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_" + permissionBtnVal);
+            permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_" + dto.getPermissionBtnVal());
         }
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
-        List<Permission> existPermList = permissionMapper.selectList(queryWrapper.eq("permission_code", permission.getPermissionCode()));
+        List<Permission> existPermList = permissionMapper.selectList(queryWrapper
+                .eq("permission_code", permission.getPermissionCode()));
         if (!existPermList.isEmpty()) {
             warn = "此权限已经存在";
         } else {
@@ -72,25 +78,18 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String update(Permission permission, String permissionBtnVal) {
+    public String update(PermissionUpdateDto dto) {
         String warn = "";
-        if (ObjectUtils.isEmpty(permissionBtnVal)) {
-            permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_select");
-        } else {
-            permission.setPermissionCode(permission.getPermissionBelongSubmenuName() + "_" + permissionBtnVal);
+        Permission oldPerm = permissionMapper.selectById(dto.getId());
+        Permission permission = new Permission();
+        BeanUtils.copyProperties(dto, permission);
+        if (permission.getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()) {
+            managerMapper.deleteManagerPermissionByPermissionId(permission.getId());
         }
-        Permission oldPerm = permissionMapper.selectById(permission.getId());
-        if (!oldPerm.getPermissionCode().equals(permission.getPermissionCode())) {
-            warn = "所属子菜单标识，权限类型，权限按钮确定后无法修改";
-        } else {
-            if (permission.getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()) {
-                managerMapper.deleteManagerPermissionByPermissionId(permission.getId());
-            }
-            permissionMapper.updateById(permission);
-            if (oldPerm.getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()
-                    && permission.getPermissionStatus() == EnableStatusEnum.ENABLE.getStatusId().intValue()) {
-                managerMapper.insertManagerPermissionForAdmin(permission.getId());
-            }
+        permissionMapper.updateById(permission);
+        if (oldPerm.getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()
+                && permission.getPermissionStatus() == EnableStatusEnum.ENABLE.getStatusId().intValue()) {
+            managerMapper.insertManagerPermissionForAdmin(permission.getId());
         }
         return warn;
     }

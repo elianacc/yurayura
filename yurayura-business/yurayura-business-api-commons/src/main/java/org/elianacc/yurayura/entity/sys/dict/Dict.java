@@ -36,31 +36,31 @@ public class Dict implements Serializable {
     /**
      * 字典编码
      */
-    @ApiModelProperty(value = "字典编码", required = true)
+    @ApiModelProperty(value = "字典编码")
     private String dictCode;
 
     /**
      * 字典名
      */
-    @ApiModelProperty(value = "字典名", required = true)
+    @ApiModelProperty(value = "字典名")
     private String dictName;
 
     /**
      * 字典值
      */
-    @ApiModelProperty(value = "字典值", required = true)
+    @ApiModelProperty(value = "字典值")
     private String dictVal;
 
     /**
      * 状态- 0：禁用，1：启用
      */
-    @ApiModelProperty(value = "状态- 0：禁用，1：启用", required = true)
+    @ApiModelProperty(value = "状态- 0：禁用，1：启用")
     private Integer dictStatus;
 
     /**
      * 序号
      */
-    @ApiModelProperty(value = "序号", required = true)
+    @ApiModelProperty(value = "序号")
     private Integer dictSeq;
 
 }

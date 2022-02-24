@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * 番剧添加与修改 dto
+ * 番剧添加 dto
  *
  * @author ELiaNaCc
  * @since 2019-11-21
@@ -20,16 +20,10 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "番剧添加与修改dto")
-public class ComicInstAndUpdtDto implements Serializable {
+@ApiModel(value = "番剧添加dto")
+public class ComicInsertDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @ApiModelProperty(value = "id")
-    private Integer id;
 
     /**
      * 名称
@@ -40,7 +34,7 @@ public class ComicInstAndUpdtDto implements Serializable {
     /**
      * 评分
      */
-    @ApiModelProperty(value = "评分", required = true)
+    @ApiModelProperty(value = "评分", required = true, example = "1.1")
     private Double comicScore;
 
     /**
@@ -71,19 +65,19 @@ public class ComicInstAndUpdtDto implements Serializable {
     /**
      * 当前话数
      */
-    @ApiModelProperty(value = "当前话数", required = true)
+    @ApiModelProperty(value = "当前话数", required = true, example = "1")
     private Integer comicCurrentEpisodes;
 
     /**
      * 上架状态 1：上架  0：下架
      */
-    @ApiModelProperty(value = "上架状态 1：上架  0：下架", required = true)
+    @ApiModelProperty(value = "上架状态 1：上架  0：下架", required = true, example = "1")
     private Integer comicShelfStatus;
 
     /**
      * 状态 0：已完结  8：更新中
      */
-    @ApiModelProperty(value = "状态 0：已完结  8：更新中", required = true)
+    @ApiModelProperty(value = "状态 0：已完结  8：更新中", required = true, example = "0")
     private Integer comicStatus;
 
     /**

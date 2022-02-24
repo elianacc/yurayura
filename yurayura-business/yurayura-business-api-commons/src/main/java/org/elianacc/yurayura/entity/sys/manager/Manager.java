@@ -38,7 +38,7 @@ public class Manager implements Serializable {
     /**
      * 管理员名
      */
-    @ApiModelProperty(value = "管理员名", required = true)
+    @ApiModelProperty(value = "管理员名")
     private String managerName;
 
     /**
@@ -50,7 +50,7 @@ public class Manager implements Serializable {
     /**
      * 状态- 0：禁用，1：启用
      */
-    @ApiModelProperty(value = "状态- 0：禁用，1：启用", required = true)
+    @ApiModelProperty(value = "状态- 0：禁用，1：启用")
     private Integer managerStatus;
 
     /**

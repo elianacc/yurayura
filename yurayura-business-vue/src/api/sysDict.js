@@ -2,7 +2,7 @@ import request from '@api/baseRequest'
 
 // 分页查询系统数据字典
 function getSysDictPage (params, success, warn) {
-  request.get('/api/sys/dict/getPage', params, success, warn)
+  request.post('/api/sys/dict/getPage', JSON.stringify(params), success, warn)
 }
 
 // 添加系统数据字典

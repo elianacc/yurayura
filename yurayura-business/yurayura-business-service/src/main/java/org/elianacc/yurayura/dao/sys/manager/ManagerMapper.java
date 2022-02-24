@@ -42,7 +42,7 @@ public interface ManagerMapper extends BaseMapper<Manager> {
     void deleteManagerPermissionByManagerId(Integer managerId);
 
     /**
-     * 查询管理员及其权限（系统管理员查询dto）
+     * 查询管理员及其权限（根据系统管理员查询dto）
      *
      * @param dto
      * @return java.util.List<java.util.Map<java.lang.String,java.lang.Object>>

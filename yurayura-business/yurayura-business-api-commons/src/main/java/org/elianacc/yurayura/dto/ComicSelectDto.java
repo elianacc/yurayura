@@ -32,13 +32,13 @@ public class ComicSelectDto implements Serializable {
     /**
      * 状态- 0：已完结，1：周一更新...，8：更新中
      */
-    @ApiModelProperty(value = "状态")
+    @ApiModelProperty(value = "状态- 0：已完结，1：周一更新...，8：更新中", example = "0")
     private Integer comicStatus;
 
     /**
      * 上架状态- 1：上架，0：下架
      */
-    @ApiModelProperty(value = "上架状态")
+    @ApiModelProperty(value = "上架状态- 1：上架，0：下架", example = "1")
     private Integer comicShelfStatus;
 
     /**
@@ -50,13 +50,13 @@ public class ComicSelectDto implements Serializable {
     /**
      * 页码
      */
-    @ApiModelProperty(value = "页码", required = true)
+    @ApiModelProperty(value = "页码", required = true, example = "1")
     private Integer pageNum;
 
     /**
      * 页记录数
      */
-    @ApiModelProperty(value = "页记录数")
+    @ApiModelProperty(value = "页记录数", example = "10")
     private Integer pageSize;
 
 }

@@ -13,11 +13,11 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.elianacc.yurayura.dao.sys.manager.ManagerMapper;
 import org.elianacc.yurayura.dao.sys.permission.PermissionMapper;
-import org.elianacc.yurayura.dto.ManagerLoginDto;
-import org.elianacc.yurayura.dto.ManagerSelectDto;
+import org.elianacc.yurayura.dto.*;
 import org.elianacc.yurayura.entity.sys.manager.Manager;
 import org.elianacc.yurayura.enumerate.EnableStatusEnum;
 import org.elianacc.yurayura.service.sys.manager.IManagerService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,20 +56,24 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String insert(Manager manager, List<Integer> permissionIdArr) {
+    public String insert(ManagerInsertDto dto) {
         String warn = "";
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
-        List<Manager> managerList = managerMapper.selectList(queryWrapper.eq("manager_name", manager.getManagerName()));
+        List<Manager> managerList = managerMapper.selectList(queryWrapper.eq("manager_name", dto.getManagerName()));
         if (managerList.isEmpty()) {
+            Manager manager = new Manager();
+            BeanUtils.copyProperties(dto, manager);
             manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
             manager.setManagerCreateTime(LocalDateTime.now());
             manager.setManagerUpdateTime(null);
             managerMapper.insert(manager);
-            if (permissionIdArr != null) {
-                List<Integer> permissionIdExistList = permissionIdArr.stream()
+            if (!dto.getPermissionIdArr().isEmpty()) {
+                List<Integer> permissionIdExistList = dto.getPermissionIdArr().stream()
                         .filter(permissionId -> !(permissionMapper.selectById(permissionId).getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
                         .collect(Collectors.toList());
-                managerMapper.insertBatchManagerPermission(permissionIdExistList, manager.getId());
+                if (!permissionIdExistList.isEmpty()) {
+                    managerMapper.insertBatchManagerPermission(permissionIdExistList, manager.getId());
+                }
             }
         } else {
             warn = "管理员名已经被占用";
@@ -79,37 +83,37 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteBatchByIds(List<Integer> ids) {
-        managerMapper.deleteBatchIds(ids);
+    public void deleteBatchByIds(IdsDto dto) {
+        managerMapper.deleteBatchIds(dto.getIds());
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String update(Manager manager, List<Integer> permissionIdArr) {
+    public String update(ManagerUpdateDto dto) {
         String warn = "";
-        Manager oldManager = managerMapper.selectById(manager.getId());
+        Manager oldManager = managerMapper.selectById(dto.getId());
         if (oldManager.getManagerName().equals("admin")) {
             warn = "管理员admin信息不允许被修改";
             return warn;
         }
-        if (oldManager.getManagerName().equals(manager.getManagerName())) {
-            // 修改密码为空时使用此管理员旧密码
-            if (ObjectUtils.isEmpty(manager.getManagerPassword())) {
-                manager.setManagerPassword(oldManager.getManagerPassword());
-            } else {
-                manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
-            }
-            manager.setManagerUpdateTime(LocalDateTime.now());
-            managerMapper.updateById(manager);
-            managerMapper.deleteManagerPermissionByManagerId(manager.getId());
-            if (permissionIdArr != null) {
-                List<Integer> permissionIdExistList = permissionIdArr.stream()
-                        .filter(permissionId -> !(permissionMapper.selectById(permissionId).getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
-                        .collect(Collectors.toList());
+        Manager manager = new Manager();
+        BeanUtils.copyProperties(dto, manager);
+        // 修改密码为空时使用此管理员旧密码
+        if (ObjectUtils.isEmpty(manager.getManagerPassword())) {
+            manager.setManagerPassword(oldManager.getManagerPassword());
+        } else {
+            manager.setManagerPassword(DigestUtils.md5DigestAsHex(manager.getManagerPassword().getBytes()));
+        }
+        manager.setManagerUpdateTime(LocalDateTime.now());
+        managerMapper.updateById(manager);
+        managerMapper.deleteManagerPermissionByManagerId(manager.getId());
+        if (!dto.getPermissionIdArr().isEmpty()) {
+            List<Integer> permissionIdExistList = dto.getPermissionIdArr().stream()
+                    .filter(permissionId -> !(permissionMapper.selectById(permissionId).getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
+                    .collect(Collectors.toList());
+            if (!permissionIdExistList.isEmpty()) {
                 managerMapper.insertBatchManagerPermission(permissionIdExistList, manager.getId());
             }
-        } else {
-            warn = "管理员名确定后无法修改";
         }
         return warn;
     }

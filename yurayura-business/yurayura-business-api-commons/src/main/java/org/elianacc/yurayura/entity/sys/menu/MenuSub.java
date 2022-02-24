@@ -36,31 +36,31 @@ public class MenuSub implements Serializable {
     /**
      * 标题
      */
-    @ApiModelProperty(value = "标题", required = true)
+    @ApiModelProperty(value = "标题")
     private String menuTitle;
 
     /**
      * 标识
      */
-    @ApiModelProperty(value = "标识", required = true)
+    @ApiModelProperty(value = "标识")
     private String menuName;
 
     /**
      * 路径
      */
-    @ApiModelProperty(value = "路径", required = true)
+    @ApiModelProperty(value = "路径")
     private String menuIndex;
 
     /**
      * 图标样式
      */
-    @ApiModelProperty(value = "图标样式", required = true)
+    @ApiModelProperty(value = "图标样式")
     private String menuIconClass;
 
     /**
      * 父菜单id
      */
-    @ApiModelProperty(value = "父菜单id", required = true)
+    @ApiModelProperty(value = "父菜单id")
     private Integer menuPid;
 
     /**
@@ -72,13 +72,13 @@ public class MenuSub implements Serializable {
     /**
      * 序号
      */
-    @ApiModelProperty(value = "序号", required = true)
+    @ApiModelProperty(value = "序号")
     private Integer menuSeq;
 
     /**
      * 状态- 0：隐藏，1：显示
      */
-    @ApiModelProperty(value = "状态- 0：隐藏，1：显示", required = true)
+    @ApiModelProperty(value = "状态- 0：隐藏，1：显示")
     private Integer menuStatus;
 
 }

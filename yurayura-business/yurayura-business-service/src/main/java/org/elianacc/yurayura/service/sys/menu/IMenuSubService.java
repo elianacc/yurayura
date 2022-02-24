@@ -1,6 +1,9 @@
 package org.elianacc.yurayura.service.sys.menu;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.elianacc.yurayura.dto.IdDto;
+import org.elianacc.yurayura.dto.MenuSubInsertDto;
+import org.elianacc.yurayura.dto.MenuSubUpdateDto;
 import org.elianacc.yurayura.entity.sys.menu.MenuSub;
 
 import java.util.List;
@@ -16,26 +19,26 @@ public interface IMenuSubService extends IService<MenuSub> {
     /**
      * 添加系统子菜单
      *
-     * @param menuSub
+     * @param dto
      * @return java.lang.String
      */
-    public String insert(MenuSub menuSub);
+    public String insert(MenuSubInsertDto dto);
 
     /**
-     * 删除系统子菜单（根据id）
+     * 删除系统子菜单（根据系统子菜单id）
      *
-     * @param id
+     * @param dto
      * @return void
      */
-    public void deleteById(Integer id);
+    public void deleteById(IdDto dto);
 
     /**
      * 修改系统子菜单
      *
-     * @param menuSub
+     * @param dto
      * @return java.lang.String
      */
-    public String update(MenuSub menuSub);
+    public String update(MenuSubUpdateDto dto);
 
     /**
      * 查询系统子菜单（根据路径）

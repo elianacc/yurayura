@@ -51,6 +51,18 @@ spring:
         min-idle: 0
     timeout: 50000
 
+# knife4j配置
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 开启Swagger的Basic认证功能,默认是false
+  basic:
+    enable: true
+    # Basic认证用户名
+    username: admin
+    # Basic认证密码
+    password: admin123
+
 # 自定义配置
 yurayura:
   # 上传默认图片

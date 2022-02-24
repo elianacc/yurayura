@@ -3,13 +3,10 @@ package org.elianacc.yurayura.controller.sys.manager;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.elianacc.yurayura.dto.ManagerLoginDto;
-import org.elianacc.yurayura.dto.ManagerSelectDto;
-import org.elianacc.yurayura.entity.sys.manager.Manager;
+import org.elianacc.yurayura.dto.*;
 import org.elianacc.yurayura.service.sys.manager.IManagerService;
 import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.system.util.VerifyCodeUtil;
@@ -25,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,19 +39,18 @@ public class ManagerController {
     private IManagerService iManagerService;
 
     /**
-     * 查询系统管理员（根据id）
+     * 查询系统管理员（根据系统管理员id）
      *
-     * @param id
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @GetMapping("/getById")
-    @ApiOperation("查询系统管理员（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    @ApiOperation("查询系统管理员（根据系统管理员id）")
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", iManagerService.getById(id));
+        return ApiResult.success("查询成功", iManagerService.getById(dto.getId()));
     }
 
     /**
@@ -64,9 +59,9 @@ public class ManagerController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @GetMapping("/getPage")
+    @PostMapping("/getPage")
     @ApiOperation("分页查询系统管理员")
-    public ApiResult getPage(ManagerSelectDto dto) {
+    public ApiResult getPage(@RequestBody ManagerSelectDto dto) {
         if (ObjectUtils.isEmpty(dto.getPageNum())) {
             return ApiResult.warn("页码不能为空");
         } else if (ObjectUtils.isEmpty(dto.getPageSize())) {
@@ -82,25 +77,23 @@ public class ManagerController {
     /**
      * 添加系统管理员
      *
-     * @param manager
-     * @param permissionIdArr
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统管理员")
-    @ApiImplicitParam(name = "permissionIdArr", value = "拥有权限组")
-    public ApiResult insert(Manager manager, @RequestParam(value = "permissionIdArr", required = false) List<Integer> permissionIdArr) {
-        if (ObjectUtils.isEmpty(manager.getManagerName())) {
+    public ApiResult insert(@RequestBody ManagerInsertDto dto) {
+        if (ObjectUtils.isEmpty(dto.getManagerName())) {
             return ApiResult.warn("管理员名不能为空");
-        } else if (ObjectUtils.isEmpty(manager.getManagerPassword())) {
+        } else if (ObjectUtils.isEmpty(dto.getManagerPassword())) {
             return ApiResult.warn("管理员密码不能为空");
-        } else if (ObjectUtils.isEmpty(manager.getManagerStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getManagerStatus())) {
             return ApiResult.warn("状态不能为空");
-        } else if (manager.getManagerName().length() > 20) {
+        } else if (dto.getManagerName().length() > 20) {
             return ApiResult.warn("管理员名不能超过20个字符");
         }
-        String warn = iManagerService.insert(manager, permissionIdArr);
+        String warn = iManagerService.insert(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }
@@ -110,21 +103,19 @@ public class ManagerController {
     /**
      * 修改系统管理员
      *
-     * @param manager
-     * @param permissionIdArr
+     * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
     @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统管理员")
-    @ApiImplicitParam(name = "permissionIdArr", value = "拥有权限组")
-    public ApiResult update(Manager manager, @RequestParam(value = "permissionIdArr", required = false) List<Integer> permissionIdArr) {
-        if (ObjectUtils.isEmpty(manager.getId())) {
+    public ApiResult update(@RequestBody ManagerUpdateDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
-        } else if (ObjectUtils.isEmpty(manager.getManagerStatus())) {
+        } else if (ObjectUtils.isEmpty(dto.getManagerStatus())) {
             return ApiResult.warn("状态不能为空");
         }
-        String warn = iManagerService.update(manager, permissionIdArr);
+        String warn = iManagerService.update(dto);
         if (!ObjectUtils.isEmpty(warn)) {
             return ApiResult.warn(warn);
         }

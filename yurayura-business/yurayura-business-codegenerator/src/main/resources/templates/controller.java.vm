@@ -1,13 +1,15 @@
 package ${package.Controller};
 
 #if(${swagger2})
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 #end
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Service}.${table.serviceName};
+import ${cfg.packageParentPath}.dto.IdDto;
 import ${cfg.packageParentPath}.vo.ApiResult;
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
@@ -47,21 +49,20 @@ public class ${table.controllerName} {
     private ${table.serviceName} i${entity}Service;
 
     /**
-     * 查询$!{table.comment}（根据id）
+     * 查询$!{table.comment}（根据$!{table.comment}id）
      *
-     * @param id
+     * @param dto
      * @return ${cfg.packageParentPath}.vo.ApiResult
      */
     @GetMapping("/getById")
     #if(${swagger2})
-    @ApiOperation("查询$!{table.comment}（根据id）")
-    @ApiImplicitParam(name = "id", value = "id", required = true, defaultValue = "1", dataType = "int")
+    @ApiOperation("查询$!{table.comment}（根据$!{table.comment}id）")
     #end
-    public ApiResult getById(Integer id) {
-        if (ObjectUtils.isEmpty(id)) {
+    public ApiResult getById(IdDto dto) {
+        if (ObjectUtils.isEmpty(dto.getId())) {
             return ApiResult.warn("id不能为空");
         }
-        return ApiResult.success("查询成功", i${entity}Service.getById(id));
+        return ApiResult.success("查询成功", i${entity}Service.getById(dto.getId()));
     }
 }
 

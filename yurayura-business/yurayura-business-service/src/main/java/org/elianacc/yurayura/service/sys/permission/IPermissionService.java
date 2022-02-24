@@ -3,7 +3,9 @@ package org.elianacc.yurayura.service.sys.permission;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import org.elianacc.yurayura.bo.PermissionAuthorTreeSelectBo;
+import org.elianacc.yurayura.dto.PermissionInsertDto;
 import org.elianacc.yurayura.dto.PermissionSelectDto;
+import org.elianacc.yurayura.dto.PermissionUpdateDto;
 import org.elianacc.yurayura.entity.sys.permission.Permission;
 
 import java.util.List;
@@ -27,20 +29,18 @@ public interface IPermissionService extends IService<Permission> {
     /**
      * 添加系统权限
      *
-     * @param permission
-	 * @param permissionBtnVal
+     * @param dto
      * @return java.lang.String
      */
-    public String insert(Permission permission, String permissionBtnVal);
+    public String insert(PermissionInsertDto dto);
 
     /**
      * 修改系统权限
      *
-     * @param permission
-	 * @param permissionBtnVal
+     * @param dto
      * @return java.lang.String
      */
-    public String update(Permission permission, String permissionBtnVal);
+    public String update(PermissionUpdateDto dto);
 
     /**
      * 查询权限授权树

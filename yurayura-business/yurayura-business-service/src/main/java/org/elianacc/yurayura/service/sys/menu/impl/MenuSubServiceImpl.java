@@ -6,12 +6,16 @@ import org.elianacc.yurayura.dao.sys.manager.ManagerMapper;
 import org.elianacc.yurayura.dao.sys.menu.MenuMapper;
 import org.elianacc.yurayura.dao.sys.menu.MenuSubMapper;
 import org.elianacc.yurayura.dao.sys.permission.PermissionMapper;
+import org.elianacc.yurayura.dto.IdDto;
+import org.elianacc.yurayura.dto.MenuSubInsertDto;
+import org.elianacc.yurayura.dto.MenuSubUpdateDto;
 import org.elianacc.yurayura.entity.sys.menu.MenuSub;
 import org.elianacc.yurayura.entity.sys.permission.Permission;
 import org.elianacc.yurayura.enumerate.EnableStatusEnum;
 import org.elianacc.yurayura.enumerate.MenuTypeEnum;
 import org.elianacc.yurayura.enumerate.PermissionTypeEnum;
 import org.elianacc.yurayura.service.sys.menu.IMenuSubService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,15 +42,17 @@ public class MenuSubServiceImpl extends ServiceImpl<MenuSubMapper, MenuSub> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String insert(MenuSub menuSub) {
+    public String insert(MenuSubInsertDto dto) {
         String warn = "";
-        if (!("/business/" + menuSub.getMenuName()).equals(menuSub.getMenuIndex())) {
+        if (!("/business/" + dto.getMenuName()).equals(dto.getMenuIndex())) {
             warn = "菜单路径不正确";
         } else {
             List<String> menuNameList = menuMapper.getMenuNameAndMenuSubName();
-            if (menuNameList.contains(menuSub.getMenuName())) {
+            if (menuNameList.contains(dto.getMenuName())) {
                 warn = "菜单标识已存在，请更换";
             } else {
+                MenuSub menuSub = new MenuSub();
+                BeanUtils.copyProperties(dto, menuSub);
                 menuSub.setMenuType(MenuTypeEnum.SECONDLEVEL.getTypeId());
                 menuSubMapper.insert(menuSub);
                 Permission permission = new Permission();
@@ -65,29 +71,23 @@ public class MenuSubServiceImpl extends ServiceImpl<MenuSubMapper, MenuSub> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteById(Integer id) {
-        MenuSub deleteMenuSub = menuSubMapper.selectById(id);
+    public void deleteById(IdDto dto) {
+        MenuSub deleteMenuSub = menuSubMapper.selectById(dto.getId());
         QueryWrapper<Permission> permissionQueryWrapper = new QueryWrapper<>();
-        List<Permission> deletePermissions = permissionMapper.selectList(permissionQueryWrapper.eq("permission_belong_submenu_name", deleteMenuSub.getMenuName()));
+        List<Permission> deletePermissions = permissionMapper.selectList(permissionQueryWrapper
+                .eq("permission_belong_submenu_name", deleteMenuSub.getMenuName()));
         deletePermissions.forEach(permission -> managerMapper.deleteManagerPermissionByPermissionId(permission.getId()));
         permissionMapper.delete(permissionQueryWrapper.eq("permission_belong_submenu_name", deleteMenuSub.getMenuName()));
-        menuSubMapper.deleteById(id);
+        menuSubMapper.deleteById(dto.getId());
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String update(MenuSub menuSub) {
+    public String update(MenuSubUpdateDto dto) {
         String warn = "";
-        if (!("/business/" + menuSub.getMenuName()).equals(menuSub.getMenuIndex())) {
-            warn = "菜单路径不正确";
-        } else {
-            MenuSub oldMenuSub = menuSubMapper.selectById(menuSub.getId());
-            if (!menuSub.getMenuName().equals(oldMenuSub.getMenuName())) {
-                warn = "菜单标识确定后无法修改";
-            } else {
-                menuSubMapper.updateById(menuSub);
-            }
-        }
+        MenuSub menuSub = new MenuSub();
+        BeanUtils.copyProperties(dto, menuSub);
+        menuSubMapper.updateById(menuSub);
         return warn;
     }
 
