@@ -8,7 +8,8 @@
              width="40"
              height="40"
              class="rounded" />
-        <span class="ms-3">{{$store.getters['manager/managerName']}}</span>
+        <span class="ms-3"
+              v-show="!sideMenuIsCollapse">{{$store.getters['manager/managerName']}}</span>
         <span :class="sideMenuIsCollapse? 'ms-3' : 'ms-uncollapse-span'"
               class="collapse-span"
               @click="sideMenuIsCollapse = !sideMenuIsCollapse">
