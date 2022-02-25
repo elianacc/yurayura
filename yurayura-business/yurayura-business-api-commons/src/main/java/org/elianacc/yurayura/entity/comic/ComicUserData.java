@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,8 +18,6 @@ import java.time.LocalDateTime;
  * @since 2020-04-03
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("yurayura_comic_user_data")
 @ApiModel(value = "ComicUserData对象", description = "番剧用户数据")
 public class ComicUserData implements Serializable {

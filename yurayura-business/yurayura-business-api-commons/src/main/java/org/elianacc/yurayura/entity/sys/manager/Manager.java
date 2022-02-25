@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,8 +18,6 @@ import java.time.LocalDateTime;
  * @since 2020-12-06
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("yurayura_sys_manager")
 @ApiModel(value = "Manager对象", description = "系统管理员")
 public class Manager implements Serializable {

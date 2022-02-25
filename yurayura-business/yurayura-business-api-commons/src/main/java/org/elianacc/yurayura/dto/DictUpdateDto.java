@@ -3,8 +3,6 @@ package org.elianacc.yurayura.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -15,8 +13,6 @@ import java.io.Serializable;
  * @since 2022-02-21
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @ApiModel(value = "系统数据字典修改dto")
 public class DictUpdateDto implements Serializable {
 

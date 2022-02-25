@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -18,8 +16,6 @@ import java.io.Serializable;
  * @since 2021-03-16
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("yurayura_sys_menu_sub")
 @ApiModel(value = "MenuSub对象", description = "系统子菜单")
 public class MenuSub implements Serializable {

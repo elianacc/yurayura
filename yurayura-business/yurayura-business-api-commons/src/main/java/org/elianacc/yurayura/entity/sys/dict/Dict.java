@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -18,8 +16,6 @@ import java.io.Serializable;
  * @since 2020-04-03
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("yurayura_sys_dict")
 @ApiModel(value = "Dict对象", description = "系统数据字典")
 public class Dict implements Serializable {

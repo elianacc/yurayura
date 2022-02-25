@@ -52,13 +52,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public void updateStatus(UserUpdateStatusDto dto) {
-        User user = new User().setId(dto.getId()).setUserStatus(dto.getUserStatus());
+        User user = new User();
+        user.setId(dto.getId());
+        user.setUserStatus(dto.getUserStatus());
         userMapper.updateById(user);
     }
 
     @Override
     public void updateAvatarDefault(IdDto dto) {
-        User user = new User().setId(dto.getId()).setUserAvatarUrl(defaultUplUserAvatar);
+        User user = new User();
+        user.setId(dto.getId());
+        user.setUserAvatarUrl(defaultUplUserAvatar);
         userMapper.updateById(user);
     }
 

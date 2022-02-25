@@ -1,8 +1,6 @@
 package org.elianacc.yurayura.bo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.elianacc.yurayura.entity.sys.menu.MenuSub;
 
 import java.io.Serializable;
@@ -15,8 +13,6 @@ import java.util.List;
  * @since 2021-03-16
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 public class MenuTreeSelectBo implements Serializable {
 
     private static final long serialVersionUID = 1L;

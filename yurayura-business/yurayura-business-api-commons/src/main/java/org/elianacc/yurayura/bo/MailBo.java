@@ -1,8 +1,6 @@
 package org.elianacc.yurayura.bo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -14,8 +12,6 @@ import java.util.Map;
  * @since 2019-11-25
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 public class MailBo implements Serializable {
 
     private static final long serialVersionUID = 1L;

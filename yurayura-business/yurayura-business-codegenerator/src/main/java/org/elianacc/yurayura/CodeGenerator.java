@@ -127,6 +127,7 @@ public class CodeGenerator {
         strategy.setInclude(generatorTable);
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(generatorTable.contains("_sys_") ? "yurayura_sys_" : "yurayura_");
+        strategy.setChainModel(false);
         mpg.setStrategy(strategy);
 
         mpg.execute();
