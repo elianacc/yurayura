@@ -25,9 +25,9 @@ public class UserSelectDto implements Serializable {
     private String userNameKeyword;
 
     /**
-     * 性别- 1：男，0：女
+     * 性别- 1：男，2：女
      */
-    @ApiModelProperty(value = "性别- 1：男，0：女", example = "1")
+    @ApiModelProperty(value = "性别- 1：男，2：女", example = "1")
     private Integer userSex;
 
     /**
