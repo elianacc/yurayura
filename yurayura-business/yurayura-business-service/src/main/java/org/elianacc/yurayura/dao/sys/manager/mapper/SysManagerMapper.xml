@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.elianacc.yurayura.dao.sys.manager.SysManagerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.elianacc.yurayura.entity.sys.manager.SysManager">
+        <id column="id" property="id"/>
+        <result column="manager_name" property="managerName"/>
+        <result column="manager_password" property="managerPassword"/>
+        <result column="manager_status" property="managerStatus"/>
+        <result column="manager_create_time" property="managerCreateTime"/>
+        <result column="manager_update_time" property="managerUpdateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, manager_name, manager_password, manager_status, manager_create_time, manager_update_time
+    </sql>
+
+    <select id="getCurrentManagerPermission" resultType="java.lang.String">
+        SELECT
+            GROUP_CONCAT(p.permission_code) permissionsStr
+        FROM
+            yurayura_sys_manager_permission mp
+                LEFT JOIN yurayura_sys_permission p ON mp.permission_id = p.id
+        WHERE
+            mp.manager_id = #{managerId}
+          AND p.permission_status = 1
+    </select>
+
+    <insert id="insertBatchManagerPermission">
+        insert into yurayura_sys_manager_permission
+        (manager_id, permission_id) VALUES
+        <foreach collection="permissionIdList" item="permissionId" index="index" separator=",">
+            (#{managerId},#{permissionId})
+        </foreach>
+    </insert>
+
+    <insert id="insertManagerPermissionForAdmin">
+        insert into yurayura_sys_manager_permission
+            (manager_id, permission_id) VALUES (1,#{permissionId})
+    </insert>
+
+    <delete id="deleteManagerPermissionByManagerId">
+        delete from yurayura_sys_manager_permission where manager_id = #{managerId}
+    </delete>
+
+    <delete id="deleteManagerPermissionByPermissionId">
+        delete from yurayura_sys_manager_permission where permission_id = #{permissionId}
+    </delete>
+
+    <select id="getManagerAndPermissionListBySelectDto" resultType="java.util.Map">
+        SELECT
+            mng.id id,
+            mng.manager_name managerName,
+            mng.manager_status managerStatus,
+            DATE_FORMAT(mng.manager_create_time,'%Y-%m-%d %H:%i:%s') managerCreateTime,
+            DATE_FORMAT(mng.manager_update_time,'%Y-%m-%d %H:%i:%s') managerUpdateTime,
+            GROUP_CONCAT(p.id) permissionIdsStr,
+            GROUP_CONCAT(p.permission_name) permissionNamesStr
+        FROM
+            yurayura_sys_manager mng
+                LEFT JOIN yurayura_sys_manager_permission mp ON mng.id = mp.manager_id
+                LEFT JOIN yurayura_sys_permission p ON mp.permission_id = p.id
+        <where>
+            <if test="managerName != null and managerName != ''">
+                and mng.manager_name like CONCAT('%',#{managerName},'%')
+            </if>
+            <if test="managerStatus != null">
+                and mng.manager_status = #{managerStatus}
+            </if>
+        </where>
+        GROUP BY
+            mng.id
+    </select>
+
+</mapper>

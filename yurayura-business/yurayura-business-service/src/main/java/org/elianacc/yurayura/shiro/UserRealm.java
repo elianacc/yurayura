@@ -8,8 +8,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.elianacc.yurayura.dao.sys.manager.ManagerMapper;
-import org.elianacc.yurayura.entity.sys.manager.Manager;
+import org.elianacc.yurayura.dao.sys.manager.SysManagerMapper;
+import org.elianacc.yurayura.entity.sys.manager.SysManager;
 import org.elianacc.yurayura.enumerate.EnableStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -23,7 +23,7 @@ import org.springframework.util.ObjectUtils;
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
-    private ManagerMapper managerMapper;
+    private SysManagerMapper sysManagerMapper;
 
     /**
      * 用户授权
@@ -41,11 +41,11 @@ public class UserRealm extends AuthorizingRealm {
             return null;
         }
 
-        Manager currentManager = (Manager) principalCollection.getPrimaryPrincipal();
+        SysManager currentSysManager = (SysManager) principalCollection.getPrimaryPrincipal();
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-        info.addStringPermission(managerMapper.getCurrentManagerPermission(currentManager.getId()));
+        info.addStringPermission(sysManagerMapper.getCurrentManagerPermission(currentSysManager.getId()));
 
         return info;
     }
@@ -59,16 +59,16 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken userToken = (UsernamePasswordToken) authenticationToken;
-        QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
-        Manager manager = managerMapper.selectOne(queryWrapper
+        QueryWrapper<SysManager> queryWrapper = new QueryWrapper<>();
+        SysManager sysManager = sysManagerMapper.selectOne(queryWrapper
                 .eq("manager_name", userToken.getUsername())
                 .eq("manager_status", EnableStatusEnum.ENABLE.getStatusId()));
         // 判断用户是否存在
-        if (ObjectUtils.isEmpty(manager)) {
+        if (ObjectUtils.isEmpty(sysManager)) {
             return null;
         }
 
         // 密码认证 shiro来处理
-        return new SimpleAuthenticationInfo(manager, manager.getManagerPassword(), getName());
+        return new SimpleAuthenticationInfo(sysManager, sysManager.getManagerPassword(), getName());
     }
 }

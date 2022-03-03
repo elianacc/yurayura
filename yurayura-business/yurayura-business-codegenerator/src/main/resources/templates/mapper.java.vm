@@ -2,6 +2,9 @@ package ${package.Mapper};
 
 import ${package.Entity}.${entity};
 import ${superMapperClassPackage};
+#if(${mapperAnnotation})
+import org.apache.ibatis.annotations.Mapper;
+#end
 
 /**
  * $!{table.comment} mapper interface
@@ -9,6 +12,9 @@ import ${superMapperClassPackage};
  * @author ${author}
  * @since ${date}
  */
+#if(${mapperAnnotation})
+@Mapper
+#end
 #if(${kotlin})
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 #else

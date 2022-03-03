@@ -3,15 +3,12 @@ package ${package.Entity};
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
-#if(${swagger2})
+#if(${swagger})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
 import lombok.Data;
-#if(${superEntityClass})
-import lombok.EqualsAndHashCode;
-#end
 #if(${chainModel})
 import lombok.experimental.Accessors;
 #end
@@ -31,28 +28,27 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 #if(${entityLombokModel})
 @Data
-  #if(${superEntityClass})
-@EqualsAndHashCode(callSuper = true)
-  #end
   #if(${chainModel})
 @Accessors(chain = true)
   #end
 #end
 #if(${table.convert})
-@TableName("${table.name}")
+@TableName("${schemaName}${table.name}")
 #end
-#if(${swagger2})
+#if(${swagger})
 @ApiModel(value = "${entity}对象", description = "$!{table.comment}")
 #end
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
 #elseif(${activeRecord})
 public class ${entity} extends Model<${entity}> {
-#else
+#elseif(${entitySerialVersionUID})
 public class ${entity} implements Serializable {
+#else
+public class ${entity} {
 #end
-
 #if(${entitySerialVersionUID})
+
     private static final long serialVersionUID = 1L;
 #end
 ## ----------  BEGIN 字段循环遍历  ----------
@@ -90,15 +86,15 @@ public class ${entity} implements Serializable {
     @TableField("${field.annotationColumnName}")
 #end
 ## 乐观锁注解
-#if(${versionFieldName}==${field.name})
+#if(${field.versionField})
     @Version
 #end
 ## 逻辑删除注解
-#if(${logicDeleteFieldName}==${field.name})
+#if(${field.logicDeleteField})
     @TableLogic
 #end
 #if("$!field.comment" != "")
-    #if(${swagger2})
+    #if(${swagger})
     @ApiModelProperty(value = "${field.comment}")
     #end
 #end
@@ -141,7 +137,7 @@ public class ${entity} implements Serializable {
 #end
 #if(${activeRecord})
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
   #if(${keyPropertyName})
         return this.${keyPropertyName};
   #else

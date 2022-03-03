@@ -1,6 +1,6 @@
 package ${package.Controller};
 
-#if(${swagger2})
+#if(${swagger})
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 #end
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Service}.${table.serviceName};
-import ${cfg.packageParentPath}.dto.IdDto;
-import ${cfg.packageParentPath}.vo.ApiResult;
+import ${packageParentPath}.dto.IdDto;
+import ${packageParentPath}.vo.ApiResult;
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
@@ -31,7 +31,7 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("/api/#if(${controllerMappingHyphenStyle})#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#else#if(${cfg.isSysModule})sys/${table.entityPath}#else${table.entityPath}#end#end")
+@RequestMapping("/api${sysModulePath}#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
@@ -39,7 +39,7 @@ class ${table.controllerName}#if(${superControllerClass}) : ${superControllerCla
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
-    #if(${swagger2})
+    #if(${swagger})
 @Api(tags = "$!{table.comment}API")
     #end
 public class ${table.controllerName} {
@@ -52,10 +52,10 @@ public class ${table.controllerName} {
      * 查询$!{table.comment}（根据$!{table.comment}id）
      *
      * @param dto
-     * @return ${cfg.packageParentPath}.vo.ApiResult
+     * @return ${packageParentPath}.vo.ApiResult
      */
     @GetMapping("/getById")
-    #if(${swagger2})
+    #if(${swagger})
     @ApiOperation("查询$!{table.comment}（根据$!{table.comment}id）")
     #end
     public ApiResult getById(IdDto dto) {
