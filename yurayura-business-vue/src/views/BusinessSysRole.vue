@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <!-- 操作按钮及数据筛选表单row -->
     <div class="row mt-4 r1">
 
@@ -8,7 +9,7 @@
                 class="btn btn-primary font-size-14 me-2"
                 v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_insert`)"
                 @click="insertDialogOpen">
-          <i class="fa fa-plus-circle me-2"></i>添加按钮权限
+          <i class="fa fa-plus-circle me-2"></i>添加
         </button>
       </div>
 
@@ -20,38 +21,18 @@
                  size="small"
                  class="float-end"
                  @submit.native.prevent="selectContent">
-          <el-form-item label="权限编码"
-                        prop="permissionCode"
+          <el-form-item label="角色名"
+                        prop="roleName"
                         label-width="4.5rem">
-            <el-input v-model.trim="selectForm.permissionCode"
+            <el-input v-model.trim="selectForm.roleName"
                       clearable></el-input>
           </el-form-item>
-          <el-form-item label="权限类型"
-                        prop="permissionType"
-                        label-width="4.5rem">
-            <sys-dict-select v-model="selectForm.permissionType"
-                             dictCode="permissionType">
-            </sys-dict-select>
-          </el-form-item>
           <el-form-item label="状态"
-                        prop="permissionStatus"
+                        prop="roleStatus"
                         label-width="3rem">
-            <sys-dict-select v-model="selectForm.permissionStatus"
+            <sys-dict-select v-model="selectForm.roleStatus"
                              dictCode="enableStatus">
             </sys-dict-select>
-          </el-form-item>
-          <el-form-item label="所属子菜单"
-                        prop="permissionBelongSubmenuName"
-                        label-width="5.5rem">
-            <el-select v-model="selectForm.permissionBelongSubmenuName"
-                       clearable
-                       placeholder="----请选择所属子菜单----">
-              <el-option v-for="item in allMenuSub"
-                         :key="item.id"
-                         :value="item.menuName"
-                         :label="item.menuTitle">
-              </el-option>
-            </el-select>
           </el-form-item>
           <el-form-item>
             <div class="btn-group">
@@ -75,42 +56,34 @@
     <div class="row r2">
       <div class="col-12 c1">
         <el-table :data="pageInfo.list">
-          <el-table-column label="权限编码"
+          <el-table-column label="角色名"
                            width="200"
-                           prop="permissionCode">
+                           prop="roleName">
           </el-table-column>
-          <el-table-column label="权限名称"
+          <el-table-column label="权限"
+                           width="400"
+                           prop="permissionNamesStr">
+          </el-table-column>
+          <el-table-column label="创建时间"
                            width="200"
-                           prop="permissionName">
+                           prop="roleCreateTime">
           </el-table-column>
-          <el-table-column label="所属子菜单"
-                           width="200">
-            <template slot-scope="scope">
-              {{scope.row.permissionBelongSubmenuName | permissionBelongFilter(allMenuSub)}}
-            </template>
-          </el-table-column>
-          <el-table-column label="权限类型"
-                           width="200">
-            <template slot-scope="scope">
-              {{scope.row.permissionType | sysDictFormatFilter('permissionType')}}
-            </template>
+          <el-table-column label="更新时间"
+                           width="200"
+                           prop="roleUpdateTime">
           </el-table-column>
           <el-table-column label="状态"
                            width="200">
             <template slot-scope="scope">
-              {{scope.row.permissionStatus | sysDictFormatFilter('enableStatus')}}
+              {{scope.row.roleStatus | sysDictFormatFilter('enableStatus')}}
             </template>
-          </el-table-column>
-          <el-table-column label="序号"
-                           width="200"
-                           prop="permissionSeq">
           </el-table-column>
           <el-table-column label="操作"
                            width="180">
             <template slot-scope="scope">
               <button type="button"
                       class="btn btn-info btn-twitter font-size-14 text-white shadow"
-                      v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`)"
+                      v-if="$store.getters['manager/managerPermission'].includes(`${$store.getters['menutab/editableTabsValue']}_update`) && scope.row.id !== 1"
                       @click="updateDialogOpen(scope.row.id)">
                 <i class="fa fa-pencil-square-o me-2"></i>修改
               </button>
@@ -137,69 +110,36 @@
                  inline-message
                  label-suffix=":"
                  size="small">
-          <el-form-item label="权限名称"
-                        prop="permissionName"
+          <el-form-item label="角色名"
+                        prop="roleName"
                         label-width="10rem">
-            <el-input v-model.trim="dataDialogForm.permissionName"
+            <el-input v-model.trim="dataDialogForm.roleName"
                       class="w-75"
                       maxlength="20"
                       show-word-limit></el-input>
           </el-form-item>
-          <el-form-item label="所属子菜单"
-                        prop="permissionBelongSubmenuName"
+          <el-form-item label="权限"
                         label-width="10rem">
-            <el-select v-model="dataDialogForm.permissionBelongSubmenuName"
-                       clearable
-                       placeholder="----请选择所属子菜单----"
-                       class="w-50"
-                       :disabled="dataDialogForm.id !== 0">
-              <el-option v-for="item in allMenuSub"
-                         :key="item.id"
-                         :value="item.menuName"
-                         :label="item.menuTitle">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="权限类型"
-                        prop="permissionType"
-                        label-width="10rem"
-                        v-if="dataDialogForm.id !== 0">
-            <sys-dict-radio-group v-model="dataDialogForm.permissionType"
-                                  dictCode="permissionType"
-                                  disabled>
-            </sys-dict-radio-group>
-          </el-form-item>
-          <el-form-item label="权限按钮"
-                        prop="permissionBtnVal"
-                        label-width="10rem"
-                        v-show="dataDialogForm.permBtnGrpShow">
-            <sys-dict-select v-model="dataDialogForm.permissionBtnVal"
-                             dictCode="permissionBtn"
-                             placeholder="----请选择权限按钮----"
-                             customClass="w-50"
-                             :disabled="dataDialogForm.id !== 0">
-            </sys-dict-select>
+            <el-tree :data="permissionAuthorTreeList"
+                     show-checkbox
+                     default-expand-all
+                     node-key="id"
+                     ref="permissionAuthorTree"
+                     highlight-current
+                     :props="permissionAuthorTreeProps">
+            </el-tree>
           </el-form-item>
           <el-form-item label="状态"
-                        prop="permissionStatus"
+                        prop="roleStatus"
                         label-width="10rem">
-            <sys-dict-radio-group v-model="dataDialogForm.permissionStatus"
+            <sys-dict-radio-group v-model="dataDialogForm.roleStatus"
                                   dictCode="enableStatus">
             </sys-dict-radio-group>
-          </el-form-item>
-          <el-form-item label="序号"
-                        prop="permissionSeq"
-                        label-width="10rem">
-            <el-input-number :min="1"
-                             :max="10000"
-                             @blur="dataDialogForm.permissionSeq = dataDialogForm.permissionSeq || 1"
-                             v-model="dataDialogForm.permissionSeq"
-                             class="w-50"></el-input-number>
           </el-form-item>
           <el-form-item label="tip"
                         label-width="10rem"
                         v-if="dataDialogForm.id !== 0">
-            <span class="text-white">权限禁用后，拥有此权限的角色将失去此权限，需要时需启用此权限，重新给角色授权！</span>
+            <span class="text-white">角色禁用后，拥有此角色管理员将失去此角色</span>
           </el-form-item>
         </el-form>
         <div slot="footer"
@@ -219,27 +159,19 @@
 
 <script>
 import BusinessPagination from '@components/BusinessPagination.vue'
-import { getMenuSubAll } from '@api/sysMenu'
-import { getSysPermissionPage, insertSysPermission, updateSysPermission } from '@api/sysPermission'
+import { getSysRolePage, insertSysRole, updateSysRole } from '@api/sysRole'
+import { getSysPermissionAuthorTree } from '@api/sysPermission'
 
 export default {
-  name: 'BusinessSysPermission',
+  name: 'BusinessSysRole',
   components: {
     BusinessPagination
   },
   data () {
-    let checkPermissionBtnVal = (rule, value, callback) => {
-      if (this.dataDialogForm.permissionType === 2 && !value) {
-        return callback(new Error('权限按钮不能为空'))
-      }
-      callback()
-    }
     return {
       selectForm: {
-        permissionCode: '',
-        permissionType: '',
-        permissionStatus: '',
-        permissionBelongSubmenuName: ''
+        roleName: '',
+        roleStatus: ''
       },
       searchContent: {},
       pageInfo: {},
@@ -248,20 +180,17 @@ export default {
       dataDialogVisible: false,
       dataDialogForm: {
         id: 0,
-        permissionName: '',
-        permissionBelongSubmenuName: '',
-        permissionType: 1,
-        permissionBtnVal: '',
-        permissionStatus: 1,
-        permissionSeq: 1,
-        permBtnGrpShow: false
+        roleName: '',
+        roleStatus: 1
       },
       dataDialogFormRule: {
-        permissionName: [{ required: true, message: '权限名称不能为空', trigger: 'blur' }],
-        permissionBelongSubmenuName: [{ required: true, message: '所属子菜单不能为空', trigger: 'blur' }],
-        permissionBtnVal: [{ validator: checkPermissionBtnVal, trigger: 'blur' }]
+        roleName: [{ required: true, message: '角色名不能为空', trigger: 'blur' }]
       },
-      allMenuSub: []
+      permissionAuthorTreeList: [],
+      permissionAuthorTreeProps: {
+        children: 'permissionList',
+        label: 'title'
+      }
     }
   },
   methods: {
@@ -269,7 +198,7 @@ export default {
       let sendData = { ...this.searchContent }
       sendData.pageNum = this.currentPageNum
       sendData.pageSize = 10
-      getSysPermissionPage(sendData, success => {
+      getSysRolePage(sendData, success => {
         this.pageInfo = success.data
       }, () => {
         this.pageInfo = {}
@@ -289,26 +218,31 @@ export default {
       this.getPage()
     },
     insertDialogOpen () {
-      this.dataDialogTitle = '『添加按钮权限窗口』'
+      this.getPermissionAuthorTree()
+      this.dataDialogTitle = '『添加窗口』'
       this.dataDialogVisible = true
-      this.dataDialogForm.permissionType = 2
     },
     updateDialogOpen (id) {
+      this.getPermissionAuthorTree()
       this.dataDialogTitle = '『修改窗口』'
       this.dataDialogOpenAndSetVal(id)
     },
     dataDialogOpenAndSetVal (id) {
-      let currentPerm = this.pageInfo.list.find(perm => perm.id === id)
-      Object.keys(this.dataDialogForm).forEach(key => this.dataDialogForm[key] = currentPerm[key])
-      if (currentPerm.permissionType === 2) {
-        let permCode = currentPerm.permissionCode
-        this.dataDialogForm.permissionBtnVal = permCode.substring(permCode.lastIndexOf('_') + 1, permCode.length)
-      }
+      let currentRole = this.pageInfo.list.find(role => role.id === id)
+      Object.keys(this.dataDialogForm).forEach(key => this.dataDialogForm[key] = currentRole[key])
+      this.$nextTick(() => {
+        if (currentRole.permissionIdsStr) {
+          this.$refs.permissionAuthorTree.setCheckedKeys(currentRole.permissionIdsStr.split(','))
+        }
+      })
       this.dataDialogVisible = true
     },
     submitContent () {
       this.$refs.dataDialogForm.validate(valid => {
         if (valid) {
+          let sendData = { ...this.dataDialogForm }
+          let checkPermIdArr = this.$refs.permissionAuthorTree.getCheckedKeys().filter(permId => permId % 1 === 0)
+          sendData.permissionIdArr = checkPermIdArr
           let successCallback = success => {
             this.$message.success(success.msg)
             if (this.dataDialogForm.id === 0) {
@@ -320,9 +254,9 @@ export default {
           }
           let warnCallback = warn => { this.$message.error(warn.msg) }
           if (this.dataDialogForm.id === 0) {
-            insertSysPermission(this.dataDialogForm, successCallback, warnCallback)
+            insertSysRole(sendData, successCallback, warnCallback)
           } else {
-            updateSysPermission(this.dataDialogForm, successCallback, warnCallback)
+            updateSysRole(sendData, successCallback, warnCallback)
           }
         }
       })
@@ -331,30 +265,20 @@ export default {
       this.getPage()
       this.dataDialogForm = {
         id: 0,
-        permissionName: '',
-        permissionBelongSubmenuName: '',
-        permissionType: 1,
-        permissionBtnVal: '',
-        permissionStatus: 1,
-        permissionSeq: 1,
-        permBtnGrpShow: false
+        roleName: '',
+        roleStatus: 1
       }
       this.$refs.dataDialogForm.clearValidate()
+      this.$refs.permissionAuthorTree.setCheckedKeys([])
     },
-    getAllMenuSub () {
-      getMenuSubAll(success => {
-        this.allMenuSub = success.data
+    getPermissionAuthorTree () {
+      getSysPermissionAuthorTree(success => {
+        this.permissionAuthorTreeList = success.data
       })
-    }
-  },
-  watch: {
-    'dataDialogForm.permissionType' (val) {
-      this.dataDialogForm.permBtnGrpShow = val === 2
     }
   },
   mounted () {
     this.getPage()
-    this.getAllMenuSub()
   }
 }
 </script>
@@ -418,9 +342,18 @@ export default {
 .data-dialog /deep/ .el-radio {
   color: #f8f9fa;
 }
-/* el禁用表单重写 */
-.data-dialog /deep/ .el-radio__input.is-disabled .el-radio__inner,
-.data-dialog /deep/ .el-radio__input.is-disabled.is-checked .el-radio__inner {
-  background-color: #15202b;
+/* el表单树形控件重写 */
+.data-dialog /deep/ .el-tree {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.data-dialog /deep/ .el-tree,
+.data-dialog /deep/ .el-tree-node__content:hover,
+.data-dialog
+  /deep/
+  .el-tree--highlight-current
+  .el-tree-node.is-current
+  > .el-tree-node__content {
+  border-radius: 0.25rem;
 }
 </style>

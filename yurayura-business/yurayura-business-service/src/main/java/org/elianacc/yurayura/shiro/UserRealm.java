@@ -45,7 +45,7 @@ public class UserRealm extends AuthorizingRealm {
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-        info.addStringPermission(sysManagerMapper.getCurrentManagerPermission(currentSysManager.getId()));
+        info.addStringPermission(sysManagerMapper.getCurrentManagerRolePermission(currentSysManager.getId()));
 
         return info;
     }

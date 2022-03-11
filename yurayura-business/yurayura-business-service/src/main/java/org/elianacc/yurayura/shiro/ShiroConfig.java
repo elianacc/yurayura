@@ -70,6 +70,11 @@ public class ShiroConfig {
         fillterMap.put("/api/sys/manager/insert*", "perms[sys_manager_insert]");
         fillterMap.put("/api/sys/manager/update*", "perms[sys_manager_update]");
 
+        fillterMap.put("/api/sys/role/getAll", "authc");
+        fillterMap.put("/api/sys/role/get*", "perms[sys_role_select]");
+        fillterMap.put("/api/sys/role/insert*", "perms[sys_role_insert]");
+        fillterMap.put("/api/sys/role/update*", "perms[sys_role_update]");
+
         fillterMap.put("/api/sys/permission/getPermissionAuthorTree", "authc");
         fillterMap.put("/api/sys/permission/get*", "perms[sys_permission_select]");
         fillterMap.put("/api/sys/permission/insert*", "perms[sys_permission_insert]");

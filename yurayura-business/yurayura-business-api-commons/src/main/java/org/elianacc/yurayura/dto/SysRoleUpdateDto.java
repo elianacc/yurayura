@@ -8,14 +8,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 系统管理员修改 dto
+ * 系统角色修改 dto
  *
  * @author ELiaNaCc
- * @since 2022-02-22
+ * @since 2022-03-09
  */
 @Data
-@ApiModel(value = "系统管理员修改dto")
-public class SysManagerUpdateDto implements Serializable {
+@ApiModel(value = "系统角色修改dto")
+public class SysRoleUpdateDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,21 +26,21 @@ public class SysManagerUpdateDto implements Serializable {
     private Integer id;
 
     /**
-     * 管理员密码
+     * 角色名
      */
-    @ApiModelProperty(value = "管理员密码")
-    private String managerPassword;
+    @ApiModelProperty(value = "角色名", required = true)
+    private String roleName;
 
     /**
      * 状态- 0：禁用，1：启用
      */
     @ApiModelProperty(value = "状态- 0：禁用，1：启用", required = true, example = "1")
-    private Integer managerStatus;
+    private Integer roleStatus;
 
     /**
-     * 拥有角色id组
+     * 拥有权限id组
      */
-    @ApiModelProperty(value = "拥有角色id组")
-    private List<Integer> roleIdArr;
+    @ApiModelProperty(value = "拥有权限id组")
+    private List<Integer> permissionIdArr;
 
 }

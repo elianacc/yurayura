@@ -38,9 +38,9 @@ public class SysManagerInsertDto implements Serializable {
     private Integer managerStatus;
 
     /**
-     * 拥有权限id组
+     * 拥有角色id组
      */
-    @ApiModelProperty(value = "拥有权限id组")
-    private List<Integer> permissionIdArr;
+    @ApiModelProperty(value = "拥有角色id组")
+    private List<Integer> roleIdArr;
 
 }

@@ -148,7 +148,7 @@ public class SysMenuSubController {
      */
     @GetMapping("/getAll")
     @ApiOperation("查询所有系统子菜单")
-    public ApiResult getAllMenuName() {
+    public ApiResult getAll() {
         return ApiResult.success("查询成功", iSysMenuSubService.getAll());
     }
 }

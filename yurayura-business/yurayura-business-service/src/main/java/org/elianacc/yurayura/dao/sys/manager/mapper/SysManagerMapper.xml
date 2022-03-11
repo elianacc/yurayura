@@ -17,51 +17,49 @@
         id, manager_name, manager_password, manager_status, manager_create_time, manager_update_time
     </sql>
 
-    <select id="getCurrentManagerPermission" resultType="java.lang.String">
+    <select id="getCurrentManagerRolePermission" resultType="java.lang.String">
         SELECT
-            GROUP_CONCAT(p.permission_code) permissionsStr
+            GROUP_CONCAT(DISTINCT p.permission_code) permissionsStr
         FROM
-            yurayura_sys_manager_permission mp
-                LEFT JOIN yurayura_sys_permission p ON mp.permission_id = p.id
+            yurayura_sys_manager_role mr
+                LEFT JOIN yurayura_sys_role_permission rp ON mr.role_id = rp.role_id
+                LEFT JOIN yurayura_sys_role r ON mr.role_id = r.id
+                LEFT JOIN yurayura_sys_permission p ON rp.permission_id = p.id
         WHERE
-            mp.manager_id = #{managerId}
+            mr.manager_id = #{managerId}
+          AND r.role_status = 1
           AND p.permission_status = 1
     </select>
 
-    <insert id="insertBatchManagerPermission">
-        insert into yurayura_sys_manager_permission
-        (manager_id, permission_id) VALUES
-        <foreach collection="permissionIdList" item="permissionId" index="index" separator=",">
-            (#{managerId},#{permissionId})
+    <insert id="insertBatchManagerRole">
+        insert into yurayura_sys_manager_role
+        (manager_id, role_id) VALUES
+        <foreach collection="roleIdList" item="roleId" index="index" separator=",">
+            (#{managerId},#{roleId})
         </foreach>
     </insert>
 
-    <insert id="insertManagerPermissionForAdmin">
-        insert into yurayura_sys_manager_permission
-            (manager_id, permission_id) VALUES (1,#{permissionId})
-    </insert>
-
-    <delete id="deleteManagerPermissionByManagerId">
-        delete from yurayura_sys_manager_permission where manager_id = #{managerId}
+    <delete id="deleteManagerRoleByManagerId">
+        delete from yurayura_sys_manager_role where manager_id = #{managerId}
     </delete>
 
-    <delete id="deleteManagerPermissionByPermissionId">
-        delete from yurayura_sys_manager_permission where permission_id = #{permissionId}
+    <delete id="deleteManagerRoleByRoleId">
+        delete from yurayura_sys_manager_role where role_id = #{roleId}
     </delete>
 
-    <select id="getManagerAndPermissionListBySelectDto" resultType="java.util.Map">
+    <select id="getManagerAndRoleListBySelectDto" resultType="java.util.Map">
         SELECT
             mng.id id,
             mng.manager_name managerName,
             mng.manager_status managerStatus,
             DATE_FORMAT(mng.manager_create_time,'%Y-%m-%d %H:%i:%s') managerCreateTime,
             DATE_FORMAT(mng.manager_update_time,'%Y-%m-%d %H:%i:%s') managerUpdateTime,
-            GROUP_CONCAT(p.id) permissionIdsStr,
-            GROUP_CONCAT(p.permission_name) permissionNamesStr
+            GROUP_CONCAT(r.id) roleIdsStr,
+            GROUP_CONCAT(r.role_name) roleNamesStr
         FROM
             yurayura_sys_manager mng
-                LEFT JOIN yurayura_sys_manager_permission mp ON mng.id = mp.manager_id
-                LEFT JOIN yurayura_sys_permission p ON mp.permission_id = p.id
+                LEFT JOIN yurayura_sys_manager_role mr ON mng.id = mr.manager_id
+                LEFT JOIN yurayura_sys_role r ON mr.role_id = r.id
         <where>
             <if test="managerName != null and managerName != ''">
                 and mng.manager_name like CONCAT('%',#{managerName},'%')

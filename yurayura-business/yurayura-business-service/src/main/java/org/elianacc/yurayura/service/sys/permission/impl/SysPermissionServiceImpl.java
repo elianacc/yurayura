@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.elianacc.yurayura.bo.SysPermissionAuthorTreeSelectBo;
-import org.elianacc.yurayura.dao.sys.manager.SysManagerMapper;
 import org.elianacc.yurayura.dao.sys.permission.SysPermissionMapper;
+import org.elianacc.yurayura.dao.sys.role.SysRoleMapper;
 import org.elianacc.yurayura.dto.SysPermissionInsertDto;
 import org.elianacc.yurayura.dto.SysPermissionSelectDto;
 import org.elianacc.yurayura.dto.SysPermissionUpdateDto;
@@ -33,7 +33,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
     @Autowired
-    private SysManagerMapper sysManagerMapper;
+    private SysRoleMapper sysRoleMapper;
 
 
     @Override
@@ -70,7 +70,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         } else {
             sysPermissionMapper.insert(sysPermission);
             if (sysPermission.getPermissionStatus() == EnableStatusEnum.ENABLE.getStatusId().intValue()) {
-                sysManagerMapper.insertManagerPermissionForAdmin(sysPermission.getId());
+                sysRoleMapper.insertRolePermissionForAdmin(sysPermission.getId());
             }
         }
         return warn;
@@ -84,12 +84,12 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         SysPermission sysPermission = new SysPermission();
         BeanUtils.copyProperties(dto, sysPermission);
         if (sysPermission.getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()) {
-            sysManagerMapper.deleteManagerPermissionByPermissionId(sysPermission.getId());
+            sysRoleMapper.deleteRolePermissionByPermissionId(sysPermission.getId());
         }
         sysPermissionMapper.updateById(sysPermission);
         if (oldPerm.getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()
                 && sysPermission.getPermissionStatus() == EnableStatusEnum.ENABLE.getStatusId().intValue()) {
-            sysManagerMapper.insertManagerPermissionForAdmin(sysPermission.getId());
+            sysRoleMapper.insertRolePermissionForAdmin(sysPermission.getId());
         }
         return warn;
     }

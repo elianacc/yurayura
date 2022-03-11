@@ -12,7 +12,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.elianacc.yurayura.dao.sys.manager.SysManagerMapper;
-import org.elianacc.yurayura.dao.sys.permission.SysPermissionMapper;
+import org.elianacc.yurayura.dao.sys.role.SysRoleMapper;
 import org.elianacc.yurayura.dto.*;
 import org.elianacc.yurayura.entity.sys.manager.SysManager;
 import org.elianacc.yurayura.enumerate.EnableStatusEnum;
@@ -44,13 +44,13 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
     @Autowired
     private SysManagerMapper sysManagerMapper;
     @Autowired
-    private SysPermissionMapper sysPermissionMapper;
+    private SysRoleMapper sysRoleMapper;
 
     @Override
     public PageInfo<Map<String, Object>> getPage(SysManagerSelectDto dto) {
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<Map<String, Object>> managerAndPermissionList = sysManagerMapper.getManagerAndPermissionListBySelectDto(dto);
+        List<Map<String, Object>> managerAndPermissionList = sysManagerMapper.getManagerAndRoleListBySelectDto(dto);
         return new PageInfo<>(managerAndPermissionList, 5);
     }
 
@@ -67,12 +67,12 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
             sysManager.setManagerCreateTime(LocalDateTime.now());
             sysManager.setManagerUpdateTime(null);
             sysManagerMapper.insert(sysManager);
-            if (!dto.getPermissionIdArr().isEmpty()) {
-                List<Integer> permissionIdExistList = dto.getPermissionIdArr().stream()
-                        .filter(permissionId -> !(sysPermissionMapper.selectById(permissionId).getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
+            if (!dto.getRoleIdArr().isEmpty()) {
+                List<Integer> roleIdExistList = dto.getRoleIdArr().stream()
+                        .filter(roleId -> !(sysRoleMapper.selectById(roleId).getRoleStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
                         .collect(Collectors.toList());
-                if (!permissionIdExistList.isEmpty()) {
-                    sysManagerMapper.insertBatchManagerPermission(permissionIdExistList, sysManager.getId());
+                if (!roleIdExistList.isEmpty()) {
+                    sysManagerMapper.insertBatchManagerRole(roleIdExistList, sysManager.getId());
                 }
             }
         } else {
@@ -106,13 +106,13 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
         }
         sysManager.setManagerUpdateTime(LocalDateTime.now());
         sysManagerMapper.updateById(sysManager);
-        sysManagerMapper.deleteManagerPermissionByManagerId(sysManager.getId());
-        if (!dto.getPermissionIdArr().isEmpty()) {
-            List<Integer> permissionIdExistList = dto.getPermissionIdArr().stream()
-                    .filter(permissionId -> !(sysPermissionMapper.selectById(permissionId).getPermissionStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
+        sysManagerMapper.deleteManagerRoleByManagerId(sysManager.getId());
+        if (!dto.getRoleIdArr().isEmpty()) {
+            List<Integer> roleIdExistList = dto.getRoleIdArr().stream()
+                    .filter(roleId -> !(sysRoleMapper.selectById(roleId).getRoleStatus() == EnableStatusEnum.DISABLE.getStatusId().intValue()))
                     .collect(Collectors.toList());
-            if (!permissionIdExistList.isEmpty()) {
-                sysManagerMapper.insertBatchManagerPermission(permissionIdExistList, sysManager.getId());
+            if (!roleIdExistList.isEmpty()) {
+                sysManagerMapper.insertBatchManagerRole(roleIdExistList, sysManager.getId());
             }
         }
         return warn;
@@ -155,7 +155,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
         SysManager currentSysManager = (SysManager) SecurityUtils.getSubject().getPrincipal();
         Map<String, Object> currentManagerMsg = new HashMap<>();
         currentManagerMsg.put("managerName", currentSysManager.getManagerName());
-        currentManagerMsg.put("managerPermission", sysManagerMapper.getCurrentManagerPermission(currentSysManager.getId()));
+        currentManagerMsg.put("managerPermission", sysManagerMapper.getCurrentManagerRolePermission(currentSysManager.getId()));
         return currentManagerMsg;
     }
 }

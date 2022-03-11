@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.elianacc.yurayura.dao.sys.role.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.elianacc.yurayura.entity.sys.role.SysRole">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_status" property="roleStatus"/>
+        <result column="role_create_time" property="roleCreateTime"/>
+        <result column="role_update_time" property="roleUpdateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_name, role_status, role_create_time, role_update_time
+    </sql>
+
+    <select id="getRoleAndPermissionListBySelectDto" resultType="java.util.Map">
+        SELECT
+            r.id id,
+            r.role_name roleName,
+            r.role_status roleStatus,
+            DATE_FORMAT(r.role_create_time, '%Y-%m-%d %H:%i:%s') roleCreateTime,
+            DATE_FORMAT(r.role_update_time, '%Y-%m-%d %H:%i:%s') roleUpdateTime,
+            GROUP_CONCAT(p.id) permissionIdsStr,
+            GROUP_CONCAT(p.permission_name) permissionNamesStr
+        FROM
+            yurayura_sys_role r
+                LEFT JOIN yurayura_sys_role_permission rp ON r.id = rp.role_id
+                LEFT JOIN yurayura_sys_permission p ON rp.permission_id = p.id
+        <where>
+            <if test="roleName != null and roleName != ''">
+                and r.role_name like CONCAT('%',#{roleName},'%')
+            </if>
+            <if test="roleStatus != null">
+                and r.role_status = #{roleStatus}
+            </if>
+        </where>
+        GROUP BY
+            r.id
+    </select>
+
+    <delete id="deleteRolePermissionByPermissionId">
+        delete from yurayura_sys_role_permission where permission_id = #{permissionId}
+    </delete>
+
+    <delete id="deleteRolePermissionByRoleId">
+        delete from yurayura_sys_role_permission where role_id = #{roleId}
+    </delete>
+
+    <insert id="insertRolePermissionForAdmin">
+        insert into yurayura_sys_role_permission
+            (role_id, permission_id) VALUES (1,#{permissionId})
+    </insert>
+
+    <insert id="insertBatchRolePermission">
+        insert into yurayura_sys_role_permission
+        (role_id, permission_id) VALUES
+        <foreach collection="permissionIdList" item="permId" index="index" separator=",">
+            (#{roleId},#{permId})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.elianacc.yurayura.bo.SysMenuTreeSelectBo;
-import org.elianacc.yurayura.dao.sys.manager.SysManagerMapper;
 import org.elianacc.yurayura.dao.sys.menu.SysMenuMapper;
 import org.elianacc.yurayura.dao.sys.menu.SysMenuSubMapper;
 import org.elianacc.yurayura.dao.sys.permission.SysPermissionMapper;
+import org.elianacc.yurayura.dao.sys.role.SysRoleMapper;
 import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.dto.SysMenuInsertDto;
 import org.elianacc.yurayura.dto.SysMenuUpdateDto;
@@ -40,7 +40,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
     @Autowired
-    private SysManagerMapper sysManagerMapper;
+    private SysRoleMapper sysRoleMapper;
 
     @Override
     public List<SysMenuTreeSelectBo> getTreeListForCurrentManager() {
@@ -79,7 +79,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             QueryWrapper<SysPermission> permissionQueryWrapper = new QueryWrapper<>();
             List<SysPermission> deleteSysPermissions = sysPermissionMapper.selectList(permissionQueryWrapper
                     .eq("permission_belong_submenu_name", menuSub.getMenuName()));
-            deleteSysPermissions.forEach(permission -> sysManagerMapper.deleteManagerPermissionByPermissionId(permission.getId()));
+            deleteSysPermissions.forEach(permission -> sysRoleMapper.deleteRolePermissionByPermissionId(permission.getId()));
             sysPermissionMapper.delete(permissionQueryWrapper.eq("permission_belong_submenu_name", menuSub.getMenuName()));
         });
         sysMenuSubMapper.delete(queryWrapper.eq("menu_pid", dto.getId()));

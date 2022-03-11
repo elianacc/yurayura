@@ -60,9 +60,9 @@
                            width="200"
                            prop="managerName">
           </el-table-column>
-          <el-table-column label="权限"
+          <el-table-column label="角色"
                            width="400"
-                           prop="permissionNamesStr">
+                           prop="roleNamesStr">
           </el-table-column>
           <el-table-column label="创建时间"
                            width="200"
@@ -128,16 +128,14 @@
                       :placeholder="dataDialogForm.id !== 0? '修改密码为空则使用此管理员旧密码': ''">
             </el-input>
           </el-form-item>
-          <el-form-item label="权限"
-                        label-width="10rem">
-            <el-tree :data="permissionAuthorTreeList"
-                     show-checkbox
-                     default-expand-all
-                     node-key="id"
-                     ref="permissionAuthorTree"
-                     highlight-current
-                     :props="permissionAuthorTreeProps">
-            </el-tree>
+          <el-form-item label="角色"
+                        label-width="10rem"
+                        prop="roleIdArr">
+            <el-checkbox-group v-model="dataDialogForm.roleIdArr">
+              <el-checkbox v-for="item in allRole"
+                           :key="item.id"
+                           :label="item.id">{{item.roleName}}</el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
           <el-form-item label="状态"
                         prop="managerStatus"
@@ -166,7 +164,7 @@
 import BusinessPagination from '@components/BusinessPagination.vue'
 import { Base64 } from 'js-base64'
 import { getSysManagerPage, insertSysManager, updateSysManager } from '@api/sysManager'
-import { getSysPermissionAuthorTree } from '@api/sysPermission'
+import { getRoleAll } from '@api/sysRole'
 
 export default {
   name: 'BusinessSysManager',
@@ -194,17 +192,14 @@ export default {
         id: 0,
         managerName: '',
         managerPassword: '',
+        roleIdArr: [],
         managerStatus: 1
       },
       dataDialogFormRule: {
         managerName: [{ required: true, message: '管理员名不能为空', trigger: 'blur' }],
         managerPassword: [{ validator: checkPassword, trigger: 'blur' }]
       },
-      permissionAuthorTreeList: [],
-      permissionAuthorTreeProps: {
-        children: 'permissionList',
-        label: 'title'
-      }
+      allRole: []
     }
   },
   methods: {
@@ -232,23 +227,17 @@ export default {
       this.getPage()
     },
     insertDialogOpen () {
-      this.getPermissionAuthorTree()
       this.dataDialogTitle = '『添加窗口』'
       this.dataDialogVisible = true
     },
     updateDialogOpen (id) {
-      this.getPermissionAuthorTree()
       this.dataDialogTitle = '『修改窗口』'
       this.dataDialogOpenAndSetVal(id)
     },
     dataDialogOpenAndSetVal (id) {
       let currentManager = this.pageInfo.list.find(manager => manager.id === id)
       Object.keys(this.dataDialogForm).forEach(key => this.dataDialogForm[key] = currentManager[key])
-      this.$nextTick(() => {
-        if (currentManager.permissionIdsStr) {
-          this.$refs.permissionAuthorTree.setCheckedKeys(currentManager.permissionIdsStr.split(','))
-        }
-      })
+      this.dataDialogForm.roleIdArr = currentManager.roleIdsStr.split(',').map(Number)
       this.dataDialogVisible = true
     },
     submitContent () {
@@ -258,8 +247,6 @@ export default {
           if (sendData.managerPassword) {
             sendData.managerPassword = Base64.encode(sendData.managerPassword)
           }
-          let checkPermIdArr = this.$refs.permissionAuthorTree.getCheckedKeys().filter(permId => permId % 1 === 0)
-          sendData.permissionIdArr = checkPermIdArr
           let successCallback = success => {
             this.$message.success(success.msg)
             if (this.dataDialogForm.id === 0) {
@@ -284,19 +271,20 @@ export default {
         id: 0,
         managerName: '',
         managerPassword: '',
+        roleIdArr: [],
         managerStatus: 1
       }
       this.$refs.dataDialogForm.clearValidate()
-      this.$refs.permissionAuthorTree.setCheckedKeys([])
     },
-    getPermissionAuthorTree () {
-      getSysPermissionAuthorTree(success => {
-        this.permissionAuthorTreeList = success.data
+    getAllRole () {
+      getRoleAll(success => {
+        this.allRole = success.data
       })
     }
   },
   mounted () {
     this.getPage()
+    this.getAllRole()
   }
 }
 </script>
@@ -360,18 +348,8 @@ export default {
 .data-dialog /deep/ .el-radio {
   color: #f8f9fa;
 }
-/* el表单树形控件重写 */
-.data-dialog /deep/ .el-tree {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.data-dialog /deep/ .el-tree,
-.data-dialog /deep/ .el-tree-node__content:hover,
-.data-dialog
-  /deep/
-  .el-tree--highlight-current
-  .el-tree-node.is-current
-  > .el-tree-node__content {
-  border-radius: 0.25rem;
+/* el表单多选重写 */
+.data-dialog /deep/ .el-checkbox {
+  color: #f8f9fa;
 }
 </style>

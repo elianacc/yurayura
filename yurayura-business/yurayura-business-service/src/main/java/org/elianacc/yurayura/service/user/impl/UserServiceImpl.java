@@ -13,6 +13,7 @@ import org.elianacc.yurayura.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return new PageInfo<>(userList, 5);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateStatus(UserUpdateStatusDto dto) {
         User user = new User();
@@ -58,6 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userMapper.updateById(user);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateAvatarDefault(IdDto dto) {
         User user = new User();

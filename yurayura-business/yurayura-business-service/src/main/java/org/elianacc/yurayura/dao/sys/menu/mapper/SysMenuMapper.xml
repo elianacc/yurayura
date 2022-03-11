@@ -119,12 +119,15 @@
             ms.menu_seq submenu_seq,
             ms.menu_status submenu_status
         FROM
-            yurayura_sys_manager_permission mp
-                LEFT JOIN yurayura_sys_permission p ON mp.permission_id = p.id
+            yurayura_sys_manager_role mr
+                LEFT JOIN yurayura_sys_role_permission rp ON mr.role_id = rp.role_id
+                LEFT JOIN yurayura_sys_role r ON mr.role_id = r.id
+                LEFT JOIN yurayura_sys_permission p ON rp.permission_id = p.id
                 LEFT JOIN yurayura_sys_menu_sub ms ON ms.menu_name = p.permission_belong_submenu_name
                 LEFT JOIN yurayura_sys_menu m ON m.id = ms.menu_pid
         WHERE
-            mp.manager_id = #{managerId}
+            mr.manager_id = #{managerId}
+          AND r.role_status = 1
           AND p.permission_type = 1
           AND p.permission_status = 1
           AND ms.menu_status = 1

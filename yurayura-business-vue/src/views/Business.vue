@@ -409,8 +409,8 @@ nav .ms-uncollapse-span {
   background-image: url("~@assets/miku-sidemenu.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: 0px 580px;
-  background-size: 210px 350px;
+  background-position: 0px 630px;
+  background-size: 210px 300px;
 }
 
 /* el侧边导航折叠时隐藏文字 */

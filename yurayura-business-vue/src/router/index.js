@@ -7,6 +7,7 @@ import BusinessIndex from '@views/BusinessIndex.vue'
 import BusinessSysMenu from '@views/BusinessSysMenu.vue'
 import BusinessSysDict from '@views/BusinessSysDict.vue'
 import BusinessSysManager from '@views/BusinessSysManager.vue'
+import BusinessSysRole from '@views/BusinessSysRole.vue'
 import BusinessSysPermission from '@views/BusinessSysPermission.vue'
 import BusinessComicInfo from '@views/BusinessComicInfo.vue'
 import BusinessUserInfo from '@views/BusinessUserInfo.vue'
@@ -54,6 +55,11 @@ const router = new Router({
           path: 'sys_manager',
           name: 'BusinessSysManager',
           component: BusinessSysManager
+        },
+        {
+          path: 'sys_role',
+          name: 'BusinessSysRole',
+          component: BusinessSysRole
         },
         {
           path: 'sys_permission',

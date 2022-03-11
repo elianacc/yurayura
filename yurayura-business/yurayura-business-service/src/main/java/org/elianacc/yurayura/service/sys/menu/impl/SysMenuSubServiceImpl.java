@@ -2,10 +2,10 @@ package org.elianacc.yurayura.service.sys.menu.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.elianacc.yurayura.dao.sys.manager.SysManagerMapper;
 import org.elianacc.yurayura.dao.sys.menu.SysMenuMapper;
 import org.elianacc.yurayura.dao.sys.menu.SysMenuSubMapper;
 import org.elianacc.yurayura.dao.sys.permission.SysPermissionMapper;
+import org.elianacc.yurayura.dao.sys.role.SysRoleMapper;
 import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.dto.SysMenuSubInsertDto;
 import org.elianacc.yurayura.dto.SysMenuSubUpdateDto;
@@ -38,7 +38,7 @@ public class SysMenuSubServiceImpl extends ServiceImpl<SysMenuSubMapper, SysMenu
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
     @Autowired
-    private SysManagerMapper sysManagerMapper;
+    private SysRoleMapper sysRoleMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -63,7 +63,7 @@ public class SysMenuSubServiceImpl extends ServiceImpl<SysMenuSubMapper, SysMenu
                 sysPermission.setPermissionBelongSubmenuName(sysMenuSub.getMenuName());
                 sysPermission.setPermissionSeq(1);
                 sysPermissionMapper.insert(sysPermission);
-                sysManagerMapper.insertManagerPermissionForAdmin(sysPermission.getId());
+                sysRoleMapper.insertRolePermissionForAdmin(sysPermission.getId());
             }
         }
         return warn;
@@ -76,7 +76,7 @@ public class SysMenuSubServiceImpl extends ServiceImpl<SysMenuSubMapper, SysMenu
         QueryWrapper<SysPermission> permissionQueryWrapper = new QueryWrapper<>();
         List<SysPermission> deleteSysPermissions = sysPermissionMapper.selectList(permissionQueryWrapper
                 .eq("permission_belong_submenu_name", deleteSysMenuSub.getMenuName()));
-        deleteSysPermissions.forEach(permission -> sysManagerMapper.deleteManagerPermissionByPermissionId(permission.getId()));
+        deleteSysPermissions.forEach(permission -> sysRoleMapper.deleteRolePermissionByPermissionId(permission.getId()));
         sysPermissionMapper.delete(permissionQueryWrapper.eq("permission_belong_submenu_name", deleteSysMenuSub.getMenuName()));
         sysMenuSubMapper.deleteById(dto.getId());
     }

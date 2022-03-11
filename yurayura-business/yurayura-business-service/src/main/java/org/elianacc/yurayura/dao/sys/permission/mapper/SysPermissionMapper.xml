@@ -41,10 +41,13 @@
                 SELECT
                     1000 + RAND() * (10000 - 1000) id,
                     ms.menu_title,
-                    p.permission_belong_submenu_name
+                    p.permission_belong_submenu_name,
+                    m.menu_seq,
+                    ms.menu_seq msmenu_seq
                 FROM
                     yurayura_sys_permission p
                         LEFT JOIN yurayura_sys_menu_sub ms ON p.permission_belong_submenu_name = ms.menu_name
+                        LEFT JOIN yurayura_sys_menu m ON ms.menu_pid = m.id
                 GROUP BY
                     p.permission_belong_submenu_name
             ) m
@@ -52,7 +55,8 @@
         WHERE
             p.permission_status = 1
         ORDER BY
-            m.permission_belong_submenu_name,
+            m.menu_seq,
+            m.msmenu_seq,
             p.permission_seq
     </select>
 

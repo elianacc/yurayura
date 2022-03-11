@@ -8,7 +8,7 @@ import SysDictSelect from '@components/SysDictSelect.vue'
 import SysDictRadioGroup from '@components/SysDictRadioGroup.vue'
 import {
   Col, Button,
-  Form, FormItem, Input, InputNumber, Select, Option, DatePicker, RadioGroup, Radio, CheckboxGroup, CheckboxButton, Upload,
+  Form, FormItem, Input, InputNumber, Select, Option, DatePicker, RadioGroup, Radio, Checkbox, CheckboxGroup, CheckboxButton, Upload,
   Table, TableColumn, Pagination, Tag, Tree,
   Menu, MenuItem, Submenu, Tabs, TabPane,
   Dialog, Scrollbar, Backtop,
@@ -37,6 +37,7 @@ Vue.use(Option)
 Vue.use(DatePicker)
 Vue.use(RadioGroup)
 Vue.use(Radio)
+Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 Vue.use(CheckboxButton)
 Vue.use(Upload)
