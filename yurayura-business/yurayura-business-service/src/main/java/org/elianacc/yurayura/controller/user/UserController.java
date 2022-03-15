@@ -9,7 +9,6 @@ import org.elianacc.yurayura.dto.UserSelectDto;
 import org.elianacc.yurayura.dto.UserUpdateStatusDto;
 import org.elianacc.yurayura.entity.user.User;
 import org.elianacc.yurayura.service.user.IUserService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -71,7 +70,6 @@ public class UserController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/updateStatus")
     @ApiOperation("修改状态（根据用户id）")
     public ApiResult updateStatus(@RequestBody UserUpdateStatusDto dto) {

@@ -1,5 +1,6 @@
 package org.elianacc.yurayura.service.sys.menu.impl;
 
+import com.baomidou.lock.annotation.Lock4j;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
@@ -54,6 +55,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.menuName"}, autoRelease = false)
     @Override
     public String insert(SysMenuInsertDto dto) {
         String warn = "";
@@ -86,6 +88,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
     @Override
     public String update(SysMenuUpdateDto dto) {
         String warn = "";

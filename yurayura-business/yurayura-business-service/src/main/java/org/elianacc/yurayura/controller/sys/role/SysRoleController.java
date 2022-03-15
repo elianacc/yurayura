@@ -8,7 +8,6 @@ import org.elianacc.yurayura.dto.SysRoleInsertDto;
 import org.elianacc.yurayura.dto.SysRoleSelectDto;
 import org.elianacc.yurayura.dto.SysRoleUpdateDto;
 import org.elianacc.yurayura.service.sys.role.ISysRoleService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -72,7 +71,6 @@ public class SysRoleController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统角色")
     public ApiResult insert(@RequestBody SysRoleInsertDto dto) {
@@ -96,7 +94,6 @@ public class SysRoleController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统角色")
     public ApiResult update(@RequestBody SysRoleUpdateDto dto) {

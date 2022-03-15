@@ -1,5 +1,6 @@
 package org.elianacc.yurayura.service.sys.manager.impl;
 
+import com.baomidou.lock.annotation.Lock4j;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -55,6 +56,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.managerName"}, autoRelease = false)
     @Override
     public String insert(SysManagerInsertDto dto) {
         String warn = "";
@@ -88,6 +90,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
     @Override
     public String update(SysManagerUpdateDto dto) {
         String warn = "";
@@ -118,6 +121,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
         return warn;
     }
 
+    @Lock4j(keys = {"#dto.managerName"}, autoRelease = false)
     @SneakyThrows
     @Override
     public String login(SysManagerLoginDto dto, HttpSession httpSession) {

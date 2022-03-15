@@ -51,6 +51,13 @@ spring:
         min-idle: 0
     timeout: 50000
 
+# lock4j配置
+lock4j:
+  acquire-timeout: 3000
+  expire: 10000
+  primary-executor: com.baomidou.lock.executor.RedisTemplateLockExecutor
+  lock-key-prefix: lock4j
+
 # knife4j配置
 knife4j:
   # 开启增强配置

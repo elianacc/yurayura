@@ -8,7 +8,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.elianacc.yurayura.dto.*;
 import org.elianacc.yurayura.service.sys.manager.ISysManagerService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.system.util.VerifyCodeUtil;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +79,6 @@ public class SysManagerController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统管理员")
     public ApiResult insert(@RequestBody SysManagerInsertDto dto) {
@@ -106,7 +104,6 @@ public class SysManagerController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统管理员")
     public ApiResult update(@RequestBody SysManagerUpdateDto dto) {
@@ -153,7 +150,6 @@ public class SysManagerController {
      * @param session
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/login")
     @ApiOperation("系统管理员登入")
     public ApiResult login(@RequestBody SysManagerLoginDto dto, @ApiIgnore HttpSession session) {

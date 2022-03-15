@@ -10,7 +10,6 @@ import org.elianacc.yurayura.dto.SysPermissionUpdateDto;
 import org.elianacc.yurayura.entity.sys.permission.SysPermission;
 import org.elianacc.yurayura.enumerate.SysPermissionTypeEnum;
 import org.elianacc.yurayura.service.sys.permission.ISysPermissionService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -72,7 +71,6 @@ public class SysPermissionController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统权限")
     public ApiResult insert(@RequestBody SysPermissionInsertDto dto) {
@@ -104,7 +102,6 @@ public class SysPermissionController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统权限")
     public ApiResult update(@RequestBody SysPermissionUpdateDto dto) {

@@ -1,5 +1,6 @@
 package org.elianacc.yurayura.service.user.impl;
 
+import com.baomidou.lock.annotation.Lock4j;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -52,6 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
     @Override
     public void updateStatus(UserUpdateStatusDto dto) {
         User user = new User();

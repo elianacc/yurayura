@@ -1,5 +1,6 @@
 package org.elianacc.yurayura.service.sys.permission.impl;
 
+import com.baomidou.lock.annotation.Lock4j;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -52,6 +53,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.permissionType", "#dto.permissionBelongSubmenuName"}, autoRelease = false)
     @Override
     public String insert(SysPermissionInsertDto dto) {
         String warn = "";
@@ -77,6 +79,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
     @Override
     public String update(SysPermissionUpdateDto dto) {
         String warn = "";

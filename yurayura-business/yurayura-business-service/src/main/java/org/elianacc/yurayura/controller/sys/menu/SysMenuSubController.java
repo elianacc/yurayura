@@ -7,7 +7,6 @@ import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.dto.SysMenuSubInsertDto;
 import org.elianacc.yurayura.dto.SysMenuSubUpdateDto;
 import org.elianacc.yurayura.service.sys.menu.ISysMenuSubService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -48,7 +47,6 @@ public class SysMenuSubController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统子菜单")
     public ApiResult insert(@RequestBody SysMenuSubInsertDto dto) {
@@ -84,7 +82,6 @@ public class SysMenuSubController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统子菜单")
     public ApiResult update(@RequestBody SysMenuSubUpdateDto dto) {

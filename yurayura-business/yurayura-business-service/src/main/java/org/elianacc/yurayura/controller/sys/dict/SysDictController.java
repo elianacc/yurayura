@@ -11,7 +11,6 @@ import org.elianacc.yurayura.dto.SysDictUpdateDto;
 import org.elianacc.yurayura.dto.IdDto;
 import org.elianacc.yurayura.entity.sys.dict.SysDict;
 import org.elianacc.yurayura.service.sys.dict.ISysDictService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -75,7 +74,6 @@ public class SysDictController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加系统数据字典")
     public ApiResult insert(@RequestBody SysDictInsertDto dto) {
@@ -107,7 +105,6 @@ public class SysDictController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改系统数据字典")
     public ApiResult update(@RequestBody SysDictUpdateDto dto) {

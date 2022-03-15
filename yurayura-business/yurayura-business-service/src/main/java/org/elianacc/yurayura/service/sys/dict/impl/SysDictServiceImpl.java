@@ -1,6 +1,7 @@
 package org.elianacc.yurayura.service.sys.dict.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.lock.annotation.Lock4j;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -53,6 +54,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.dictCode", "#dto.dictVal"}, autoRelease = false)
     @Override
     public String insert(SysDictInsertDto dto) {
         String warn = "";
@@ -86,6 +88,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
     @Override
     public String update(SysDictUpdateDto dto) {
         String warn = "";

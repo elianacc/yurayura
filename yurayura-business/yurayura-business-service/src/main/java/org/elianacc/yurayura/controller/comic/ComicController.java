@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import org.elianacc.yurayura.dto.*;
 import org.elianacc.yurayura.entity.comic.Comic;
 import org.elianacc.yurayura.service.comic.IComicService;
-import org.elianacc.yurayura.system.annotation.PreventRepeatSubmit;
 import org.elianacc.yurayura.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -69,7 +68,6 @@ public class ComicController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PostMapping("/insert")
     @ApiOperation("添加番剧")
     public ApiResult insert(ComicInsertDto dto) {
@@ -115,7 +113,6 @@ public class ComicController {
      * @param dto
      * @return org.elianacc.yurayura.vo.ApiResult
      */
-    @PreventRepeatSubmit
     @PutMapping("/update")
     @ApiOperation("修改番剧")
     public ApiResult update(ComicUpdateDto dto) {

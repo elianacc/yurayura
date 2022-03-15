@@ -1,5 +1,6 @@
 package org.elianacc.yurayura.service.comic.impl;
 
+import com.baomidou.lock.annotation.Lock4j;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -53,6 +54,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.comicName"}, autoRelease = false)
     @SneakyThrows
     @Override
     public String insert(ComicInsertDto dto) {
@@ -114,6 +116,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
     @SneakyThrows
     @Override
     public String update(ComicUpdateDto dto) {
