@@ -87,7 +87,6 @@ public class CodeGenerator {
                             .formatServiceFileName("I" + filePrefix + "%sService")
                             .controllerBuilder()
                             .enableRestStyle()
-                            .enableHyphenStyle()
                             .formatFileName(filePrefix + "%sController");
                 })
                 .execute();

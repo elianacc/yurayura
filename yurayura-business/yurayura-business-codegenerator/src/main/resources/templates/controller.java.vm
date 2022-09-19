@@ -31,7 +31,7 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("/api${sysModulePath}#if(${controllerMappingHyphenStyle})#if(${controllerMappingHyphen.indexOf("-")}!=-1)${controllerMappingHyphen.substring(4)}#else${controllerMappingHyphen}#end#else${table.entityPath}#end")
+@RequestMapping("/api${sysModulePath}#if(${table.entityPath.startsWith("sys")})${table.entityPath.substring(3).substring(0,1).toLowerCase()}${table.entityPath.substring(3).substring(1)}#else${table.entityPath}#end")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
