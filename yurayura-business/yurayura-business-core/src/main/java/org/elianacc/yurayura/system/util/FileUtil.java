@@ -1,6 +1,8 @@
 package org.elianacc.yurayura.system.util;
 
 import org.elianacc.yurayura.enumerate.ImgUploadResultEnum;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -13,7 +15,17 @@ import java.util.UUID;
  * @author ELiaNaCc
  * @since 2018-8-23
  */
+@Component
 public class FileUtil {
+
+    private FileUtil(){}
+
+    private static String uploadPath;
+
+    @Value("${spring.servlet.multipart.location}")
+    public void setUploadPath(String uploadPath) {
+        FileUtil.uploadPath = uploadPath;
+    }
 
     /**
      * 图片上传
@@ -45,7 +57,7 @@ public class FileUtil {
                     // 新文件名
                     String fileNewName;
                     // 上传文件路径
-                    String path = "D://yurayura-upload-resource/upload/" + category;
+                    String path = uploadPath + "/" + category;
                     // 生成不重复的32位新文件名
                     fileNewName = UUID.randomUUID().toString().replace("-", "") + fileEndName;
                     File newFile = new File(path, fileNewName);
@@ -72,7 +84,7 @@ public class FileUtil {
      * @return void
      */
     public static void fileDelete(String dPath) {
-        File file = new File("D://yurayura-upload-resource" + dPath);
+        File file = new File(uploadPath.substring(0,28) + dPath);
         if (file.isFile() && file.exists()) { // 上传文件路径不为空
             file.delete(); // 删除文件
         }
