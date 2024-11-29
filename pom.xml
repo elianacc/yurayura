@@ -28,7 +28,7 @@
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <velocity.version>2.3</velocity.version>
         <lock4j-redis.version>2.2.2</lock4j-redis.version>
-        <pagehelper.version>5.2.0</pagehelper.version>
+        <pagehelper.version>5.3.1</pagehelper.version>
         <knife4j.version>3.0.3</knife4j.version>
         <sa-token.version>1.35.0.RC</sa-token.version>
         <hutool.version>5.8.9</hutool.version>
