@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud-modules</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-comic</artifactId>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <name>yura-cloud-comic</name>
+    <description>comic模块</description>
+
+    <dependencies>
+
+        <!-- nacos模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-nacos</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- sentinel模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-sentinel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- seata模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-seata</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 核心模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- mybatis-plus模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-mybatisplus</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- redis模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-redis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 认证授权模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-auth</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- comic api调用模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-api-comic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- sys api调用模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-api-sys</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- SpringBoot mysql驱动 依赖 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
+        </dependency>
+
+        <!-- SpringBoot lombok 依赖 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>yura-cloud-comic</finalName>
+        <resources>
+            <!-- java文件夹下的xml也加入编译 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.txt</include>
+                    <include>*.xml</include>
+                    <include>*.yml</include>
+                    <include>**/*.ico</include>
+                    <include>**/*.jpg</include>
+                    <include>**/*.html</include>
+                    <include>templates/*.xlsx</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- 编译jar包插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

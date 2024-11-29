@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud-common</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-common-mybatisplus</artifactId>
+
+    <name>yura-cloud-common-mybatisplus</name>
+    <description>mybatis-plus模块</description>
+
+    <dependencies>
+
+        <!-- mybatis-plus springboot 依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <!-- github-PageHelper 依赖 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

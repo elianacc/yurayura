@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-gateway</artifactId>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <name>yura-cloud-gateway</name>
+    <description>网关模块</description>
+
+    <dependencies>
+
+        <!-- nacos模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-nacos</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- SpringBoot 指标监控 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- SpringCloud gateway 依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

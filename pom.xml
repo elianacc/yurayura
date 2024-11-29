@@ -1,0 +1,163 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pers.elianacc.yurayura</groupId>
+    <artifactId>yura-cloud</artifactId>
+    <version>1.0.3</version>
+    <packaging>pom</packaging>
+
+    <name>yura-cloud</name>
+
+    <modules>
+        <module>yura-cloud-codegenerator</module>
+        <module>yura-cloud-api</module>
+        <module>yura-cloud-common</module>
+        <module>yura-cloud-modules</module>
+        <module>yura-cloud-auth</module>
+        <module>yura-cloud-gateway</module>
+    </modules>
+
+    <!-- 项目父模块依赖版本统一设置 -->
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <velocity.version>2.3</velocity.version>
+        <lock4j-redis.version>2.2.2</lock4j-redis.version>
+        <pagehelper.version>5.2.0</pagehelper.version>
+        <knife4j.version>3.0.3</knife4j.version>
+        <sa-token.version>1.35.0.RC</sa-token.version>
+        <hutool.version>5.8.9</hutool.version>
+        <easypoi.version>4.2.0</easypoi.version>
+        <truelicense.version>1.33</truelicense.version>
+        <license-generate.version>1.0.0</license-generate.version>
+    </properties>
+
+    <!-- 引用私服jar包仓库 -->
+    <repositories>
+        <repository>
+            <id>releases</id>
+            <url>http://localhost:8081/repository/yura-cloud-release/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- 发布仓库 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>http://localhost:8081/repository/yura-cloud-release/</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- SpringBoot 整合第三方框架父依赖 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.12.RELEASE</version>
+    </parent>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- spring cloud 依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- spring cloud alibaba 依赖 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- mybatis-plus springboot 依赖 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- mybatis-plus 代码生成器 依赖 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- mybatis-plus 代码生成默认velocity模板 依赖 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+
+            <!-- lock4j-redis springboot 依赖 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-redis-template-spring-boot-starter</artifactId>
+                <version>${lock4j-redis.version}</version>
+            </dependency>
+
+            <!-- github-PageHelper 依赖 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <!-- Knife4j springboot 依赖 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- Sa-Token权限认证 springboot 依赖 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
+            <!-- Sa-Token 整合Jwt 依赖 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-jwt</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
+            <!-- Hutool 依赖 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- easypoi springboot 依赖 -->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-spring-boot-starter</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

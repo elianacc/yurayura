@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud-common</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-common-redis</artifactId>
+
+    <name>yura-cloud-common-redis</name>
+    <description>redis模块</description>
+
+    <dependencies>
+
+        <!-- SpringBoot SpringMVC 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- SpringBoot redis 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- SpringBoot commons-pool2（提供Redis连接池） 依赖 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

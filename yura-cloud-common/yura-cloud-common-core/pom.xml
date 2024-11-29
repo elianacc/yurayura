@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud-common</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-common-core</artifactId>
+
+    <name>yura-cloud-common-core</name>
+    <description>核心模块</description>
+
+
+    <dependencies>
+
+        <!-- SpringBoot SpringMVC 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- SpringBoot 指标监控 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- SpringBoot lombok 依赖 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- SpringBoot aop 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- SpringBoot validation 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- SpringBoot commons-lang3 依赖 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- Hutool 依赖 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <!-- lock4j-redis springboot 依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>lock4j-redis-template-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- common api调用模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-api-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- mail模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-mail</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- easypoi springboot 依赖 -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- SpringBoot test 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

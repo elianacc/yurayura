@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-common</artifactId>
+    <packaging>pom</packaging>
+
+    <name>yura-cloud-common</name>
+    <description>通用模块</description>
+
+    <modules>
+        <module>yura-cloud-common-core</module>
+        <module>yura-cloud-common-redis</module>
+        <module>yura-cloud-common-mail</module>
+        <module>yura-cloud-common-mybatisplus</module>
+        <module>yura-cloud-common-satoken</module>
+        <module>yura-cloud-common-swagger</module>
+        <module>yura-cloud-common-seata</module>
+        <module>yura-cloud-common-nacos</module>
+        <module>yura-cloud-common-sentinel</module>
+        <module>yura-cloud-common-feign</module>
+    </modules>
+
+</project>

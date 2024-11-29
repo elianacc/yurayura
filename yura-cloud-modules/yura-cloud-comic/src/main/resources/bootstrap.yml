@@ -1,0 +1,13 @@
+# SpringBoot内嵌web容器配置
+server:
+  # SpringBoot内嵌web容器http端口号
+  port: 2333
+
+spring:
+  profiles:
+    active: dev # 开发环境
+    #active: test # 测试环境
+    #active: prev # 预发布环境
+    #active: prod # 正式环境
+  application:
+    name: yura-cloud-comic

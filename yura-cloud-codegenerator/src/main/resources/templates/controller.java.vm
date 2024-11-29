@@ -1,0 +1,66 @@
+package ${package.Controller};
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import ${package.Service}.${table.serviceName};
+import ${packageParentPath}.dto.IdDTO;
+import ${packageParentPath}.entity.${modulePackagePath}.${entity};
+import ${packageParentPath}.vo.ApiResult;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+#if(${swagger})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+
+/**
+ * $!{table.comment} controller
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("/api${sysModulePath}#if(${table.entityPath.startsWith("sys")})${table.entityPath.substring(3).substring(0,1).toLowerCase()}${table.entityPath.substring(3).substring(1)}#else#if(${modulePackagePath.equals(${table.entityPath})})${table.entityPath}#else${modulePackagePath}/${table.entityPath}#end#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+    #if(${swagger})
+@Api(tags = "$!{table.comment}API")
+    #end
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private ${table.serviceName} i${entity}Service;
+
+    /**
+     * 查询$!{table.comment}（根据$!{table.comment}id）
+     *
+     * @param dto
+     * @return ${packageParentPath}.vo.ApiResult<${packageParentPath}.entity.${modulePackagePath}.${entity}>
+     */
+    @GetMapping("/getById")
+    #if(${swagger})
+    @ApiOperation("查询$!{table.comment}（根据$!{table.comment}id）")
+    #end
+    public ApiResult<${entity}> getById(IdDTO dto) {
+        return ApiResult.success("查询成功", i${entity}Service.getById(dto.getId()));
+    }
+}
+
+#end

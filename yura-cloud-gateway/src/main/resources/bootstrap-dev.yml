@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    # Nacos配置
+    nacos:
+      discovery:
+        # Nacos服务注册中心地址
+        server-addr: localhost:8888
+        # 指定分组
+        group: SEATA_GROUP
+        # 指定命名空间
+        namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b
+      config:
+        # Nacos作为配置中心地址
+        server-addr: localhost:8888
+        # 指定yml格式的配置
+        file-extension: yml
+        # 指定分组
+        group: SEATA_GROUP
+        # 指定命名空间
+        namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b

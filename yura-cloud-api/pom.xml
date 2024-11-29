@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pers.elianacc.yurayura</groupId>
+        <artifactId>yura-cloud</artifactId>
+        <version>1.0.3</version>
+    </parent>
+
+    <artifactId>yura-cloud-api</artifactId>
+    <packaging>pom</packaging>
+
+    <name>yura-cloud-api</name>
+    <description>api调用模块</description>
+
+    <modules>
+        <module>yura-cloud-api-comic</module>
+        <module>yura-cloud-api-sys</module>
+        <module>yura-cloud-api-common</module>
+        <module>yura-cloud-api-user</module>
+    </modules>
+
+</project>
