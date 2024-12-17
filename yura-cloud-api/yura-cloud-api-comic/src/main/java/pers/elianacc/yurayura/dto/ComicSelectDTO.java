@@ -45,6 +45,12 @@ public class ComicSelectDTO implements Serializable {
     private List<String> comicTag;
 
     /**
+     * 所属组织
+     */
+    @ApiModelProperty(value = "所属组织")
+    private Integer comicOrg;
+
+    /**
      * 页码
      */
     @NotNull(message = "页码不能为空")

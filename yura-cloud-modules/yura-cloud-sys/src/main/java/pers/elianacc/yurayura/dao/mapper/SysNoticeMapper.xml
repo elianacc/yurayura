@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.elianacc.yurayura.dao.SysNoticeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="pers.elianacc.yurayura.entity.SysNotice">
+        <id column="id" property="id"/>
+        <result column="notice_sender" property="noticeSender"/>
+        <result column="notice_content" property="noticeContent"/>
+        <result column="notice_org" property="noticeOrg"/>
+        <result column="notice_create_time" property="noticeCreateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, notice_sender, notice_content, notice_org, notice_create_time
+    </sql>
+
+</mapper>

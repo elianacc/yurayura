@@ -2,6 +2,7 @@ package pers.elianacc.yurayura.service.impl;
 
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -45,6 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public PageInfo<User> getPage(UserSelectDTO dto) {
+        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<User> userList = userMapper
@@ -59,6 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                         .eq(!ObjectUtils.isEmpty(dto.getUserStatus()), User::getUserStatus, dto.getUserStatus())
                         .eq(!ObjectUtils.isEmpty(dto.getUserPhoneNumber())
                                 , User::getUserPhoneNumber, dto.getUserPhoneNumber())
+                        .eq(!managerOrg.equals(0), User::getUserOrg, managerOrg)
                         .orderByDesc(User::getId));
         PageInfo<User> pageInfo = new PageInfo<>(userList, 5);
         Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");

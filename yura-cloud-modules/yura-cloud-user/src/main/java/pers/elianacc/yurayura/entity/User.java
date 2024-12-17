@@ -133,5 +133,11 @@ public class User implements Serializable {
     @ApiModelProperty(value = "最近编辑时间")
     private LocalDateTime userCurrentEditTime;
 
+    /**
+     * 所属组织
+     */
+    @TableField("user_org")
+    @ApiModelProperty(value = "所属组织")
+    private Integer userOrg;
 
 }

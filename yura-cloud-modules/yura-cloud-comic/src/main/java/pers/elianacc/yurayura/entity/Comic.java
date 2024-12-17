@@ -119,5 +119,11 @@ public class Comic implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime comicUpdateTime;
 
+    /**
+     * 所属组织
+     */
+    @TableField("comic_org")
+    @ApiModelProperty(value = "所属组织")
+    private Integer comicOrg;
 
 }

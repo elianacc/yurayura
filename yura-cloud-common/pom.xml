@@ -25,6 +25,7 @@
         <module>yura-cloud-common-nacos</module>
         <module>yura-cloud-common-sentinel</module>
         <module>yura-cloud-common-feign</module>
+        <module>yura-cloud-common-mqtt</module>
     </modules>
 
 </project>

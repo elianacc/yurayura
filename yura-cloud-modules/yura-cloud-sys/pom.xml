@@ -61,6 +61,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- mqtt模块 依赖 -->
+        <dependency>
+            <groupId>pers.elianacc.yurayura</groupId>
+            <artifactId>yura-cloud-common-mqtt</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- 认证授权模块 依赖 -->
         <dependency>
             <groupId>pers.elianacc.yurayura</groupId>

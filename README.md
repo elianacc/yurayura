@@ -15,6 +15,7 @@ yura-cloud
 ├───── yura-cloud-common-core ----- 核心模块
 ├───── yura-cloud-common-feign ----- feign模块
 ├───── yura-cloud-common-mail ----- mail模块
+├───── yura-cloud-common-mqtt ----- mqtt模块
 ├───── yura-cloud-common-mybatisplus ----- mybatis-plus模块
 ├───── yura-cloud-common-nacos ----- nacos模块
 ├───── yura-cloud-common-redis ----- redis模块
@@ -27,8 +28,6 @@ yura-cloud
 ```
 
 ## 项目技术构成
-
-
 
 | 描述                | 框架                                | 版本                        |
 | ------------------- | ----------------------------------- | --------------------------- |
@@ -43,6 +42,7 @@ yura-cloud
 | 自动生成代码工具    | MyBatis-Plus-Generator              | 3.5.1                       |
 | 分页工具            | Mybatis-PageHelper                  | 5.2.0                       |
 | 认证和授权          | Sa-Token + Jwt                      | 1.35.0.RC                   |
+| 消息发布订阅        | MQTT                                | 5.3.8.RELEASE               |
 | 分布式锁            | Lock4j                              | 2.2.2                       |
 | 日志                | Logback                             | 1.2.3                       |
 | 项目构建            | Maven                               | 3.6.3                       |
@@ -331,6 +331,18 @@ yurayura:
     enable: true
   # 接收邮箱
   receive-email: （隐藏）@126.com
+  # mqtt配置
+  mqtt:
+    hostUrl: tcp://127.0.0.1:1883
+    username: yura
+    password: 123456
+    clientId: mqtt-yura-cloud-sys
+    cleanSession: true
+    reconnect: true
+    connectTimeout: 100
+    keepAlive: 100
+    qos: 0
+    subTopic: yura-cloud-sys/#
 
 ```
 
@@ -404,6 +416,7 @@ yurayura:
 -  编码： IntelliJ IDEA（idea）
 -  数据库可视化： Navicat Premium
 -  Redis可视化： RedisDesktopManager
+-  mqtt服务端： EMQX
 -  maven私服工具： Nexus
 -  密钥生成工具： KeyTool
 -  页面访问及调试： Google Chrome

@@ -17,11 +17,12 @@
         <result column="comic_shelf_status" property="comicShelfStatus"/>
         <result column="comic_create_time" property="comicCreateTime"/>
         <result column="comic_update_time" property="comicUpdateTime"/>
+        <result column="comic_org" property="comicOrg"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, comic_name, comic_score, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_create_time, comic_update_time
+        id, comic_name, comic_score, comic_content, comic_time, comic_image_url, comic_link, comic_label, comic_status, comic_current_episodes, comic_shelf_status, comic_create_time, comic_update_time, comic_org
     </sql>
 
     <select id="getListBySelectDTO" resultType="pers.elianacc.yurayura.entity.Comic">
@@ -44,6 +45,9 @@
                 <foreach collection="comicTag" item="tag" open="(" separator="or" close=")">
                     t.comic_label like CONCAT('%',#{tag},'%')
                 </foreach>
+            </if>
+            <if test="comicOrg != null">
+                and t.comic_org = #{comicOrg}
             </if>
         </where>
         order by t.id desc

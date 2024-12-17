@@ -5,9 +5,12 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -25,6 +28,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import pers.elianacc.yurayura.bo.ComicExportBO;
 import pers.elianacc.yurayura.bo.ComicImportBO;
+import pers.elianacc.yurayura.component.MqttMessageSender;
+import pers.elianacc.yurayura.constants.MqttConstant;
 import pers.elianacc.yurayura.dao.ComicMapper;
 import pers.elianacc.yurayura.dao.ComicUserDataMapper;
 import pers.elianacc.yurayura.dto.ComicInsertDTO;
@@ -77,8 +82,15 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
+    @Autowired
+    private MqttMessageSender mqttMessageSender;
+
     @Override
     public PageInfo<Comic> getPage(ComicSelectDTO dto) {
+        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        if (!managerOrg.equals(0)) {
+            dto.setComicOrg(managerOrg);
+        }
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<Comic> comicList = comicMapper.getListBySelectDTO(dto);
@@ -120,6 +132,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         }
         comic.setComicCreateTime(LocalDateTime.now());
         comic.setComicUpdateTime(null);
+        comic.setComicOrg((Integer) StpUtil.getExtra("managerOrg"));
         comicMapper.insert(comic);
         comicUserData.setComicId(comic.getId());
         comicUserData.setComicName(comic.getComicName());
@@ -128,6 +141,14 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         comicUserData.setComicUserDataCreateTime(LocalDateTime.now());
         comicUserData.setComicUserDataUpdateTime(null);
         comicUserDataMapper.insert(comicUserData);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.set("noticeSender", StpUtil.getExtra("managerName").toString());
+        jsonObject.set("noticeContent", StpUtil
+                .getExtra("managerName").toString() + "上架了番剧" + comic.getComicName());
+        jsonObject.set("noticeOrg", StpUtil.getExtra("managerOrg"));
+        jsonObject.set("noticeCreateTime", LocalDateTime.now());
+        mqttMessageSender.sendMsg(MqttConstant.YURA_CLOUD_SYS_INSERT_NOTICE
+                , JSONUtil.toJsonStr(jsonObject));
     }
 
     @Override
