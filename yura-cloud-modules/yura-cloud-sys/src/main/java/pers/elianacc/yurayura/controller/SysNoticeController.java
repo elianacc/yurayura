@@ -58,6 +58,7 @@ public class SysNoticeController {
                 .list(Wrappers.<SysNotice>lambdaQuery()
                         .eq(managerOrg != 0, SysNotice::getNoticeOrg, managerOrg)
                         .ge(SysNotice::getNoticeCreateTime, today0Time.minusDays(30))
+                        .orderByDesc(SysNotice::getNoticeCreateTime)
                 ));
     }
 

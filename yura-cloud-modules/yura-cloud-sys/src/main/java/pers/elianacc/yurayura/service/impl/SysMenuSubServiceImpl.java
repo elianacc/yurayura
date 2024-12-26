@@ -1,6 +1,7 @@
 package pers.elianacc.yurayura.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -19,8 +20,10 @@ import pers.elianacc.yurayura.enumerate.EnableStatusEnum;
 import pers.elianacc.yurayura.enumerate.SysMenuTypeEnum;
 import pers.elianacc.yurayura.enumerate.SysPermissionTypeEnum;
 import pers.elianacc.yurayura.service.ISysMenuSubService;
+import pers.elianacc.yurayura.vo.VueRouterVO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 系统子菜单 service impl
@@ -90,5 +93,33 @@ public class SysMenuSubServiceImpl extends ServiceImpl<SysMenuSubMapper, SysMenu
     @Override
     public List<SysMenuSub> getAll() {
         return sysMenuSubMapper.selectList(null);
+    }
+
+    @Override
+    public List<VueRouterVO> getVueRouter() {
+        List<VueRouterVO> voList = sysMenuSubMapper
+                .selectList(null)
+                .stream()
+                .map(subMenu -> {
+                    VueRouterVO routerVO = new VueRouterVO();
+                    routerVO.setPath(subMenu.getMenuName());
+                    String nameCamelCase = StrUtil.toCamelCase(subMenu.getMenuName());
+                    String componentName = "Business" + nameCamelCase.substring(0, 1)
+                            .toUpperCase() + nameCamelCase.substring(1);
+                    routerVO.setName(componentName);
+                    routerVO.setComponent(routerVO.getName());
+                    return routerVO;
+                }).collect(Collectors.toList());
+        VueRouterVO routerVO2 = new VueRouterVO();
+        routerVO2.setPath("index");
+        routerVO2.setName("BusinessIndex");
+        routerVO2.setComponent("BusinessIndex");
+        voList.add(0, routerVO2);
+        VueRouterVO routerVO1 = new VueRouterVO();
+        routerVO1.setPath("");
+        routerVO1.setName("Business");
+        routerVO1.setComponent("BusinessIndex");
+        voList.add(0, routerVO1);
+        return voList;
     }
 }

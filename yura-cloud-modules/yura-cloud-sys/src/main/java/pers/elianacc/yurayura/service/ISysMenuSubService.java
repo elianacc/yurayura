@@ -5,6 +5,7 @@ import pers.elianacc.yurayura.dto.IdDTO;
 import pers.elianacc.yurayura.dto.SysMenuSubInsertDTO;
 import pers.elianacc.yurayura.dto.SysMenuSubUpdateDTO;
 import pers.elianacc.yurayura.entity.SysMenuSub;
+import pers.elianacc.yurayura.vo.VueRouterVO;
 
 import java.util.List;
 
@@ -55,4 +56,12 @@ public interface ISysMenuSubService extends IService<SysMenuSub> {
      * @return java.util.List<pers.elianacc.yurayura.entity.sys.menu.SysMenuSub>
      */
     public List<SysMenuSub> getAll();
+
+    /**
+     * 获取后台页面vue-router
+     *
+     * @param
+     * @return java.util.List<pers.elianacc.yurayura.vo.VueRouterVO>
+     */
+    public List<VueRouterVO> getVueRouter();
 }

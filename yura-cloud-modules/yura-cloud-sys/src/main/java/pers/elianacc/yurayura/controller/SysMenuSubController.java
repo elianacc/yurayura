@@ -14,6 +14,7 @@ import pers.elianacc.yurayura.dto.SysMenuSubUpdateDTO;
 import pers.elianacc.yurayura.entity.SysMenuSub;
 import pers.elianacc.yurayura.service.ISysMenuSubService;
 import pers.elianacc.yurayura.vo.ApiResult;
+import pers.elianacc.yurayura.vo.VueRouterVO;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -113,4 +114,17 @@ public class SysMenuSubController {
     public ApiResult<List<SysMenuSub>> getAll() {
         return ApiResult.success("查询成功", iSysMenuSubService.getAll());
     }
+
+    /**
+     * 获取后台页面vue-router
+     *
+     * @param
+     * @return pers.elianacc.yurayura.vo.ApiResult<java.util.List<pers.elianacc.yurayura.vo.VueRouterVO>>
+     */
+    @GetMapping("/getVueRouter")
+    @ApiOperation("获取后台页面vue-router")
+    public ApiResult<List<VueRouterVO>> getVueRouter() {
+        return ApiResult.success("查询成功", iSysMenuSubService.getVueRouter());
+    }
+
 }
