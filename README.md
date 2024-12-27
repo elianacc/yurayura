@@ -51,7 +51,6 @@ yura-cloud
 | 数据库              | MySQL80                             | 8.0.28                      |
 | NoSQL数据库         | Redis                               | 3.2.100                     |
 | 在线接口文档生成    | Knife4j（swagger2增强）             | 3.0.3                       |
-| JSON处理工具        | FastJson                            | 1.2.83                      |
 | 文档处理            | easypoi                             | 4.2.0                       |
 | 工具类库            | Hutool                              | 5.8.9                       |
 
