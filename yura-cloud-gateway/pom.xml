@@ -40,4 +40,8 @@
 
     </dependencies>
 
+    <build>
+        <finalName>yura-cloud-gateway</finalName>
+    </build>
+
 </project>
