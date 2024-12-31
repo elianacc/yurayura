@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -57,7 +58,7 @@ public class EasyPoiUtil {
 
         if (workbook != null) {
             response.setCharacterEncoding("UTF-8");
-            response.setHeader("content-Type", "application/vnd.ms-excel");
+            response.setHeader("content-Type", MediaType.APPLICATION_OCTET_STREAM_VALUE);
             response.setHeader("Content-Disposition"
                     , "attachment;filename=" + URLEncoder.encode(exportExcelName, "UTF-8") + ".xlsx");
             workbook.write(response.getOutputStream());
@@ -109,7 +110,7 @@ public class EasyPoiUtil {
 
         if (workbook != null) {
             response.setCharacterEncoding("UTF-8");
-            response.setHeader("content-Type", "application/vnd.ms-excel");
+            response.setHeader("content-Type", MediaType.APPLICATION_OCTET_STREAM_VALUE);
             response.setHeader("Content-Disposition"
                     , "attachment;filename=" + URLEncoder.encode(exportExcelName, "UTF-8") + ".xlsx");
             workbook.write(response.getOutputStream());

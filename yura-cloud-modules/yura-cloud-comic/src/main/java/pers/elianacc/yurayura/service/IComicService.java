@@ -2,7 +2,7 @@ package pers.elianacc.yurayura.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import pers.elianacc.yurayura.dto.ComicInsertDTO;
@@ -75,7 +75,7 @@ public interface IComicService extends IService<Comic> {
      * 下载导入模板
      *
      * @param
-     * @return org.springframework.http.ResponseEntity<org.springframework.core.io.FileSystemResource>
+     * @return org.springframework.http.ResponseEntity<org.springframework.core.io.InputStreamResource>
      */
-    public ResponseEntity<FileSystemResource> downloadImportTplt() throws IOException;
+    public ResponseEntity<InputStreamResource> downloadImportTplt() throws IOException;
 }

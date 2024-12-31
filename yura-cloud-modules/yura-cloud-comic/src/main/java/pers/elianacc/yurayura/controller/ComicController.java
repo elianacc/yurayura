@@ -8,7 +8,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -144,11 +144,11 @@ public class ComicController {
      * 下载导入模板
      *
      * @param
-     * @return org.springframework.http.ResponseEntity<org.springframework.core.io.FileSystemResource>
+     * @return org.springframework.http.ResponseEntity<org.springframework.core.io.InputStreamResource>
      */
     @GetMapping("/downloadImportTplt")
     @ApiOperation("下载导入模板")
-    public ResponseEntity<FileSystemResource> downloadImportTplt() throws IOException {
+    public ResponseEntity<InputStreamResource> downloadImportTplt() throws IOException {
         return iComicService.downloadImportTplt();
     }
 

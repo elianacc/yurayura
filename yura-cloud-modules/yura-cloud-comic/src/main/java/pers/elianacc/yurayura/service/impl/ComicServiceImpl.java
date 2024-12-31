@@ -19,7 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -328,11 +329,16 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     }
 
     @Override
-    public ResponseEntity<FileSystemResource> downloadImportTplt() throws IOException {
+    public ResponseEntity<InputStreamResource> downloadImportTplt() throws IOException {
         // 获取ClassPathResource下资源
         ClassPathResource resource = new ClassPathResource("templates/comic-import-tplt.xlsx");
-        File file = resource.getFile();
-        return FileUtil.downloadFile("comic-import-tplt.xlsx", file);
+
+        // 使用InputStream读取文件
+        InputStream inputStream = resource.getInputStream();
+        long fileLength = resource.contentLength();  // 获取文件长度
+
+        // 调用改造后的downloadFile方法
+        return FileUtil.downloadFile("comic-import-tplt.xlsx", inputStream, fileLength);
     }
 
 }

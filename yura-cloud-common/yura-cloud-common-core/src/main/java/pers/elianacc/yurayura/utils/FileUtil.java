@@ -1,7 +1,7 @@
 package pers.elianacc.yurayura.utils;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import pers.elianacc.yurayura.enumerate.ImgUploadResultEnum;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.UUID;
@@ -102,21 +103,23 @@ public class FileUtil {
      * 下载文件
      *
      * @param fileName 下载文件名
-	 * @param file 待下载文件
-     * @return org.springframework.http.ResponseEntity<org.springframework.core.io.FileSystemResource>
+	 * @param inputStream 输入流
+	 * @param fileLength 文件长度
+     * @return org.springframework.http.ResponseEntity<org.springframework.core.io.InputStreamResource>
      */
-    public static ResponseEntity<FileSystemResource> downloadFile(String fileName, File file)
+    public static ResponseEntity<InputStreamResource> downloadFile(String fileName, InputStream inputStream, long fileLength)
             throws UnsupportedEncodingException {
-        if (!file.exists()) {
+        if (inputStream == null) {
             return ResponseEntity.noContent().build();
         }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, "UTF-8"));
-        headers.setContentLength(file.length());
+        headers.setContentLength(fileLength);
 
-        FileSystemResource resource = new FileSystemResource(file);
+        // 使用 InputStreamResource 包装 InputStream
+        InputStreamResource resource = new InputStreamResource(inputStream);
 
         return ResponseEntity.ok().headers(headers).body(resource);
     }
