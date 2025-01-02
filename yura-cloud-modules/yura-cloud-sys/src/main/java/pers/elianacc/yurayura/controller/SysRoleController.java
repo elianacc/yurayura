@@ -52,6 +52,7 @@ public class SysRoleController {
      * @return pers.elianacc.yurayura.vo.ApiResult<com.github.pagehelper.PageInfo<pers.elianacc.yurayura.vo.SysRoleAndPermissionVO>>
      */
     @PostMapping("/getPage")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("分页查询系统角色")
     public ApiResult<PageInfo<SysRoleAndPermissionVO>> getPage(@Validated @RequestBody SysRoleSelectDTO dto) {
         return ApiResult.success("分页查询成功", iSysRoleService.getPage(dto));
@@ -64,7 +65,7 @@ public class SysRoleController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/insert")
-    @Lock4j(keys = {"#dto.roleName"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.roleName"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("添加系统角色")
     public ApiResult<String> insert(@Validated @RequestBody SysRoleInsertDTO dto) {
@@ -79,7 +80,7 @@ public class SysRoleController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/update")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改系统角色")
     public ApiResult<String> update(@Validated @RequestBody SysRoleUpdateDTO dto) {

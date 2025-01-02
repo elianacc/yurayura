@@ -1,7 +1,6 @@
 package pers.elianacc.yurayura.controller;
 
 import cn.hutool.core.lang.Assert;
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.lock.annotation.Lock4j;
 import com.github.pagehelper.PageInfo;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pers.elianacc.yurayura.controller.block.ComicBlockHandler;
 import pers.elianacc.yurayura.dto.*;
 import pers.elianacc.yurayura.entity.Comic;
 import pers.elianacc.yurayura.service.IComicService;
@@ -56,9 +54,7 @@ public class ComicController {
      * @return pers.elianacc.yurayura.vo.ApiResult<PageInfo<Comic>>
      */
     @PostMapping("/getPage")
-    @SentinelResource(value = "comic-getPage",
-            blockHandlerClass = ComicBlockHandler.class,
-            blockHandler = "getPageBlockHandler")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("分页查询番剧")
     public ApiResult<PageInfo<Comic>> getPage(@Validated @RequestBody ComicSelectDTO dto) {
         return ApiResult.success("分页查询成功", iComicService.getPage(dto));
@@ -71,7 +67,7 @@ public class ComicController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/insert")
-    @Lock4j(keys = {"#dto.comicName"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.comicName"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("添加番剧")
     public ApiResult<String> insert(@Validated ComicInsertDTO dto) throws IOException {
@@ -86,6 +82,7 @@ public class ComicController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/deleteBatchByIds")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("批量删除番剧（根据番剧id组）")
     public ApiResult<String> deleteBatchByIds(@Validated @RequestBody IdsDTO dto) {
@@ -100,7 +97,7 @@ public class ComicController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/update")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改番剧")
     public ApiResult<String> update(@Validated ComicUpdateDTO dto) throws IOException {
@@ -116,6 +113,7 @@ public class ComicController {
      * @return void
      */
     @GetMapping("/export")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, expire = 10000, autoRelease = false)
     @ApiOperation("导出")
     public void export(ComicSelectDTO dto, @ApiIgnore HttpServletResponse response)
             throws IOException {
@@ -129,6 +127,7 @@ public class ComicController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/import")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("导入")
     public ApiResult<String> importExcel(@RequestPart("file") MultipartFile file) throws Exception {
@@ -147,6 +146,7 @@ public class ComicController {
      * @return org.springframework.http.ResponseEntity<org.springframework.core.io.InputStreamResource>
      */
     @GetMapping("/downloadImportTplt")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, expire = 10000, autoRelease = false)
     @ApiOperation("下载导入模板")
     public ResponseEntity<InputStreamResource> downloadImportTplt() throws IOException {
         return iComicService.downloadImportTplt();

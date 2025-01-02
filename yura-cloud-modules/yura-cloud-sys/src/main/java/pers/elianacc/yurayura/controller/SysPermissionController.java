@@ -52,6 +52,7 @@ public class SysPermissionController {
      * @return pers.elianacc.yurayura.vo.ApiResult<PageInfo<SysPermission>>
      */
     @PostMapping("/getPage")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("分页查询系统权限")
     public ApiResult<PageInfo<SysPermission>> getPage(@Validated @RequestBody SysPermissionSelectDTO dto) {
         return ApiResult.success("分页查询成功", iSysPermissionService.getPage(dto));
@@ -64,7 +65,8 @@ public class SysPermissionController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/insert")
-    @Lock4j(keys = {"#dto.permissionType", "#dto.permissionBelongSubmenuName"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.permissionType"
+            , "#dto.permissionBelongSubmenuName"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("添加系统权限")
     public ApiResult<String> insert(@Validated @RequestBody SysPermissionInsertDTO dto) {
@@ -79,7 +81,7 @@ public class SysPermissionController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/update")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改系统权限")
     public ApiResult<String> update(@Validated @RequestBody SysPermissionUpdateDTO dto) {

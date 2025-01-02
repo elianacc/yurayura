@@ -26,13 +26,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- sentinel模块 依赖 -->
-        <dependency>
-            <groupId>pers.elianacc.yurayura</groupId>
-            <artifactId>yura-cloud-common-sentinel</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- seata模块 依赖 -->
         <dependency>
             <groupId>pers.elianacc.yurayura</groupId>

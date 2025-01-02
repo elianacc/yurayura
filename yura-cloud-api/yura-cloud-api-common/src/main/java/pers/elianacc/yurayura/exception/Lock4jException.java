@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * 重复提交 exception
+ * Lock4j exception
  *
  * @author ELiaNaCc
  * @since 2022-03-15
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RepeatSubmitException extends RuntimeException implements Serializable {
+public class Lock4jException extends RuntimeException implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

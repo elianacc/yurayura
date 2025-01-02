@@ -54,6 +54,7 @@ public class SysDictController {
      * @return pers.elianacc.yurayura.vo.ApiResult<PageInfo<SysDict>>
      */
     @PostMapping("/getPage")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("分页查询系统数据字典")
     public ApiResult<PageInfo<SysDict>> getPage(@Validated @RequestBody SysDictSelectDTO dto) {
         return ApiResult.success("分页查询成功", iSysDictService.getPage(dto));
@@ -66,7 +67,7 @@ public class SysDictController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/insert")
-    @Lock4j(keys = {"#dto.dictCode", "#dto.dictVal"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.dictCode", "#dto.dictVal"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("添加系统数据字典")
     public ApiResult<String> insert(@Validated @RequestBody SysDictInsertDTO dto) {
@@ -81,7 +82,7 @@ public class SysDictController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/update")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改系统数据字典")
     public ApiResult<String> update(@Validated @RequestBody SysDictUpdateDTO dto) {

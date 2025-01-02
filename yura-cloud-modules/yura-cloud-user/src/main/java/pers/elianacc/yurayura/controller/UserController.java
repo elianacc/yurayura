@@ -52,6 +52,7 @@ public class UserController {
      * @return pers.elianacc.yurayura.vo.ApiResult<PageInfo<User>>
      */
     @PostMapping("/getPage")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("分页查询用户")
     public ApiResult<PageInfo<User>> getPage(@Validated @RequestBody UserSelectDTO dto) {
         return ApiResult.success("分页查询成功", iUserService.getPage(dto));
@@ -64,7 +65,7 @@ public class UserController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/updateStatus")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改状态（根据用户id）")
     public ApiResult<String> updateStatus(@Validated @RequestBody UserUpdateStatusDTO dto) {
@@ -79,6 +80,7 @@ public class UserController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/updateAvatarDefault")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("重置为默认头像（根据用户id）")
     public ApiResult<String> updateAvatarDefault(@Validated @RequestBody IdDTO dto) {
@@ -94,6 +96,7 @@ public class UserController {
      * @return void
      */
     @GetMapping("/export")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, expire = 10000, autoRelease = false)
     @ApiOperation("导出")
     public void export(UserSelectDTO dto, @ApiIgnore HttpServletResponse response) throws IOException {
         iUserService.exportExcel(dto, response);

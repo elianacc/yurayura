@@ -65,6 +65,7 @@ public class SysOrgController {
      * @return pers.elianacc.yurayura.vo.ApiResult<com.github.pagehelper.PageInfo<pers.elianacc.yurayura.entity.sys.org.SysOrg>>
      */
     @PostMapping("/getPage")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("分页查询系统组织")
     public ApiResult<PageInfo<SysOrg>> getPage(@Validated @RequestBody SysOrgSelectDTO dto) {
         return ApiResult.success("分页查询成功", iSysOrgService.getPage(dto));
@@ -77,7 +78,7 @@ public class SysOrgController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/insert")
-    @Lock4j(keys = {"#dto.orgName"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.orgName"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("添加系统组织")
     public ApiResult<String> insert(@Validated @RequestBody SysOrgInsertDTO dto) {
@@ -95,7 +96,7 @@ public class SysOrgController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/update")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改系统组织")
     public ApiResult<String> update(@Validated @RequestBody SysOrgUpdateDTO dto) {

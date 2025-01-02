@@ -34,7 +34,6 @@ yura-cloud
 | 基础                | Spring Boot                         | 2.3.12.RELEASE              |
 | 微服务基础          | Spring Cloud + Spring Cloud Alibaba | Hoxton.SR12 + 2.2.6.RELEASE |
 | 服务注册与配置中心  | Nacos                               | 2.0.3                       |
-| 服务流控及熔断降级  | Sentinel                            | 1.8.1                       |
 | 服务调用            | OpenFeign                           | 2.2.9.RELEASE               |
 | 分布式事务          | Seata                               | 1.3.0                       |
 | 服务网关            | Gateway                             | 2.2.9.RELEASE               |
@@ -56,10 +55,9 @@ yura-cloud
 
 ## 常用功能实现
 
--  sentinel可视化配置同步到nacos持久化 -> 改官方的sentinel源码--步骤在个人空间中另一个项目总结https://github.com/elianacc/sentinel-dashboard-nacos
--  全局捕获异常处理(包括系统异常500、自定义业务异常403、请求接口参数异常400、重复提交异常等)
+-  全局捕获异常处理(包括系统异常500、自定义业务异常403、请求接口参数异常400、断言异常等)
 -  AOP统一处理Web请求日志
--  防止重复提交表单数据
+-  redis锁注解处理接口流控
 -  ~~分布式session共享~~   →  现转为无状态模式，使用 Jwt
 -  外部静态资源访问处理
 -  通用接口返回信息处理
@@ -128,33 +126,6 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
       pool-name: ELiaNaCcHikariCP
-  cloud:
-    # sentinel设置
-    sentinel:
-      transport:
-        # 配置Sentinel dashboard地址
-        dashboard: localhost:8087
-        port: 8719
-      # 添加Nacos数据源配置,sentinel持久化
-      datasource:
-        # 自定义的流控规则数据源名称
-        flow:
-          nacos:
-            server-addr: localhost:8888
-            namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b
-            dataId: sentinel.rule.flow
-            groupId: ${spring.application.name}
-            data-type: json
-            rule-type: flow
-        # 自定义的降级规则数据源名称
-        degrade:
-          nacos:
-            server-addr: localhost:8888
-            namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b
-            dataId: sentinel.rule.degrade
-            groupId: ${spring.application.name}
-            data-type: json
-            rule-type: degrade      
   # thymeleaf配置
   thymeleaf:
     mode: HTML
@@ -212,9 +183,6 @@ feign:
         connect-timeout: 5000
         # 指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
         read-timeout: 12000
-  sentinel:
-    # 激活Sentinel对Feign的支持
-    enabled: true        
 
 # seata配置
 seata:
@@ -258,7 +226,7 @@ mybatis-plus:
 # lock4j配置
 lock4j:
   acquire-timeout: 3000
-  expire: 10000
+  expire: 5000
   primary-executor: com.baomidou.lock.executor.RedisTemplateLockExecutor
   lock-key-prefix: lock4j
 

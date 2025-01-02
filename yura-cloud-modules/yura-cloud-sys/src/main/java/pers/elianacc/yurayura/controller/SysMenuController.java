@@ -63,6 +63,7 @@ public class SysMenuController {
      * @return pers.elianacc.yurayura.vo.ApiResult<List<SysMenuTreeVO>>
      */
     @GetMapping("/getTreeList")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @ApiOperation("查询系统菜单树形列表")
     public ApiResult<List<SysMenuTreeVO>> getTreeList() {
         return ApiResult.success("树形列表查询成功", iSysMenuService.getTreeList());
@@ -75,7 +76,7 @@ public class SysMenuController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PostMapping("/insert")
-    @Lock4j(keys = {"#dto.menuName"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.menuName"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("添加系统菜单")
     public ApiResult<String> insert(@Validated @RequestBody SysMenuInsertDTO dto) {
@@ -90,7 +91,7 @@ public class SysMenuController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/update")
-    @Lock4j(keys = {"#dto.id"}, autoRelease = false)
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()", "#dto.id"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("修改系统菜单")
     public ApiResult<String> update(@Validated @RequestBody SysMenuUpdateDTO dto) {
@@ -105,6 +106,7 @@ public class SysMenuController {
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
     @PutMapping("/deleteById")
+    @Lock4j(keys = {"T(cn.dev33.satoken.stp.StpUtil).getTokenValue()"}, autoRelease = false)
     @GlobalTransactional(rollbackFor = Exception.class) // TM开启全局事务
     @ApiOperation("删除系统菜单（根据系统菜单id）")
     public ApiResult<String> deleteById(@Validated @RequestBody IdDTO dto) {

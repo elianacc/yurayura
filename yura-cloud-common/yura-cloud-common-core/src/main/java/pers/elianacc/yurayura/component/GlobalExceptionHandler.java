@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pers.elianacc.yurayura.bo.MailBO;
 import pers.elianacc.yurayura.exception.BusinessException;
-import pers.elianacc.yurayura.exception.RepeatSubmitException;
+import pers.elianacc.yurayura.exception.Lock4jException;
 import pers.elianacc.yurayura.utils.MailUtil;
 import pers.elianacc.yurayura.vo.ApiResult;
 
@@ -77,14 +77,14 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理重复提交异常
+     * 处理Lock4j异常
      *
-     * @param repeatSubmitException
+     * @param lock4jException
      * @return pers.elianacc.yurayura.vo.ApiResult<java.lang.String>
      */
-    @ExceptionHandler(RepeatSubmitException.class)
-    public ApiResult<String> repeatSubmitExceptionHandler(RepeatSubmitException repeatSubmitException) {
-        return ApiResult.warn(repeatSubmitException.getErrorMsg());
+    @ExceptionHandler(Lock4jException.class)
+    public ApiResult<String> repeatSubmitExceptionHandler(Lock4jException lock4jException) {
+        return ApiResult.warn(lock4jException.getErrorMsg());
     }
 
     /**
