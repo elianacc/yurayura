@@ -40,10 +40,10 @@
             (
                 SELECT
                     1000 + RAND() * (10000 - 1000) id,
-                    ms.menu_title,
+                    MAX(ms.menu_title) AS menu_title,
                     p.permission_belong_submenu_name,
-                    m.menu_seq,
-                    ms.menu_seq msmenu_seq
+                    MAX(m.menu_seq) AS menu_seq,
+                    MAX(ms.menu_seq) AS msmenu_seq
                 FROM
                     yurayura_sys_permission p
                         LEFT JOIN yurayura_sys_menu_sub ms ON p.permission_belong_submenu_name = ms.menu_name
