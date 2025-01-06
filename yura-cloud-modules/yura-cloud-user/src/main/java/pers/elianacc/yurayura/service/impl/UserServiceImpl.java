@@ -3,7 +3,6 @@ package pers.elianacc.yurayura.service.impl;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -63,9 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                                 , User::getUserPhoneNumber, dto.getUserPhoneNumber())
                         .eq(!managerOrg.equals(0), User::getUserOrg, managerOrg)
                         .orderByDesc(User::getId));
-        PageInfo<User> pageInfo = new PageInfo<>(userList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(userList, 5);
     }
 
     @Override

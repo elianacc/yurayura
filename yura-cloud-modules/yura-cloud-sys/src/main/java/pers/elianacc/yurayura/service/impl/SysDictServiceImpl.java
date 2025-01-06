@@ -48,9 +48,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                                 , "instr(dict_code, {0}) > 0", dto.getDictCode())
                         .eq(!ObjectUtils.isEmpty(dto.getDictStatus()), SysDict::getDictStatus, dto.getDictStatus())
                         .orderByAsc(SysDict::getDictCode, SysDict::getDictSeq));
-        PageInfo<SysDict> pageInfo = new PageInfo<>(sysDictList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(sysDictList, 5);
     }
 
     @Override

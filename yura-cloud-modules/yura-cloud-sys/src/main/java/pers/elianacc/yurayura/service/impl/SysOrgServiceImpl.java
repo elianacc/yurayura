@@ -1,6 +1,5 @@
 package pers.elianacc.yurayura.service.impl;
 
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -37,9 +36,7 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
                         , "instr(org_name, {0}) > 0", dto.getOrgName())
                 .orderByDesc(SysOrg::getOrgCreateTime)
         );
-        PageInfo<SysOrg> pageInfo = new PageInfo<>(sysOrgList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(sysOrgList, 5);
     }
 
 

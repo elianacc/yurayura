@@ -91,9 +91,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<Comic> comicList = comicMapper.getListBySelectDTO(dto);
-        PageInfo<Comic> pageInfo = new PageInfo<>(comicList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(comicList, 5);
     }
 
     @Override

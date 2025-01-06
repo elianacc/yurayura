@@ -44,9 +44,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<SysRoleAndPermissionVO> roleAndPermissionList = sysRoleMapper.getRoleAndPermissionListBySelectDTO(dto);
-        PageInfo<SysRoleAndPermissionVO> pageInfo = new PageInfo<>(roleAndPermissionList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(roleAndPermissionList, 5);
     }
 
     @Override

@@ -53,9 +53,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
                                 , SysPermission::getPermissionBelongSubmenuName, dto.getPermissionBelongSubmenuName())
                         .orderByAsc(SysPermission::getPermissionBelongSubmenuName, SysPermission::getPermissionSeq)
                 );
-        PageInfo<SysPermission> pageInfo = new PageInfo<>(sysPermissionList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(sysPermissionList, 5);
     }
 
     @Override

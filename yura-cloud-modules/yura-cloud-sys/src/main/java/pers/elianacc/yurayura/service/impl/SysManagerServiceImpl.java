@@ -46,9 +46,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<SysManagerAndRoleVO> managerAndPermissionList = sysManagerMapper.getManagerAndRoleListBySelectDTO(dto);
-        PageInfo<SysManagerAndRoleVO> pageInfo = new PageInfo<>(managerAndPermissionList, 5);
-        Assert.isTrue(pageInfo.getTotal() != 0, "查询不到数据");
-        return pageInfo;
+        return new PageInfo<>(managerAndPermissionList, 5);
     }
 
     @Override
