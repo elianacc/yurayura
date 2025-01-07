@@ -108,19 +108,6 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>*.txt</include>
-                    <include>*.xml</include>
-                    <include>*.yml</include>
-                    <include>**/*.ico</include>
-                    <include>**/*.jpg</include>
-                    <include>**/*.html</include>
-                    <include>templates/*.xlsx</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
         </resources>
         <plugins>
             <!-- 编译jar包插件 -->

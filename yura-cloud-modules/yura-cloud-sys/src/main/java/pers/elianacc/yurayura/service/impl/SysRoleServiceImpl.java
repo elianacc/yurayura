@@ -15,6 +15,7 @@ import pers.elianacc.yurayura.dto.SysRoleInsertDTO;
 import pers.elianacc.yurayura.dto.SysRoleSelectDTO;
 import pers.elianacc.yurayura.dto.SysRoleUpdateDTO;
 import pers.elianacc.yurayura.entity.SysRole;
+import pers.elianacc.yurayura.enumerate.AdminOrgEnum;
 import pers.elianacc.yurayura.enumerate.EnableStatusEnum;
 import pers.elianacc.yurayura.service.ISysRoleService;
 import pers.elianacc.yurayura.vo.SysRoleAndPermissionVO;
@@ -51,9 +52,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public List<SysRole> getByOrg(Integer orgId) {
         return sysRoleMapper
                 .selectList(Wrappers.<SysRole>lambdaQuery()
-                        .eq(SysRole::getRoleStatus, 1)
+                        .eq(SysRole::getRoleStatus, EnableStatusEnum.ENABLE.getStatusId())
                         .eq(SysRole::getRoleOrg, orgId)
-                        .ne(SysRole::getId, 1));
+                        .ne(SysRole::getRoleOrg, AdminOrgEnum.ADMIN_ORG.getOrg()));
     }
 
     @Override
@@ -81,7 +82,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public void update(SysRoleUpdateDTO dto) {
         SysRole oldRole = sysRoleMapper.selectById(dto.getId());
-        Assert.isTrue(!oldRole.getRoleName().equals("超级管理员"), "超级管理员的角色信息不允许被修改");
+        Assert.isTrue(!oldRole.getRoleOrg().equals(AdminOrgEnum.ADMIN_ORG.getOrg()), "超级管理员的角色信息不允许被修改");
         List<SysRole> sysRoleList = sysRoleMapper.selectList(Wrappers.<SysRole>lambdaQuery()
                 .eq(SysRole::getRoleName, dto.getRoleName()));
         Assert.isTrue(sysRoleList.isEmpty() || oldRole.getRoleName().equals(dto.getRoleName())

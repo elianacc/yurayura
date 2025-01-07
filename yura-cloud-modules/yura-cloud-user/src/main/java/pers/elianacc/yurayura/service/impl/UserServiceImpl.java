@@ -18,6 +18,7 @@ import pers.elianacc.yurayura.dto.IdDTO;
 import pers.elianacc.yurayura.dto.UserSelectDTO;
 import pers.elianacc.yurayura.dto.UserUpdateStatusDTO;
 import pers.elianacc.yurayura.entity.User;
+import pers.elianacc.yurayura.enumerate.AdminOrgEnum;
 import pers.elianacc.yurayura.service.IUserService;
 import pers.elianacc.yurayura.utils.EasyPoiUtil;
 
@@ -60,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                         .eq(!ObjectUtils.isEmpty(dto.getUserStatus()), User::getUserStatus, dto.getUserStatus())
                         .eq(!ObjectUtils.isEmpty(dto.getUserPhoneNumber())
                                 , User::getUserPhoneNumber, dto.getUserPhoneNumber())
-                        .eq(!managerOrg.equals(0), User::getUserOrg, managerOrg)
+                        .eq(!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg()), User::getUserOrg, managerOrg)
                         .orderByDesc(User::getId));
         return new PageInfo<>(userList, 5);
     }
@@ -83,6 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public void exportExcel(UserSelectDTO dto, HttpServletResponse response) throws IOException {
+        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
         List<User> userList = userMapper
                 .selectList(Wrappers.<User>lambdaQuery()
                         .select(User.class, i -> !i.getColumn().equals("user_password"))
@@ -95,6 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                         .eq(!ObjectUtils.isEmpty(dto.getUserStatus()), User::getUserStatus, dto.getUserStatus())
                         .eq(!ObjectUtils.isEmpty(dto.getUserPhoneNumber())
                                 , User::getUserPhoneNumber, dto.getUserPhoneNumber())
+                        .eq(!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg()), User::getUserOrg, managerOrg)
                         .orderByDesc(User::getId));
 
         List<UserExportBO> exportBOList = userList

@@ -18,6 +18,7 @@ import pers.elianacc.yurayura.dto.SysManagerInsertDTO;
 import pers.elianacc.yurayura.dto.SysManagerSelectDTO;
 import pers.elianacc.yurayura.dto.SysManagerUpdateDTO;
 import pers.elianacc.yurayura.entity.SysManager;
+import pers.elianacc.yurayura.enumerate.AdminOrgEnum;
 import pers.elianacc.yurayura.enumerate.EnableStatusEnum;
 import pers.elianacc.yurayura.service.ISysManagerService;
 import pers.elianacc.yurayura.vo.SysManagerAndRoleVO;
@@ -81,7 +82,8 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
     @Override
     public void update(SysManagerUpdateDTO dto) {
         SysManager oldSysManager = sysManagerMapper.selectById(dto.getId());
-        Assert.isTrue(!oldSysManager.getManagerName().equals("admin"), "管理员admin信息不允许被修改");
+        Assert.isTrue(!oldSysManager.getManagerOrg().equals(AdminOrgEnum.ADMIN_ORG.getOrg())
+                , "管理员admin信息不允许被修改");
         SysManager sysManager = new SysManager();
         BeanUtils.copyProperties(dto, sysManager);
         // 修改密码为空时使用此管理员旧密码

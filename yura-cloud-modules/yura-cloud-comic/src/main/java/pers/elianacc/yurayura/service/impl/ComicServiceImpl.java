@@ -34,10 +34,7 @@ import pers.elianacc.yurayura.dao.ComicUserDataMapper;
 import pers.elianacc.yurayura.dto.*;
 import pers.elianacc.yurayura.entity.Comic;
 import pers.elianacc.yurayura.entity.ComicUserData;
-import pers.elianacc.yurayura.enumerate.ComicShelfStatusEnum;
-import pers.elianacc.yurayura.enumerate.ComicStatusEnum;
-import pers.elianacc.yurayura.enumerate.ImgUploadCategoryEnum;
-import pers.elianacc.yurayura.enumerate.ImgUploadResultEnum;
+import pers.elianacc.yurayura.enumerate.*;
 import pers.elianacc.yurayura.excel.ComicImportVerifyHandler;
 import pers.elianacc.yurayura.exception.BusinessException;
 import pers.elianacc.yurayura.feign.SysFeignClient;
@@ -85,7 +82,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
     @Override
     public PageInfo<Comic> getPage(ComicSelectDTO dto) {
         Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
-        if (!managerOrg.equals(0)) {
+        if (!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg())) {
             dto.setComicOrg(managerOrg);
         }
         // 设置分页
@@ -212,6 +209,10 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
 
     @Override
     public void exportExcel(ComicSelectDTO dto, HttpServletResponse response) throws IOException {
+        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        if (!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg())) {
+            dto.setComicOrg(managerOrg);
+        }
         List<Comic> comicList = comicMapper.getListBySelectDTO(dto);
         ApiResult<List<SysDictVO>> apiResult = sysFeignClient.getByDictCode("comicStatus");
         Assert.isTrue(apiResult.getCode() == ApiResult.SUCCESS_CODE, "获取状态字典列表失败");

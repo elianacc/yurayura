@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pers.elianacc.yurayura.dto.IdDTO;
 import pers.elianacc.yurayura.entity.SysNotice;
+import pers.elianacc.yurayura.enumerate.AdminOrgEnum;
 import pers.elianacc.yurayura.service.ISysNoticeService;
 import pers.elianacc.yurayura.vo.ApiResult;
 
@@ -56,7 +57,7 @@ public class SysNoticeController {
         LocalDateTime today0Time = LocalDate.now().atStartOfDay();
         return ApiResult.success("查询成功", iSysNoticeService
                 .list(Wrappers.<SysNotice>lambdaQuery()
-                        .eq(managerOrg != 0, SysNotice::getNoticeOrg, managerOrg)
+                        .eq(!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg()), SysNotice::getNoticeOrg, managerOrg)
                         .ge(SysNotice::getNoticeCreateTime, today0Time.minusDays(30))
                         .orderByDesc(SysNotice::getNoticeCreateTime)
                 ));
