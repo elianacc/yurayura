@@ -61,8 +61,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public void insert(SysRoleInsertDTO dto) {
         List<SysRole> sysRoleList = sysRoleMapper
                 .selectList(Wrappers.<SysRole>lambdaQuery()
-                        .eq(SysRole::getRoleName, dto.getRoleName()));
-        Assert.isTrue(sysRoleList.isEmpty(), "角色名已经存在");
+                        .eq(SysRole::getRoleName, dto.getRoleName())
+                        .eq(SysRole::getRoleOrg, dto.getRoleOrg()));
+        Assert.isTrue(sysRoleList.isEmpty(), "此组织角色名已经存在");
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(dto, sysRole);
         sysRole.setRoleCreateTime(LocalDateTime.now());
@@ -84,9 +85,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole oldRole = sysRoleMapper.selectById(dto.getId());
         Assert.isTrue(!oldRole.getRoleOrg().equals(AdminOrgEnum.ADMIN_ORG.getOrg()), "超级管理员的角色信息不允许被修改");
         List<SysRole> sysRoleList = sysRoleMapper.selectList(Wrappers.<SysRole>lambdaQuery()
-                .eq(SysRole::getRoleName, dto.getRoleName()));
+                .eq(SysRole::getRoleName, dto.getRoleName())
+                .eq(SysRole::getRoleOrg, oldRole.getRoleOrg()));
         Assert.isTrue(sysRoleList.isEmpty() || oldRole.getRoleName().equals(dto.getRoleName())
-                , "角色名已经存在");
+                , "此组织角色名已经存在");
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(dto, sysRole);
         sysRole.setRoleUpdateTime(LocalDateTime.now());
