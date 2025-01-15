@@ -47,6 +47,13 @@ public class SysManager implements Serializable {
     private String managerPassword;
 
     /**
+     * 管理员密码盐
+     */
+    @TableField("manager_pass_salt")
+    @ApiModelProperty(value = "管理员密码盐")
+    private String managerPassSalt;
+
+    /**
      * 状态- 0：禁用，1：启用
      */
     @TableField("manager_status")

@@ -38,6 +38,13 @@ public class SysManagerInsertDTO implements Serializable {
     private String managerPassword;
 
     /**
+     * 管理员密码盐
+     */
+    @NotBlank(message = "管理员密码盐不能为空")
+    @ApiModelProperty(value = "管理员密码盐")
+    private String managerPassSalt;
+
+    /**
      * 状态- 0：禁用，1：启用
      */
     @NotNull(message = "状态不能为空")

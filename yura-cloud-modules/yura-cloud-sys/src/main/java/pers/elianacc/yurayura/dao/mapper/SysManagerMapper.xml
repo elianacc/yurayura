@@ -7,6 +7,7 @@
         <id column="id" property="id"/>
         <result column="manager_name" property="managerName"/>
         <result column="manager_password" property="managerPassword"/>
+        <result column="manager_pass_salt" property="managerPassSalt"/>
         <result column="manager_status" property="managerStatus"/>
         <result column="manager_org" property="managerOrg"/>
         <result column="manager_create_time" property="managerCreateTime"/>
@@ -15,7 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, manager_name, manager_password, manager_status, manager_org, manager_create_time, manager_update_time
+        id, manager_name, manager_password, manager_pass_salt, manager_status, manager_org, manager_create_time, manager_update_time
     </sql>
 
     <select id="getManagerRolePermission" resultType="java.lang.String">

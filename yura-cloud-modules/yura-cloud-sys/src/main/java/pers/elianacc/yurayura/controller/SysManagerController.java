@@ -149,7 +149,7 @@ public class SysManagerController {
 
         SysManager sysManager = iSysManagerService.getEnableManagerByName(dto.getManagerName());
 
-        Assert.isTrue(!ObjectUtils.isEmpty(sysManager), "用户不存在");
+        Assert.isTrue(!ObjectUtils.isEmpty(sysManager), "管理员不存在");
         Assert.isTrue(sysManager.getManagerPassword().equals(DigestUtils.md5DigestAsHex(dto.getManagerPassword().getBytes()))
                 , "密码错误");
 
