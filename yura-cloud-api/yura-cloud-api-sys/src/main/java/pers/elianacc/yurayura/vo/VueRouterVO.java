@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 前端vue-router vo
  *
@@ -12,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "前端vue-router VO", description = "前端vue-router视图对象")
-public class VueRouterVO {
+public class VueRouterVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +29,12 @@ public class VueRouterVO {
      */
     @ApiModelProperty(value = "组件名")
     private String name;
+
+    /**
+     * 组件标题
+     */
+    @ApiModelProperty(value = "组件标题")
+    private String title;
 
     /**
      * 组件

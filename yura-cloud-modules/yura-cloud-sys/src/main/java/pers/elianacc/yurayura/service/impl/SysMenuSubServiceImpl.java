@@ -97,29 +97,19 @@ public class SysMenuSubServiceImpl extends ServiceImpl<SysMenuSubMapper, SysMenu
 
     @Override
     public List<VueRouterVO> getVueRouter() {
-        List<VueRouterVO> voList = sysMenuSubMapper
+        return sysMenuSubMapper
                 .selectList(null)
                 .stream()
                 .map(subMenu -> {
-                    VueRouterVO routerVO = new VueRouterVO();
-                    routerVO.setPath(subMenu.getMenuName());
                     String nameCamelCase = StrUtil.toCamelCase(subMenu.getMenuName());
                     String componentName = "Business" + nameCamelCase.substring(0, 1)
                             .toUpperCase() + nameCamelCase.substring(1);
+                    VueRouterVO routerVO = new VueRouterVO();
+                    routerVO.setPath(subMenu.getMenuName());
                     routerVO.setName(componentName);
-                    routerVO.setComponent(routerVO.getName());
+                    routerVO.setTitle(subMenu.getMenuTitle());
+                    routerVO.setComponent(componentName);
                     return routerVO;
                 }).collect(Collectors.toList());
-        VueRouterVO routerVO2 = new VueRouterVO();
-        routerVO2.setPath("index");
-        routerVO2.setName("BusinessIndex");
-        routerVO2.setComponent("BusinessIndex");
-        voList.add(0, routerVO2);
-        VueRouterVO routerVO1 = new VueRouterVO();
-        routerVO1.setPath("");
-        routerVO1.setName("Business");
-        routerVO1.setComponent("BusinessIndex");
-        voList.add(0, routerVO1);
-        return voList;
     }
 }
