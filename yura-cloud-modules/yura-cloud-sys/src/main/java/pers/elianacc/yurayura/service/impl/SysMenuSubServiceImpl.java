@@ -106,7 +106,7 @@ public class SysMenuSubServiceImpl extends ServiceImpl<SysMenuSubMapper, SysMenu
                             .toUpperCase() + nameCamelCase.substring(1);
                     VueRouterVO routerVO = new VueRouterVO();
                     routerVO.setPath(subMenu.getMenuName());
-                    routerVO.setName(componentName);
+                    routerVO.setName(subMenu.getMenuName());
                     routerVO.setTitle(subMenu.getMenuTitle());
                     routerVO.setComponent(componentName);
                     return routerVO;
