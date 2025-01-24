@@ -53,7 +53,7 @@ public class SysNoticeController {
     @GetMapping("/getRecentMonthList")
     @ApiOperation("查询最近一个月系统通知")
     public ApiResult<List<SysNotice>> getRecentMonthList() {
-        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        Integer managerOrg = Integer.parseInt(StpUtil.getExtra("managerOrg").toString());
         LocalDateTime today0Time = LocalDate.now().atStartOfDay();
         return ApiResult.success("查询成功", iSysNoticeService
                 .list(Wrappers.<SysNotice>lambdaQuery()

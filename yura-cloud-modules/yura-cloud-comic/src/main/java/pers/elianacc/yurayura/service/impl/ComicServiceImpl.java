@@ -81,7 +81,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
 
     @Override
     public PageInfo<Comic> getPage(ComicSelectDTO dto) {
-        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        Integer managerOrg = Integer.parseInt(StpUtil.getExtra("managerOrg").toString());
         if (!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg())) {
             dto.setComicOrg(managerOrg);
         }
@@ -124,7 +124,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         }
         comic.setComicCreateTime(LocalDateTime.now());
         comic.setComicUpdateTime(null);
-        comic.setComicOrg((Integer) StpUtil.getExtra("managerOrg"));
+        comic.setComicOrg(Integer.parseInt(StpUtil.getExtra("managerOrg").toString()));
         comicMapper.insert(comic);
         comicUserData.setComicId(comic.getId());
         comicUserData.setComicName(comic.getComicName());
@@ -137,7 +137,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         noticeInsertDTO.setNoticeSender(StpUtil.getExtra("managerName").toString());
         noticeInsertDTO.setNoticeContent(StpUtil
                 .getExtra("managerName").toString() + "上架了番剧 " + comic.getComicName());
-        noticeInsertDTO.setNoticeOrg((Integer) StpUtil.getExtra("managerOrg"));
+        noticeInsertDTO.setNoticeOrg(Integer.parseInt(StpUtil.getExtra("managerOrg").toString()));
         noticeInsertDTO.setNoticeCreateTime(LocalDateTime.now());
         mqttMessageSender.sendMsg(MqttConstant.YURA_CLOUD_SYS_INSERT_NOTICE
                 , JSONUtil.toJsonStr(noticeInsertDTO));
@@ -162,7 +162,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
         noticeInsertDTO.setNoticeSender(StpUtil.getExtra("managerName").toString());
         noticeInsertDTO.setNoticeContent(StpUtil
                 .getExtra("managerName").toString() + "删除了番剧 " + comicDelName);
-        noticeInsertDTO.setNoticeOrg((Integer) StpUtil.getExtra("managerOrg"));
+        noticeInsertDTO.setNoticeOrg(Integer.parseInt(StpUtil.getExtra("managerOrg").toString()));
         noticeInsertDTO.setNoticeCreateTime(LocalDateTime.now());
 
         mqttMessageSender.sendMsg(MqttConstant.YURA_CLOUD_SYS_INSERT_NOTICE
@@ -209,7 +209,7 @@ public class ComicServiceImpl extends ServiceImpl<ComicMapper, Comic> implements
 
     @Override
     public void exportExcel(ComicSelectDTO dto, HttpServletResponse response) throws IOException {
-        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        Integer managerOrg = Integer.parseInt(StpUtil.getExtra("managerOrg").toString());
         if (!managerOrg.equals(AdminOrgEnum.ADMIN_ORG.getOrg())) {
             dto.setComicOrg(managerOrg);
         }

@@ -205,7 +205,7 @@ public class SysManagerController {
     public ApiResult<SysManagerMsgVO> getCurrentManagerMsg() {
         SysManagerMsgVO sysManagerMsgVO = new SysManagerMsgVO();
         sysManagerMsgVO.setManagerName(StpUtil.getExtra("managerName").toString());
-        sysManagerMsgVO.setManagerOrg((Integer) StpUtil.getExtra("managerOrg"));
+        sysManagerMsgVO.setManagerOrg(Integer.parseInt(StpUtil.getExtra("managerOrg").toString()));
 
         List<String> managerRolePermission = iSysManagerService.getManagerRolePermission(StpUtil.getLoginIdAsInt());
 

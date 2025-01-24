@@ -18,3 +18,5 @@ spring:
         group: SEATA_GROUP
         # 指定命名空间
         namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b
+  config:
+    import: "nacos:yura-cloud-gateway-dev.yml"

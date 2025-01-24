@@ -15,6 +15,18 @@
 
     <dependencies>
 
+        <!-- SpringBoot SpringMVC 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- SpringBoot 指标监控 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- Knife4j springboot 依赖 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

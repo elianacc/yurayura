@@ -29,29 +29,29 @@ yura-cloud
 
 ## 项目技术构成
 
-| 描述                | 框架                                | 版本                        |
-| ------------------- | ----------------------------------- | --------------------------- |
-| 基础                | Spring Boot                         | 2.3.12.RELEASE              |
-| 微服务基础          | Spring Cloud + Spring Cloud Alibaba | Hoxton.SR12 + 2.2.6.RELEASE |
-| 服务注册与配置中心  | Nacos                               | 2.0.3                       |
-| 服务调用            | OpenFeign                           | 2.2.9.RELEASE               |
-| 分布式事务          | Seata                               | 1.3.0                       |
-| 服务网关            | Gateway                             | 2.2.9.RELEASE               |
-| 数据库持久层（ORM） | MyBatis-Plus                        | 3.5.1                       |
-| 自动生成代码工具    | MyBatis-Plus-Generator              | 3.5.1                       |
-| 分页工具            | Mybatis-PageHelper                  | 5.2.0                       |
-| 认证和授权          | Sa-Token + Jwt                      | 1.35.0.RC                   |
-| 消息发布订阅        | MQTT                                | 5.3.8.RELEASE               |
-| 分布式锁            | Lock4j                              | 2.2.2                       |
-| 日志                | Logback                             | 1.2.3                       |
-| 项目构建            | Maven                               | 3.6.3                       |
-| 代码简化工具        | Lombok                              | 1.18.20                     |
-| 数据库连接池        | HikariCP                            | 3.4.5                       |
-| 数据库              | MySQL80                             | 8.0.28                      |
-| NoSQL数据库         | Redis                               | 3.2.100                     |
-| 在线接口文档生成    | Knife4j（swagger2增强）             | 3.0.3                       |
-| 文档处理            | easypoi                             | 4.2.0                       |
-| 工具类库            | Hutool                              | 5.8.9                       |
+| 描述                | 框架                                | 版本                  |
+| ------------------- | ----------------------------------- | --------------------- |
+| 基础                | Spring Boot                         | 2.6.13                |
+| 微服务基础          | Spring Cloud + Spring Cloud Alibaba | 2021.0.5 + 2021.0.5.0 |
+| 服务注册与配置中心  | Nacos                               | 2.3.0                 |
+| 服务调用            | OpenFeign                           | 3.1.5                 |
+| 分布式事务          | Seata                               | 1.6.1                 |
+| 服务网关            | Gateway                             | 3.1.4                 |
+| 数据库持久层（ORM） | MyBatis-Plus                        | 3.5.5                 |
+| 自动生成代码工具    | MyBatis-Plus-Generator              | 3.5.5                 |
+| 分页工具            | Mybatis-PageHelper                  | 5.2.0                 |
+| 认证和授权          | Sa-Token + Jwt                      | 1.35.0.RC             |
+| 消息发布订阅        | MQTT                                | 1.2.5                 |
+| 分布式锁            | Lock4j                              | 2.2.4                 |
+| 日志                | Logback                             | 1.2.11                |
+| 项目构建            | Maven                               | 3.6.3                 |
+| 代码简化工具        | Lombok                              | 1.18.24               |
+| 数据库连接池        | HikariCP                            | 4.0.3                 |
+| 数据库              | MySQL80                             | 8.0.22                |
+| NoSQL数据库         | Redis                               | 3.2.100               |
+| 在线接口文档生成    | Knife4j（swagger2增强）             | 3.0.3                 |
+| 文档处理            | easypoi                             | 4.2.0                 |
+| 工具类库            | Hutool                              | 5.8.25                |
 
 ## 常用功能实现
 
@@ -103,6 +103,10 @@ server:
       enabled: true
 
 spring:  
+  mvc:
+    # 映射匹配请求路径的默认策略修改
+    pathmatch:
+      matching-strategy: ant_path_matcher
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -187,28 +191,12 @@ feign:
 
 # seata配置
 seata:
-  enabled: true
-  application-id: ${spring.application.name}
-  tx-service-group: my_test_tx_group
-  enable-auto-data-source-proxy: true
-  registry:
-    type: nacos
-    nacos:
-      application: seata-server
-      server-addr: localhost:8888
-      namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b
-      group: SEATA_GROUP
-      cluster: yurayura-cloud
-      username: nacos
-      password: nacos
-  config:
-    type: nacos
-    nacos:
-      server-addr: localhost:8888
-      namespace: ad0670cf-4455-42e9-a7ef-90937cd83f0b
-      group: SEATA_GROUP
-      username: nacos
-      password: nacos
+  tx-service-group: yuragroup
+  service:
+    vgroup-mapping:
+      yuragroup: default
+    grouplist:
+      default: 127.0.0.1:8092
 
 logging:
   # 日志级别设置

@@ -46,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public PageInfo<User> getPage(UserSelectDTO dto) {
-        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        Integer managerOrg = Integer.parseInt(StpUtil.getExtra("managerOrg").toString());
         // 设置分页
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<User> userList = userMapper
@@ -84,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public void exportExcel(UserSelectDTO dto, HttpServletResponse response) throws IOException {
-        Integer managerOrg = (Integer) StpUtil.getExtra("managerOrg");
+        Integer managerOrg = Integer.parseInt(StpUtil.getExtra("managerOrg").toString());
         List<User> userList = userMapper
                 .selectList(Wrappers.<User>lambdaQuery()
                         .select(User.class, i -> !i.getColumn().equals("user_password"))
